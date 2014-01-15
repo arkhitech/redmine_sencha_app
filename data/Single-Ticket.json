@@ -1,0 +1,132 @@
+{
+issue: {
+id: 217,
+        project: {
+        id: 1,
+                name: "Arkhitech Website and Marketing"
+        },
+        tracker: {
+        id: 5,
+                name: "Enhancement"
+        },
+        status: {
+        id: 2,
+                name: "In Progress"
+        },
+        priority: {
+        id: 2,
+                name: "Normal"
+        },
+        author: {
+        id: 1,
+                name: "Hisham Malik"
+        },
+        assigned_to: {
+        id: 8,
+                name: "Nadeem Khan"
+        },
+        category: {
+        id: 1,
+                name: "Website"
+        },
+        fixed_version: {
+        id: 6,
+                name: "Sprint 2 - Website Tweaks"
+        },
+        subject: "Outsource/Review 8 Catchy Blog Articles",
+        description: "Outsource/Review 8 Catchy Blog Articles",
+        start_date: "2013-11-26",
+        due_date: "2013-11-27",
+        done_ratio: 0,
+        estimated_hours: 24,
+        spent_hours: 7.65,
+        custom_fields: [
+        {
+        id: 18,
+                name: "Assigned Developer",
+                value: "8"
+        },
+        {
+        id: 19,
+                name: "Assigned Tester",
+                value: ""
+        }
+        ],
+        created_on: "2013-11-26T12:39:14Z",
+        updated_on: "2013-11-28T12:39:31Z",
+        attachments: [ ],
+        relations: [
+        {
+        id: 71,
+                issue_id: 105,
+                issue_to_id: 217,
+                relation_type: "relates",
+                delay: null
+        },
+        {
+        id: 73,
+                issue_id: 218,
+                issue_to_id: 217,
+                relation_type: "relates",
+                delay: null
+        }
+        ],
+        changesets: [ ],
+        journals: [
+        {
+        id: 826,
+                user: {
+                id: 8,
+                        name: "Nadeem Khan"
+                },
+                notes: "",
+                created_on: "2013-11-27T05:23:35Z",
+                details: [
+                {
+                property: "attr",
+                        name: "status_id",
+                        old_value: "1",
+                        new_value: "2"
+                }
+                ]
+        },
+        {
+        id: 831,
+                user: {
+                id: 8,
+                        name: "Nadeem Khan"
+                },
+                notes: "Published: http://www.arkhitech.com/the-tell-tale-signs-of-a-good-graphic-designer#overlay-context=blog",
+                created_on: "2013-11-27T08:14:23Z",
+                details: [
+                {
+                property: "attr",
+                        name: "estimated_hours",
+                        new_value: "24.0"
+                }
+                ]
+        },
+        {
+        id: 877,
+                user: {
+                id: 8,
+                        name: "Nadeem Khan"
+                },
+                notes: "published: http://arkhitech.com/13-characteristics-successful-entrepreneurs",
+                created_on: "2013-11-28T08:41:22Z",
+                details: [ ]
+        },
+        {
+        id: 880,
+                user: {
+                id: 8,
+                        name: "Nadeem Khan"
+                },
+                notes: "Published: http://arkhitech.com/12-greatest-programmers-of-all-time",
+                created_on: "2013-11-28T12:39:31Z",
+                details: [ ]
+        }
+        ],
+        story_points: null
+}
+}

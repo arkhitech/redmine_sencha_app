@@ -1,0 +1,22 @@
+{
+"versionString":"1.0",
+"applicationName":"Redmine App",
+"applicationId":"com.Arkhitech.iOSNative",
+"inputPath":"/var/www/html/RedmineApp/",
+"outputPath":"/var/www/html/Final-App/",
+
+"iconName":"icon.png",
+"configuration":"Debug",
+"platform":"iOS",
+"deviceType":"iPhone",
+
+
+"certificateAlias":"iPhone Developer",
+
+"orientations":[
+"portrait",
+"lanscapeLeft",
+"landscapeRight",
+"portraitUpsideDown"
+]
+}
