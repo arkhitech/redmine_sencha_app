@@ -11,7 +11,6 @@ Ext.define('RedmineApp.view.ProjDetail', {
         items: [
             {
                 xtype: 'list',
-                store: 'Issues',
                 grouped: true,
                 indexBar: true,
                 id: 'ticketlist',

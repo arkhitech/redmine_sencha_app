@@ -4,7 +4,7 @@ Ext.define('RedmineApp.store.RedmineConfigs', {
         model: 'RedmineApp.model.RedmineConfig',
         autoLoad: true,
         proxy: {
-            type: 'sessionstorage',
+            type: 'localstorage',
             id: 'redmine_config'
         }
     }

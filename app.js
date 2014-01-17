@@ -12,9 +12,9 @@
 Ext.Loader.setConfig({disableCaching: false});
 Ext.application({
     name: 'RedmineApp',
-    views: ['IssueDetail', 'ProjDetail', 'RedmineNavigator', 'RedmineTabPanel', 'RedmineChart', 'RedmineChartsMenu'],
-    models: ['Project', 'Issue', 'RedmineConfig'],
-    stores: ['Projects', 'Issues', 'RedmineConfigs'],
+    views: ['IssueDetail', 'ProjDetail', 'RedmineIssuesNavigator', 'RedmineTabPanel', 'RedmineChart', 'RedmineChartsNavigator'],
+    models: ['RedmineConfig','Issue','Project'],
+    stores: ['RedmineConfigs'],
     controllers: ['Projects', 'Issues', 'ChartsMenu'],
     launch: function() {
         // Destroy the #appLoadingIndicator element
@@ -22,6 +22,7 @@ Ext.application({
 
         // Initialize the main view
         Ext.Viewport.add(Ext.create('RedmineApp.view.RedmineTabPanel'));
+       
     },
     projectIdentifier: null,
     redmine_url: '',
@@ -50,7 +51,7 @@ Ext.application({
 
     },
     setRedmineUrl: function(redmine_url) {
-        this.redmine_url = redmine_url;
+        this.redmine_url = redmine_url.replace(/\/$/, '');
         this.saveRedmineConfig();
     },
     getRedmineUrl: function() {
@@ -84,7 +85,7 @@ Ext.application({
             autoLoad: true,
             proxy: {
                 type: 'ajax',
-                url: 'http://redmine.arkhitech.com/projects/' + projectIdentifier + '/issues.json?key=9174453938f1629beac1e7431a6a70bcc28b17aa&include=relations,changesets,journals,attachments',
+                url: this.getRedmineUrl()+ '/projects/' + projectIdentifier + '/issues.json?key=9174453938f1629beac1e7431a6a70bcc28b17aa&include=relations,changesets,journals,attachments',
                 reader: {
                     rootProperty: 'issues',
                     type: 'json'
@@ -95,6 +96,29 @@ Ext.application({
                     return record.get('subject').substr(0, 1);
                 },
                 sortProperty: 'subject'
+            }
+
+        });
+        newStore.load();
+        return newStore;
+    },
+    createProjectsStore: function() {
+        var newStore = Ext.create('Ext.data.Store', {
+            model: 'RedmineApp.model.Project',
+            autoLoad: true,
+            proxy: {
+                type: 'ajax',
+                url: this.getRedmineUrl()+ '/projects.json?key=9174453938f1629beac1e7431a6a70bcc28b17aa&include=relations,changesets,journals,attachments',
+                reader: {
+                    rootProperty: 'projects',
+                    type: 'json'
+                }
+            },
+            grouper: {
+                groupFn: function(record) {
+                    return record.get('name').substr(0, 1);
+                },
+                sortProperty: 'name'
             }
 
         });

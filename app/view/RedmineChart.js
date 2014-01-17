@@ -9,6 +9,7 @@ Ext.define('RedmineApp.view.RedmineChart', {
     ],
     config: {
         height: '100%',
+        direction: 'vertical',
         align: 'stretch',
         title: 'Analytics',
         items: [

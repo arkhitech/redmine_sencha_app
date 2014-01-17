@@ -41,7 +41,7 @@ Ext.define('RedmineApp.view.UserInputView', {
                             RedmineApp.app.setRedmineUrl(redurl);
                             var accesskey = Ext.getCmp('access_key_from_user').getValue();
                             RedmineApp.app.setRedmineAccessKey(accesskey);
-
+                               Ext.Msg.alert('Save Successful', 'Your credentials have been saved and will remain saved until overwritten.');
                         }
                     }
                 ]

@@ -4,9 +4,7 @@ Ext.define('RedmineApp.controller.Issues', {
         'Ext.data.proxy.LocalStorage'
     ],
     config: {
-        stores: ['IssueDetails'],
-        models: ['Issue'],
-        views: ['ProjDetail', 'RedmineNavigator'],
+        views: ['ProjDetail', 'RedmineIssuesNavigator'],
         refs: {
             list: '#ticketlist'
         },
@@ -42,7 +40,7 @@ Ext.define('RedmineApp.controller.Issues', {
         store.addListener('load', function(store, records, successful, operation, eOpts) {
             var issue_details_view = Ext.create('RedmineApp.view.IssueDetail');
             issue_details_view.setRecord(records[0]);
-            list.up('redminenavigator').push(issue_details_view);
+            list.up('redmine-issues-navigator').push(issue_details_view);
             RedmineApp.controller.Issues.isClickInProcess = false;
         });
         store.load();

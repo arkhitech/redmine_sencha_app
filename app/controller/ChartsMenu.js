@@ -4,9 +4,7 @@ Ext.define('RedmineApp.controller.ChartsMenu', {
         'Ext.data.proxy.LocalStorage'
     ],
     config: {
-        stores: ['Issues'],
-        models: ['Issue'],
-        views: ['RedmineChart', 'RedmineNavigator'],
+        views: ['RedmineChart', 'RedmineChartsNavigator'],
         refs: {
             list: '#projectlist'
         },
@@ -19,7 +17,7 @@ Ext.define('RedmineApp.controller.ChartsMenu', {
     showProjectDetails: function(list, record, node, index, event, eOpts) {
         RedmineApp.app.setCurrentProjectIdentifier(record.data.identifier);
         var redmine_chart_view = Ext.create('RedmineApp.view.RedmineChart');
-        list.up('projectlistforcharts').push(redmine_chart_view);
+        list.up('redmine-charts-navigator').push(redmine_chart_view);
     }
 
 });

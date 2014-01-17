@@ -17,7 +17,11 @@ Ext.Loader.addClassPathMappings({
   "Ext.device.sqlite.SQLResultSetRowList": "touch/src/device/sqlite/Sencha.js",
   "Ext.device.sqlite.SQLTransaction": "touch/src/device/sqlite/Sencha.js",
   "Ext.draw.engine.SvgContext.Gradient": "touch/src/draw/engine/SvgContext.js",
-  "TestApp6": "app"
+  "IssueByID": "app/view/RedmineIDChart.js",
+  "IssueByPriority": "app/view/RedminePriorityChart.js",
+  "IssueByStatus": "app/view/RedmineStatusChart.js",
+  "IssueByTracker": "app/view/RedmineTrackerChart.js",
+  "RedmineApp": "app"
 });
 Ext.ClassManager.addNameAlternateMappings({
   "Ext.AbstractComponent": [],
@@ -743,7 +747,28 @@ Ext.ClassManager.addNameAlternateMappings({
   "Ext.viewport.WindowsPhone": [
     "Ext.viewport.WP"
   ],
-  "TestApp6.view.Main": []
+  "IssueByID": [],
+  "IssueByPriority": [],
+  "IssueByStatus": [],
+  "IssueByTracker": [],
+  "RedmineApp.controller.ChartsMenu": [],
+  "RedmineApp.controller.Issues": [],
+  "RedmineApp.controller.Projects": [],
+  "RedmineApp.model.Issue": [],
+  "RedmineApp.model.Project": [],
+  "RedmineApp.model.RedmineConfig": [],
+  "RedmineApp.store.RedmineConfigs": [],
+  "RedmineApp.view.IssueDetail": [],
+  "RedmineApp.view.ProjDetail": [],
+  "RedmineApp.view.RedmineChart": [],
+  "RedmineApp.view.RedmineChartsNavigator": [],
+  "RedmineApp.view.RedmineIDChart": [],
+  "RedmineApp.view.RedmineIssuesNavigator": [],
+  "RedmineApp.view.RedminePriorityChart": [],
+  "RedmineApp.view.RedmineStatusChart": [],
+  "RedmineApp.view.RedmineTabPanel": [],
+  "RedmineApp.view.RedmineTrackerChart": [],
+  "RedmineApp.view.UserInputView": []
 });
 Ext.ClassManager.addNameAliasMappings({
   "Ext.AbstractComponent": [],
@@ -1687,7 +1712,48 @@ Ext.ClassManager.addNameAliasMappings({
   "Ext.viewport.Ios": [],
   "Ext.viewport.Viewport": [],
   "Ext.viewport.WindowsPhone": [],
-  "TestApp6.view.Main": [
-    "widget.main"
+  "IssueByID": [],
+  "IssueByPriority": [],
+  "IssueByStatus": [],
+  "IssueByTracker": [],
+  "RedmineApp.controller.ChartsMenu": [],
+  "RedmineApp.controller.Issues": [],
+  "RedmineApp.controller.Projects": [],
+  "RedmineApp.model.Issue": [],
+  "RedmineApp.model.Project": [],
+  "RedmineApp.model.RedmineConfig": [],
+  "RedmineApp.store.RedmineConfigs": [],
+  "RedmineApp.view.IssueDetail": [
+    "widget.ticketdetail"
+  ],
+  "RedmineApp.view.ProjDetail": [
+    "widget.projdetail"
+  ],
+  "RedmineApp.view.RedmineChart": [
+    "widget.redminecharts"
+  ],
+  "RedmineApp.view.RedmineChartsNavigator": [
+    "widget.redmine-charts-navigator"
+  ],
+  "RedmineApp.view.RedmineIDChart": [
+    "widget.redmine-id-chart"
+  ],
+  "RedmineApp.view.RedmineIssuesNavigator": [
+    "widget.redmine-issues-navigator"
+  ],
+  "RedmineApp.view.RedminePriorityChart": [
+    "widget.redmine-priority-chart"
+  ],
+  "RedmineApp.view.RedmineStatusChart": [
+    "widget.redmine-status-chart"
+  ],
+  "RedmineApp.view.RedmineTabPanel": [
+    "widget.RedmineTabPanel"
+  ],
+  "RedmineApp.view.RedmineTrackerChart": [
+    "widget.redmine-tracker-chart"
+  ],
+  "RedmineApp.view.UserInputView": [
+    "widget.redmine-user-input"
   ]
 });

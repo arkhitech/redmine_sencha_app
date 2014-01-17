@@ -2,8 +2,8 @@ Ext.define('RedmineApp.view.RedmineTabPanel', {
     extend: 'Ext.tab.Panel',
     xtype: 'RedmineTabPanel',
     requires: [
-        'RedmineApp.view.RedmineNavigator',
-        'RedmineApp.view.RedmineChartsMenu',
+        'RedmineApp.view.RedmineIssuesNavigator',
+        'RedmineApp.view.RedmineChartsNavigator',
         'RedmineApp.view.UserInputView'
     ],
     config: {
@@ -20,7 +20,7 @@ Ext.define('RedmineApp.view.RedmineTabPanel', {
                 iconCls: 'organize',
                 title: 'Issues',
                 flex: 1,
-                xtype: 'redminenavigator'
+                xtype: 'redmine-issues-navigator'
             },
             {
                 iconCls: 'compose',
@@ -28,7 +28,7 @@ Ext.define('RedmineApp.view.RedmineTabPanel', {
                 title: 'Analytics',
                 badgeText: 'New',
                 flex: 1,
-                xtype: 'projectlistforcharts'
+                xtype: 'redmine-charts-navigator'
             }
         ]
     }
