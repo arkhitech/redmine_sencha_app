@@ -5,11 +5,13 @@ Ext.define('RedmineApp.view.UserInputView', {
         'Ext.TitleBar',
         'Ext.form.FieldSet',
         'Ext.MessageBox',
-        'Ext.field.Url'
+        'Ext.field.Url',
+        'Ext.Img'
     ],
     config: {
-        layout: 'vbox',
+        layout: 'fit',
         height: '100%',
+        scrollable: false,
         items: [{
                 xtype: 'fieldset',
                 items: [
@@ -18,30 +20,30 @@ Ext.define('RedmineApp.view.UserInputView', {
                         id: 'redmine_url_from_user',
                         name: 'redmine_url',
                         label: 'Enter Your Redmine App URL',
-                        flex: 2,
                         clearIcon: true,
-                        placeHolder: 'http://redmine.arkhitech.com/'
+                        placeHolder: 'http://redmine.example.com/'
                     },
                     {
                         xtype: 'textfield',
                         id: 'access_key_from_user',
                         name: 'redmine_access_key',
                         label: 'Enter Your Redmine API Access Key',
-                        flex: 2,
                         clearIcon: true,
-                        placeHolder: '9174453938f1629beac1e7431a6a70bcc28b17aa'
+                        placeHolder: '917454393ig4629beac1e7431a6987bcc28b17aa'
                     },
                     {
                         xtype: 'button',
+                        align: 'center',
+//                        width: '30%',
                         ui: 'confirm',
                         text: 'Save Permanently',
                         handler: function(btn, evt) {
-
                             var redurl = Ext.getCmp('redmine_url_from_user').getValue();
                             RedmineApp.app.setRedmineUrl(redurl);
                             var accesskey = Ext.getCmp('access_key_from_user').getValue();
                             RedmineApp.app.setRedmineAccessKey(accesskey);
-                               Ext.Msg.alert('Save Successful', 'Your credentials have been saved and will remain saved until overwritten.');
+                            Ext.Msg.alert('Save Successful', 'Your credentials have been saved and will remain saved until overwritten.');
+
                         }
                     }
                 ]

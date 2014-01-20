@@ -27,7 +27,7 @@ Ext.define('RedmineApp.view.RedmineIssuesNavigator', {
                         this.setStore(RedmineApp.app.createProjectsStore());
                     }
                 }
-            }
+            }            
         ]
     }
 });

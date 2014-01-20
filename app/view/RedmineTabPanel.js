@@ -4,7 +4,8 @@ Ext.define('RedmineApp.view.RedmineTabPanel', {
     requires: [
         'RedmineApp.view.RedmineIssuesNavigator',
         'RedmineApp.view.RedmineChartsNavigator',
-        'RedmineApp.view.UserInputView'
+        'RedmineApp.view.UserInputView',
+        Ext.Img
     ],
     config: {
         tabBarPosition: 'bottom',
@@ -13,6 +14,7 @@ Ext.define('RedmineApp.view.RedmineTabPanel', {
                 iconCls: 'action',
                 style: 'text-align:center; background:#999999;height:30px;font-size:24',
                 title: 'Configure',
+                layout: 'fit',
                 flex: 1,
                 xtype: 'redmine-user-input'
             },
@@ -29,7 +31,7 @@ Ext.define('RedmineApp.view.RedmineTabPanel', {
                 badgeText: 'New',
                 flex: 1,
                 xtype: 'redmine-charts-navigator'
-            }
+            }           
         ]
     }
 });
