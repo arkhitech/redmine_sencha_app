@@ -30,7 +30,7 @@ Ext.define('RedmineApp.controller.Issues', {
             model: 'RedmineApp.model.Issue',
             proxy: {
                 type: 'ajax',
-                url: RedmineApp.app.getRedmineUrl() + 'issues/' + record.data.id + '.json?key=' + RedmineApp.app.getRedmineAccessKey() + '&include=relations,changesets,journals,attachments',
+                url: RedmineApp.app.getRedmineUrl() + '/issues/' + record.data.id + '.json?key=' + RedmineApp.app.getRedmineAccessKey() + '&include=relations,changesets,journals,attachments',
                 reader: {
                     rootProperty: 'issue',
                     type: 'json'
