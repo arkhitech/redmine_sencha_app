@@ -13,7 +13,7 @@ Ext.Loader.setConfig({disableCaching: false});
 Ext.application({
     name: 'RedmineApp',
     views: ['IssueDetail', 'ProjDetail', 'RedmineIssuesNavigator', 'RedmineTabPanel', 'RedmineChart', 'RedmineChartsNavigator'],
-    models: ['RedmineConfig','Issue','Project'],
+    models: ['RedmineConfig', 'Issue', 'Project'],
     stores: ['RedmineConfigs'],
     controllers: ['Projects', 'Issues', 'ChartsMenu'],
     launch: function() {
@@ -22,7 +22,7 @@ Ext.application({
 
         // Initialize the main view
         Ext.Viewport.add(Ext.create('RedmineApp.view.RedmineTabPanel'));
-       
+
     },
     projectIdentifier: null,
     redmine_url: '',
@@ -85,7 +85,7 @@ Ext.application({
             autoLoad: true,
             proxy: {
                 type: 'ajax',
-                url: this.getRedmineUrl()+ '/projects/' + projectIdentifier + '/issues.json?key=9174453938f1629beac1e7431a6a70bcc28b17aa&include=relations,changesets,journals,attachments',
+                url: this.getRedmineUrl() + '/projects/' + projectIdentifier + '/issues.json?key=9174453938f1629beac1e7431a6a70bcc28b17aa&include=relations,changesets,journals,attachments',
                 reader: {
                     rootProperty: 'issues',
                     type: 'json'
@@ -93,9 +93,10 @@ Ext.application({
             },
             grouper: {
                 groupFn: function(record) {
-                    return record.get('subject').substr(0, 1);
+                    return record.get('updated_on');
                 },
-                sortProperty: 'subject'
+                sortProperty: 'updated_on',
+                direction: 'DESC'
             }
 
         });
@@ -108,7 +109,7 @@ Ext.application({
             autoLoad: true,
             proxy: {
                 type: 'ajax',
-                url: this.getRedmineUrl()+ '/projects.json?key=9174453938f1629beac1e7431a6a70bcc28b17aa&include=relations,changesets,journals,attachments',
+                url: this.getRedmineUrl() + '/projects.json?key=9174453938f1629beac1e7431a6a70bcc28b17aa&include=relations,changesets,journals,attachments',
                 reader: {
                     rootProperty: 'projects',
                     type: 'json'
