@@ -12,17 +12,21 @@
 Ext.Loader.setConfig({disableCaching: false});
 Ext.application({
     name: 'RedmineApp',
-    views: ['IssueDetail', 'ProjDetail', 'RedmineIssuesNavigator', 'RedmineTabPanel', 'RedmineChart', 'RedmineChartsNavigator'],
+    views: ['IssueDetail', 'ProjDetail', 'RedmineIssuesNavigator', 'RedmineTabPanel', 'RedmineChart', 'RedmineChartsNavigator','UserInputView','RedmineIDChart','RedminePriorityChart','RedmineTrackerChart','RedmineStatusChart'],
     models: ['RedmineConfig', 'Issue', 'Project'],
     stores: ['RedmineConfigs'],
     controllers: ['Projects', 'Issues', 'ChartsMenu'],
+    icon: {
+        57: "resources/icons/57-57.png",
+        72: "resources/icons/72-72.png",
+        114: "resources/icons/114-114.png",
+        144: "resources/icons/144-144.png"
+    },
     launch: function() {
         // Destroy the #appLoadingIndicator element
         Ext.fly('appLoadingIndicator').destroy();
-
         // Initialize the main view
         Ext.Viewport.add(Ext.create('RedmineApp.view.RedmineTabPanel'));
-
     },
     projectIdentifier: null,
     redmine_url: '',
@@ -42,13 +46,10 @@ Ext.application({
             redmine_access_key: this.redmine_access_key
         });
         var configStore = Ext.getStore('RedmineConfigs');
-
         configStore.load();
         configStore.removeAll();
-
         configStore.add(newRecord);
         configStore.sync();
-
     },
     setRedmineUrl: function(redmine_url) {
         this.redmine_url = redmine_url.replace(/\/$/, '');
@@ -98,7 +99,6 @@ Ext.application({
                 sortProperty: 'updated_on',
                 direction: 'DESC'
             }
-
         });
         newStore.load();
         return newStore;
@@ -121,16 +121,10 @@ Ext.application({
                 },
                 sortProperty: 'name'
             }
-
         });
         newStore.load();
         return newStore;
     }
-
-
-
-
-
 });
 
 

@@ -4,8 +4,7 @@ Ext.define('RedmineApp.view.RedmineTabPanel', {
     requires: [
         'RedmineApp.view.RedmineIssuesNavigator',
         'RedmineApp.view.RedmineChartsNavigator',
-        'RedmineApp.view.UserInputView',
-        Ext.Img
+        'RedmineApp.view.UserInputView'       
     ],
     config: {
         tabBarPosition: 'bottom',
