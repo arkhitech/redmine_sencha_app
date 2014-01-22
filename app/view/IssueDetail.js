@@ -15,6 +15,35 @@ Ext.define('RedmineApp.view.IssueDetail', {
         listeners: {
             painted: function(element, options) {
                 var items = this.config.items;
+                var attachments = this.getRecord().data.attachments;
+                this.add({
+                    xtype: 'textfield',
+                    label: 'ATTACHMENTS',
+                    readOnly: true
+                });
+                for (var i = 0; attachments !== undefined && i < attachments.length; i++) {
+                    new_items = [
+                        {
+                            xtype: 'textfield',
+                            label: 'Attachment URL:',
+                            value: attachments[i].content_url,
+                            readOnly: true
+                        },
+                        {
+                            xtype: 'textfield',
+                            label: 'Attachment Creation Date:',
+                            value: attachments[i].created_on,
+                            readOnly: true
+                        },
+                        {
+                            xtype: 'textareafield',
+                            label: 'File Name:',
+                            value: attachments[i].filename,
+                            readOnly: true
+                        }
+                    ],
+                            this.add(new_items);
+                }
                 var relations = this.getRecord().data.relations;
                 this.add({
                     xtype: 'textfield',
@@ -183,13 +212,13 @@ Ext.define('RedmineApp.view.IssueDetail', {
                 readOnly: true
 
             },
-            {
-                xtype: 'textfield',
-                label: 'Attachments',
-                name: 'attachments',
-                readOnly: true
-
-            },
+//            {
+//                xtype: 'textfield',
+//                label: 'Attachments',
+//                name: 'attachments',
+//                readOnly: true
+//
+//            },
             {
                 xtype: 'textfield',
                 label: 'Changesets',
