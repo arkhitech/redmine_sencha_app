@@ -8,11 +8,11 @@ Ext.define('RedmineApp.view.UserInputView', {
         'Ext.field.Url',
         'Ext.Img'
     ],
-    config: {       
-        height: '100%',        
+    config: {
+        height: '100%',
         items: [{
                 xtype: 'fieldset',
-               height: '100%',        
+                height: '100%',
                 items: [
                     {
                         xtype: 'urlfield',
@@ -32,7 +32,9 @@ Ext.define('RedmineApp.view.UserInputView', {
                     },
                     {
                         xtype: 'button',
-                        align: 'center',
+                        layout: {
+                            pack: 'center'
+                        },
                         ui: 'confirm',
                         text: 'Save Permanently',
                         handler: function(btn, evt) {

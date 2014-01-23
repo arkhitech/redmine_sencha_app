@@ -1,5 +1,6 @@
 Ext.define('RedmineApp.model.Issue', {
     extend: 'Ext.data.Model',
+    requires: ['RedmineApp.proxy.DynamicRest'],
     config: {
         fields: [
             {name: 'id', type: 'auto', mapping: 'id'},
@@ -26,11 +27,20 @@ Ext.define('RedmineApp.model.Issue', {
             {name: 'changesets', type: 'auto', mapping: 'changesets'},
             {name: 'journals', type: 'auto', mapping: 'journals'},
             {name: 'story_points', type: 'auto', mapping: 'story_points'}
-        ]
-
-
+        ],
+        proxy: {
+            type: 'dynamicrest',
+            resourcePath: '/issues/',
+            format: 'json',
+            reader: {
+                rootProperty: 'issue',
+                type: 'json'
+            },
+            extraParams: {
+                include: 'relations,changesets,journals,attachments'
+            }
+        }
     }
-
 });
 
 
