@@ -757,6 +757,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "RedmineApp.model.Issue": [],
   "RedmineApp.model.Project": [],
   "RedmineApp.model.RedmineConfig": [],
+  "RedmineApp.proxy.DynamicRest": [],
   "RedmineApp.store.RedmineConfigs": [],
   "RedmineApp.view.IssueDetail": [],
   "RedmineApp.view.ProjDetail": [],
@@ -1722,6 +1723,9 @@ Ext.ClassManager.addNameAliasMappings({
   "RedmineApp.model.Issue": [],
   "RedmineApp.model.Project": [],
   "RedmineApp.model.RedmineConfig": [],
+  "RedmineApp.proxy.DynamicRest": [
+    "proxy.dynamicrest"
+  ],
   "RedmineApp.store.RedmineConfigs": [],
   "RedmineApp.view.IssueDetail": [
     "widget.ticketdetail"

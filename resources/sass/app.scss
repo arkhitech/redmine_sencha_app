@@ -1,6 +1,7 @@
 // The following two lines import the default Sencha Touch theme. If you are building
 // a new theme, remove them and the add your own CSS on top of the base CSS (which
 // is already included in your app.json file).
+
 $base-color: #27ae60;
 $base-gradient: 'matte';
 $alert-color: #2ecc71;
@@ -12,6 +13,9 @@ $button-radius: '0px';
 
 @import 'sencha-touch/default';
 @import 'sencha-touch/default/all';
+
+
+
 
 // Custom code goes here..
 
