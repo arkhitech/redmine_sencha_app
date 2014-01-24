@@ -11,7 +11,7 @@ Ext.define('RedmineApp.view.IssueDetail', {
         'Ext.MessageBox'
     ],
     config: {
-        id: 'issueDetailsPanel',
+        id: 'issue-details-panel',
         title: 'Issue Details',
         fullscreen: true,
         layout: 'vbox',
@@ -84,12 +84,24 @@ Ext.define('RedmineApp.view.IssueDetail', {
                         {
                             xtype: 'textareafield',
                             label: 'Notes:',
+                            name: 'journal_note',
                             value: journals[i].notes,
                             readOnly: true
                         }
                     ],
                             this.add(new_items);
                 }
+                //create an empty editable journal note entry
+                new_items = [
+                    {
+                        xtype: 'textareafield',
+                        id: 'newEmptyNode',
+                        label: 'Notes:',
+                        name: 'journal_note_new',
+                        readOnly: true
+                    }
+                ],
+                        this.add(new_items);
             }
         },
         items: [
@@ -119,6 +131,7 @@ Ext.define('RedmineApp.view.IssueDetail', {
                             else {
                                 btn.hasDisabled = true;
                                 Ext.getCmp('issue-estimated-hours').setReadOnly(false);
+                                Ext.getCmp('newEmptyNode').setReadOnly(false);
                                 Ext.getCmp('savebutton').show();
                                 btn.setText('Disable Editing');
                                 btn.setUi('decline');
@@ -135,14 +148,16 @@ Ext.define('RedmineApp.view.IssueDetail', {
                         scope: this,
                         hidden: true,
                         handler: function(btn) {
-                            var form = Ext.getCmp('issueDetailsPanel');
-                            console.log(form);
+                            var form = Ext.getCmp('issue-details-panel');
                             var issue = form.getRecord();
-                            issue.estimated_hours = form.getValues().estimated_hours;
+                            issue.data.estimated_hours = form.getValues().estimated_hours;
+                            var journal_note = form.getValues().journal_note_new;
+                            console.log(issue.data);
+                            issue.data.journals += {'notes': journal_note};
                             issue.save();
-                            //    console.log("Estimated Hours: "+ this.getRecord().data.estimated_hours)
                             Ext.getCmp('issue-estimated-hours').setReadOnly(true);
-                            Ext.Msg.alert('Save Successful', 'The estimated hours have been updated to ' + newestimatedhours);
+                            Ext.getCmp('newEmptyNode').setReadOnly(true);
+                            Ext.Msg.alert('Save Successful', 'The estimated hours have been updated to ' + form.getValues().estimated_hours);
                         }
                     }
                 ]

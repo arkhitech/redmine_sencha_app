@@ -12,7 +12,7 @@
 Ext.Loader.setConfig({disableCaching: false});
 Ext.application({
     name: 'RedmineApp',
-    views: ['IssueDetail', 'ProjDetail', 'RedmineIssuesNavigator', 'RedmineTabPanel', 'RedmineChart', 'RedmineChartsNavigator','UserInputView','RedmineIDChart','RedminePriorityChart','RedmineTrackerChart','RedmineStatusChart'],
+    views: ['IssueDetail', 'ProjDetail', 'RedmineIssuesNavigator', 'RedmineTabPanel', 'RedmineChart', 'RedmineChartsNavigator', 'UserInputView', 'RedmineIDChart', 'RedminePriorityChart', 'RedmineTrackerChart', 'RedmineStatusChart'],
     models: ['RedmineConfig', 'Issue', 'Project'],
     stores: ['RedmineConfigs'],
     controllers: ['Projects', 'Issues', 'ChartsMenu'],
@@ -22,6 +22,7 @@ Ext.application({
         114: "resources/icons/114-114.png",
         144: "resources/icons/144-144.png"
     },
+    glossOnIcon: false,
     launch: function() {
         // Destroy the #appLoadingIndicator element
         Ext.fly('appLoadingIndicator').destroy();

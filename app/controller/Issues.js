@@ -4,7 +4,7 @@ Ext.define('RedmineApp.controller.Issues', {
         'Ext.data.proxy.LocalStorage'
     ],
     config: {
-        views: ['ProjDetail', 'RedmineIssuesNavigator'],
+        views: ['ProjDetail', 'RedmineIssuesNavigator','IssueDetail'],
         refs: {
             list: '#ticketlist'
         },
@@ -34,27 +34,7 @@ Ext.define('RedmineApp.controller.Issues', {
                 list.up('redmine-issues-navigator').push(issue_details_view);
                 RedmineApp.controller.Issues.isClickInProcess = false;                
             }
-        });
-        /*
-        var store = Ext.create('Ext.data.Store', {
-            model: 'RedmineApp.model.Issue',
-            proxy: {
-                type: 'ajax',
-                url: RedmineApp.app.getRedmineUrl() + '/issues/' + record.data.id + '.json?key=' + RedmineApp.app.getRedmineAccessKey() + '&include=relations,changesets,journals,attachments',
-                reader: {
-                    rootProperty: 'issue',
-                    type: 'json'
-                }
-            }
-        });
-        store.addListener('load', function(store, records, successful, operation, eOpts) {
-            var issue_details_view = Ext.create('RedmineApp.view.IssueDetail');
-            issue_details_view.setRecord(records[0]);          
-            list.up('redmine-issues-navigator').push(issue_details_view);
-            RedmineApp.controller.Issues.isClickInProcess = false;
-        });
-        store.load();
-        */
+        });      
     }
 });
 

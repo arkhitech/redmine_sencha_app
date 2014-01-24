@@ -1,6 +1,7 @@
 Ext.define('RedmineApp.model.Issue', {
     extend: 'Ext.data.Model',
-    requires: ['RedmineApp.proxy.DynamicRest'],
+    requires: ['RedmineApp.proxy.DynamicRest',
+        'Ext.data.writer.Xml'],
     config: {
         fields: [
             {name: 'id', type: 'auto', mapping: 'id'},
@@ -19,14 +20,14 @@ Ext.define('RedmineApp.model.Issue', {
             {name: 'done_ratio', type: 'auto', mapping: 'done_ratio'},
             {name: 'estimated_hours', type: 'auto', mapping: 'estimated_hours'},
             {name: 'spent_hours', type: 'auto', mapping: 'spent_hours'},
-            {name: 'custom_fields', type: 'auto', mapping: 'custom_fields'},
-            {name: 'relations', type: 'auto', mapping: 'relations'},
-            {name: 'created_on', type: 'auto', mapping: 'created_on'},
+                        {name: 'created_on', type: 'auto', mapping: 'created_on'},
             {name: 'updated_on', type: 'auto', mapping: 'updated_on'},
-            {name: 'attachments', type: 'auto', mapping: 'attachments'},
-            {name: 'changesets', type: 'auto', mapping: 'changesets'},
-            {name: 'journals', type: 'auto', mapping: 'journals'},
-            {name: 'story_points', type: 'auto', mapping: 'story_points'}
+            {name: 'story_points', type: 'auto', mapping: 'story_points'},
+            {name: 'custom_fields', type: 'auto', mapping: 'custom_fields', persist: false},
+            {name: 'relations', type: 'auto', mapping: 'relations', persist: false},
+            {name: 'attachments', type: 'auto', mapping: 'attachments', persist: false},
+            {name: 'changesets', type: 'auto', mapping: 'changesets', persist: false},
+            {name: 'journals', type: 'auto', mapping: 'journals', persist: false}
         ],
         proxy: {
             type: 'dynamicrest',
@@ -35,6 +36,14 @@ Ext.define('RedmineApp.model.Issue', {
             reader: {
                 rootProperty: 'issue',
                 type: 'json'
+            },
+            writer: {
+                documentRoot: undefined,
+                defaultDocumentRoot: undefined,
+                record: 'issue',
+                rootProperty: 'issue',
+                type: 'xml'
+                
             },
             extraParams: {
                 include: 'relations,changesets,journals,attachments'
