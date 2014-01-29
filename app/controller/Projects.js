@@ -1,24 +1,24 @@
 Ext.define('RedmineApp.controller.Projects', {
     extend: 'Ext.app.Controller',
-    requires: [
-        'Ext.data.proxy.LocalStorage'
-    ],
     config: {
         views: ['RedmineIssuesNavigator'],
         refs: {
-            list: '#projectnames'
+            projectList: '#projectlist'
         },
         control: {
-            list: {
-                disclose: 'showProjectDetails'
+            projectList: {
+                disclose: 'showProjectIssues'
             }
         }
     },
-    showProjectDetails: function(list, record) {
-        var project_details_view = Ext.create('RedmineApp.view.ProjDetail');
-        list.up('redmine-issues-navigator').push(project_details_view);                
-        var newstore = RedmineApp.app.createIssuesStore(record.data.identifier);
-        project_details_view.getAt(0).setStore(newstore);
+    showProjectIssues: function(list, project) {
+       RedmineApp.app.loadProjectSettings(project.data.id);
+        
+        var project_issues_view = Ext.create('RedmineApp.view.ProjectIssues');
+        list.up('redmine-issues-navigator').push(project_issues_view);                
+        var issues_store = RedmineApp.app.createIssuesStore(project.data.id);
+                
+        project_issues_view.getAt(0).setStore(issues_store);
 
     }
 });

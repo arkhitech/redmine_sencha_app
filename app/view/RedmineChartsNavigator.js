@@ -15,7 +15,8 @@ Ext.define('RedmineApp.view.RedmineChartsNavigator', {
             {
                 xtype: 'list',
                 title: 'Select a Project for Analytics',
-                id: 'projectlist',
+                id: 'chartsprojectlist',
+                store: 'Projects',
                 itemTpl: [
                     '<tpl for=".">',
                     '<p>{name}</p>',
@@ -23,12 +24,7 @@ Ext.define('RedmineApp.view.RedmineChartsNavigator', {
                 ],
                 grouped: true,
                 indexBar: true,
-                onItemDisclosure: true,
-                listeners: {
-                    painted: function(element, options) {
-                        this.setStore(RedmineApp.app.createProjectsStore());
-                    }
-                }
+                onItemDisclosure: true
             }
         ]
     }

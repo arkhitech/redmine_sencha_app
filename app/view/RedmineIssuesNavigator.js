@@ -3,16 +3,31 @@ Ext.define('RedmineApp.view.RedmineIssuesNavigator', {
     xtype: 'redmine-issues-navigator',
     requires: [
         'Ext.TitleBar',
-        'Ext.dataview.List'
+        'Ext.dataview.List',
+        'Ext.Button'
     ],
     config: {
-        id: 'redminenavigatorview',
+        id: 'redmine-issues-navigator',
         flex: 1,
+        navigationBar: {
+            ui: 'sencha',
+            items: [
+                {
+                    xtype: 'button',
+                    ui: 'action',
+                    id: 'editButton',
+                    text: 'Edit',
+                    align: 'right',
+                    hidden: true
+                }
+            ]
+        },
         items: [
             {
                 xtype: 'list',
                 title: 'Select a Project for Details',
-                id: 'projectnames',
+                id: 'projectlist',
+                store: 'Projects',
                 itemTpl: [
                     '<tpl for=".">',
                     '<p>{name}</p>',
@@ -21,13 +36,8 @@ Ext.define('RedmineApp.view.RedmineIssuesNavigator', {
                 flex: 1,
                 grouped: true,
                 indexBar: true,
-                onItemDisclosure: true,
-                listeners: {
-                    painted: function(element, options) {
-                        this.setStore(RedmineApp.app.createProjectsStore());
-                    }
-                }
-            }            
+                onItemDisclosure: true
+            }
         ]
     }
 });

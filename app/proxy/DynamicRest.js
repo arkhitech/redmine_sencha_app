@@ -3,7 +3,7 @@ Ext.define('RedmineApp.proxy.DynamicRest', {
     alias: 'proxy.dynamicrest',
     buildUrl: function(request) {
         var me = this;
-        var url = RedmineApp.app.getRedmineUrl() + me.getResourcePath();
+        var url = RedmineApp.app.getRedmineUrl() + RedmineApp.app.getRedmineBasePath() + me.getResourcePath();
         request.setUrl(url);
         return me.callParent([request]);
     },

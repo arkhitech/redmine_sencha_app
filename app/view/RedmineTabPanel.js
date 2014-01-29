@@ -4,10 +4,12 @@ Ext.define('RedmineApp.view.RedmineTabPanel', {
     requires: [
         'RedmineApp.view.RedmineIssuesNavigator',
         'RedmineApp.view.RedmineChartsNavigator',
-        'RedmineApp.view.UserInputView'       
+        'RedmineApp.view.UserInputView',
+        'Ext.Button'
     ],
     config: {
         tabBarPosition: 'bottom',
+        id: 'redmine-tab-panel',
         items: [
             {
                 iconCls: 'action',
@@ -30,7 +32,17 @@ Ext.define('RedmineApp.view.RedmineTabPanel', {
                 badgeText: 'New',
                 flex: 1,
                 xtype: 'redmine-charts-navigator'
-            }           
+            },
+            {
+                xtype: 'button',
+                flex: 1,
+                title: 'Refresh',
+                iconMask: true,
+                iconCls: 'refresh',
+                handler: function() {
+                    window.location.reload();
+                }
+            }
         ]
     }
 });

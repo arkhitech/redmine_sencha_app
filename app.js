@@ -12,9 +12,9 @@
 Ext.Loader.setConfig({disableCaching: false});
 Ext.application({
     name: 'RedmineApp',
-    views: ['IssueDetail', 'ProjDetail', 'RedmineIssuesNavigator', 'RedmineTabPanel', 'RedmineChart', 'RedmineChartsNavigator', 'UserInputView', 'RedmineIDChart', 'RedminePriorityChart', 'RedmineTrackerChart', 'RedmineStatusChart'],
-    models: ['RedmineConfig', 'Issue', 'Project'],
-    stores: ['RedmineConfigs'],
+    views: ['Issue', 'ProjectIssues', 'RedmineIssuesNavigator', 'RedmineTabPanel', 'RedmineChart', 'RedmineChartsNavigator', 'UserInputView', 'RedmineIDChart', 'RedminePriorityChart', 'RedmineTrackerChart', 'RedmineStatusChart'],
+    models: ['RedmineConfig', 'Issue', 'IssueCategory', 'IssuePriority', 'Project', 'ProjectMembership', 'Tracker', 'User'],
+    stores: ['RedmineConfigs', 'Projects', 'Trackers', 'IssuePriorities'],
     controllers: ['Projects', 'Issues', 'ChartsMenu'],
     icon: {
         57: "resources/icons/57-57.png",
@@ -62,6 +62,13 @@ Ext.application({
         }
         return this.redmine_url;
     },
+    redmine_base_path: '',
+    setRedmineBasePath: function(redmine_base_path) {
+        this.redmine_base_path = redmine_base_path;
+    },
+    getRedmineBasePath: function() {
+        return this.redmine_base_path;
+    },
     setRedmineAccessKey: function(redmine_access_key) {
         this.redmine_access_key = redmine_access_key;
         this.saveRedmineConfig();
@@ -78,16 +85,38 @@ Ext.application({
     getCurrentProjectIdentifier: function() {
         return this.projectIdentifier;
     },
+    getCurrentProjectTrackers: function() {
+        return this.projectTrackersStore;
+    },
+    setCurrentProjectTrackers: function(projectTrackersStore) {
+        this.projectTrackersStore = projectTrackersStore;
+    },
     getCurrentIssuesStore: function() {
         return this.createIssuesStore(this.getCurrentProjectIdentifier());
+    },
+    setCurrentProjectIssueCategories: function(issueCategoriesStore) {
+        this.issueCategoriesStore = issueCategoriesStore;
+    },
+    loadProjectSettings: function(project_id) {
+        var Project = Ext.ModelManager.getModel('RedmineApp.model.Project');
+        Project.load(project_id, {
+            success: function(project) {
+                //Ext.getCmp('issue-tracker').setOptions(project.raw.trackers);
+                RedmineApp.app.setCurrentProjectTrackers(project.trackersStore);
+                RedmineApp.app.setCurrentProjectIssueCategories(project.issueCategoriesStore);
+
+            }
+        });
+
     },
     createIssuesStore: function(projectIdentifier) {
         var newStore = Ext.create('Ext.data.Store', {
             model: 'RedmineApp.model.Issue',
             autoLoad: true,
             proxy: {
-                type: 'ajax',
-                url: this.getRedmineUrl() + '/projects/' + projectIdentifier + '/issues.json?key=9174453938f1629beac1e7431a6a70bcc28b17aa&include=relations,changesets,journals,attachments',
+                type: 'dynamicrest',
+                resourcePath: '/projects/' + projectIdentifier + '/issues',
+                format: 'json',
                 reader: {
                     rootProperty: 'issues',
                     type: 'json'
@@ -101,31 +130,46 @@ Ext.application({
                 direction: 'DESC'
             }
         });
-        newStore.load();
-        return newStore;
-    },
-    createProjectsStore: function() {
-        var newStore = Ext.create('Ext.data.Store', {
-            model: 'RedmineApp.model.Project',
-            autoLoad: true,
-            proxy: {
-                type: 'ajax',
-                url: this.getRedmineUrl() + '/projects.json?key=9174453938f1629beac1e7431a6a70bcc28b17aa&include=relations,changesets,journals,attachments',
-                reader: {
-                    rootProperty: 'projects',
-                    type: 'json'
-                }
-            },
-            grouper: {
-                groupFn: function(record) {
-                    return record.get('name').substr(0, 1);
-                },
-                sortProperty: 'name'
-            }
-        });
-        newStore.load();
+        //newStore.load();
         return newStore;
     }
+//    createTrackersStore: function() {
+//        var newTrackerStore = Ext.create('Ext.data.Store', {
+//            extend: 'Ext.data.Store',
+//            model: 'RedmineApp.model.Tracker',
+//            autoLoad: true,
+//            proxy: {
+//                type: 'dynamicrest',
+//                resourcePath: '/trackers',
+//                format: 'json',
+//                reader: {
+//                    rootProperty: 'trackers',
+//                    type: 'json'
+//                }
+//            }
+//
+//        }
+//        );
+//        return newTrackerStore;
+//    },
+//    createPrioritiesStore: function() {
+//        var newPriorityStore = Ext.create('Ext.data.Store', {
+//            extend: 'Ext.data.Store',
+//            model: 'RedmineApp.model.IssuePriority',
+//            autoLoad: true,
+//            proxy: {
+//                type: 'dynamicrest',
+//                resourcePath: '/enumerations/issue_priorities',
+//                format: 'json',
+//                reader: {
+//                    rootProperty: 'issue_priorities',
+//                    type: 'json'
+//                }
+//            }
+//        }
+//        );
+//        return newPriorityStore;
+//    }
 });
 
 
