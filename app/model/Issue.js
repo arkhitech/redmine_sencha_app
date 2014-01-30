@@ -18,7 +18,7 @@ Ext.define('RedmineApp.model.Issue', {
             {name: 'assigned_to_id'},
             {name: 'assigned_to', mapping: 'assigned_to.name', persist: false},
             {name: 'category_id'},
-            {name: 'category', mapping: 'category.name', persist: false},
+            {name: 'category_name', mapping: 'category.name', persist: false},
             {name: 'fixed_version', mapping: 'fixed_version.name', persist: false},
             {name: 'subject'},
             {name: 'description'},

@@ -1,14 +1,17 @@
-Ext.define('RedmineApp.store.Trackers', {
+Ext.define('RedmineApp.store.Users', {
     extend: 'Ext.data.Store',
     requires: ['RedmineApp.proxy.DynamicRest'],
     config: {
-        model: 'RedmineApp.model.Tracker',
+        model: 'RedmineApp.model.User',
         proxy: {
             type: 'dynamicrest',
-            resourcePath: '/trackers',
+            resourcePath: '/users',
             format: 'json',
+            extraParams: {
+                include: 'memberships,groups'
+            },
             reader: {
-                rootProperty: 'trackers',
+                rootProperty: 'users',
                 type: 'json'
             }
         },
@@ -16,4 +19,3 @@ Ext.define('RedmineApp.store.Trackers', {
     }
 }
 );
-

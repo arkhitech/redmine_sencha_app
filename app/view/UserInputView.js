@@ -44,13 +44,13 @@ Ext.define('RedmineApp.view.UserInputView', {
                             RedmineApp.app.setRedmineAccessKey(accesskey);
                             Ext.getStore('Projects').load();
                             Ext.Msg.alert('Save Successful', 'Your credentials have been saved and will remain saved until overwritten.');
-
                         }
                     }
                 ]
             },
             {
                 xtype: 'titlebar',
+                ui: 'Sencha',
                 docked: 'top',
                 title: 'Please Enter Your Details'
             }

@@ -13,8 +13,8 @@ Ext.Loader.setConfig({disableCaching: false});
 Ext.application({
     name: 'RedmineApp',
     views: ['Issue', 'ProjectIssues', 'RedmineIssuesNavigator', 'RedmineTabPanel', 'RedmineChart', 'RedmineChartsNavigator', 'UserInputView', 'RedmineIDChart', 'RedminePriorityChart', 'RedmineTrackerChart', 'RedmineStatusChart'],
-    models: ['RedmineConfig', 'Issue', 'IssueCategory', 'IssuePriority', 'Project', 'ProjectMembership', 'Tracker', 'User'],
-    stores: ['RedmineConfigs', 'Projects', 'Trackers', 'IssuePriorities'],
+    models: ['RedmineConfig', 'Issue', 'IssueCategory', 'IssuePriority', 'Project', 'ProjectMembership', 'Tracker', 'User', 'IssueStatus'],
+    stores: ['RedmineConfigs', 'Projects', 'IssuePriorities', 'IssueStatuses'],
     controllers: ['Projects', 'Issues', 'ChartsMenu'],
     icon: {
         57: "resources/icons/57-57.png",
@@ -94,6 +94,9 @@ Ext.application({
     getCurrentIssuesStore: function() {
         return this.createIssuesStore(this.getCurrentProjectIdentifier());
     },
+    getCurrentProjectIssueCategories: function() {
+        return this.issueCategoriesStore;
+    },
     setCurrentProjectIssueCategories: function(issueCategoriesStore) {
         this.issueCategoriesStore = issueCategoriesStore;
     },
@@ -101,13 +104,10 @@ Ext.application({
         var Project = Ext.ModelManager.getModel('RedmineApp.model.Project');
         Project.load(project_id, {
             success: function(project) {
-                //Ext.getCmp('issue-tracker').setOptions(project.raw.trackers);
                 RedmineApp.app.setCurrentProjectTrackers(project.trackersStore);
                 RedmineApp.app.setCurrentProjectIssueCategories(project.issueCategoriesStore);
-
             }
         });
-
     },
     createIssuesStore: function(projectIdentifier) {
         var newStore = Ext.create('Ext.data.Store', {
@@ -130,46 +130,8 @@ Ext.application({
                 direction: 'DESC'
             }
         });
-        //newStore.load();
         return newStore;
     }
-//    createTrackersStore: function() {
-//        var newTrackerStore = Ext.create('Ext.data.Store', {
-//            extend: 'Ext.data.Store',
-//            model: 'RedmineApp.model.Tracker',
-//            autoLoad: true,
-//            proxy: {
-//                type: 'dynamicrest',
-//                resourcePath: '/trackers',
-//                format: 'json',
-//                reader: {
-//                    rootProperty: 'trackers',
-//                    type: 'json'
-//                }
-//            }
-//
-//        }
-//        );
-//        return newTrackerStore;
-//    },
-//    createPrioritiesStore: function() {
-//        var newPriorityStore = Ext.create('Ext.data.Store', {
-//            extend: 'Ext.data.Store',
-//            model: 'RedmineApp.model.IssuePriority',
-//            autoLoad: true,
-//            proxy: {
-//                type: 'dynamicrest',
-//                resourcePath: '/enumerations/issue_priorities',
-//                format: 'json',
-//                reader: {
-//                    rootProperty: 'issue_priorities',
-//                    type: 'json'
-//                }
-//            }
-//        }
-//        );
-//        return newPriorityStore;
-//    }
 });
 
 

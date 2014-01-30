@@ -1,5 +1,5 @@
 Ext.define('RedmineApp.proxy.DynamicRest', {
-    extend: 'Ext.data.proxy.Rest',   
+    extend: 'Ext.data.proxy.Rest',
     alias: 'proxy.dynamicrest',
     buildUrl: function(request) {
         var me = this;

@@ -12,9 +12,8 @@ Ext.define('RedmineApp.model.Project', {
             {name: 'updated_on'}
         ],
         hasMany: [
-            {model: 'RedmineApp.model.Issue', name: 'issues'},
             {model: 'RedmineApp.model.Tracker', name: 'trackers'},
-            {model: 'RedmineApp.model.IssueCategory', name: 'issue_categories'}
+            {model: 'RedmineApp.model.IssueCategory', name: 'issueCategories', associationKey: 'issue_categories'}
         ],
         proxy: {
             type: 'dynamicrest',

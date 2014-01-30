@@ -32,16 +32,6 @@ Ext.define('RedmineApp.view.RedmineTabPanel', {
                 badgeText: 'New',
                 flex: 1,
                 xtype: 'redmine-charts-navigator'
-            },
-            {
-                xtype: 'button',
-                flex: 1,
-                title: 'Refresh',
-                iconMask: true,
-                iconCls: 'refresh',
-                handler: function() {
-                    window.location.reload();
-                }
             }
         ]
     }

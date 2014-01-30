@@ -10,33 +10,33 @@ Ext.define('RedmineApp.view.Issue', {
         'Ext.form.FieldSet',
         'Ext.MessageBox',
         'Ext.field.Select',
-        'RedmineApp.model.Project'
+        'Ext.field.Toggle'
     ],
     config: {
         id: 'issue-panel',
         title: 'Issue Details',
         fullscreen: true,
         layout: 'vbox',
-        listeners: {
-//            doubletap: function(e) {
-//                Ext.getCmp('issue-estimated-hours').setReadOnly(false);
-//                Ext.getCmp('issue-estimated-hours').setStyle({backgroundColor: '#BA661B'});
-//                Ext.getCmp('issue-start-date').setReadOnly(false);
-//                Ext.getCmp('issue-start-date').setStyle({backgroundColor: '#BA661B'});
-//                Ext.getCmp('issue-due-date').setReadOnly(false);
-//                Ext.getCmp('issue-due-date').setStyle({backgroundColor: '#BA661B'});
-//                Ext.getCmp('newEmptyNode').setReadOnly(false);
-//                Ext.getCmp('newEmptyNode').setStyle({backgroundColor: '#BA661B'});
-//                Ext.getCmp('issue-description').setReadOnly(false);
-//                Ext.getCmp('issue-description').setStyle({backgroundColor: '#BA661B'});
-//                Ext.getCmp('issue-priority').setReadOnly(false);
-//                Ext.getCmp('issue-priority').setStyle({backgroundColor: '#BA661B'});
-//                Ext.getCmp('issue-tracker').setReadOnly(false);
-//                Ext.getCmp('issue-tracker').setStyle({backgroundColor: '#BA661B'});
-//                Ext.getCmp('savebutton').show();
-//            }
-        },
         items: [
+//            {
+//                xtype: 'container',
+//                layout: {
+//                    type: 'hbox',
+//                    pack: 'center'
+//                },
+//                items: [
+//                    {
+//                        xtype: 'button',
+//                        id: 'savebutton',
+//                        style: 'margin: .5em',
+//                        ui: 'confirm',
+//                        width: '25%',
+//                        text: 'Save',
+//                        scope: this,
+//                        hidden: true                       
+//                    }
+//                ]
+//            },
             {
                 xtype: 'fieldset',
                 id: 'redmine-fieldset',
@@ -44,6 +44,7 @@ Ext.define('RedmineApp.view.Issue', {
                     {
                         xtype: 'textfield',
                         label: 'Issue ID',
+                        id: 'issue-id',
                         name: 'id',
                         readOnly: true
 
@@ -52,6 +53,7 @@ Ext.define('RedmineApp.view.Issue', {
                         xtype: 'textfield',
                         label: 'Project',
                         name: 'project_name',
+                        id: 'issue-project',
                         readOnly: true
                     },
                     {
@@ -59,15 +61,18 @@ Ext.define('RedmineApp.view.Issue', {
                         label: 'Tracker',
                         id: 'issue-tracker',
                         name: 'tracker_name',
-                        //store: 'Trackers',
                         valueField: 'id',
                         displayField: 'name',
-                        //readOnly: true
+                        readOnly: true
                     },
                     {
-                        xtype: 'textfield',
+                        xtype: 'selectfield',
                         label: 'Issue Status',
+                        store: 'IssueStatuses',
+                        id: 'issue-status',
                         name: 'status_name',
+                        valueField: 'id',
+                        displayField: 'name',
                         readOnly: true
                     },
                     {
@@ -75,10 +80,11 @@ Ext.define('RedmineApp.view.Issue', {
                         label: 'Priority',
                         id: 'issue-priority',
                         name: 'priority_name',
-                        readOnly: true,
                         store: 'IssuePriorities',
                         valueField: 'id',
-                        displayField: 'name'
+                        displayField: 'name',
+                        readOnly: true
+
                     },
                     {
                         xtype: 'textfield',
@@ -95,16 +101,19 @@ Ext.define('RedmineApp.view.Issue', {
 
                     },
                     {
-                        xtype: 'textfield',
+                        xtype: 'selectfield',
+                        id: 'issue-category',
                         label: 'Category',
-                        name: 'category',
+                        name: 'category_name',
+                        valueField: 'id',
+                        displayField: 'name',
                         readOnly: true
-
                     },
                     {
                         xtype: 'textfield',
                         label: 'Fixed Version',
                         name: 'fixed_version',
+                        id: 'issue-fixed-version',
                         readOnly: true
 
                     },
@@ -112,6 +121,7 @@ Ext.define('RedmineApp.view.Issue', {
                         xtype: 'textfield',
                         label: 'Subject',
                         name: 'subject',
+                        id: 'issue-subject',
                         readOnly: true
 
                     },
@@ -157,6 +167,7 @@ Ext.define('RedmineApp.view.Issue', {
                         xtype: 'textfield',
                         label: 'Spent Hours',
                         name: 'spent_hours',
+                        id: 'issue-spent-hours',
                         readOnly: true
 
                     },
@@ -164,6 +175,7 @@ Ext.define('RedmineApp.view.Issue', {
                         xtype: 'textfield',
                         label: 'Created On',
                         name: 'created_on',
+                        id: 'issue-created-on',
                         readOnly: true
 
                     },
@@ -171,6 +183,7 @@ Ext.define('RedmineApp.view.Issue', {
                         xtype: 'textfield',
                         label: 'Updated On',
                         name: 'updated_on',
+                        id: 'issue-updated-on',
                         readOnly: true
 
                     },
@@ -178,6 +191,7 @@ Ext.define('RedmineApp.view.Issue', {
                         xtype: 'textfield',
                         label: 'Changesets',
                         name: 'changesets',
+                        id: 'issue-changesets',
                         readOnly: true
 
                     },
@@ -185,56 +199,38 @@ Ext.define('RedmineApp.view.Issue', {
                         xtype: 'textfield',
                         label: 'Story Points',
                         name: 'story_points',
+                        id: 'issue-story-points',
                         readOnly: true
                     }
                 ]
             },
             {
-                xtype: 'container',
+                xtype: 'togglefield',
+                name: 'historytoggle',
                 layout: {
-                    type: 'hbox',
                     pack: 'center'
                 },
-                items: [
-                    {
-                        xtype: 'button',
-                        style: 'margin: .5em',
-                        ui: 'confirm',
-                        width: '25%',
-                        text: 'Enable Editing',
-                        scope: this,
-                        hasDisabled: false,
-                        id: 'btn-enable-editing'
-                    },
-                    {
-                        xtype: 'button',
-                        id: 'savebutton',
-                        style: 'margin: .5em',
-                        ui: 'confirm',
-                        width: '25%',
-                        text: 'Save',
-                        scope: this,
-                        hidden: true,
-                        handler: function(btn) {                            
-                            var form = Ext.getCmp('issue-panel');
-                            var issue = form.getRecord();
-                            issue.set('estimated_hours', form.getValues().estimated_hours);
-                            issue.set('description', form.getValues().description);
-                            issue.set('due_date', form.getValues().due_date);
-                            issue.set('start_date', form.getValues().start_date);
-                            issue.set('notes', form.getValues().notes);
-                            issue.save();
-                            Ext.getCmp('issue-estimated-hours').setReadOnly(true);
-                            Ext.getCmp('newEmptyNode').setReadOnly(true);
-                            Ext.getCmp('issue-description').setReadOnly(true);
-                            Ext.getCmp('issue-start-date').setReadOnly(true);
-                            Ext.getCmp('issue-due-date').setReadOnly(true);
-                            Ext.Msg.alert('Save Successful', 'The values have been updated');
+                label: 'Show Issue History',
+                listeners: {
+                    change: function(slider, thumb, newValue, oldValue) {
+                        var attachments = Ext.getCmp('issue-attachments');
+                        var relations = Ext.getCmp('issue-relations');
+                        var journals = Ext.getCmp('issue-journals');
+
+                        if (oldValue === 0 && newValue === 1) {
+                            attachments.show();
+                            relations.show();
+                            journals.show();
+                        }
+                        else if (oldValue === 1 && newValue === 0)
+                        {
+                            attachments.hide();
+                            relations.hide();
+                            journals.hide();
                         }
                     }
-                ]
+                }
             }
-
         ]
     }
 }
