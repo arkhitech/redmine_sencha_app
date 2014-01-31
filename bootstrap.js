@@ -757,6 +757,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "RedmineApp.model.Issue": [],
   "RedmineApp.model.IssueCategory": [],
   "RedmineApp.model.IssuePriority": [],
+  "RedmineApp.model.IssueStatus": [],
   "RedmineApp.model.Project": [],
   "RedmineApp.model.ProjectMembership": [],
   "RedmineApp.model.RedmineConfig": [],
@@ -764,10 +765,12 @@ Ext.ClassManager.addNameAlternateMappings({
   "RedmineApp.model.User": [],
   "RedmineApp.proxy.DynamicRest": [],
   "RedmineApp.store.IssuePriorities": [],
+  "RedmineApp.store.IssueStatuses": [],
   "RedmineApp.store.Projects": [],
   "RedmineApp.store.RedmineConfigs": [],
-  "RedmineApp.store.Trackers": [],
+  "RedmineApp.store.Users": [],
   "RedmineApp.view.Issue": [],
+  "RedmineApp.view.IssueHistory": [],
   "RedmineApp.view.ProjectIssues": [],
   "RedmineApp.view.RedmineChart": [],
   "RedmineApp.view.RedmineChartsNavigator": [],
@@ -1731,6 +1734,7 @@ Ext.ClassManager.addNameAliasMappings({
   "RedmineApp.model.Issue": [],
   "RedmineApp.model.IssueCategory": [],
   "RedmineApp.model.IssuePriority": [],
+  "RedmineApp.model.IssueStatus": [],
   "RedmineApp.model.Project": [],
   "RedmineApp.model.ProjectMembership": [],
   "RedmineApp.model.RedmineConfig": [],
@@ -1740,11 +1744,15 @@ Ext.ClassManager.addNameAliasMappings({
     "proxy.dynamicrest"
   ],
   "RedmineApp.store.IssuePriorities": [],
+  "RedmineApp.store.IssueStatuses": [],
   "RedmineApp.store.Projects": [],
   "RedmineApp.store.RedmineConfigs": [],
-  "RedmineApp.store.Trackers": [],
+  "RedmineApp.store.Users": [],
   "RedmineApp.view.Issue": [
     "widget.issueview"
+  ],
+  "RedmineApp.view.IssueHistory": [
+    "widget.issuehistoryview"
   ],
   "RedmineApp.view.ProjectIssues": [
     "widget.projectissuesview"
