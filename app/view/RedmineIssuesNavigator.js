@@ -47,6 +47,10 @@ Ext.define('RedmineApp.view.RedmineIssuesNavigator', {
                     hidden: false,
                     handler: function() {
                         Ext.StoreMgr.get('Projects').load();
+                        Ext.getCmp('btn-new-note').show();
+                        Ext.getCmp('btn-show-history').show();
+                        Ext.getCmp('btn-new-note-save').hide();
+                        Ext.getCmp('newEmptyNode').hide();
                     }
                 }
             ]

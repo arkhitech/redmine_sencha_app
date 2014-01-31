@@ -12,7 +12,7 @@
 Ext.Loader.setConfig({disableCaching: false});
 Ext.application({
     name: 'RedmineApp',
-    views: ['Issue', 'ProjectIssues', 'RedmineIssuesNavigator', 'RedmineTabPanel', 'RedmineChart', 'RedmineChartsNavigator', 'UserInputView', 'RedmineIDChart', 'RedminePriorityChart', 'RedmineTrackerChart', 'RedmineStatusChart'],
+    views: ['Issue', 'ProjectIssues', 'RedmineIssuesNavigator', 'RedmineTabPanel', 'RedmineChart', 'RedmineChartsNavigator', 'UserInputView', 'RedmineIDChart', 'RedminePriorityChart', 'RedmineTrackerChart', 'RedmineStatusChart', 'IssueHistory'],
     models: ['RedmineConfig', 'Issue', 'IssueCategory', 'IssuePriority', 'Project', 'ProjectMembership', 'Tracker', 'User', 'IssueStatus'],
     stores: ['RedmineConfigs', 'Projects', 'IssuePriorities', 'IssueStatuses'],
     controllers: ['Projects', 'Issues', 'ChartsMenu'],

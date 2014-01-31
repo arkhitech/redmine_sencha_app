@@ -10,36 +10,20 @@ Ext.define('RedmineApp.view.Issue', {
         'Ext.form.FieldSet',
         'Ext.MessageBox',
         'Ext.field.Select',
-        'Ext.field.Toggle'
+        'Ext.field.Toggle',
+        'Ext.form.Panel'
     ],
     config: {
         id: 'issue-panel',
         title: 'Issue Details',
-        fullscreen: true,
         layout: 'vbox',
         items: [
-//            {
-//                xtype: 'container',
-//                layout: {
-//                    type: 'hbox',
-//                    pack: 'center'
-//                },
-//                items: [
-//                    {
-//                        xtype: 'button',
-//                        id: 'savebutton',
-//                        style: 'margin: .5em',
-//                        ui: 'confirm',
-//                        width: '25%',
-//                        text: 'Save',
-//                        scope: this,
-//                        hidden: true                       
-//                    }
-//                ]
-//            },
             {
                 xtype: 'fieldset',
-                id: 'redmine-fieldset',
+                layout: {
+                    type: 'fit',
+                    align: 'center'
+                },
                 items: [
                     {
                         xtype: 'textfield',
@@ -204,34 +188,70 @@ Ext.define('RedmineApp.view.Issue', {
                     }
                 ]
             },
+//            {
+//                xtype: 'togglefield',
+//                name: 'historytoggle',
+//                layout: {
+//                    pack: 'center'
+//                },
+//                label: 'Show Issue History',
+//                listeners: {
+//                    change: function(slider, thumb, newValue, oldValue) {
+//                        var attachments = Ext.getCmp('attachment-sub-fieldset');
+//                        var relations = Ext.getCmp('issue-relations');
+//                        var journals = Ext.getCmp('issue-journals');
+//
+//                        if (oldValue === 0 && newValue === 1) {
+//                            attachments.show();
+//                            relations.show();
+//                            journals.show();
+//                        }
+//                        else if (oldValue === 1 && newValue === 0)
+//                        {
+//                            attachments.hide();
+//                            relations.hide();
+//                            journals.hide();
+//                        }
+//                    }
+//                }
+//            }
             {
-                xtype: 'togglefield',
-                name: 'historytoggle',
+                xtype: 'container',
                 layout: {
+                    type: 'hbox',
                     pack: 'center'
                 },
-                label: 'Show Issue History',
-                listeners: {
-                    change: function(slider, thumb, newValue, oldValue) {
-                        var attachments = Ext.getCmp('issue-attachments');
-                        var relations = Ext.getCmp('issue-relations');
-                        var journals = Ext.getCmp('issue-journals');
-
-                        if (oldValue === 0 && newValue === 1) {
-                            attachments.show();
-                            relations.show();
-                            journals.show();
-                        }
-                        else if (oldValue === 1 && newValue === 0)
-                        {
-                            attachments.hide();
-                            relations.hide();
-                            journals.hide();
-                        }
+                items: [
+                    {
+                        xtype: 'button',
+                        id: 'btn-show-history',
+                        style: 'margin: .5em',
+                        ui: 'confirm',
+                        width: '25%',
+                        text: 'Show History',
+                        hidden: false
+                    },
+                    {
+                        xtype: 'button',
+                        id: 'btn-new-note',
+                        style: 'margin: .5em',
+                        ui: 'confirm',
+                        width: '25%',
+                        text: 'Add New Note'
+                    },
+                    {
+                        xtype: 'button',
+                        id: 'btn-new-note-save',
+                        style: 'margin: .5em',
+                        ui: 'decline',
+                        width: '25%',
+                        text: 'Save New Note',
+                        hidden: true
                     }
-                }
+                ]
             }
         ]
     }
+
 }
 );

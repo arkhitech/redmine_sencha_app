@@ -4,7 +4,7 @@ Ext.define('RedmineApp.controller.Issues', {
         'Ext.data.proxy.LocalStorage'
     ],
     config: {
-        views: ['ProjectIssues', 'Issue'],
+        views: ['ProjectIssues', 'Issue', 'IssueHistory'],
         refs: {
             projectIssueList: '#project-issue-list',
             issueTracker: '#issue-tracker',
@@ -30,7 +30,15 @@ Ext.define('RedmineApp.controller.Issues', {
             issuePriority: '#issue-priority',
             issueStoryPoints: '#issue-story-points',
             issueStatus: '#issue-status',
-            issueChangesets: '#issue-changesets'
+            issueChangesets: '#issue-changesets',
+            btnNewNoteSave: '#btn-new-note-save',
+            btnNewNote: '#btn-new-note',
+            btnShowHistory: '#btn-show-history',
+            attachmentSubFieldset: '#attachment-sub-fieldset',
+            relationsSubFieldset: '#relations-sub-fieldset',
+            journalsSubFieldset: '#journals-sub-fieldset',
+            historyPanel: '#issue-history-panel'
+
         },
         control: {
             projectIssueList: {
@@ -44,6 +52,18 @@ Ext.define('RedmineApp.controller.Issues', {
             },
             issuePanel: {
                 initialize: 'initializeIssuePanel'
+            },
+            historyPanel: {
+                initialize: 'initializeHistoryPanel'
+            },
+            btnNewNoteSave: {
+                tap: 'saveNewNoteValue'
+            },
+            btnNewNote: {
+                tap: 'showNewNoteField'
+            },
+            btnShowHistory: {
+                tap: 'showIssueHistoryFields'
             }
         },
         routes: {
@@ -53,109 +73,127 @@ Ext.define('RedmineApp.controller.Issues', {
     statics: {
         isClickInProcess: false
     },
+    initializeHistoryPanel: function(historyPanel, eOpts) {
+        historyPanel.setRecord(this.issue);
+        var attachments = historyPanel.getRecord().data.attachments;
+        historyPanel.add(
+                {
+                    xtype: 'textfield',
+                    id: 'issue-attachments',
+                    label: 'ATTACHMENTS',
+                    readOnly: true,
+                    hidden: true
+                }
+        );
+        for (var i = 0; attachments !== undefined && i < attachments.length; i++) {
+            var new_item = {
+                xtype: 'fieldset',
+                items: [
+                    {
+                        xtype: 'urlfield',
+                        label: 'Attachment URL:',
+                        value: attachments[i].content_url,
+                        readOnly: true
+                    },
+                    {
+                        xtype: 'textfield',
+                        label: 'Attachment Creation Date:',
+                        value: attachments[i].created_on,
+                        readOnly: true
+                    },
+                    {
+                        xtype: 'textareafield',
+                        label: 'File Name:',
+                        value: attachments[i].filename,
+                        readOnly: true
+                    }
+                ]
+            };
+            historyPanel.add(new_item);
+        }
+        var relations = historyPanel.getRecord().data.relations;
+        historyPanel.add(
+                {
+                    xtype: 'textfield',
+                    label: 'ISSUE RELATED TO',
+                    readOnly: true,
+                    id: 'issue-relations',
+                    hidden: true
+                });
+        for (var i = 0; relations !== undefined && i < relations.length; i++) {
+            var new_item = {
+                xtype: 'fieldset',
+                items: [
+                    {
+                        xtype: 'textareafield',
+                        label: 'Ticket ID: ',
+                        html: relations[i].issue_id, //'<a href="http://redmine.arkhitech.com/issues/"    //+ ">" + relations[i].issue_id </a>',                            
+                        readOnly: true
+                    }
+                ]
+            };
+            historyPanel.add(new_item);
+        }
+        var journals = historyPanel.getRecord().data.journals;
+        historyPanel.add(
+                {
+                    xtype: 'textfield',
+                    label: 'JOURNALS',
+                    readOnly: true,
+                    id: 'issue-journals',
+                    hidden: true
+                });
+        for (var i = 0; journals !== undefined && i < journals.length; i++) {
+            var new_item = {
+                xtype: 'fieldset',
+                items: [
+                    {
+                        xtype: 'textfield',
+                        label: 'Created On:',
+                        value: journals[i].created_on,
+                        readOnly: true
+                    },
+                    {
+                        xtype: 'textfield',
+                        label: 'User:',
+                        value: journals[i].user.name,
+                        readOnly: true
+                    },
+                    {
+                        xtype: 'textareafield',
+                        label: 'Notes:',
+                        name: 'journal_note',
+                        value: journals[i].notes,
+                        readOnly: true
+                    }
+                ]
+            };
+            historyPanel.add(new_item);
+        }
+    },
     initializeIssuePanel: function(issuePanel, eOpts) {
-
         this.getBtnEnableEditing().show();
         this.getIssueCategory().setStore(RedmineApp.app.getCurrentProjectIssueCategories());
         this.getIssueTracker().setStore(RedmineApp.app.getCurrentProjectTrackers());
         issuePanel.setRecord(this.issue);
         var projectIdentifier = issuePanel.getRecord().data.identifier;
         RedmineApp.app.setCurrentProjectIdentifier(projectIdentifier);
-        var attachments = issuePanel.getRecord().data.attachments;
-        issuePanel.add({
-            xtype: 'textfield',
-            id: 'issue-attachments',
-            label: 'ATTACHMENTS',
-            readOnly: true,
-            hidden: true
-        });
-        for (var i = 0; attachments !== undefined && i < attachments.length; i++) {
-            new_items = [
-                {
-                    xtype: 'urlfield',
-                    label: 'Attachment URL:',
-                    value: attachments[i].content_url,
-                    readOnly: true
-                },
-                {
-                    xtype: 'textfield',
-                    label: 'Attachment Creation Date:',
-                    value: attachments[i].created_on,
-                    readOnly: true
-                },
-                {
-                    xtype: 'textareafield',
-                    label: 'File Name:',
-                    value: attachments[i].filename,
-                    readOnly: true
-                }
-            ],
-                    issuePanel.add(new_items);
-        }
-        var relations = issuePanel.getRecord().data.relations;
-        issuePanel.add({
-            xtype: 'textfield',
-            label: 'ISSUE RELATED TO',
-            readOnly: true,
-            hidden: true,
-            id: 'issue-relations'
-        });
-        for (var i = 0; relations !== undefined && i < relations.length; i++) {
-            issuePanel.add({
-                xtype: 'textareafield',
-                label: 'Ticket ID: ',
-                html: relations[i].issue_id, //'<a href="http://redmine.arkhitech.com/issues/"    //+ ">" + relations[i].issue_id </a>',                            
-                readOnly: true
-            });
-        }
-        var journals = issuePanel.getRecord().data.journals;
-        issuePanel.add({
-            xtype: 'textfield',
-            label: 'JOURNALS',
-            readOnly: true,
-            hidden: true,
-            id: 'issue-journals'
-        });
-        for (var i = 0; journals !== undefined && i < journals.length; i++) {
-            new_items = [
-                {
-                    xtype: 'textfield',
-                    label: 'Created On:',
-                    value: journals[i].created_on,
-                    readOnly: true
-                },
-                {
-                    xtype: 'textfield',
-                    label: 'User:',
-                    value: journals[i].user.name,
-                    readOnly: true
-                },
-                {
-                    xtype: 'textareafield',
-                    label: 'Notes:',
-                    name: 'journal_note',
-                    value: journals[i].notes,
-                    readOnly: true
-                }
-            ],
-                    issuePanel.add(new_items);
-        }
         //create an empty editable journal note entry
         new_items = [
             {
                 xtype: 'textareafield',
                 id: 'newEmptyNode',
-                label: 'Notes:',
+                label: 'Enter a New Note',
                 name: 'notes',
-                readOnly: true
+                hidden: true
             }
         ],
                 issuePanel.add(new_items);
     },
     enableEditing: function(btn) {
 
-       this.getIssueTracker().setStore(RedmineApp.app.getCurrentProjectTrackers());
-       this.getIssueCategory().setStore(RedmineApp.app.getCurrentProjectIssueCategories());
+        this.getIssueTracker().setStore(RedmineApp.app.getCurrentProjectTrackers());
+        this.getIssueCategory().setStore(RedmineApp.app.getCurrentProjectIssueCategories());
         if (btn.hasDisabled) {
             btn.hasDisabled = false;
             btn.setUi('confirm');
@@ -176,8 +214,6 @@ Ext.define('RedmineApp.controller.Issues', {
             this.getIssueStartDate().setStyle({backgroundColor: '#BA661B'});
             this.getIssueDueDate().setReadOnly(false);
             this.getIssueDueDate().setStyle({backgroundColor: '#BA661B'});
-            this.getNewEmptyNode().setReadOnly(false);
-            this.getNewEmptyNode().setStyle({backgroundColor: '#BA661B'});
             this.getIssueDescription().setReadOnly(false);
             this.getIssueDescription().setStyle({backgroundColor: '#BA661B'});
             this.getIssuePriority().setReadOnly(false);
@@ -192,6 +228,9 @@ Ext.define('RedmineApp.controller.Issues', {
             this.getIssueCategory().setStyle({backgroundColor: '#BA661B'});
             btn.hide();
             this.getBtnSaveInfo().show();
+            this.getBtnNewNoteSave().hide();
+            this.getBtnNewNote().hide();
+            this.getBtnShowHistory().hide();
         }
     },
     saveInfo: function(btn) {
@@ -201,7 +240,6 @@ Ext.define('RedmineApp.controller.Issues', {
         issue.set('description', form.getValues().description);
         issue.set('due_date', form.getValues().due_date);
         issue.set('start_date', form.getValues().start_date);
-        issue.set('notes', form.getValues().notes);
         issue.set('priority_id', form.getValues().priority_name);
         issue.set('tracker_id', form.getValues().tracker_name);
         issue.set('status_id', form.getValues().status_name);
@@ -239,7 +277,6 @@ Ext.define('RedmineApp.controller.Issues', {
             scope: this,
             success: function(issue, operation) {
                 this.issue = issue;
-
                 var issue_view = Ext.create('RedmineApp.view.Issue');
                 this.getRedmineTabPanel().setActiveItem(1);
                 this.getRedmineIssuesNavigator().push(issue_view);
@@ -268,12 +305,42 @@ Ext.define('RedmineApp.controller.Issues', {
             scope: this,
             success: function(issue, operation) {
                 this.issue = issue;
-                this.issueView = Ext.create('RedmineApp.view.Issue');
-
+                var issueView = Ext.create('RedmineApp.view.Issue');
                 this.getRedmineIssuesNavigator().setCurrentRefreshListener(this.refreshIssue, this);
-                list.up('redmine-issues-navigator').push(this.issueView);
+                list.up('redmine-issues-navigator').push(issueView);
+                var me = this;
+                issueView.addListener('remove', function() {
+                    me.getBtnEnableEditing().hide();
+                });
                 RedmineApp.controller.Issues.isClickInProcess = false;
             }
+        });
+    },
+    saveNewNoteValue: function(btn) {
+        var form = this.getIssuePanel();
+        var issue = form.getRecord();
+        this.issue.set('notes', form.getValues().notes);
+        this.issue.save();
+        Ext.Msg.alert('New Note Saved Successfully');
+    },
+    showNewNoteField: function(btn) {
+
+
+        this.getNewEmptyNode().show();
+        this.getBtnNewNoteSave().show();
+        this.getBtnNewNote().hide();
+        this.getBtnShowHistory().hide();
+    },
+    showIssueHistoryFields: function(btn) {
+        var issue_history_view = Ext.create('RedmineApp.view.IssueHistory');
+        this.getRedmineIssuesNavigator().push(issue_history_view);
+        this.getNewEmptyNode().hide();
+        this.getBtnEnableEditing().hide();
+        this.getBtnRefresh().hide();
+        var me = this;
+        issue_history_view.addListener('remove', function() {
+            me.getBtnRefresh().show();
+            me.getBtnEnableEditing().show();
         });
     }
 });

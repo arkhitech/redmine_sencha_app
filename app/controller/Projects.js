@@ -18,14 +18,10 @@ Ext.define('RedmineApp.controller.Projects', {
     },
     showProjectIssues: function(list, project) {
         RedmineApp.app.loadProjectSettings(project.data.id);
-
         var project_issues_view = Ext.create('RedmineApp.view.ProjectIssues');
         list.up('redmine-issues-navigator').push(project_issues_view);
-
         this.projectIssueStore = RedmineApp.app.createIssuesStore(project.data.id);
-
         this.getRedmineIssuesNavigator().setCurrentRefreshListener(this.refreshProjectIssues, this);
-
         project_issues_view.getAt(0).setStore(this.projectIssueStore);
 
     }
