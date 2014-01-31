@@ -12,6 +12,7 @@ Ext.define('RedmineApp.view.RedmineChart', {
         direction: 'vertical',
         align: 'stretch',
         title: 'Analytics',
+        ui: 'Sencha',
         items: [
             {
                 xtype: 'redmine-id-chart',
@@ -23,7 +24,7 @@ Ext.define('RedmineApp.view.RedmineChart', {
                 xtype: 'redmine-tracker-chart',
                 scrollable: null,
                 style: {background: '#F7F7F7'},
-                html: 'Estimated Hours per Category'
+                html: 'Estimated Hours per Tracker'
             },
             {
                 xtype: 'redmine-status-chart',

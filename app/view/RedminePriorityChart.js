@@ -16,20 +16,20 @@ Ext.define('RedmineApp.view.RedminePriorityChart', {
         var store = RedmineApp.app.getCurrentIssuesStore();
         var me = this;
         store.addListener('load', function(store, records, successful, operation, eOpts) {
-            store.setGroupField('priority');
+            store.setGroupField('priority_name');
             var groups = store.getGroups();
             Ext.define('IssueByPriority', {
                 extend: 'Ext.data.Model',
                 config: {
-                    fields: [{
-                            name: 'priority', mapping: 'name'
-                        }, {
+                    fields: [
+                        {name: 'name'},
+                                {
                             name: 'total_issues',
                             convert: function(value, record) {
                                 return record.raw.children.length;
                             }
                         }]
-                }
+                        }
             });
             var groupStore = Ext.create('Ext.data.Store', {
                 model: 'IssueByPriority',
@@ -58,7 +58,7 @@ Ext.define('RedmineApp.view.RedminePriorityChart', {
                 xField: 'total_issues',
                 fill: true,
                 label: {
-                    field: 'priority',
+                    field: 'name',
                     display: 'rotate',
                     contrast: true,
                     font: '18px "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, Helvetica, sans-serif'

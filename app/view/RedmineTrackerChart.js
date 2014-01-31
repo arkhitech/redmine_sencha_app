@@ -9,16 +9,16 @@ Ext.define('RedmineApp.view.RedmineTrackerChart', {
         var store = RedmineApp.app.getCurrentIssuesStore();
         var me = this;
         store.addListener('load', function(store, records, successful, operation, eOpts) {
-            store.setGroupField('tracker');
+            store.setGroupField('tracker_name');
             var groups = store.getGroups();
             Ext.define('IssueByTracker', {
                 extend: 'Ext.data.Model',
                 config: {
                     fields: [{
-                            name: 'tracker', mapping: 'name'
+                            name: 'name'
                         }, {
                             name: 'total_estimated_hours',
-                            convert: function(value, record) {
+                            convert: function(value, record) {                             
                                 return record.raw.children.length;
                             }
                         }]
@@ -29,6 +29,7 @@ Ext.define('RedmineApp.view.RedmineTrackerChart', {
                 data: groups
             });
             me.bindStore(groupStore);
+            console.log(groupStore);
         });
     },
     config: {
@@ -51,7 +52,7 @@ Ext.define('RedmineApp.view.RedmineTrackerChart', {
                 xField: 'total_estimated_hours',
                 fill: true,
                 label: {
-                    field: 'tracker',
+                    field: 'name',
                     display: 'rotate',
                     contrast: true,
                     font: '18px "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, Helvetica, sans-serif'

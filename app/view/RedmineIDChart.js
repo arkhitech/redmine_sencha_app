@@ -23,13 +23,13 @@ Ext.define('RedmineApp.view.RedmineIDChart', {
                 extend: 'Ext.data.Model',
                 config: {
                     fields: [{
-                            name: 'id',
-                            convert: function(value, record) {
-                                return record.raw.children[0].data.id;
-                            }
+                            name: 'name',
+//                            convert: function(value, record) {
+//                                return record.raw.children[0].data.id;
+//                            }
                         }, {
                             name: 'estimated_hours',
-                            convert: function(value, record) {
+                            convert: function(value, record) {                                   
                                 return record.raw.children.length;
                             }
                         }]
@@ -65,7 +65,7 @@ Ext.define('RedmineApp.view.RedmineIDChart', {
                 animate: true,
                 fill: true,
                 label: {
-                    field: 'id',
+                    field: 'name',
                     display: 'rotate',
                     contrast: true,
                     font: '18px "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, Helvetica, sans-serif'

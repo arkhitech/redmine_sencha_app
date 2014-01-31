@@ -16,13 +16,13 @@ Ext.define('RedmineApp.view.RedmineStatusChart', {
         var store = RedmineApp.app.getCurrentIssuesStore();
         var me = this;
         store.addListener('load', function(store, records, successful, operation, eOpts) {
-            store.setGroupField('status');
+            store.setGroupField('status_name');
             var groups = store.getGroups();
             Ext.define('IssueByStatus', {
                 extend: 'Ext.data.Model',
                 config: {
                     fields: [{
-                            name: 'status', mapping: 'name'
+                            name: 'name',
                         }, {
                             name: 'total_statuses',
                             convert: function(value, record) {
@@ -58,7 +58,7 @@ Ext.define('RedmineApp.view.RedmineStatusChart', {
                 xField: 'total_statuses',
                 fill: true,
                 label: {
-                    field: 'status',
+                    field: 'name',
                     display: 'rotate',
                     contrast: true,
                     font: '18px "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, Helvetica, sans-serif'
