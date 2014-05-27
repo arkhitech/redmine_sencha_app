@@ -16,7 +16,7 @@ Ext.define('RedmineApp.view.IssueHistory', {
                 layout: {
                     type: 'fit',
                     align: 'center'
-                }                
+                }
             }
         ]
     }

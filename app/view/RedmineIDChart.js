@@ -29,7 +29,7 @@ Ext.define('RedmineApp.view.RedmineIDChart', {
 //                            }
                         }, {
                             name: 'estimated_hours',
-                            convert: function(value, record) {                                   
+                            convert: function(value, record) {
                                 return record.raw.children.length;
                             }
                         }]

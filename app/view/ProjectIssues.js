@@ -13,7 +13,7 @@ Ext.define('RedmineApp.view.ProjectIssues', {
                 xtype: 'list',
                 grouped: true,
                 indexBar: true,
-                id: 'project-issue-list',
+                itemId: 'project-issue-list',
                 itemTpl: [
                     '<tpl for=".">',
                     '<p>{subject}</p>',

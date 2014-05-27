@@ -35,10 +35,12 @@ Ext.application({
     loadRedmineConfig: function() {
         var configStore = Ext.getStore('RedmineConfigs');
         configStore.load();
-        var redmine_config = configStore.getAt(0);
+        var redmine_config = configStore.getAt(0);       
         if (redmine_config !== undefined) {
             this.redmine_url = redmine_config.get('redmine_url');
             this.redmine_access_key = redmine_config.get('redmine_access_key');
+        } else {
+            this.redmine_url = 'http://redmine.arkhitech.com';
         }
     },
     saveRedmineConfig: function() {

@@ -14,7 +14,7 @@ Ext.define('RedmineApp.view.Issue', {
         'Ext.form.Panel'
     ],
     config: {
-        id: 'issue-panel',
+        itemId: 'issue-panel',
         title: 'Issue Details',
         layout: 'vbox',
         items: [
@@ -28,22 +28,21 @@ Ext.define('RedmineApp.view.Issue', {
                     {
                         xtype: 'textfield',
                         label: 'Issue ID',
-                        id: 'issue-id',
+                        itemId: 'issue-id',
                         name: 'id',
-                        readOnly: true
-
+                        readOnly: true,
                     },
                     {
                         xtype: 'textfield',
                         label: 'Project',
                         name: 'project_name',
-                        id: 'issue-project',
+                        itemId: 'issue-project',
                         readOnly: true
                     },
                     {
                         xtype: 'selectfield',
                         label: 'Tracker',
-                        id: 'issue-tracker',
+                        itemId: 'issue-tracker',
                         name: 'tracker_name',
                         valueField: 'id',
                         displayField: 'name',
@@ -53,7 +52,7 @@ Ext.define('RedmineApp.view.Issue', {
                         xtype: 'selectfield',
                         label: 'Issue Status',
                         store: 'IssueStatuses',
-                        id: 'issue-status',
+                        itemId: 'issue-status',
                         name: 'status_name',
                         valueField: 'id',
                         displayField: 'name',
@@ -62,7 +61,7 @@ Ext.define('RedmineApp.view.Issue', {
                     {
                         xtype: 'selectfield',
                         label: 'Priority',
-                        id: 'issue-priority',
+                        itemId: 'issue-priority',
                         name: 'priority_name',
                         store: 'IssuePriorities',
                         valueField: 'id',
@@ -80,13 +79,13 @@ Ext.define('RedmineApp.view.Issue', {
                     {
                         xtype: 'textfield',
                         label: 'Assigned to',
-                        name: 'assigned_to',
+                        name: 'raw.assigned_to',
                         readOnly: true
 
                     },
                     {
                         xtype: 'selectfield',
-                        id: 'issue-category',
+                        itemId: 'issue-category',
                         label: 'Category',
                         name: 'category_name',
                         valueField: 'id',
@@ -97,7 +96,7 @@ Ext.define('RedmineApp.view.Issue', {
                         xtype: 'textfield',
                         label: 'Fixed Version',
                         name: 'fixed_version',
-                        id: 'issue-fixed-version',
+                        itemId: 'issue-fixed-version',
                         readOnly: true
 
                     },
@@ -105,7 +104,7 @@ Ext.define('RedmineApp.view.Issue', {
                         xtype: 'textfield',
                         label: 'Subject',
                         name: 'subject',
-                        id: 'issue-subject',
+                        itemId: 'issue-subject',
                         readOnly: true
 
                     },
@@ -113,14 +112,14 @@ Ext.define('RedmineApp.view.Issue', {
                         xtype: 'textfield',
                         label: 'Issue Description',
                         name: 'description',
-                        id: 'issue-description',
+                        itemId: 'issue-description',
                         readOnly: true
 
                     },
                     {
                         xtype: 'textfield',
                         label: 'Start Date',
-                        id: 'issue-start-date',
+                        itemId: 'issue-start-date',
                         name: 'start_date',
                         readOnly: true
 
@@ -128,7 +127,7 @@ Ext.define('RedmineApp.view.Issue', {
                     {
                         xtype: 'textfield',
                         label: 'Due Date',
-                        id: 'issue-due-date',
+                        itemId: 'issue-due-date',
                         name: 'due_date',
                         readOnly: true
 
@@ -143,7 +142,7 @@ Ext.define('RedmineApp.view.Issue', {
                     {
                         xtype: 'textfield',
                         label: 'Estimated Hours',
-                        id: 'issue-estimated-hours',
+                        itemId: 'issue-estimated-hours',
                         name: 'estimated_hours',
                         readOnly: true
                     },
@@ -151,7 +150,7 @@ Ext.define('RedmineApp.view.Issue', {
                         xtype: 'textfield',
                         label: 'Spent Hours',
                         name: 'spent_hours',
-                        id: 'issue-spent-hours',
+                        itemId: 'issue-spent-hours',
                         readOnly: true
 
                     },
@@ -159,7 +158,7 @@ Ext.define('RedmineApp.view.Issue', {
                         xtype: 'textfield',
                         label: 'Created On',
                         name: 'created_on',
-                        id: 'issue-created-on',
+                        itemId: 'issue-created-on',
                         readOnly: true
 
                     },
@@ -167,7 +166,7 @@ Ext.define('RedmineApp.view.Issue', {
                         xtype: 'textfield',
                         label: 'Updated On',
                         name: 'updated_on',
-                        id: 'issue-updated-on',
+                        itemId: 'issue-updated-on',
                         readOnly: true
 
                     },
@@ -175,7 +174,7 @@ Ext.define('RedmineApp.view.Issue', {
                         xtype: 'textfield',
                         label: 'Changesets',
                         name: 'changesets',
-                        id: 'issue-changesets',
+                        itemId: 'issue-changesets',
                         readOnly: true
 
                     },
@@ -183,7 +182,7 @@ Ext.define('RedmineApp.view.Issue', {
                         xtype: 'textfield',
                         label: 'Story Points',
                         name: 'story_points',
-                        id: 'issue-story-points',
+                        itemId: 'issue-story-points',
                         readOnly: true
                     }
                 ]
@@ -224,7 +223,7 @@ Ext.define('RedmineApp.view.Issue', {
                 items: [
                     {
                         xtype: 'button',
-                        id: 'btn-show-history',
+                        itemId: 'btn-show-history',
                         style: 'margin: .5em',
                         ui: 'confirm',
                         width: '25%',
@@ -233,7 +232,7 @@ Ext.define('RedmineApp.view.Issue', {
                     },
                     {
                         xtype: 'button',
-                        id: 'btn-new-note',
+                        itemId: 'btn-new-note',
                         style: 'margin: .5em',
                         ui: 'confirm',
                         width: '25%',
@@ -241,7 +240,7 @@ Ext.define('RedmineApp.view.Issue', {
                     },
                     {
                         xtype: 'button',
-                        id: 'btn-new-note-save',
+                        itemId: 'btn-new-note-save',
                         style: 'margin: .5em',
                         ui: 'decline',
                         width: '25%',
@@ -250,7 +249,7 @@ Ext.define('RedmineApp.view.Issue', {
                     }
                 ]
             }
-        ]
+        ],
     }
 
 }

@@ -23,13 +23,13 @@ Ext.define('RedmineApp.view.RedminePriorityChart', {
                 config: {
                     fields: [
                         {name: 'name'},
-                                {
+                        {
                             name: 'total_issues',
                             convert: function(value, record) {
                                 return record.raw.children.length;
                             }
                         }]
-                        }
+                }
             });
             var groupStore = Ext.create('Ext.data.Store', {
                 model: 'IssueByPriority',

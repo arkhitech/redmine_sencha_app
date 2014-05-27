@@ -3,8 +3,8 @@ Ext.define('RedmineApp.controller.Projects', {
     config: {
         views: ['RedmineIssuesNavigator', 'ProjectIssues'],
         refs: {
-            projectList: '#projectlist',
-            redmineIssuesNavigator: '#redmine-issues-navigator'
+            projectList: 'redmine-issues-navigator #projectlist',
+            redmineIssuesNavigator: 'redmine-issues-navigator'
         },
         control: {
             projectList: {
@@ -19,10 +19,10 @@ Ext.define('RedmineApp.controller.Projects', {
     showProjectIssues: function(list, project) {
         RedmineApp.app.loadProjectSettings(project.data.id);
         var project_issues_view = Ext.create('RedmineApp.view.ProjectIssues');
-        list.up('redmine-issues-navigator').push(project_issues_view);
+        this.getRedmineIssuesNavigator().push(project_issues_view);
         this.projectIssueStore = RedmineApp.app.createIssuesStore(project.data.id);
-        this.getRedmineIssuesNavigator().setCurrentRefreshListener(this.refreshProjectIssues, this);
         project_issues_view.getAt(0).setStore(this.projectIssueStore);
+        this.getRedmineIssuesNavigator().setCurrentRefreshListener(this.refreshProjectIssues, this);
 
     }
 });

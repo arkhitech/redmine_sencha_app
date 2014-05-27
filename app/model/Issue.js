@@ -30,6 +30,7 @@ Ext.define('RedmineApp.model.Issue', {
             {name: 'created_on'},
             {name: 'updated_on'},
             {name: 'story_points'},
+            {name: 'notes'},
             {name: 'custom_fields', persist: false},
             {name: 'relations', mapping: 'relations', persist: false},
             {name: 'attachments', mapping: 'attachments', persist: false},
@@ -51,7 +52,6 @@ Ext.define('RedmineApp.model.Issue', {
                 rootProperty: 'issue',
                 type: 'xml',
                 writeAllFields: false
-
             },
             extraParams: {
                 include: 'relations,changesets,journals,attachments'

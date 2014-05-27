@@ -18,8 +18,6 @@ Ext.define('RedmineApp.controller.ChartsMenu', {
         RedmineApp.app.setCurrentProjectIdentifier(record.data.identifier);
         var redmine_chart_view = Ext.create('RedmineApp.view.RedmineChart');
         list.up('redmine-charts-navigator').push(redmine_chart_view);
-        
-        
     }
 
 });

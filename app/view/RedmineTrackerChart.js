@@ -18,7 +18,7 @@ Ext.define('RedmineApp.view.RedmineTrackerChart', {
                             name: 'name'
                         }, {
                             name: 'total_estimated_hours',
-                            convert: function(value, record) {                             
+                            convert: function(value, record) {
                                 return record.raw.children.length;
                             }
                         }]
@@ -29,7 +29,6 @@ Ext.define('RedmineApp.view.RedmineTrackerChart', {
                 data: groups
             });
             me.bindStore(groupStore);
-            console.log(groupStore);
         });
     },
     config: {
