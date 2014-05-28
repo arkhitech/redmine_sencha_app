@@ -1,12 +1,11 @@
 Ext.define('RedmineApp.view.ProjectIssues', {
-    extend: 'Ext.Container',
+    extend: 'Ext.form.Panel',
     xtype: 'projectissuesview',
     requires: [
         'Ext.dataview.List'
     ],
     config: {
         layout: 'vbox',
-        scrollable: 'none',
         title: 'Select a Ticket For Details',
         items: [
             {

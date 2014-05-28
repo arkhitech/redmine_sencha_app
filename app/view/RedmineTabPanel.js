@@ -9,7 +9,13 @@ Ext.define('RedmineApp.view.RedmineTabPanel', {
     ],
     config: {
         tabBarPosition: 'bottom',
-        id: 'redmine-tab-panel',
+        deferredRender: false,
+        itemId: 'redmine-tab-panel',
+        defaults: {hideMode: "offsets"},
+        layoutOnTabChange: true,
+        //renderTo: Ext.getBody(),
+        activeTab: 1,
+        plain: true,
         items: [
             {
                 iconCls: 'action',

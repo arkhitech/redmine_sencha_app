@@ -22,7 +22,7 @@ Ext.define('RedmineApp.controller.Projects', {
         this.getRedmineIssuesNavigator().push(project_issues_view);
         this.projectIssueStore = RedmineApp.app.createIssuesStore(project.data.id);
         project_issues_view.getAt(0).setStore(this.projectIssueStore);
-        this.getRedmineIssuesNavigator().setCurrentRefreshListener(this.refreshProjectIssues, this);
+        //this.getRedmineIssuesNavigator().setCurrentRefreshListener(this.refreshProjectIssues, this);
 
     }
 });

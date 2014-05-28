@@ -10,7 +10,7 @@ Ext.define('RedmineApp.controller.Issues', {
             issueTracker: 'issueview #issue-tracker',
             issueCategory: 'issueview #issue-category',
             btnEnableEditing: 'redmine-issues-navigator #btn-enable-editing',
-            btnRefresh: 'redmine-issues-navigator #btn-refresh',
+             btnRefresh: 'redmine-issues-navigator #btn-refresh',
             btnSaveInfo: 'redmine-issues-navigator #btn-save-values',
             issuePanel: '#issue-panel',
             redmineTabPanel: '#redmine-tab-panel',
@@ -264,11 +264,20 @@ Ext.define('RedmineApp.controller.Issues', {
         });
     },
     backClicked: function() {
+
         console.log("Back button pressed");
         this.getBtnEnableEditing().hide();
+        console.log(this.getRedmineIssuesNavigator().getItems().length);
 //        this.getRedmineIssuesNavigator().pop();
-//        this.getRedmineIssuesNavigator().push(this.getProjectIssueList());        
+//        this.getRedmineIssuesNavigator().push(this.getProjectIssueList());   
+//        if (this.issueView) {
+//            this.issueView.destroy();
+//            delete this.issueView;
+//            console.log('Issue View Destroyed');
+//        }
     },
+    Issue: null,
+    issueView: null,
     loadIssueById: function(issue_id) {
         var Issue = Ext.ModelManager.getModel('RedmineApp.model.Issue');
         Issue.load(issue_id, {
@@ -277,12 +286,9 @@ Ext.define('RedmineApp.controller.Issues', {
                 this.issue = issue;
 
                 console.log('Creating Issue View');
-                var issueView = Ext.create('RedmineApp.view.Issue');
+                this.issueView = Ext.create('RedmineApp.view.Issue');
 
-                if (this.issueView) {
-                    this.issueView.destroy();
-                    delete this.issueView;
-                }
+
                 //create an empty editable journal note entry
                 new_items = [
                     {
@@ -293,14 +299,14 @@ Ext.define('RedmineApp.controller.Issues', {
                         hidden: true
                     }
                 ],
-                        issueView.add(new_items);
+                        this.issueView.add(new_items);
 
-                issueView.setRecord(issue);
+                this.issueView.setRecord(issue);
                 this.getBtnEnableEditing().show();
 //                this.getIssueTracker().setStore(RedmineApp.app.getCurrentProjectTrackers());
 //                this.getIssueCategory().setStore(RedmineApp.app.getCurrentProjectIssueCategories());
-                this.getRedmineIssuesNavigator().push(issueView);
-                this.getRedmineIssuesNavigator().setCurrentRefreshListener(this.refreshIssue, this);
+                this.getRedmineIssuesNavigator().push(this.issueView);
+                //   this.getRedmineIssuesNavigator().setCurrentRefreshListener(this.refreshIssue, this);
 
                 RedmineApp.controller.Issues.isClickInProcess = false;
             }

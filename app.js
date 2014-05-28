@@ -9,13 +9,13 @@
  changes and its generated code, it will produce a "merge conflict" that you
  will need to resolve manually.
  */
-Ext.Loader.setConfig({disableCaching: false});
+Ext.Loader.setConfig({disableCaching: true});
 Ext.application({
     name: 'RedmineApp',
     views: ['Issue', 'ProjectIssues', 'RedmineIssuesNavigator', 'RedmineTabPanel', 'RedmineChart', 'RedmineChartsNavigator', 'UserInputView', 'RedmineIDChart', 'RedminePriorityChart', 'RedmineTrackerChart', 'RedmineStatusChart', 'IssueHistory'],
     models: ['RedmineConfig', 'Issue', 'IssueCategory', 'IssuePriority', 'Project', 'ProjectMembership', 'Tracker', 'User', 'IssueStatus'],
     stores: ['RedmineConfigs', 'Projects', 'IssuePriorities', 'IssueStatuses'],
-    controllers: ['Projects', 'Issues', 'ChartsMenu'],
+    controllers: ['Projects', 'Issues', 'ChartsMenu','UserInputFields'],
     icon: {
         57: "resources/icons/57-57.png",
         72: "resources/icons/72-72.png",

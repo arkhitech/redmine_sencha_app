@@ -16,7 +16,8 @@ Ext.define('RedmineApp.view.RedmineIssuesNavigator', {
         this.currentRefreshListener = fn;
     },
     config: {
-        // itemId: 'redmine-issues-navigator',
+        autoDestroy: true,
+        showAnimation: null,
         flex: 1,
         navigationBar: {
             ui: 'sencha',
@@ -51,23 +52,28 @@ Ext.define('RedmineApp.view.RedmineIssuesNavigator', {
                 }
             ]
         },
-        items: [
-            {
-                xtype: 'list',
+        items: [{
+                xtype: 'formpanel',
+                layout: 'vbox',
                 title: 'Select a Project for Details',
-                itemId: 'projectlist',
-                store: 'Projects',
-                pinHeaders: true,
-                clearSelectionOnDeactivate: true,
-                itemTpl: [
-                    '<tpl for=".">',
-                    '<p>{name}</p>',
-                    '</tpl>'
-                ],
-                flex: 1,
-                grouped: true,
-                indexBar: true,
-                onItemDisclosure: true
+                items: [
+                    {
+                        xtype: 'list',
+                        itemId: 'projectlist',
+                        store: 'Projects',
+                        pinHeaders: true,
+                        clearSelectionOnDeactivate: true,
+                        itemTpl: [
+                            '<tpl for=".">',
+                            '<p>{name}</p>',
+                            '</tpl>'
+                        ],
+                        flex: 1,
+                        grouped: true,
+                        indexBar: true,
+                        onItemDisclosure: true
+                    }
+                ]
             }
         ]
     }
