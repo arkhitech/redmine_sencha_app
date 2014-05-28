@@ -13,6 +13,8 @@ Ext.define('RedmineApp.view.ProjectIssues', {
                 xtype: 'list',
                 grouped: true,
                 indexBar: true,
+                pinHeaders: true,
+                clearSelectionOnDeactivate: true,
                 itemId: 'project-issue-list',
                 itemTpl: [
                     '<tpl for=".">',

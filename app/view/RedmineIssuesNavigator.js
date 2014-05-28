@@ -16,7 +16,7 @@ Ext.define('RedmineApp.view.RedmineIssuesNavigator', {
         this.currentRefreshListener = fn;
     },
     config: {
-        itemId: 'redmine-issues-navigator',
+        // itemId: 'redmine-issues-navigator',
         flex: 1,
         navigationBar: {
             ui: 'sencha',
@@ -27,7 +27,7 @@ Ext.define('RedmineApp.view.RedmineIssuesNavigator', {
                     text: 'Edit',
                     align: 'right',
                     hidden: true,
-                    id: 'btn-enable-editing',
+                    itemId: 'btn-enable-editing',
                     hasDisabled: false
                 },
                 {
@@ -36,7 +36,7 @@ Ext.define('RedmineApp.view.RedmineIssuesNavigator', {
                     text: 'Save',
                     align: 'right',
                     hidden: true,
-                    id: 'btn-save-values'
+                    itemId: 'btn-save-values'
                 },
                 {
                     xtype: 'button',
@@ -57,6 +57,8 @@ Ext.define('RedmineApp.view.RedmineIssuesNavigator', {
                 title: 'Select a Project for Details',
                 itemId: 'projectlist',
                 store: 'Projects',
+                pinHeaders: true,
+                clearSelectionOnDeactivate: true,
                 itemTpl: [
                     '<tpl for=".">',
                     '<p>{name}</p>',

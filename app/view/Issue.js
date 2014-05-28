@@ -249,7 +249,7 @@ Ext.define('RedmineApp.view.Issue', {
                     }
                 ]
             }
-        ],
+        ]
     }
 
 }

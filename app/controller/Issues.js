@@ -9,9 +9,9 @@ Ext.define('RedmineApp.controller.Issues', {
             projectIssueList: 'projectissuesview #project-issue-list',
             issueTracker: 'issueview #issue-tracker',
             issueCategory: 'issueview #issue-category',
-            btnEnableEditing: '#btn-enable-editing',
-            btnRefresh: '#btn-refresh',
-            btnSaveInfo: '#btn-save-values',
+            btnEnableEditing: 'redmine-issues-navigator #btn-enable-editing',
+            btnRefresh: 'redmine-issues-navigator #btn-refresh',
+            btnSaveInfo: 'redmine-issues-navigator #btn-save-values',
             issuePanel: '#issue-panel',
             redmineTabPanel: '#redmine-tab-panel',
             redmineIssuesNavigator: 'redmine-issues-navigator',
@@ -37,7 +37,7 @@ Ext.define('RedmineApp.controller.Issues', {
             attachmentSubFieldset: '#attachment-sub-fieldset',
             relationsSubFieldset: '#relations-sub-fieldset',
             journalsSubFieldset: '#journals-sub-fieldset',
-            historyPanel: '#issue-history-panel'
+            historyPanel: 'issuehistoryview'
         },
         control: {
             redmineIssuesNavigator: {
@@ -215,22 +215,17 @@ Ext.define('RedmineApp.controller.Issues', {
     },
     saveInfo: function(btn) {
         var form = this.getIssuePanel();
-
-        if (form) {
-            var issue = form.getRecord();
-            if (issue) {
-                issue.set('estimated_hours', form.getValues().estimated_hours);
-                issue.set('description', form.getValues().description);
-                issue.set('due_date', form.getValues().due_date);
-                issue.set('start_date', form.getValues().start_date);
-                issue.set('priority_id', form.getValues().priority_name);
-                issue.set('tracker_id', form.getValues().tracker_name);
-                issue.set('status_id', form.getValues().status_name);
-                issue.set('category_id', form.getValues().category_name);
-                issue.set('issue-story-points', form.getValues().story_points);
-                issue.save();
-            }
-        }
+        var issue = form.getRecord();
+        issue.set('estimated_hours', form.getValues().estimated_hours);
+        issue.set('description', form.getValues().description);
+        issue.set('due_date', form.getValues().due_date);
+        issue.set('start_date', form.getValues().start_date);
+        issue.set('priority_id', form.getValues().priority_name);
+        issue.set('tracker_id', form.getValues().tracker_name);
+        issue.set('status_id', form.getValues().status_name);
+        issue.set('category_id', form.getValues().category_name);
+        issue.set('issue-story-points', form.getValues().story_points);
+        issue.save();
         this.getIssueID().enable();
         this.getIssueProject().enable();
         this.getIssueFixedVersion().enable();
@@ -255,8 +250,6 @@ Ext.define('RedmineApp.controller.Issues', {
         this.getBtnShowHistory().show();
         this.getBtnNewNote().show();
     },
-    issue: null,
-    issueView: null,
     refreshIssue: function(btn) {
         var Issue = Ext.ModelManager.getModel('RedmineApp.model.Issue');
         Issue.load(this.issue.data.id, {
@@ -270,9 +263,11 @@ Ext.define('RedmineApp.controller.Issues', {
             }
         });
     },
-    backClicked: function(issueview, eOpts) {
+    backClicked: function() {
         console.log("Back button pressed");
         this.getBtnEnableEditing().hide();
+//        this.getRedmineIssuesNavigator().pop();
+//        this.getRedmineIssuesNavigator().push(this.getProjectIssueList());        
     },
     loadIssueById: function(issue_id) {
         var Issue = Ext.ModelManager.getModel('RedmineApp.model.Issue');
@@ -280,7 +275,14 @@ Ext.define('RedmineApp.controller.Issues', {
             scope: this,
             success: function(issue, operation) {
                 this.issue = issue;
+
+                console.log('Creating Issue View');
                 var issueView = Ext.create('RedmineApp.view.Issue');
+
+                if (this.issueView) {
+                    this.issueView.destroy();
+                    delete this.issueView;
+                }
                 //create an empty editable journal note entry
                 new_items = [
                     {
@@ -295,8 +297,8 @@ Ext.define('RedmineApp.controller.Issues', {
 
                 issueView.setRecord(issue);
                 this.getBtnEnableEditing().show();
-                this.getIssueTracker().setStore(RedmineApp.app.getCurrentProjectTrackers());
-                this.getIssueCategory().setStore(RedmineApp.app.getCurrentProjectIssueCategories());
+//                this.getIssueTracker().setStore(RedmineApp.app.getCurrentProjectTrackers());
+//                this.getIssueCategory().setStore(RedmineApp.app.getCurrentProjectIssueCategories());
                 this.getRedmineIssuesNavigator().push(issueView);
                 this.getRedmineIssuesNavigator().setCurrentRefreshListener(this.refreshIssue, this);
 
@@ -336,10 +338,10 @@ Ext.define('RedmineApp.controller.Issues', {
         this.getBtnEnableEditing().hide();
         this.getBtnRefresh().hide();
         var me = this;
-        issue_history_view.addListener('remove', function() {
-            me.getBtnRefresh().show();
-            me.getBtnEnableEditing().show();
-        });
+//        issue_history_view.addListener('remove', function() {
+//            me.getBtnRefresh().show();
+//            me.getBtnEnableEditing().show();
+//        });
 
         this.getRedmineIssuesNavigator().push(issue_history_view);
     },
