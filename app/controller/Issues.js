@@ -10,7 +10,7 @@ Ext.define('RedmineApp.controller.Issues', {
             issueTracker: 'issueview #issue-tracker',
             issueCategory: 'issueview #issue-category',
             btnEnableEditing: 'redmine-issues-navigator #btn-enable-editing',
-             btnRefresh: 'redmine-issues-navigator #btn-refresh',
+            btnRefresh: 'redmine-issues-navigator #btn-refresh',
             btnSaveInfo: 'redmine-issues-navigator #btn-save-values',
             issuePanel: '#issue-panel',
             redmineTabPanel: '#redmine-tab-panel',
@@ -264,11 +264,9 @@ Ext.define('RedmineApp.controller.Issues', {
         });
     },
     backClicked: function() {
-
-        console.log("Back button pressed");
         this.getBtnEnableEditing().hide();
-        console.log(this.getRedmineIssuesNavigator().getItems().length);
-//        this.getRedmineIssuesNavigator().pop();
+        //console.log(this.getRedmineIssuesNavigator().getItems().length);
+        // this.getRedmineIssuesNavigator().back();
 //        this.getRedmineIssuesNavigator().push(this.getProjectIssueList());   
 //        if (this.issueView) {
 //            this.issueView.destroy();

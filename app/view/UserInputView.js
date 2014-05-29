@@ -60,7 +60,7 @@ Ext.define('RedmineApp.view.UserInputView', {
                             {
                                 xtype: 'button',
                                 ui: 'confirm',
-                                style: 'margin: .5em',
+                                style: 'margin: .05em',
                                 text: 'Save Permanently',
                                 handler: function(btn, evt) {
                                     var redurl = Ext.getCmp('redmine_url_from_user').getValue();
