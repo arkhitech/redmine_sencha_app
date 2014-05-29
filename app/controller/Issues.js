@@ -283,7 +283,7 @@ Ext.define('RedmineApp.controller.Issues', {
             success: function(issue, operation) {
                 this.issue = issue;
 
-                console.log('Creating Issue View');
+                // console.log('Creating Issue View');
                 this.issueView = Ext.create('RedmineApp.view.Issue');
 
 
@@ -330,7 +330,7 @@ Ext.define('RedmineApp.controller.Issues', {
     },
     showIssue: function(list, issue, node, index, event, eOpts) {
         if (RedmineApp.controller.Issues.isClickInProcess) {
-            console.log("Click is already in process, so ignoring");
+            //console.log("Click is already in process, so ignoring");
             return;
         }
         RedmineApp.controller.Issues.isClickInProcess = true;

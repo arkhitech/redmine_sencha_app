@@ -16,12 +16,12 @@ Ext.define('RedmineApp.controller.UserInputFields', {
         }
     },
     styleRedmineUrlField: function(urlfield, eOpts) {
-        console.log('I am here in styleRedmineUrlField');
+        // console.log('I am here in styleRedmineUrlField');
         // redmineurltextfield.getRedmineUrlField().setStyle({backgroundColor: '#00D2A5'});
         Ext.getCmp('redmine-url-field').setStyle({backgroundColor: '#00D2A5'});
     },
     styleRedmineKeyField: function(keyfield, eOpts) {
-        console.log('I am here in styleRedmineKeyField');
+        //  console.log('I am here in styleRedmineKeyField');
         //  redminekeytextfield.getRedmineKeyField().setStyle({backgroundColor: '#00D2A5'});
         Ext.getCmp('redmine-key-field').setStyle({backgroundColor: '#00D2A5'});
     }

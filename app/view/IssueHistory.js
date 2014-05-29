@@ -7,7 +7,7 @@ Ext.define('RedmineApp.view.IssueHistory', {
         'Ext.form.FieldSet'
     ],
     config: {
-        title: 'Issue History',       
+        title: 'Issue History',
         layout: 'vbox',
         items: [
             {

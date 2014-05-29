@@ -55,7 +55,7 @@ Ext.define('RedmineApp.view.RedmineIssuesNavigator', {
         items: [{
                 xtype: 'formpanel',
                 layout: 'vbox',
-                title: 'Select a Project for Details',
+                title: 'Select a Project',
                 items: [
                     {
                         xtype: 'list',

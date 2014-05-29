@@ -60,6 +60,7 @@ Ext.define('RedmineApp.view.UserInputView', {
                             {
                                 xtype: 'button',
                                 ui: 'confirm',
+                                id: 'save-permanently',
                                 style: 'margin: .05em',
                                 text: 'Save Permanently',
                                 handler: function(btn, evt) {
@@ -71,6 +72,22 @@ Ext.define('RedmineApp.view.UserInputView', {
                                     Ext.Msg.alert('Save Successful', 'Your credentials have been saved and will remain saved until overwritten.');
                                     Ext.getCmp('redmine_url_from_user').disable();
                                     Ext.getCmp('access_key_from_user').disable();
+                                    btn.hide();
+                                    Ext.getCmp('edit-credentials').show();
+                                }
+                            },
+                            {
+                                xtype: 'button',
+                                ui: 'confirm',
+                                id: 'edit-credentials',
+                                style: 'margin: .05em',
+                                text: 'Edit Credentials',
+                                hidden: true,
+                                handler: function(btn, evt) {
+                                    btn.hide();
+                                    Ext.getCmp('save-permanently').show();
+                                    Ext.getCmp('redmine_url_from_user').enable();
+                                    Ext.getCmp('access_key_from_user').enable();
                                 }
                             }
                         ]
