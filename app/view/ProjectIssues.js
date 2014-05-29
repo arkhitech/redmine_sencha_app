@@ -1,12 +1,16 @@
 Ext.define('RedmineApp.view.ProjectIssues', {
-    extend: 'Ext.form.Panel',
+    extend: 'Ext.navigation.View',
     xtype: 'projectissuesview',
     requires: [
         'Ext.dataview.List'
     ],
     config: {
-        layout: 'vbox',
-        title: 'Select a Ticket For Details',
+        navigationBar: null,
+        // layout: 'vbox',
+        autoDestroy: true,
+        showAnimation: null,
+        flex: 1,
+        title: 'Select a Ticket',
         items: [
             {
                 xtype: 'list',
@@ -20,8 +24,7 @@ Ext.define('RedmineApp.view.ProjectIssues', {
                     '<p>{subject}</p>',
                     '</tpl>'
                 ],
-                onItemDisclosure: true,
-                flex: 1
+                onItemDisclosure: true
             }
         ]
     }

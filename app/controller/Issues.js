@@ -6,6 +6,7 @@ Ext.define('RedmineApp.controller.Issues', {
     config: {
         views: ['ProjectIssues', 'Issue', 'IssueHistory'],
         refs: {
+            projectIssuesView: 'projectissuesview',
             projectIssueList: 'projectissuesview #project-issue-list',
             issueTracker: 'issueview #issue-tracker',
             issueCategory: 'issueview #issue-category',
@@ -250,29 +251,23 @@ Ext.define('RedmineApp.controller.Issues', {
         this.getBtnShowHistory().show();
         this.getBtnNewNote().show();
     },
-    refreshIssue: function(btn) {
-        var Issue = Ext.ModelManager.getModel('RedmineApp.model.Issue');
-        Issue.load(this.issue.data.id, {
-            scope: this,
-            success: function(issue, operation) {
-                this.issue = issue;
-                var form = this.getIssuePanel();
-                if (form) {
-                    form.setRecord(issue);
-                }
-            }
-        });
-    },
+//    refreshIssue: function(btn) {
+//        var Issue = Ext.ModelManager.getModel('RedmineApp.model.Issue');
+//        Issue.load(this.issue.data.id, {
+//            scope: this,
+//            success: function(issue, operation) {
+//                this.issue = issue;
+//                var form = this.getIssuePanel();
+//                if (form) {
+//                    form.setRecord(issue);
+//                }
+//            }
+//        });
+//    },
     backClicked: function() {
         this.getBtnEnableEditing().hide();
+        this.getBtnRefresh().show();
         //console.log(this.getRedmineIssuesNavigator().getItems().length);
-        // this.getRedmineIssuesNavigator().back();
-//        this.getRedmineIssuesNavigator().push(this.getProjectIssueList());   
-//        if (this.issueView) {
-//            this.issueView.destroy();
-//            delete this.issueView;
-//            console.log('Issue View Destroyed');
-//        }
     },
     Issue: null,
     issueView: null,
@@ -301,9 +296,15 @@ Ext.define('RedmineApp.controller.Issues', {
 
                 this.issueView.setRecord(issue);
                 this.getBtnEnableEditing().show();
-//                this.getIssueTracker().setStore(RedmineApp.app.getCurrentProjectTrackers());
-//                this.getIssueCategory().setStore(RedmineApp.app.getCurrentProjectIssueCategories());
-                this.getRedmineIssuesNavigator().push(this.issueView);
+//                this.getIssueTracker().setStore(RedmineApp.app.getCurrentProjectTrackers());         
+//                 this.getIssueCategory().setStore(RedmineApp.app.getCurrentProjectIssueCategories());
+
+
+                //   this.getRedmineIssuesNavigator().push(this.issueView);
+
+                this.getProjectIssuesView().push(this.issueView);
+                this.getBtnRefresh().hide();
+
                 //   this.getRedmineIssuesNavigator().setCurrentRefreshListener(this.refreshIssue, this);
 
                 RedmineApp.controller.Issues.isClickInProcess = false;

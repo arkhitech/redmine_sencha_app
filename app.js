@@ -15,12 +15,12 @@ Ext.application({
     views: ['Issue', 'ProjectIssues', 'RedmineIssuesNavigator', 'RedmineTabPanel', 'RedmineChart', 'RedmineChartsNavigator', 'UserInputView', 'RedmineIDChart', 'RedminePriorityChart', 'RedmineTrackerChart', 'RedmineStatusChart', 'IssueHistory'],
     models: ['RedmineConfig', 'Issue', 'IssueCategory', 'IssuePriority', 'Project', 'ProjectMembership', 'Tracker', 'User', 'IssueStatus'],
     stores: ['RedmineConfigs', 'Projects', 'IssuePriorities', 'IssueStatuses'],
-    controllers: ['Projects', 'Issues', 'ChartsMenu','UserInputFields'],
+    controllers: ['Projects', 'Issues', 'ChartsMenu', 'UserInputFields'],
     icon: {
-        57: "resources/icons/57-57.png",
-        72: "resources/icons/72-72.png",
-        114: "resources/icons/114-114.png",
-        144: "resources/icons/144-144.png"
+        "57": "resources/icons/57-57.png",
+        "72": "resources/icons/72-72.png",
+        "114": "resources/icons/114-114.png",
+        "144": "resources/icons/144-144.png"
     },
     glossOnIcon: false,
     launch: function() {
@@ -38,7 +38,7 @@ Ext.application({
         var redmine_config = configStore.getAt(0);
         if (redmine_config !== undefined) {
             this.redmine_url = redmine_config.get('redmine_url');
-            this.redmine_access_key = redmine_config.get('redmine_access_key');          
+            this.redmine_access_key = redmine_config.get('redmine_access_key');
         } else {
             this.redmine_url = 'http://redmine.arkhitech.com';
         }

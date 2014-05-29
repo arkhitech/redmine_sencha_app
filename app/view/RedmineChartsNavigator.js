@@ -12,7 +12,8 @@ Ext.define('RedmineApp.view.RedmineChartsNavigator', {
         pack: 'center',
         align: 'left',
         navigationBar: {
-            ui: 'sencha'},
+            ui: 'sencha'
+        },
         items: [
             {
                 title: 'Select a Project',

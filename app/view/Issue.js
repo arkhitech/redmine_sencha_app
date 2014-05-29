@@ -226,8 +226,7 @@ Ext.define('RedmineApp.view.Issue', {
                         itemId: 'btn-show-history',
                         style: 'margin: .5em',
                         ui: 'confirm',
-                        width: '25%',
-                        text: 'Show History',
+                        text: 'History',
                         hidden: false
                     },
                     {
@@ -235,16 +234,14 @@ Ext.define('RedmineApp.view.Issue', {
                         itemId: 'btn-new-note',
                         style: 'margin: .5em',
                         ui: 'confirm',
-                        width: '25%',
-                        text: 'Add New Note'
+                        text: 'Add Note'
                     },
                     {
                         xtype: 'button',
                         itemId: 'btn-new-note-save',
                         style: 'margin: .5em',
                         ui: 'decline',
-                        width: '25%',
-                        text: 'Save New Note',
+                        text: 'Save Note',
                         hidden: true
                     }
                 ]
