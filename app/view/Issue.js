@@ -33,10 +33,11 @@ Ext.define('RedmineApp.view.Issue', {
                         readOnly: true,
                     },
                     {
-                        xtype: 'textfield',
+                        xtype: 'textareafield',
                         label: 'Project',
                         name: 'project_name',
                         itemId: 'issue-project',
+                        maxRows: 3,
                         readOnly: true
                     },
                     {
@@ -101,18 +102,20 @@ Ext.define('RedmineApp.view.Issue', {
 
                     },
                     {
-                        xtype: 'textfield',
+                        xtype: 'textareafield',
                         label: 'Subject',
                         name: 'subject',
+                        maxRows: 5,
                         itemId: 'issue-subject',
                         readOnly: true
 
                     },
                     {
-                        xtype: 'textfield',
+                        xtype: 'textareafield',
                         label: 'Issue Description',
                         name: 'description',
                         itemId: 'issue-description',
+                        maxRows: 5,
                         readOnly: true
 
                     },

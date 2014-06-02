@@ -6,7 +6,6 @@ Ext.define('RedmineApp.view.ProjectIssues', {
     ],
     config: {
         navigationBar: null,
-        // layout: 'vbox',
         autoDestroy: true,
         showAnimation: null,
         flex: 1,

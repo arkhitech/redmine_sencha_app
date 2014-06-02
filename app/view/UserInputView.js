@@ -7,12 +7,28 @@ Ext.define('RedmineApp.view.UserInputView', {
         'Ext.MessageBox',
         'Ext.field.Url'
     ],
+    initialize: function(loginformpanel) {
+        if (Ext.getCmp('redmine_url_from_user').getValue() !== undefined && Ext.getCmp('access_key_from_user').getValue() !== undefined)
+        {
+            Ext.getCmp('redmine_url_from_user').disable();
+            Ext.getCmp('access_key_from_user').disable();
+            Ext.getCmp('save-permanently').hide();
+            Ext.getCmp('edit-credentials').show();
+        }
+        else {
+            Ext.getCmp('redmine_url_from_user').enable();
+            Ext.getCmp('access_key_from_user').enable();
+            Ext.getCmp('save-permanently').show();
+            Ext.getCmp('edit-credentials').hide();
+        }
+    },
     config: {
         flex: 1,
         layout: 'vbox',
         pack: 'center',
         height: '100%',
-        items: [{
+        items: [
+            {
                 xtype: 'fieldset',
                 pack: 'center',
                 items: [

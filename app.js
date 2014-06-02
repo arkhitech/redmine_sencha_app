@@ -17,12 +17,21 @@ Ext.application({
     stores: ['RedmineConfigs', 'Projects', 'IssuePriorities', 'IssueStatuses'],
     controllers: ['Projects', 'Issues', 'ChartsMenu', 'UserInputFields'],
     icon: {
-        "57": "resources/icons/57-57.png",
-        "72": "resources/icons/72-72.png",
-        "114": "resources/icons/114-114.png",
-        "144": "resources/icons/144-144.png"
+        29: "resources/icons/Icon-Small.png",
+        40: "resources/icons/Icon-40.png",
+        50: "resources/icons/Icon-Small-50.png",
+        57: "resources/icons/Icon.png",
+        58: "resources/icons/Icon-Small@2x.png",
+        60: "resources/icons/Icon-60.png",
+        72: "resources/icons/Icon-72.png",
+        76: "resources/icons/76.png",
+        80: "resources/icons/Icon-40@2x.png",
+        100: "resources/icons/Icon-Small-50@2x.png",
+        114: "resources/icons/Icon@2x.png",
+        120: "resources/icons/Icon-60@2x.png",
+        144: "resources/icons/Icon-72@2x.png",
+        152: "resources/icons/Icon-76@2x.png"
     },
-    glossOnIcon: false,
     launch: function() {
         // Destroy the #appLoadingIndicator element
         Ext.fly('appLoadingIndicator').destroy();

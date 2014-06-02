@@ -1,7 +1,8 @@
 Ext.define('RedmineApp.controller.Issues', {
     extend: 'Ext.app.Controller',
     requires: [
-        'Ext.data.proxy.LocalStorage'
+        'Ext.data.proxy.LocalStorage',
+        'Ext.field.TextArea'
     ],
     config: {
         views: ['ProjectIssues', 'Issue', 'IssueHistory'],
@@ -164,7 +165,8 @@ Ext.define('RedmineApp.controller.Issues', {
                         label: 'Notes:',
                         name: 'journal_note',
                         value: journals[i].notes,
-                        readOnly: true
+                        readOnly: true,
+                        maxRows: 12
                     }
                 ]
             };
@@ -267,6 +269,7 @@ Ext.define('RedmineApp.controller.Issues', {
     backClicked: function() {
         this.getBtnEnableEditing().hide();
         this.getBtnRefresh().show();
+        this.getBtnSaveInfo().hide();
         //console.log(this.getRedmineIssuesNavigator().getItems().length);
     },
     Issue: null,
@@ -343,10 +346,10 @@ Ext.define('RedmineApp.controller.Issues', {
         this.getBtnEnableEditing().hide();
         this.getBtnRefresh().hide();
         var me = this;
-//        issue_history_view.addListener('remove', function() {
-//            me.getBtnRefresh().show();
-//            me.getBtnEnableEditing().show();
-//        });
+        issue_history_view.addListener('remove', function() {
+            me.getBtnRefresh().hide();
+            me.getBtnEnableEditing().show();
+        });
 
         this.getRedmineIssuesNavigator().push(issue_history_view);
     },
