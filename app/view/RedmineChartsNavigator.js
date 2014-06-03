@@ -7,12 +7,18 @@ Ext.define('RedmineApp.view.RedmineChartsNavigator', {
     ],
     config: {
         flex: 1,
+        autoDestroy: true,
         id: 'redminenavigatorviewforcharts',
         height: '100%',
         pack: 'center',
         align: 'left',
         navigationBar: {
-            ui: 'sencha'
+            ui: 'sencha',
+//             xtype: 'toolbar',
+//                ui: 'Sencha',
+//                docked: 'top',
+//                title: 'Please Enter Your Details',
+            style: 'padding-top:20px;height:4em;background:#EEEEEE !important;'
         },
         items: [
             {

@@ -29,6 +29,13 @@ Ext.define('RedmineApp.view.UserInputView', {
         height: '100%',
         items: [
             {
+                xtype: 'toolbar',
+                ui: 'Sencha',
+                docked: 'top',
+                title: 'Please Enter Your Details',
+                style: 'padding-top:20px;height:3em;background:#EEEEEE !important;'
+            },
+            {
                 xtype: 'fieldset',
                 pack: 'center',
                 items: [
@@ -76,6 +83,8 @@ Ext.define('RedmineApp.view.UserInputView', {
                             {
                                 xtype: 'button',
                                 ui: 'confirm',
+                                iconCls: 'bookmarks',
+                                iconMask: true,
                                 id: 'save-permanently',
                                 style: 'margin: .05em',
                                 text: 'Save Permanently',
@@ -95,6 +104,8 @@ Ext.define('RedmineApp.view.UserInputView', {
                             {
                                 xtype: 'button',
                                 ui: 'confirm',
+                                iconCls: 'action',
+                                iconMask: true,
                                 id: 'edit-credentials',
                                 style: 'margin: .05em',
                                 text: 'Edit Credentials',
@@ -109,12 +120,6 @@ Ext.define('RedmineApp.view.UserInputView', {
                         ]
                     }
                 ]
-            },
-            {
-                xtype: 'titlebar',
-                ui: 'Sencha',
-                docked: 'top',
-                title: 'Please Enter Your Details'
             }
         ]
     }

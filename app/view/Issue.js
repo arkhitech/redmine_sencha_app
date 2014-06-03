@@ -10,8 +10,7 @@ Ext.define('RedmineApp.view.Issue', {
         'Ext.form.FieldSet',
         'Ext.MessageBox',
         'Ext.field.Select',
-        'Ext.field.Toggle',
-        'Ext.form.Panel'
+        'Ext.field.Toggle'       
     ],
     config: {
         itemId: 'issue-panel',
@@ -227,6 +226,8 @@ Ext.define('RedmineApp.view.Issue', {
                     {
                         xtype: 'button',
                         itemId: 'btn-show-history',
+                        iconCls: 'bookmarks',
+                        iconMask: true,
                         style: 'margin: .5em',
                         ui: 'confirm',
                         text: 'History',
@@ -235,6 +236,8 @@ Ext.define('RedmineApp.view.Issue', {
                     {
                         xtype: 'button',
                         itemId: 'btn-new-note',
+                        iconCls: 'add',
+                        iconMask: true,
                         style: 'margin: .5em',
                         ui: 'confirm',
                         text: 'Add Note'
@@ -242,6 +245,8 @@ Ext.define('RedmineApp.view.Issue', {
                     {
                         xtype: 'button',
                         itemId: 'btn-new-note-save',
+                        iconCls: 'organize',
+                        iconMask: true,
                         style: 'margin: .5em',
                         ui: 'decline',
                         text: 'Save Note',

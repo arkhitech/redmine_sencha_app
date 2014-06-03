@@ -10,6 +10,10 @@ $page-bg-color: #3498db;
 $form-bg-color: #ecf0f1;
 $button-radius: '0';
 
+.x-navigation-bar.x-docked-top {
+  padding-top: 20px !important;
+}
+
 
 @import 'sencha-touch/default';
 @import 'sencha-touch/default/all';

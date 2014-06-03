@@ -4,7 +4,8 @@ Ext.define('RedmineApp.view.RedmineIssuesNavigator', {
     requires: [
         'Ext.TitleBar',
         'Ext.dataview.List',
-        'Ext.Button'
+        'Ext.Button',
+        'Ext.form.Panel'
     ],
     currentRefreshListener: null,
     setCurrentRefreshListener: function(fn, scope) {
@@ -26,6 +27,8 @@ Ext.define('RedmineApp.view.RedmineIssuesNavigator', {
                     xtype: 'button',
                     ui: 'action',
                     text: 'Edit',
+                    iconCls: 'action',
+                    iconMask: true,
                     align: 'right',
                     hidden: true,
                     itemId: 'btn-enable-editing',
@@ -35,6 +38,8 @@ Ext.define('RedmineApp.view.RedmineIssuesNavigator', {
                     xtype: 'button',
                     ui: 'confirm',
                     text: 'Save',
+                    iconCls: 'organize',
+                    iconMask: true,
                     align: 'right',
                     hidden: true,
                     itemId: 'btn-save-values'
@@ -42,6 +47,8 @@ Ext.define('RedmineApp.view.RedmineIssuesNavigator', {
                 {
                     xtype: 'button',
                     text: 'Refresh',
+                    iconCls: 'refresh',
+                    iconMask: true,
                     id: 'btn-refresh',
                     ui: 'decline',
                     align: 'right',
