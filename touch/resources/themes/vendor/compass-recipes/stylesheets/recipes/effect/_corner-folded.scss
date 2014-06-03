@@ -13,12 +13,12 @@
 @import "recipes/effect/folded-corner";
 
 @mixin effect-corner-folded(
-    $position: top-right,
-    $color: #ddd,
-    $background-color: #fff,
-    $width: 1em,
-    $border-radius: .3em,
-    $box-shadow: rgba(0, 0, 0, .3) 0 0 .6em)
+$position: top-right,
+$color: #ddd,
+$background-color: #fff,
+$width: 1em,
+$border-radius: .3em,
+$box-shadow: rgba(0, 0, 0, .3) 0 0 .6em)
 {
     @warn 'Deprecated, please use folded-corner mixin instead.';
 

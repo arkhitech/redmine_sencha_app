@@ -2,27 +2,21 @@
  * @private
  */
 Ext.define('Ext.event.publisher.ElementSize', {
-
     extend: 'Ext.event.publisher.Publisher',
-
     requires: [
         'Ext.util.SizeMonitor'
     ],
-
     targetType: 'element',
-
     handledEvents: ['resize'],
-
     constructor: function() {
         this.monitors = {};
 
         this.callSuper(arguments);
     },
-
     subscribe: function(target) {
         var match = target.match(this.idSelectorRegex),
-            subscribers = this.subscribers,
-            id, element, sizeMonitor;
+                subscribers = this.subscribers,
+                id, element, sizeMonitor;
 
         if (!match) {
             return false;
@@ -50,12 +44,11 @@ Ext.define('Ext.event.publisher.ElementSize', {
 
         return true;
     },
-
     unsubscribe: function(target, eventName, all) {
         var match = target.match(this.idSelectorRegex),
-            subscribers = this.subscribers,
-            monitors = this.monitors,
-            id, sizeMonitor;
+                subscribers = this.subscribers,
+                monitors = this.monitors,
+                id, sizeMonitor;
 
         if (!match) {
             return false;
@@ -78,7 +71,6 @@ Ext.define('Ext.event.publisher.ElementSize', {
 
         return true;
     },
-
     onElementResize: function(target, element, info) {
         Ext.TaskQueue.requestRead('dispatch', this, [target, 'resize', [element, info]]);
     }

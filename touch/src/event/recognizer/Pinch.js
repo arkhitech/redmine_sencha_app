@@ -5,11 +5,8 @@
  */
 Ext.define('Ext.event.recognizer.Pinch', {
     extend: 'Ext.event.recognizer.MultiTouch',
-
     requiredTouchesCount: 2,
-
     handledEvents: ['pinchstart', 'pinch', 'pinchend'],
-
     /**
      * @member Ext.dom.Element
      * @event pinchstart
@@ -46,16 +43,14 @@ Ext.define('Ext.event.recognizer.Pinch', {
      */
 
     startDistance: 0,
-
     lastTouches: null,
-
     onTouchMove: function(e) {
         if (!this.isTracking) {
             return;
         }
 
         var touches = Array.prototype.slice.call(e.touches),
-            firstPoint, secondPoint, distance;
+                firstPoint, secondPoint, distance;
 
         firstPoint = touches[0].point;
         secondPoint = touches[1].point;
@@ -88,11 +83,9 @@ Ext.define('Ext.event.recognizer.Pinch', {
 
         this.lastTouches = touches;
     },
-
     fireEnd: function(e) {
         this.fire('pinchend', e, this.lastTouches);
     },
-
     fail: function() {
         return this.callParent(arguments);
     }

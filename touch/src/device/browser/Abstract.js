@@ -31,7 +31,6 @@ Ext.define('Ext.device.browser.Abstract', {
      * [PhoneGap documention](http://docs.phonegap.com/en/2.6.0/cordova_inappbrowser_inappbrowser.md.html#window.open).
      */
     open: Ext.emptyFn,
-
     /**
      * Used to close the browser, if one is opened.
      */

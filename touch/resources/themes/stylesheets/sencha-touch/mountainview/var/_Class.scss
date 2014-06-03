@@ -18,9 +18,9 @@ $primary-text-color: #231f20;
 $secondary-text-color: #818285;
 
 @if $dark-theme == true {
-	$background-color: #323232;
-	$foreground-color: #5b5b5b;
-	$secondary-color: #3a3a3a;
-	$primary-text-color: #fff;
-	$secondary-text-color: #808183;
+    $background-color: #323232;
+    $foreground-color: #5b5b5b;
+    $secondary-color: #3a3a3a;
+    $primary-text-color: #fff;
+    $secondary-text-color: #808183;
 }

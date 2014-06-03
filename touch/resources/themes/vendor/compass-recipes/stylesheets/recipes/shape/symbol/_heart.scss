@@ -11,8 +11,8 @@
     height: $height;
 
     &:before,
-    &:after
-    {
+        &:after
+        {
         position: absolute;
         content: "";
         top: 0;
@@ -23,14 +23,14 @@
     }
 
     &:before
-    {
+        {
         left: $width/2;
         @include transform(rotate(-45deg));
         @include transform-origin(0%, 100%);
     }
 
     &:after
-    {
+        {
         left: 0;
         @include transform(rotate(45deg));
         @include transform-origin(100%, 100%);

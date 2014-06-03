@@ -7,7 +7,6 @@ Ext.define('Ext.data.writer.Json', {
     extend: 'Ext.data.writer.Writer',
     alternateClassName: 'Ext.data.JsonWriter',
     alias: 'writer.json',
-
     config: {
         /**
          * @cfg {String} rootProperty
@@ -20,7 +19,6 @@ Ext.define('Ext.data.writer.Json', {
          *
          */
         rootProperty: undefined,
-
         /**
          * @cfg {Boolean} encode
          * True to use Ext.encode() on the data before sending. The encode option should only be set to true when a
@@ -28,7 +26,6 @@ Ext.define('Ext.data.writer.Json', {
          * a raw post. The root will be the name of the parameter sent to the server.
          */
         encode: false,
-
         /**
          * @cfg {Boolean} allowSingle
          * False to ensure that records are always wrapped in an array, even if there is only one record being sent.
@@ -49,23 +46,20 @@ Ext.define('Ext.data.writer.Json', {
          *     }]
          */
         allowSingle: true,
-
         encodeRequest: false
     },
-
     applyRootProperty: function(root) {
         if (!root && (this.getEncode() || this.getEncodeRequest())) {
             root = 'data';
         }
         return root;
     },
-
     //inherit docs
     writeRecords: function(request, data) {
         var root = this.getRootProperty(),
-            params = request.getParams(),
-            allowSingle = this.getAllowSingle(),
-            jsonData;
+                params = request.getParams(),
+                allowSingle = this.getAllowSingle(),
+                jsonData;
 
         if (this.getAllowSingle() && data && data.length == 1) {
             // convert to single object format

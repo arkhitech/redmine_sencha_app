@@ -1,65 +1,57 @@
 Ext.define('Ext.ux.parse.association.Relation', {
     extend: 'Ext.data.association.Association',
     alias: 'association.relation',
-
     config: {
         /**
          * @cfg {Object} store
          * Optional configuration object that will be passed to the generated Store. Defaults to an empty Object.
          */
         store: undefined,
-
         /**
          * @cfg {String} storeName
          * Optional The name of the store by which you can reference it on this class as a property.
          */
         storeName: undefined,
-
         /**
          * @cfg {Boolean} autoLoad
          * `true` to automatically load the related store from a remote source when instantiated.
          */
         autoLoad: false,
-
         /**
          * @cfg {Boolean} autoSync
          * true to automatically synchronize the related store with the remote source
          */
         autoSync: false
     },
-
-    getStore:function(model) {
-        if(model[this.getName()]){
+    getStore: function(model) {
+        if (model[this.getName()]) {
             return model[this.getName()]();
         }
         return null;
     },
-
-    getData: function(model){
+    getData: function(model) {
         var items = [],
-            store = this.getStore(model);
-        if(store){
+                store = this.getStore(model);
+        if (store) {
             var collection = store.getData(), data;
-            collection.each(function(model){
+            collection.each(function(model) {
                 data = model.isParseModel ? model.getDataFlat() : model.getData();
                 items.push(data);
             });
         }
         return items;
     },
-
-    getStatus: function(model){
+    getStatus: function(model) {
         var store = this.getStore(model);
-        if(store){
-            if (store.isLoaded()){
+        if (store) {
+            if (store.isLoaded()) {
                 return "loaded"
-            } else if (store.isLoading()){
+            } else if (store.isLoading()) {
                 return "loading"
             }
         }
         return "unloaded";
     },
-
     applyAssociationKey: function(associationKey) {
         if (!associationKey) {
             var associatedName = this.getName();
@@ -67,21 +59,18 @@ Ext.define('Ext.ux.parse.association.Relation', {
         }
         return associationKey;
     },
-
     applyName: function(name) {
         if (!name) {
             name = Ext.util.Inflector.pluralize(this.getAssociatedName().toLowerCase());
         }
         return name;
     },
-
     applyStoreName: function(name) {
         if (!name) {
             name = this.getName() + 'Store';
         }
         return name;
     },
-
     /**
      * @private
      * @deprecated as of v2.0.0 on an association. Instead use the store configuration.
@@ -93,32 +82,32 @@ Ext.define('Ext.ux.parse.association.Relation', {
      */
     applyStore: function(storeConfig) {
         var me = this,
-            associatedModel = me.getAssociatedModel(),
-            storeName       = me.getStoreName(),
-            autoLoad        = me.getAutoLoad(),
-            autoSync        = me.getAutoSync();
+                associatedModel = me.getAssociatedModel(),
+                storeName = me.getStoreName(),
+                autoLoad = me.getAutoLoad(),
+                autoSync = me.getAutoSync();
 
         return function() {
             var record = this,
-                config, store,
-                listeners = {
-                    addrecords: me.onAddRecords,
-                    removerecords: me.onRemoveRecords,
-                    write: me.onStoreWrite,
-                    scope: me
-                };
+                    config, store,
+                    listeners = {
+                        addrecords: me.onAddRecords,
+                        removerecords: me.onRemoveRecords,
+                        write: me.onStoreWrite,
+                        scope: me
+                    };
 
             if (record[storeName] === undefined) {
 
                 config = Ext.apply({}, storeConfig, {
-                    model        : associatedModel,
-                    params       : {
+                    model: associatedModel,
+                    params: {
                         query: function() {
                             return record.$parseObject.relation(me.getName()).query();
                         }
                     },
-                    autoSync     : autoSync,
-                    listeners    : listeners
+                    autoSync: autoSync,
+                    listeners: listeners
                 });
 
                 store = record[storeName] = Ext.create('Ext.data.Store', config);
@@ -132,11 +121,9 @@ Ext.define('Ext.ux.parse.association.Relation', {
             return record[storeName];
         };
     },
-
     updateStore: function(store) {
         this.getOwnerModel().prototype[this.getName()] = store;
     },
-
     /**
      * Read associated data
      * @private
@@ -146,41 +133,38 @@ Ext.define('Ext.ux.parse.association.Relation', {
      */
     read: function(record, reader, associationData) {
         var store = record[this.getName()](),
-            records = reader.read(associationData).getRecords();
+                records = reader.read(associationData).getRecords();
 
         store.add(records);
     },
-
     onAddRecords: function(store, records) {
         this.syncRelation(store, 'create', records);
     },
-
     onRemoveRecords: function(store, records) {
         this.syncRelation(store, 'destroy', records);
     },
-
-    onStoreWrite: function(store, operation){
+    onStoreWrite: function(store, operation) {
         this.syncRelation(store, operation.getAction(), operation.getRecords());
     },
-
     syncRelation: function(store, type, records) {
-        if(type != "create" && type != "destroy") return;
+        if (type != "create" && type != "destroy")
+            return;
 
         var model = store.boundTo,
-            parse = model.getParseObject(),
-            relationFn = type == "destroy" ? "remove" : "add",
-            dirty = false,
-            ln = records.length, i, record, relatedParse,
-            relation = parse.relation(this.getName());
+                parse = model.getParseObject(),
+                relationFn = type == "destroy" ? "remove" : "add",
+                dirty = false,
+                ln = records.length, i, record, relatedParse,
+                relation = parse.relation(this.getName());
 
         for (i = 0; i < ln; i++) {
             record = records[i];
-            if(record.isParseModel) {
+            if (record.isParseModel) {
                 relatedParse = record.getParseObject();
-                if(!relatedParse.isNew()) {
+                if (!relatedParse.isNew()) {
                     relation[relationFn].call(relation, relatedParse);
                     dirty = true;
-                } else if(type === "create") {
+                } else if (type === "create") {
                     // <debug>
                     Ext.Logger.warn('You cannot make relationships to Models that do not exist on parse. Save this model Prior to adding, record will be removed');
                     // </debug>
@@ -189,6 +173,7 @@ Ext.define('Ext.ux.parse.association.Relation', {
             }
         }
 
-        if(!model.dirty && dirty) model.setDirty(dirty);
+        if (!model.dirty && dirty)
+            model.setDirty(dirty);
     }
 });

@@ -15,11 +15,9 @@
  */
 Ext.define('Ext.direct.Provider', {
     alias: 'direct.provider',
-
     mixins: {
         observable: 'Ext.mixin.Observable'
     },
-
     config: {
         /**
          * @cfg {String} id
@@ -38,7 +36,6 @@ Ext.define('Ext.direct.Provider', {
          */
         id: undefined
     },
-
     /**
      * @event connect
      * Fires when the Provider connects to the server-side
@@ -66,19 +63,16 @@ Ext.define('Ext.direct.Provider', {
     /**
      * @property {Boolean} isProvider Signifies this instance is an Ext.Direct provider.
      */
-    isProvider : true,
-
-    constructor : function(config){
+    isProvider: true,
+    constructor: function(config) {
         this.initConfig(config);
     },
-
     applyId: function(id) {
         if (id === undefined) {
             id = this.getUniqueId();
         }
         return id;
     },
-
     /**
      * Returns whether or not the server-side is currently connected.
      * Abstract method for subclasses to implement.
@@ -87,13 +81,11 @@ Ext.define('Ext.direct.Provider', {
     isConnected: function() {
         return false;
     },
-
     /**
      * Abstract methods for subclasses to implement.
      * @method
      */
     connect: Ext.emptyFn,
-
     /**
      * Abstract methods for subclasses to implement.
      * @method

@@ -42,12 +42,10 @@
  */
 Ext.define('Ext.device.Accelerometer', {
     singleton: true,
-
     requires: [
         'Ext.device.accelerometer.Cordova',
         'Ext.device.accelerometer.Simulator'
     ],
-
     constructor: function() {
         var browserEnv = Ext.browser.is;
         if (browserEnv.WebView && browserEnv.Cordova) {

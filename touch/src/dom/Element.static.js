@@ -17,7 +17,6 @@ Ext.dom.Element.addStatics({
     borders: {l: 'border-left-width', r: 'border-right-width', t: 'border-top-width', b: 'border-bottom-width'},
     paddings: {l: 'padding-left', r: 'padding-right', t: 'padding-top', b: 'padding-bottom'},
     margins: {l: 'margin-left', r: 'margin-right', t: 'margin-top', b: 'margin-bottom'},
-
     /**
      * Test if size has a unit, otherwise appends the passed unit string, or the default for this Element.
      * @param {Object} size The size to set.
@@ -45,7 +44,6 @@ Ext.dom.Element.addStatics({
 
         return size;
     },
-
     /**
      * @static
      * @return {Boolean}
@@ -69,7 +67,6 @@ Ext.dom.Element.addStatics({
         }
         return ret;
     },
-
     /**
      * Parses a number or string representing margin sizes into an object. Supports CSS-style margin declarations
      * (e.g. 10, "10", "10 10", "10 10 10" and "10 10 10 10" are all valid options and would return the same result)
@@ -83,7 +80,7 @@ Ext.dom.Element.addStatics({
         }
 
         var parts = box.split(' '),
-            ln = parts.length;
+                ln = parts.length;
 
         if (ln == 1) {
             parts[1] = parts[2] = parts[3] = parts[0];
@@ -103,7 +100,6 @@ Ext.dom.Element.addStatics({
             left: parts[3] || 0
         };
     },
-
     /**
      * Parses a number or string representing margin sizes into an object. Supports CSS-style margin declarations
      * (e.g. 10, "10", "10 10", "10 10 10" and "10 10 10 10" are all valid options and would return the same result)
@@ -117,16 +113,14 @@ Ext.dom.Element.addStatics({
         box = me.parseBox(box);
 
         return me.addUnits(box.top, units) + ' ' +
-               me.addUnits(box.right, units) + ' ' +
-               me.addUnits(box.bottom, units) + ' ' +
-               me.addUnits(box.left, units);
+                me.addUnits(box.right, units) + ' ' +
+                me.addUnits(box.bottom, units) + ' ' +
+                me.addUnits(box.left, units);
     },
-
     // @private
     camelReplaceFn: function(m, a) {
         return a.charAt(1).toUpperCase();
     },
-
     /**
      * Normalizes CSS property keys from dash delimited to camel case JavaScript Syntax.
      * For example:
@@ -145,7 +139,6 @@ Ext.dom.Element.addStatics({
 //        }
         return this.propertyCache[prop] || (this.propertyCache[prop] = prop.replace(this.camelRe, this.camelReplaceFn));
     },
-
     /**
      * Returns the top Element that is located at the passed coordinates
      * @static
@@ -156,7 +149,6 @@ Ext.dom.Element.addStatics({
     fromPoint: function(x, y) {
         return Ext.get(document.elementFromPoint(x, y));
     },
-
     /**
      * Converts a CSS string into an object with a property for each style.
      *
@@ -172,8 +164,8 @@ Ext.dom.Element.addStatics({
      */
     parseStyles: function(styles) {
         var out = {},
-            cssRe = this.cssRe,
-            matches;
+                cssRe = this.cssRe,
+                matches;
 
         if (styles) {
             // Since we're using the g flag on the regex, we need to set the lastIndex.
@@ -199,12 +191,12 @@ Ext.dom.Element.addStatics({
      */
     serializeForm: function(form) {
         var fElements = form.elements || (document.forms[form] || Ext.getDom(form)).elements,
-            hasSubmit = false,
-            encoder = encodeURIComponent,
-            name,
-            data = '',
-            type,
-            hasValue;
+                hasSubmit = false,
+                encoder = encodeURIComponent,
+                name,
+                data = '',
+                type,
+                hasValue;
 
         Ext.each(fElements, function(element) {
             name = element.name;
@@ -229,7 +221,6 @@ Ext.dom.Element.addStatics({
 
         return data.substr(0, data.length - 1);
     },
-
     /**
      * Retrieves the document height
      * @deprecated 2.0.0 Please use {@link Ext.Viewport#getWindowHeight} instead
@@ -239,11 +230,10 @@ Ext.dom.Element.addStatics({
     getDocumentHeight: function() {
         //<debug warn>
         Ext.Logger.deprecate("Ext.Element.getDocumentHeight() is no longer supported. " +
-            "Please use Ext.Viewport#getWindowHeight() instead", this);
+                "Please use Ext.Viewport#getWindowHeight() instead", this);
         //</debug>
         return Math.max(!Ext.isStrict ? document.body.scrollHeight : document.documentElement.scrollHeight, this.getViewportHeight());
     },
-
     /**
      * Retrieves the document width
      * @deprecated 2.0.0 Please use {@link Ext.Viewport#getWindowWidth} instead
@@ -253,11 +243,10 @@ Ext.dom.Element.addStatics({
     getDocumentWidth: function() {
         //<debug warn>
         Ext.Logger.deprecate("Ext.Element.getDocumentWidth() is no longer supported. " +
-            "Please use Ext.Viewport#getWindowWidth() instead", this);
+                "Please use Ext.Viewport#getWindowWidth() instead", this);
         //</debug>
         return Math.max(!Ext.isStrict ? document.body.scrollWidth : document.documentElement.scrollWidth, this.getViewportWidth());
     },
-
     /**
      * Retrieves the viewport height of the window.
      * @deprecated 2.0.0 Please use {@link Ext.Viewport#getWindowHeight} instead
@@ -267,11 +256,10 @@ Ext.dom.Element.addStatics({
     getViewportHeight: function() {
         //<debug warn>
         Ext.Logger.deprecate("Ext.Element.getDocumentHeight() is no longer supported. " +
-            "Please use Ext.Viewport#getWindowHeight() instead", this);
+                "Please use Ext.Viewport#getWindowHeight() instead", this);
         //</debug>
         return window.innerHeight;
     },
-
     /**
      * Retrieves the viewport width of the window.
      * @deprecated 2.0.0 Please use {@link Ext.Viewport#getWindowWidth} instead
@@ -281,11 +269,10 @@ Ext.dom.Element.addStatics({
     getViewportWidth: function() {
         //<debug warn>
         Ext.Logger.deprecate("Ext.Element.getDocumentWidth() is no longer supported. " +
-            "Please use Ext.Viewport#getWindowWidth() instead", this);
+                "Please use Ext.Viewport#getWindowWidth() instead", this);
         //</debug>
         return window.innerWidth;
     },
-
     /**
      * Retrieves the viewport size of the window.
      * @deprecated 2.0.0 Please use {@link Ext.Viewport#getSize} instead
@@ -295,14 +282,13 @@ Ext.dom.Element.addStatics({
     getViewSize: function() {
         //<debug warn>
         Ext.Logger.deprecate("Ext.Element.getViewSize() is no longer supported. " +
-            "Please use Ext.Viewport#getSize() instead", this);
+                "Please use Ext.Viewport#getSize() instead", this);
         //</debug>
         return {
             width: window.innerWidth,
             height: window.innerHeight
         };
     },
-
     /**
      * Retrieves the current orientation of the window. This is calculated by
      * determining if the height is greater than the width.
@@ -313,7 +299,7 @@ Ext.dom.Element.addStatics({
     getOrientation: function() {
         //<debug warn>
         Ext.Logger.deprecate("Ext.Element.getOrientation() is no longer supported. " +
-            "Please use Ext.Viewport#getOrientation() instead", this);
+                "Please use Ext.Viewport#getOrientation() instead", this);
         //</debug>
         if (Ext.supports.OrientationChange) {
             return (window.orientation == 0) ? 'portrait' : 'landscape';

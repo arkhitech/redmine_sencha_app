@@ -9,9 +9,7 @@
  * @private
  */
 Ext.define('Ext.env.OS', {
-
     requires: ['Ext.Version'],
-
     statics: {
         names: {
             ios: 'iOS',
@@ -32,7 +30,7 @@ Ext.define('Ext.env.OS', {
             tizen: '(Tizen )',
             ios: 'i(?:Pad|Phone|Pod)(?:.*)CPU(?: iPhone)? OS ',
             android: '(Android |HTC_|Silk/)', // Some HTC devices ship with an OSX userAgent by default,
-                                        // so we need to add a direct check for HTC_
+            // so we need to add a direct check for HTC_
             windowsPhone: 'Windows Phone ',
             blackberry: '(?:BlackBerry|BB)(?:.*)Version\/',
             rimTablet: 'RIM Tablet OS ',
@@ -41,7 +39,6 @@ Ext.define('Ext.env.OS', {
             chrome: 'CrOS '
         }
     },
-
     /**
      * A "hybrid" property, can be either accessed as a method call, i.e:
      *
@@ -85,7 +82,6 @@ Ext.define('Ext.env.OS', {
      * @return {Boolean}
      */
     is: Ext.emptyFn,
-
     /**
      * @property {String} [name=null]
      * @readonly
@@ -101,14 +97,12 @@ Ext.define('Ext.env.OS', {
      * - Other
      */
     name: null,
-
     /**
      * @property {Ext.Version} [version=null]
      * Refer to {@link Ext.Version}
      * @readonly
      */
     version: null,
-
     setFlag: function(name, value) {
         if (typeof value == 'undefined') {
             value = true;
@@ -119,14 +113,13 @@ Ext.define('Ext.env.OS', {
 
         return this;
     },
-
     constructor: function(userAgent, platform, browserScope) {
         var statics = this.statics(),
-            names = statics.names,
-            prefixes = statics.prefixes,
-            name,
-            version = '',
-            i, prefix, match, item, is, match1;
+                names = statics.names,
+                prefixes = statics.prefixes,
+                name,
+                version = '',
+                i, prefix, match, item, is, match1;
 
         browserScope = browserScope || Ext.browser;
 
@@ -138,7 +131,7 @@ Ext.define('Ext.env.OS', {
             if (prefixes.hasOwnProperty(i)) {
                 prefix = prefixes[i];
 
-                match = userAgent.match(new RegExp('(?:'+prefix+')([^\\s;]+)'));
+                match = userAgent.match(new RegExp('(?:' + prefix + ')([^\\s;]+)'));
 
                 if (match) {
                     name = names[i];
@@ -214,8 +207,8 @@ Ext.define('Ext.env.OS', {
 }, function() {
 
     var navigation = Ext.global.navigator,
-        userAgent = navigation.userAgent,
-        osEnv, osName, deviceType;
+            userAgent = navigation.userAgent,
+            osEnv, osName, deviceType;
 
     //<deprecated product=touch since=2.0>
     this.override('constructor', function() {
@@ -263,7 +256,7 @@ Ext.define('Ext.env.OS', {
     osName = osEnv.name;
 
     var search = window.location.search.match(/deviceType=(Tablet|Phone)/),
-        nativeDeviceType = window.deviceType;
+            nativeDeviceType = window.deviceType;
 
     // Override deviceType by adding a get variable of deviceType. NEEDED FOR DOCS APP.
     // E.g: example/kitchen-sink.html?deviceType=Phone
@@ -312,7 +305,7 @@ Ext.define('Ext.env.OS', {
 
     //<deprecated product=touch since=2.0>
     var flags = Ext.os.is,
-        name;
+            name;
 
     if (!Ext.is) {
         Ext.is = {};

@@ -5,52 +5,42 @@
  *
  */
 Ext.define('Ext.chart.interactions.Abstract', {
-
     xtype: 'interaction',
-
     mixins: {
         observable: 'Ext.mixin.Observable'
     },
-
     config: {
         /**
          * @cfg {String} gesture
          * Specifies which gesture type should be used for starting the interaction.
          */
         gesture: 'tap',
-
         /**
          * @cfg {Ext.chart.AbstractChart} chart The chart that the interaction is bound.
          */
         chart: null,
-
         /**
          * @cfg {Boolean} enabled 'true' if the interaction is enabled.
          */
         enabled: true
     },
-
     /**
      * Android device is emerging too many events so if we re-render every frame it will take for-ever to finish a frame.
      * This throttle technique will limit the timespan between two frames.
      */
     throttleGap: 0,
-
     stopAnimationBeforeSync: false,
-
-    constructor: function (config) {
+    constructor: function(config) {
         var me = this;
         me.initConfig(config);
         Ext.ComponentManager.register(this);
     },
-
     /**
      * @protected
      * A method to be implemented by subclasses where all event attachment should occur.
      */
     initialize: Ext.emptyFn,
-
-    updateChart: function (newChart, oldChart) {
+    updateChart: function(newChart, oldChart) {
         var me = this, gestures = me.getGestures();
         if (oldChart) {
             me.removeChartListener(oldChart);
@@ -59,10 +49,9 @@ Ext.define('Ext.chart.interactions.Abstract', {
             me.addChartListener();
         }
     },
-
-    updateEnabled: function (enabled) {
+    updateEnabled: function(enabled) {
         var me = this,
-            chart = me.getChart();
+                chart = me.getChart();
         if (chart) {
             if (enabled) {
                 me.addChartListener();
@@ -71,52 +60,47 @@ Ext.define('Ext.chart.interactions.Abstract', {
             }
         }
     },
-
-    getGestures: function () {
+    getGestures: function() {
         var gestures = {};
         gestures[this.getGesture()] = this.onGesture;
         return gestures;
     },
-
     /**
      * @protected
      * Placeholder method.
      */
     onGesture: Ext.emptyFn,
-
     /**
      * @protected Find and return a single series item corresponding to the given event,
      * or null if no matching item is found.
      * @param {Event} e
      * @return {Object} the item object or null if none found.
      */
-    getItemForEvent: function (e) {
+    getItemForEvent: function(e) {
         var me = this,
-            chart = me.getChart(),
-            chartXY = chart.getEventXY(e);
+                chart = me.getChart(),
+                chartXY = chart.getEventXY(e);
         return chart.getItemForPoint(chartXY[0], chartXY[1]);
     },
-
     /**
      * @protected Find and return all series items corresponding to the given event.
      * @param {Event} e
      * @return {Array} array of matching item objects
      */
-    getItemsForEvent: function (e) {
+    getItemsForEvent: function(e) {
         var me = this,
-            chart = me.getChart(),
-            chartXY = chart.getEventXY(e);
+                chart = me.getChart(),
+                chartXY = chart.getEventXY(e);
         return chart.getItemsForPoint(chartXY[0], chartXY[1]);
     },
-
     /**
      * @private
      */
-    addChartListener: function () {
+    addChartListener: function() {
         var me = this,
-            chart = me.getChart(),
-            gestures = me.getGestures(),
-            gesture;
+                chart = me.getChart(),
+                gestures = me.getGestures(),
+                gesture;
 
         if (!me.getEnabled()) {
             return;
@@ -124,20 +108,20 @@ Ext.define('Ext.chart.interactions.Abstract', {
 
         function insertGesture(name, fn) {
             chart.on(
-                name,
-                // wrap the handler so it does not fire if the event is locked by another interaction
-                me.listeners[name] = function (e) {
-                    var locks = me.getLocks(), result;
-                    if (me.getEnabled() && (!(name in locks) || locks[name] === me)) {
-                        result = (Ext.isFunction(fn) ? fn : me[fn]).apply(this, arguments);
-                        if (result === false && e && e.stopPropagation) {
-                            e.stopPropagation();
-                        }
-                        return result;
+                    name,
+                    // wrap the handler so it does not fire if the event is locked by another interaction
+                    me.listeners[name] = function(e) {
+                var locks = me.getLocks(), result;
+                if (me.getEnabled() && (!(name in locks) || locks[name] === me)) {
+                    result = (Ext.isFunction(fn) ? fn : me[fn]).apply(this, arguments);
+                    if (result === false && e && e.stopPropagation) {
+                        e.stopPropagation();
                     }
-                },
-                me
-            );
+                    return result;
+                }
+            },
+                    me
+                    );
         }
 
         me.listeners = me.listeners || {};
@@ -145,11 +129,10 @@ Ext.define('Ext.chart.interactions.Abstract', {
             insertGesture(gesture, gestures[gesture]);
         }
     },
-
-    removeChartListener: function (chart) {
+    removeChartListener: function(chart) {
         var me = this,
-            gestures = me.getGestures(),
-            gesture;
+                gestures = me.getGestures(),
+                gesture;
 
         function removeGesture(name) {
             chart.un(name, me.listeners[name]);
@@ -160,41 +143,35 @@ Ext.define('Ext.chart.interactions.Abstract', {
             removeGesture(gesture);
         }
     },
-
-    lockEvents: function () {
+    lockEvents: function() {
         var me = this,
-            locks = me.getLocks(),
-            args = Array.prototype.slice.call(arguments),
-            i = args.length;
+                locks = me.getLocks(),
+                args = Array.prototype.slice.call(arguments),
+                i = args.length;
         while (i--) {
             locks[args[i]] = me;
         }
     },
-
-    unlockEvents: function () {
+    unlockEvents: function() {
         var locks = this.getLocks(),
-            args = Array.prototype.slice.call(arguments),
-            i = args.length;
+                args = Array.prototype.slice.call(arguments),
+                i = args.length;
         while (i--) {
             delete locks[args[i]];
         }
     },
-
-    getLocks: function () {
+    getLocks: function() {
         var chart = this.getChart();
         return chart.lockedEvents || (chart.lockedEvents = {});
     },
-
-    isMultiTouch: function () {
+    isMultiTouch: function() {
         if (Ext.browser.is.IE10) {
             return true;
         }
         return !(Ext.os.is.MultiTouch === false || Ext.browser.is.AndroidStock2 || Ext.os.is.Desktop);
     },
-
     initializeDefaults: Ext.emptyFn,
-
-    doSync: function () {
+    doSync: function() {
         var chart = this.getChart();
         if (this.syncTimer) {
             clearTimeout(this.syncTimer);
@@ -209,35 +186,31 @@ Ext.define('Ext.chart.interactions.Abstract', {
         }
         this.syncThrottle = Date.now() + this.throttleGap;
     },
-
-    sync: function () {
+    sync: function() {
         var me = this;
         if (me.throttleGap && Ext.frameStartTime < me.syncThrottle) {
             if (me.syncTimer) {
                 return;
             }
-            me.syncTimer = setTimeout(function () {
+            me.syncTimer = setTimeout(function() {
                 me.doSync();
             }, me.throttleGap);
         } else {
             me.doSync();
         }
     },
-
-    getItemId: function () {
+    getItemId: function() {
         return this.getId();
     },
-
-    isXType: function (xtype) {
+    isXType: function(xtype) {
         return xtype === 'interaction';
     },
-
-    destroy: function () {
+    destroy: function() {
         Ext.ComponentManager.unregister(this);
         this.listeners = [];
         this.callSuper();
     }
-}, function () {
+}, function() {
     if (Ext.browser.is.AndroidStock2) {
         this.prototype.throttleGap = 20;
     } else if (Ext.os.is.Android4) {

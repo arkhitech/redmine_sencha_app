@@ -6,35 +6,28 @@
 Ext.define('Ext.ux.MenuButton', {
     extend: 'Ext.Button',
     requires: ['Ext.ux.ContextMenu'],
-
     config: {
         /**
          * @hide
          */
         ui: 'tab',
-
         /**
          * @hide
          */
         cls: 'menu',
-
         menuItems: [],
-
         /**
          * @hide
          */
         menuSide: 'right',
-
         /**
          * @hide
          */
         menuCover: false,
-
         /**
          * @hide
          */
         menuCls: null,
-
         /**
          * @hide
          */
@@ -42,7 +35,6 @@ Ext.define('Ext.ux.MenuButton', {
             tap: 'onTap'
         }
     },
-
     /**
      * @private
      * Used to show the menu associated with this button
@@ -82,6 +74,5 @@ Ext.define('Ext.ux.MenuButton', {
 
         Ext.Viewport.showMenu(this.getMenuSide());
     },
-
     onMenuButtonTap: Ext.emptyFn
 });

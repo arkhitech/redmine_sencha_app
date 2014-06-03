@@ -87,10 +87,10 @@
     &[visibility='visible'],
     &:not(.x-item-hidden) {
         ~ div:not(.x-mask),
-        ~ div:not(.x-panel),
-        ~ div:not(.x-floating),
-        ~ div:not(.x-center),
-        ~ div:not(.x-msgbox) {
+            ~ div:not(.x-panel),
+            ~ div:not(.x-floating),
+            ~ div:not(.x-center),
+            ~ div:not(.x-msgbox) {
             .x-input-el {
                 visibility: collapse;
             }

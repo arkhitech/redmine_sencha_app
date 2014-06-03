@@ -58,31 +58,26 @@
  */
 Ext.define('Ext.chart.axis.Axis', {
     xtype: 'axis',
-
     mixins: {
         observable: 'Ext.mixin.Observable'
     },
-
     requires: [
         'Ext.chart.axis.sprite.Axis',
         'Ext.chart.axis.segmenter.*',
         'Ext.chart.axis.layout.*'
     ],
-
     config: {
         /**
          * @cfg {String} position
          * Where to set the axis. Available options are `left`, `bottom`, `right`, `top`, `radial` and `angular`.
          */
         position: 'bottom',
-
         /**
          * @cfg {Array} fields
          * An array containing the names of the record fields which should be mapped along the axis.
          * This is optional if the binding between series and fields is clear.
          */
         fields: [],
-
         /**
          * @cfg {Object} label
          *
@@ -92,8 +87,7 @@ Ext.define('Ext.chart.axis.Axis', {
          *
          * For more supported values, see the configurations for {@link Ext.chart.label.Label}.
          */
-        label: { x: 0, y: 0, textBaseline: 'middle', textAlign: 'center', fontSize: 12, fontFamily: 'Helvetica' },
-
+        label: {x: 0, y: 0, textBaseline: 'middle', textAlign: 'center', fontSize: 12, fontFamily: 'Helvetica'},
         /**
          * @cfg {Object} grid
          * The grid configuration object for the Axis style. Can contain `stroke` or `fill` attributes.
@@ -111,7 +105,6 @@ Ext.define('Ext.chart.axis.Axis', {
          *     }
          */
         grid: false,
-
         /**
          * @cfg {Function} renderer Allows direct customisation of rendered axis sprites.
          * @param {String} label The label.
@@ -120,20 +113,17 @@ Ext.define('Ext.chart.axis.Axis', {
          * @return {String} The label to display.
          */
         renderer: null,
-
         /**
          * @protected
          * @cfg {Ext.chart.AbstractChart} chart The Chart that the Axis is bound.
          */
         chart: null,
-
         /**
          * @cfg {Object} style
          * The style for the axis line and ticks.
          * Refer to the {@link Ext.chart.axis.sprite.Axis}
          */
         style: null,
-
         /**
          * @cfg {Number} titleMargin
          * The margin around the axis title. Unlike CSS where the margin is added on all 4
@@ -142,51 +132,43 @@ Ext.define('Ext.chart.axis.Axis', {
          * being added on either side.
          */
         titleMargin: 4,
-
         /**
          * @cfg {Object} background
          * The background config for the axis surface.
          */
         background: null,
-
         /**
          * @cfg {Number} minimum
          * The minimum value drawn by the axis. If not set explicitly, the axis
          * minimum will be calculated automatically.
          */
         minimum: NaN,
-
         /**
          * @cfg {Number} maximum
          * The maximum value drawn by the axis. If not set explicitly, the axis
          * maximum will be calculated automatically.
          */
         maximum: NaN,
-
         /**
          * @cfg {Number} minZoom
          * The minimum zooming level for axis.
          */
         minZoom: 1,
-
         /**
          * @cfg {Number} maxZoom
          * The maximum zooming level for axis
          */
         maxZoom: 10000,
-
         /**
          * @cfg {Object|Ext.chart.axis.layout.Layout} layout
          * The axis layout config. See {@link Ext.chart.axis.layout.Layout}
          */
         layout: 'continuous',
-
         /**
          * @cfg {Object|Ext.chart.axis.segmenter.Segmenter} segmenter
          * The segmenter config. See {@link Ext.chart.axis.segmenter.Segmenter}
          */
         segmenter: 'numeric',
-
         /**
          * @cfg {Boolean} hidden
          * Indicate whether to hide the axis.
@@ -195,26 +177,22 @@ Ext.define('Ext.chart.axis.Axis', {
          * The coordination mechanism works fine no matter if the axis is hidden.
          */
         hidden: false,
-
         /**
          * @cfg {Number} majorTickSteps
          * If `minimum` and `maximum` are specified it forces the number of major ticks to the specified value.
          */
         majorTickSteps: false,
-
         /**
          * @cfg {Number} [minorTickSteps=0]
          * The number of small ticks between two major ticks.
          */
         minorTickSteps: false,
-
         /**
          * @private
          * @cfg {Boolean} adjustMaximumByMajorUnit
          * Will be supported soon.
          */
         adjustMaximumByMajorUnit: false,
-
         /**
          * @private
          * @cfg {Boolean} adjustMinimumByMajorUnit
@@ -222,15 +200,13 @@ Ext.define('Ext.chart.axis.Axis', {
          *
          */
         adjustMinimumByMajorUnit: false,
-
         /**
          * @cfg {String|Object} title
          * The title for the Axis.
          * If given a String, the text style of the title sprite will be set,
          * otherwise the style will be set.
          */
-        title: { fontSize: 18, fontFamily: 'Helvetica'},
-
+        title: {fontSize: 18, fontFamily: 'Helvetica'},
         /**
          * @cfg {Number} increment
          * Given a minimum and maximum bound for the series to be rendered (that can be obtained
@@ -238,7 +214,6 @@ Ext.define('Ext.chart.axis.Axis', {
          * on each `increment` from the minimum value to the maximum one.
          */
         increment: 0.5,
-
         /**
          * @private
          * @cfg {Number} length
@@ -246,7 +221,6 @@ Ext.define('Ext.chart.axis.Axis', {
          * WARNING: Meant to be set automatically by chart. Do not set it manually.
          */
         length: 0,
-
         /**
          * @private
          * @cfg {Array} center
@@ -254,7 +228,6 @@ Ext.define('Ext.chart.axis.Axis', {
          * WARNING: Meant to be set automatically by chart. Do not set it manually.
          */
         center: null,
-
         /**
          * @private
          * @cfg {Number} radius
@@ -262,7 +235,6 @@ Ext.define('Ext.chart.axis.Axis', {
          * WARNING: Meant to be set automatically by chart. Do not set it manually.
          */
         radius: null,
-
         /**
          * @private
          * @cfg {Number} rotation
@@ -270,20 +242,17 @@ Ext.define('Ext.chart.axis.Axis', {
          * WARNING: Meant to be set automatically by chart. Do not set it manually.
          */
         rotation: null,
-
         /**
          * @cfg {Boolean} [labelInSpan]
          * Draws the labels in the middle of the spans.
          */
         labelInSpan: null,
-
         /**
          * @cfg {Array} visibleRange
          * Specify the proportion of the axis to be rendered. The series bound to
          * this axis will be synchronized and transformed.
          */
         visibleRange: [0, 1],
-
         /**
          * @cfg {Boolean} needHighPrecision
          * Indicates that the axis needs high precision surface implementation.
@@ -291,52 +260,39 @@ Ext.define('Ext.chart.axis.Axis', {
          */
         needHighPrecision: false
     },
-
     observableType: 'component',
-
     titleOffset: 0,
-
     animating: 0,
-
     prevMin: 0,
-
     prevMax: 1,
-
     boundSeries: [],
-
     sprites: null,
-
     /**
      * @private
      * @property {Array} The full data range of the axis. Should not be set directly, clear it to `null` and use
      * `getRange` to update.
      */
     range: null,
-
     xValues: [],
-
     yValues: [],
-
-    applyRotation: function (rotation) {
+    applyRotation: function(rotation) {
         var twoPie = Math.PI * 2;
         return (rotation % twoPie + Math.PI) % twoPie - Math.PI;
     },
-
-    updateRotation: function (rotation) {
+    updateRotation: function(rotation) {
         var sprites = this.getSprites(),
-            position = this.getPosition();
+                position = this.getPosition();
         if (!this.getHidden() && position === 'angular' && sprites[0]) {
             sprites[0].setAttributes({
                 baseRotation: rotation
             });
         }
     },
-
-    applyTitle: function (title, oldTitle) {
+    applyTitle: function(title, oldTitle) {
         var surface;
 
         if (Ext.isString(title)) {
-            title = { text: title };
+            title = {text: title};
         }
 
         if (!oldTitle) {
@@ -349,8 +305,7 @@ Ext.define('Ext.chart.axis.Axis', {
         }
         return oldTitle;
     },
-
-    constructor: function (config) {
+    constructor: function(config) {
         var me = this;
         me.sprites = [];
         this.labels = [];
@@ -359,12 +314,11 @@ Ext.define('Ext.chart.axis.Axis', {
         me.mixins.observable.constructor.apply(me, arguments);
         Ext.ComponentManager.register(me);
     },
-
     /**
      * @private
      * @return {String}
      */
-    getAlignment: function () {
+    getAlignment: function() {
         switch (this.getPosition()) {
             case 'left':
             case 'right':
@@ -378,12 +332,11 @@ Ext.define('Ext.chart.axis.Axis', {
                 return 'angular';
         }
     },
-
     /**
      * @private
      * @return {String}
      */
-    getGridAlignment: function () {
+    getGridAlignment: function() {
         switch (this.getPosition()) {
             case 'left':
             case 'right':
@@ -397,24 +350,23 @@ Ext.define('Ext.chart.axis.Axis', {
                 return "radial";
         }
     },
-
     /**
      * @private
      * Get the surface for drawing the series sprites
      */
-    getSurface: function () {
+    getSurface: function() {
         if (!this.surface) {
             var chart = this.getChart();
             if (!chart) {
                 return null;
             }
             var surface = this.surface = chart.getSurface(this.getId(), 'axis'),
-                gridSurface = this.gridSurface = chart.getSurface('main'),
-                sprites = this.getSprites(),
-                sprite = sprites[0],
-                grid = this.getGrid(),
-                gridAlignment = this.getGridAlignment(),
-                gridSprite;
+                    gridSurface = this.gridSurface = chart.getSurface('main'),
+                    sprites = this.getSprites(),
+                    sprite = sprites[0],
+                    grid = this.getGrid(),
+                    gridAlignment = this.getGridAlignment(),
+                    gridSprite;
             if (grid) {
                 gridSprite = this.gridSpriteEven = new Ext.chart.Markers();
                 gridSprite.setTemplate({xclass: 'grid.' + gridAlignment});
@@ -443,7 +395,6 @@ Ext.define('Ext.chart.axis.Axis', {
         }
         return this.surface;
     },
-
     /**
      *
      * Mapping data value into coordinate.
@@ -454,62 +405,52 @@ Ext.define('Ext.chart.axis.Axis', {
      * @param {Ext.util.MixedCollection} [items]
      * @return {Number}
      */
-    getCoordFor: function (value, field, idx, items) {
+    getCoordFor: function(value, field, idx, items) {
         return this.getLayout().getCoordFor(value, field, idx, items);
     },
-
-    applyPosition: function (pos) {
+    applyPosition: function(pos) {
         return pos.toLowerCase();
     },
-
-    applyLabel: function (newText, oldText) {
+    applyLabel: function(newText, oldText) {
         if (!oldText) {
             oldText = new Ext.draw.sprite.Text({});
         }
         oldText.setAttributes(newText);
         return oldText;
     },
-
-    applyLayout: function (layout, oldLayout) {
+    applyLayout: function(layout, oldLayout) {
         // TODO: finish this
         layout = Ext.factory(layout, null, oldLayout, 'axisLayout');
         layout.setAxis(this);
         return layout;
     },
-
-    applySegmenter: function (segmenter, oldSegmenter) {
+    applySegmenter: function(segmenter, oldSegmenter) {
         // TODO: finish this
         segmenter = Ext.factory(segmenter, null, oldSegmenter, 'segmenter');
         segmenter.setAxis(this);
         return segmenter;
     },
-
-    updateMinimum: function () {
+    updateMinimum: function() {
         this.range = null;
     },
-
-    updateMaximum: function () {
+    updateMaximum: function() {
         this.range = null;
     },
-
-    hideLabels: function () {
+    hideLabels: function() {
         this.getSprites()[0].setDirty(true);
         this.setLabel({hidden: true});
     },
-
-    showLabels: function () {
+    showLabels: function() {
         this.getSprites()[0].setDirty(true);
         this.setLabel({hidden: false});
     },
-
     /**
      * Invokes renderFrame on this axis's surface(s)
      */
-    renderFrame: function () {
+    renderFrame: function() {
         this.getSurface().renderFrame();
     },
-
-    updateChart: function (newChart, oldChart) {
+    updateChart: function(newChart, oldChart) {
         var me = this, surface;
         if (oldChart) {
             oldChart.un('serieschanged', me.onSeriesChanged, me);
@@ -525,42 +466,35 @@ Ext.define('Ext.chart.axis.Axis', {
             surface.add(me.getTitle());
         }
     },
-
-    applyBackground: function (background) {
+    applyBackground: function(background) {
         var rect = Ext.ClassManager.getByAlias('sprite.rect');
         return rect.def.normalize(background);
     },
-
     /**
      * @protected
      * Invoked when data has changed.
      */
-    processData: function () {
+    processData: function() {
         this.getLayout().processData();
         this.range = null;
     },
-
-    getDirection: function () {
+    getDirection: function() {
         return this.getChart().getDirectionForAxis(this.getPosition());
     },
-
-    isSide: function () {
+    isSide: function() {
         var position = this.getPosition();
         return position === 'left' || position === 'right';
     },
-
-    applyFields: function (fields) {
+    applyFields: function(fields) {
         return [].concat(fields);
     },
-
-    updateFields: function (fields) {
+    updateFields: function(fields) {
         this.fieldsMap = {};
         for (var i = 0; i < fields.length; i++) {
             this.fieldsMap[fields[i]] = true;
         }
     },
-
-    applyVisibleRange: function (visibleRange, oldVisibleRange) {
+    applyVisibleRange: function(visibleRange, oldVisibleRange) {
         // If it is in reversed order swap them
         if (visibleRange[0] > visibleRange[1]) {
             var temp = visibleRange[0];
@@ -587,16 +521,14 @@ Ext.define('Ext.chart.axis.Axis', {
 
         return visibleRange;
     },
-
-    updateVisibleRange: function (visibleRange) {
+    updateVisibleRange: function(visibleRange) {
         this.fireEvent('transformed', this, visibleRange);
     },
-
-    onSeriesChanged: function (chart) {
+    onSeriesChanged: function(chart) {
         var me = this,
-            series = chart.getSeries(),
-            getAxisMethod = 'get' + me.getDirection() + 'Axis',
-            boundSeries = [], i, ln = series.length;
+                series = chart.getSeries(),
+                getAxisMethod = 'get' + me.getDirection() + 'Axis',
+                boundSeries = [], i, ln = series.length;
         for (i = 0; i < ln; i++) {
             if (this === series[i][getAxisMethod]()) {
                 boundSeries.push(series[i]);
@@ -606,8 +538,7 @@ Ext.define('Ext.chart.axis.Axis', {
         me.boundSeries = boundSeries;
         me.getLayout().processData();
     },
-
-    applyRange: function (newRange) {
+    applyRange: function(newRange) {
         if (!newRange) {
             return this.dataRange.slice(0);
         } else {
@@ -617,14 +548,13 @@ Ext.define('Ext.chart.axis.Axis', {
             ];
         }
     },
-
     /**
      * Get the range derived from all the bound series.
      * @return {Array}
      */
-    getRange: function () {
+    getRange: function() {
         var me = this,
-            getRangeMethod = 'get' + me.getDirection() + 'Range';
+                getRangeMethod = 'get' + me.getDirection() + 'Range';
 
         if (me.range) {
             return me.range;
@@ -633,9 +563,9 @@ Ext.define('Ext.chart.axis.Axis', {
             return this.range = [me.getMinimum(), me.getMaximum()];
         }
         var min = Infinity,
-            max = -Infinity,
-            boundSeries = me.boundSeries,
-            series, i, ln;
+                max = -Infinity,
+                boundSeries = me.boundSeries,
+                series, i, ln;
 
         // For each series bound to this axis, ask the series for its min/max values
         // and use them to find the overall min/max.
@@ -679,8 +609,7 @@ Ext.define('Ext.chart.axis.Axis', {
 
         return this.range = [min, max];
     },
-
-    applyStyle: function (style, oldStyle) {
+    applyStyle: function(style, oldStyle) {
         var cls = Ext.ClassManager.getByAlias('sprite.' + this.seriesType);
         if (cls && cls.def) {
             style = cls.def.normalize(style);
@@ -688,12 +617,11 @@ Ext.define('Ext.chart.axis.Axis', {
         oldStyle = Ext.apply(oldStyle || {}, style);
         return oldStyle;
     },
-
-    updateCenter: function (center) {
+    updateCenter: function(center) {
         var sprites = this.getSprites(),
-            axisSprite = sprites[0],
-            centerX = center[0],
-            centerY = center[1];
+                axisSprite = sprites[0],
+                centerX = center[0],
+                centerY = center[1];
         if (axisSprite) {
             axisSprite.setAttributes({
                 centerX: centerX,
@@ -717,18 +645,17 @@ Ext.define('Ext.chart.axis.Axis', {
             });
         }
     },
-
-    getSprites: function () {
+    getSprites: function() {
         if (!this.getChart()) {
             return;
         }
         var me = this,
-            range = me.getRange(),
-            position = me.getPosition(),
-            chart = me.getChart(),
-            animation = chart.getAnimate(),
-            baseSprite, style,
-            length = me.getLength();
+                range = me.getRange(),
+                position = me.getPosition(),
+                chart = me.getChart(),
+                animation = chart.getAnimate(),
+                baseSprite, style,
+                length = me.getLength();
 
         // If animation is false, then stop animation.
         if (animation === false) {
@@ -777,19 +704,18 @@ Ext.define('Ext.chart.axis.Axis', {
 
         return me.sprites;
     },
-
-    updateTitleSprite: function () {
+    updateTitleSprite: function() {
         if (!this.sprites[0]) {
             return;
         }
         var me = this,
-            thickness = this.sprites[0].thickness,
-            surface = me.getSurface(),
-            title = this.getTitle(),
-            position = me.getPosition(),
-            titleMargin = me.getTitleMargin(),
-            length = me.getLength(),
-            anchor = surface.roundPixel(length / 2);
+                thickness = this.sprites[0].thickness,
+                surface = me.getSurface(),
+                title = this.getTitle(),
+                position = me.getPosition(),
+                titleMargin = me.getTitleMargin(),
+                length = me.getLength(),
+                anchor = surface.roundPixel(length / 2);
 
         if (title) {
             switch (position) {
@@ -842,47 +768,39 @@ Ext.define('Ext.chart.axis.Axis', {
             }
         }
     },
-
-    onThicknessChanged: function () {
+    onThicknessChanged: function() {
         var me = this;
         me.getChart().onThicknessChanged();
     },
-
-    getThickness: function () {
+    getThickness: function() {
         if (this.getHidden()) {
             return 0;
         }
         return (this.sprites[0] && this.sprites[0].thickness || 1) + this.titleOffset;
     },
-
-    onAnimationStart: function () {
+    onAnimationStart: function() {
         this.animating++;
         if (this.animating === 1) {
             this.fireEvent("animationstart");
         }
     },
-
-    onAnimationEnd: function () {
+    onAnimationEnd: function() {
         this.animating--;
         if (this.animating === 0) {
             this.fireEvent("animationend");
         }
     },
-
     // Methods used in ComponentQuery and controller
-    getItemId: function () {
+    getItemId: function() {
         return this.getId();
     },
-
-    getAncestorIds: function () {
+    getAncestorIds: function() {
         return [this.getChart().getId()];
     },
-
-    isXType: function (xtype) {
+    isXType: function(xtype) {
         return xtype === 'axis';
     },
-
-    destroy: function () {
+    destroy: function() {
         Ext.ComponentManager.unregister(this);
         this.callSuper();
     }

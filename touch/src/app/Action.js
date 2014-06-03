@@ -14,35 +14,29 @@ Ext.define('Ext.app.Action', {
          * @cfg {Object} scope The scope in which the {@link #action} should be called.
          */
         scope: null,
-
         /**
          * @cfg {Ext.app.Application} application The Application that this Action is bound to.
          */
         application: null,
-
         /**
          * @cfg {Ext.app.Controller} controller The {@link Ext.app.Controller controller} whose {@link #action} should
          * be called.
          */
         controller: null,
-
         /**
          * @cfg {String} action The name of the action on the {@link #controller} that should be called.
          */
         action: null,
-
         /**
          * @cfg {Array} args The set of arguments that will be passed to the controller's {@link #action}.
          */
         args: [],
-
         /**
          * @cfg {String} url The url that was decoded into the controller/action/args in this Action.
          */
         url: undefined,
         data: {},
         title: null,
-
         /**
          * @cfg {Array} beforeFilters The (optional) set of functions to call before the {@link #action} is called.
          * This is usually handled directly by the Controller or Application when an Ext.app.Action instance is
@@ -50,24 +44,20 @@ Ext.define('Ext.app.Action', {
          * @accessor
          */
         beforeFilters: [],
-
         /**
          * @private
          * Keeps track of which before filter is currently being executed by {@link #resume}
          */
         currentFilterIndex: -1
     },
-
     constructor: function(config) {
         this.initConfig(config);
 
         this.getUrl();
     },
-
     applyBeforeFilters: function(filters) {
         return filters || [];
     },
-
     /**
      * Starts execution of this Action by calling each of the {@link #beforeFilters} in turn (if any are specified),
      * before calling the Controller {@link #action}. Same as calling {@link #resume}.
@@ -75,7 +65,6 @@ Ext.define('Ext.app.Action', {
     execute: function() {
         this.resume();
     },
-
     /**
      * Resumes the execution of this Action (or starts it if it had not been started already). This iterates over all
      * of the configured {@link #beforeFilters} and calls them. Each before filter is called with this Action as the
@@ -83,10 +72,10 @@ Ext.define('Ext.app.Action', {
      * this is the final filter, the original {@link Ext.app.Controller Controller} function.
      */
     resume: function() {
-        var index   = this.getCurrentFilterIndex() + 1,
-            filters = this.getBeforeFilters(),
-            controller = this.getController(),
-            nextFilter = filters[index];
+        var index = this.getCurrentFilterIndex() + 1,
+                filters = this.getBeforeFilters(),
+                controller = this.getController(),
+                nextFilter = filters[index];
 
         if (nextFilter) {
             this.setCurrentFilterIndex(index);
@@ -95,7 +84,6 @@ Ext.define('Ext.app.Action', {
             controller[this.getAction()].apply(controller, this.getArgs());
         }
     },
-
     /**
      * @private
      */
@@ -106,7 +94,6 @@ Ext.define('Ext.app.Action', {
 
         return url;
     },
-
     /**
      * @private
      * If the controller config is a string, swap it for a reference to the actual controller instance.
@@ -114,7 +101,7 @@ Ext.define('Ext.app.Action', {
      */
     applyController: function(controller) {
         var app = this.getApplication(),
-            profile = app.getCurrentProfile();
+                profile = app.getCurrentProfile();
 
         if (Ext.isString(controller)) {
             controller = app.getController(controller, profile ? profile.getNamespace() : null);
@@ -122,13 +109,12 @@ Ext.define('Ext.app.Action', {
 
         return controller;
     },
-
     /**
      * @private
      */
     urlEncode: function() {
         var controller = this.getController(),
-            splits;
+                splits;
 
         if (controller instanceof Ext.app.Controller) {
             splits = controller.$className.split('.');

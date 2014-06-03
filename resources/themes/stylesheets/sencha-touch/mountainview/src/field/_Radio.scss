@@ -3,18 +3,18 @@
  */
 
 .x-field-radio .x-field-mask {
-	&::before,
-	&::after {
-		@include border-radius(10px);
-	}
+    &::before,
+    &::after {
+        @include border-radius(10px);
+    }
 
     &::after {
         content: '';
         width: 10px;
         height: 10px;
-	    right: 5px;
-	    margin-top: -5px;
-	    border: transparent;
+        right: 5px;
+        margin-top: -5px;
+        border: transparent;
     }
 }
 

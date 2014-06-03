@@ -27,7 +27,6 @@
 Ext.define('Ext.LoadMask', {
     extend: 'Ext.Mask',
     xtype: 'loadmask',
-
     config: {
         /**
          * @cfg {String} message
@@ -35,21 +34,18 @@ Ext.define('Ext.LoadMask', {
          * @accessor
          */
         message: 'Loading...',
-
         /**
          * @cfg {String} cls
          * The CSS Class for this component
          * @accessor
          */
         cls: Ext.baseCSSPrefix + 'loading-mask',
-
         /**
          * @cfg {String} messageCls
          * The CSS class to apply to the loading message element.
          * @accessor
          */
         messageCls: Ext.baseCSSPrefix + 'mask-message',
-
         /**
          * @cfg {Boolean} indicator
          * True to show the loading indicator on this {@link Ext.LoadMask}.
@@ -57,7 +53,6 @@ Ext.define('Ext.LoadMask', {
          */
         indicator: true
     },
-
     getTemplate: function() {
         var prefix = Ext.baseCSSPrefix;
 
@@ -75,10 +70,10 @@ Ext.define('Ext.LoadMask', {
                             {
                                 cls: prefix + 'loading-spinner',
                                 children: [
-                                    { tag: 'span', cls: prefix + 'loading-top' },
-                                    { tag: 'span', cls: prefix + 'loading-right' },
-                                    { tag: 'span', cls: prefix + 'loading-bottom' },
-                                    { tag: 'span', cls: prefix + 'loading-left' }
+                                    {tag: 'span', cls: prefix + 'loading-top'},
+                                    {tag: 'span', cls: prefix + 'loading-right'},
+                                    {tag: 'span', cls: prefix + 'loading-bottom'},
+                                    {tag: 'span', cls: prefix + 'loading-left'}
                                 ]
                             }
                         ]
@@ -91,7 +86,6 @@ Ext.define('Ext.LoadMask', {
             }
         ];
     },
-
     /**
      * Updates the message element with the new value of the {@link #message} configuration
      * @private
@@ -107,7 +101,6 @@ Ext.define('Ext.LoadMask', {
 
         this.messageElement.setHtml(newMessage);
     },
-
     /**
      * Replaces the cls of the message element with the value of the {@link #messageCls} configuration.
      * @private
@@ -115,7 +108,6 @@ Ext.define('Ext.LoadMask', {
     updateMessageCls: function(newMessageCls, oldMessageCls) {
         this.messageElement.replaceCls(oldMessageCls, newMessageCls);
     },
-
     /**
      * Shows or hides the loading indicator when the {@link #indicator} configuration is changed.
      * @private
@@ -132,7 +124,7 @@ Ext.define('Ext.LoadMask', {
                 config = other;
 
                 Ext.Logger.deprecate("You no longer need to pass an element to create a Ext.LoadMask. " +
-                    "It is a component and can be shown using the Ext.Container.masked configuration.", this);
+                        "It is a component and can be shown using the Ext.Container.masked configuration.", this);
             }
 
             if (config) {
@@ -172,7 +164,6 @@ Ext.define('Ext.LoadMask', {
 
             this.callParent([config]);
         },
-
         /**
          * Changes the data store bound to this LoadMask.
          * @param {Ext.data.Store} store The store to bind to this LoadMask

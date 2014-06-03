@@ -7,19 +7,16 @@
 Ext.define('Ext.draw.engine.Svg', {
     extend: 'Ext.draw.Surface',
     requires: ['Ext.draw.engine.SvgContext'],
-
     statics: {
         BBoxTextCache: {}
     },
-
     config: {
         /**
          * Nothing needs to be done in high precision mode.
          */
         highPrecision: false
     },
-
-    getElementConfig: function () {
+    getElementConfig: function() {
         return {
             reference: 'element',
             style: {
@@ -46,8 +43,7 @@ Ext.define('Ext.draw.engine.Svg', {
             ]
         };
     },
-
-    constructor: function (config) {
+    constructor: function(config) {
         var me = this;
         me.callSuper([config]);
         me.mainGroup = me.createSvgNode("g");
@@ -57,17 +53,15 @@ Ext.define('Ext.draw.engine.Svg', {
         me.svgElement.appendChild(me.defElement);
         me.ctx = new Ext.draw.engine.SvgContext(me);
     },
-
     /**
      * Creates a DOM element under the SVG namespace of the given type.
      * @param {String} type The type of the SVG DOM element.
      * @return {*} The created element.
      */
-    createSvgNode: function (type) {
+    createSvgNode: function(type) {
         var node = document.createElementNS("http://www.w3.org/2000/svg", type);
         return Ext.get(node);
     },
-
     /**
      * @private
      * Returns the SVG DOM element at the given position. If it does not already exist or is a different element tag
@@ -77,7 +71,7 @@ Ext.define('Ext.draw.engine.Svg', {
      * @param {Number} position The position of the element in the DOM.
      * @return {Ext.dom.Element} The SVG element.
      */
-    getSvgElement: function (group, tag, position) {
+    getSvgElement: function(group, tag, position) {
         var element;
         if (group.dom.childNodes.length > position) {
             element = group.dom.childNodes[position];
@@ -97,17 +91,16 @@ Ext.define('Ext.draw.engine.Svg', {
         element.cache = {};
         return element;
     },
-
     /**
      * @private
      * Applies attributes to the given element.
      * @param {Ext.dom.Element} element The DOM element to be applied.
      * @param {Object} attributes The attributes to apply to the element.
      */
-    setElementAttributes: function (element, attributes) {
+    setElementAttributes: function(element, attributes) {
         var dom = element.dom,
-            cache = element.cache,
-            name, value;
+                cache = element.cache,
+                name, value;
         for (name in attributes) {
             value = attributes[name];
             if (cache[name] !== value) {
@@ -116,40 +109,36 @@ Ext.define('Ext.draw.engine.Svg', {
             }
         }
     },
-
     /**
      * @private
      * Gets the next reference element under the SVG 'defs' tag.
      * @param {String} tagName The type of reference element.
      * @return {Ext.dom.Element} The reference element.
      */
-    getNextDef: function (tagName) {
+    getNextDef: function(tagName) {
         return this.getSvgElement(this.defElement, tagName, this.defPosition++);
     },
-
     /**
      * @inheritdoc
      */
-    clearTransform: function () {
+    clearTransform: function() {
         var me = this;
         me.mainGroup.set({transform: me.matrix.toSvg()});
     },
-
     /**
      * @inheritdoc
      */
-    clear: function () {
+    clear: function() {
         this.ctx.clear();
         this.defPosition = 0;
     },
-
     /**
      * @inheritdoc
      */
-    renderSprite: function (sprite) {
+    renderSprite: function(sprite) {
         var me = this,
-            region = me.getRegion(),
-            ctx = me.ctx;
+                region = me.getRegion(),
+                ctx = me.ctx;
         if (sprite.attr.hidden || sprite.attr.opacity === 0) {
             ctx.save();
             ctx.restore();
@@ -168,11 +157,10 @@ Ext.define('Ext.draw.engine.Svg', {
             ctx.restore();
         }
     },
-
     /**
      * Destroys the Canvas element and prepares it for Garbage Collection.
      */
-    destroy: function (path, matrix, band) {
+    destroy: function(path, matrix, band) {
         var me = this;
         me.ctx.destroy();
         me.mainGroup.destroy();
@@ -180,12 +168,11 @@ Ext.define('Ext.draw.engine.Svg', {
         delete me.ctx;
         me.callSuper(arguments);
     },
-
-    remove: function (sprite, destroySprite) {
+    remove: function(sprite, destroySprite) {
         if (sprite && sprite.element) {
-          //if sprite has an associated svg element remove it from the surface
-          sprite.element.destroy();
-          sprite.element = null;
+            //if sprite has an associated svg element remove it from the surface
+            sprite.element.destroy();
+            sprite.element = null;
         }
         this.callSuper(arguments);
     }

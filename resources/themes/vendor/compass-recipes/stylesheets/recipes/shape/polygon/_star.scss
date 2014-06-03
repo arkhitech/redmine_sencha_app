@@ -23,8 +23,8 @@
     @include transform(rotate(35deg));
 
     &:before,
-    &:after
-    {
+        &:after
+        {
         content: '';
         position: absolute;
         display: block;
@@ -34,7 +34,7 @@
     }
 
     &:before
-    {
+        {
         top: -$width*0.45;
         left: -$width*0.65;
         border-bottom: $width*0.8 solid $background-color;
@@ -44,7 +44,7 @@
     }
 
     &:after
-    {
+        {
         top: $width*0.03;
         left: -$width*1.05;
         border-right: $width solid transparent;
@@ -66,7 +66,7 @@
     z-index: $z-index;
 
     &:after
-    {
+        {
         content: "";
         position: absolute;
         width: 0;
@@ -76,7 +76,7 @@
         border-left: $width/2 solid transparent;
         border-right: $width/2 solid transparent;
         border-top: $width solid $background-color;
-        
+
         top: $width*0.3;
         left: - $width /2;
     }
@@ -89,7 +89,7 @@
 {
     &,
     &:before,
-    {
+        {
         @include square($width, $color);
     }
 
@@ -99,7 +99,7 @@
     z-index: $z-index;
 
     &:before
-    {
+        {
         content: "";
         position: absolute;
         top: 0;
@@ -113,8 +113,8 @@
 {
     &,
     &:before,
-    &:after
-    {
+        &:after
+        {
         @include square($width, $color);
     }
 
@@ -123,22 +123,22 @@
     z-index: $z-index;
 
     &:before,
-    &:after
-    {
+        &:after
+        {
         content: "";
         position: absolute;
         top: 0;
         left: 0;
         z-index: $z-index - 1;
     }
-    
+
     &:before
-    {
+        {
         @include transform(rotate(30deg));
     }
 
     &:after
-    {
+        {
         @include transform(rotate(60deg));
     }
 }

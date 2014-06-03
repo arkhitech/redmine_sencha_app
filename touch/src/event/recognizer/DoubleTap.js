@@ -4,19 +4,14 @@
  * @private
  */
 Ext.define('Ext.event.recognizer.DoubleTap', {
-
     extend: 'Ext.event.recognizer.SingleTouch',
-
     inheritableStatics: {
         DIFFERENT_TARGET: 0x03
     },
-
     config: {
         maxDuration: 300
     },
-
     handledEvents: ['singletap', 'doubletap'],
-
     /**
      * @member Ext.dom.Element
      * @event singletap
@@ -36,11 +31,8 @@ Ext.define('Ext.event.recognizer.DoubleTap', {
      */
 
     singleTapTimer: null,
-
     startTime: 0,
-
     lastTapTime: 0,
-
     onTouchStart: function(e) {
         if (this.callParent(arguments) === false) {
             return false;
@@ -50,20 +42,18 @@ Ext.define('Ext.event.recognizer.DoubleTap', {
 
         clearTimeout(this.singleTapTimer);
     },
-
     onTouchMove: function() {
         return this.fail(this.self.TOUCH_MOVED);
     },
-
     onEnd: function(e) {
         var me = this,
-            maxDuration = this.getMaxDuration(),
-            touch = e.changedTouches[0],
-            time = e.time,
-            target = e.target,
-            lastTapTime = this.lastTapTime,
-            lastTarget = this.lastTarget,
-            duration;
+                maxDuration = this.getMaxDuration(),
+                touch = e.changedTouches[0],
+                time = e.time,
+                target = e.target,
+                lastTapTime = this.lastTapTime,
+                lastTarget = this.lastTarget,
+                duration;
 
         this.lastTapTime = time;
         this.lastTarget = target;
@@ -97,7 +87,6 @@ Ext.define('Ext.event.recognizer.DoubleTap', {
             }, maxDuration);
         }
     },
-
     fireSingleTap: function(e, touch) {
         this.fire('singletap', e, [touch], {
             touch: touch

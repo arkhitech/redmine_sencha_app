@@ -7,7 +7,6 @@
 Ext.define("Ext.chart.series.sprite.Area", {
     alias: 'sprite.areaSeries',
     extend: "Ext.chart.series.sprite.StackedCartesian",
-
     inheritableStatics: {
         def: {
             processors: {
@@ -21,23 +20,22 @@ Ext.define("Ext.chart.series.sprite.Area", {
             }
         }
     },
-
-    renderClipped: function (surface, ctx, clip, clipRegion) {
+    renderClipped: function(surface, ctx, clip, clipRegion) {
         var me = this,
-            attr = me.attr,
-            dataX = attr.dataX,
-            dataY = attr.dataY,
-            dataStartY = attr.dataStartY,
-            matrix = attr.matrix,
-            x, y, i, lastX, lastY,
-            xx = matrix.elements[0],
-            dx = matrix.elements[4],
-            yy = matrix.elements[3],
-            dy = matrix.elements[5],
-            surfaceMatrix = me.surfaceMatrix,
-            markerCfg = {},
-            start = Math.max(0, this.binarySearch(clip[0])),
-            end = Math.min(dataX.length - 1, this.binarySearch(clip[2]) + 1);
+                attr = me.attr,
+                dataX = attr.dataX,
+                dataY = attr.dataY,
+                dataStartY = attr.dataStartY,
+                matrix = attr.matrix,
+                x, y, i, lastX, lastY,
+                xx = matrix.elements[0],
+                dx = matrix.elements[4],
+                yy = matrix.elements[3],
+                dy = matrix.elements[5],
+                surfaceMatrix = me.surfaceMatrix,
+                markerCfg = {},
+                start = Math.max(0, this.binarySearch(clip[0])),
+                end = Math.min(dataX.length - 1, this.binarySearch(clip[2]) + 1);
         ctx.beginPath();
 
         if (attr.step) {

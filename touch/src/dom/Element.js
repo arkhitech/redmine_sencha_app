@@ -21,20 +21,15 @@
  */
 Ext.define('Ext.dom.Element', {
     alternateClassName: 'Ext.Element',
-
     mixins: [
         'Ext.mixin.Identifiable'
     ],
-
     requires: [
         'Ext.dom.Query',
         'Ext.dom.Helper'
     ],
-
     observableType: 'element',
-
     xtype: 'element',
-
     statics: {
         CREATE_ATTRIBUTES: {
             style: 'style',
@@ -46,10 +41,9 @@ Ext.define('Ext.dom.Element', {
             html: 'html',
             children: 'children'
         },
-
         create: function(attributes, domNode) {
             var ATTRIBUTES = this.CREATE_ATTRIBUTES,
-                element, elementStyle, tag, value, name, i, ln;
+                    element, elementStyle, tag, value, name, i, ln;
 
             if (!attributes) {
                 attributes = {};
@@ -84,16 +78,16 @@ Ext.define('Ext.dom.Element', {
 
                     switch (name) {
                         case ATTRIBUTES.style:
-                                if (typeof value == 'string') {
-                                    element.setAttribute(name, value);
-                                }
-                                else {
-                                    for (i in value) {
-                                        if (value.hasOwnProperty(i)) {
-                                            elementStyle[i] = value[i];
-                                        }
+                            if (typeof value == 'string') {
+                                element.setAttribute(name, value);
+                            }
+                            else {
+                                for (i in value) {
+                                    if (value.hasOwnProperty(i)) {
+                                        elementStyle[i] = value[i];
                                     }
                                 }
+                            }
                             break;
 
                         case ATTRIBUTES.className:
@@ -120,7 +114,7 @@ Ext.define('Ext.dom.Element', {
                             break;
 
                         case ATTRIBUTES.children:
-                            for (i = 0,ln = value.length; i < ln; i++) {
+                            for (i = 0, ln = value.length; i < ln; i++) {
                                 element.appendChild(this.create(value[i], true));
                             }
                             break;
@@ -138,11 +132,8 @@ Ext.define('Ext.dom.Element', {
                 return this.get(element);
             }
         },
-
         documentElement: null,
-
         cache: {},
-
         /**
          * Retrieves Ext.dom.Element objects. {@link Ext#get} is alias for {@link Ext.dom.Element#get}.
          *
@@ -156,7 +147,7 @@ Ext.define('Ext.dom.Element', {
          */
         get: function(element) {
             var cache = this.cache,
-                instance, dom, id;
+                    instance, dom, id;
 
             if (!element) {
                 return null;
@@ -189,7 +180,7 @@ Ext.define('Ext.dom.Element', {
                 return instance;
             }
 
-             // DOM element
+            // DOM element
             if ('tagName' in element) {
                 id = element.id;
 
@@ -234,10 +225,9 @@ Ext.define('Ext.dom.Element', {
 
             return null;
         },
-
         data: function(element, key, value) {
             var cache = Ext.cache,
-                id, data;
+                    id, data;
 
             element = this.get(element);
 
@@ -260,20 +250,19 @@ Ext.define('Ext.dom.Element', {
                 return (data[key] = value);
             }
         },
-
         /**
          * Serializes a DOM form into a url encoded string
          * @param {Object} form The form
          * @return {String} The url encoded form
          */
-        serializeForm : function(form) {
+        serializeForm: function(form) {
             var fElements = form.elements || (document.forms[form] || Ext.getDom(form)).elements,
-                hasSubmit = false,
-                encoder = encodeURIComponent,
-                data = '',
-                eLen = fElements.length,
-                element, name, type, options, hasValue, e,
-                o, oLen, opt;
+                    hasSubmit = false,
+                    encoder = encodeURIComponent,
+                    data = '',
+                    eLen = fElements.length,
+                    element, name, type, options, hasValue, e,
+                    o, oLen, opt;
 
             for (e = 0; e < eLen; e++) {
                 element = fElements[e];
@@ -301,15 +290,14 @@ Ext.define('Ext.dom.Element', {
             }
             return data.substr(0, data.length - 1);
         },
-
         /**
          * Serializes a DOM element and its children recursively into a string.
          * @param {Object} node DOM element to serialize.
          * @returns {String}
          */
-        serializeNode: function (node) {
+        serializeNode: function(node) {
             var result = '',
-                i, n, attr, child;
+                    i, n, attr, child;
             if (node.nodeType === document.TEXT_NODE) {
                 return node.nodeValue;
             }
@@ -331,10 +319,7 @@ Ext.define('Ext.dom.Element', {
             return result;
         }
     },
-
     isElement: true,
-
-
     /**
      * @event painted
      * Fires whenever this Element actually becomes visible (painted) on the screen. This is useful when you need to
@@ -375,16 +360,14 @@ Ext.define('Ext.dom.Element', {
 
         this.getUniqueId();
     },
-
-    attach: function (dom) {
+    attach: function(dom) {
         this.dom = dom;
         this.id = dom.id;
         return this;
     },
-
     getUniqueId: function() {
         var id = this.id,
-            dom;
+                dom;
 
         if (!id) {
             dom = this.dom;
@@ -401,10 +384,9 @@ Ext.define('Ext.dom.Element', {
 
         return id;
     },
-
     setId: function(id) {
         var currentId = this.id,
-            cache = Ext.Element.cache;
+                cache = Ext.Element.cache;
 
         if (currentId) {
             delete cache[currentId];
@@ -423,7 +405,6 @@ Ext.define('Ext.dom.Element', {
 
         return this;
     },
-
     /**
      * Sets the `innerHTML` of this element.
      * @param {String} html The new HTML.
@@ -431,7 +412,6 @@ Ext.define('Ext.dom.Element', {
     setHtml: function(html) {
         this.dom.innerHTML = html;
     },
-
     /**
      * Returns the `innerHTML` of an element.
      * @return {String}
@@ -439,20 +419,17 @@ Ext.define('Ext.dom.Element', {
     getHtml: function() {
         return this.dom.innerHTML;
     },
-
     setText: function(text) {
         this.dom.textContent = text;
     },
-
     redraw: function() {
         var dom = this.dom,
-            domStyle = dom.style;
+                domStyle = dom.style;
 
         domStyle.display = 'none';
         dom.offsetHeight;
         domStyle.display = '';
     },
-
     isPainted: (function() {
         return !Ext.browser.is.IE ? function() {
             var dom = this.dom;
@@ -462,7 +439,6 @@ Ext.define('Ext.dom.Element', {
             return Boolean(dom && (dom.offsetHeight !== 0 && dom.offsetWidth !== 0));
         }
     })(),
-
     /**
      * Sets the passed attributes as attributes of this element (a style attribute can be a string, object or function).
      * @param {Object} attributes The object with the attributes.
@@ -471,7 +447,7 @@ Ext.define('Ext.dom.Element', {
      */
     set: function(attributes, useSet) {
         var dom = this.dom,
-            attribute, value;
+                attribute, value;
 
         for (attribute in attributes) {
             if (attributes.hasOwnProperty(attribute)) {
@@ -498,7 +474,6 @@ Ext.define('Ext.dom.Element', {
 
         return this;
     },
-
     /**
      * Returns `true` if this element matches the passed simple selector (e.g. 'div.some-class' or 'span:first-child').
      * @param {String} selector The simple selector to test.
@@ -507,7 +482,6 @@ Ext.define('Ext.dom.Element', {
     is: function(selector) {
         return Ext.DomQuery.is(this.dom, selector);
     },
-
     /**
      * Returns the value of the `value` attribute.
      * @param {Boolean} asNumber `true` to parse the value as a number.
@@ -518,7 +492,6 @@ Ext.define('Ext.dom.Element', {
 
         return asNumber ? parseInt(value, 10) : value;
     },
-
     /**
      * Returns the value of an attribute from the element's underlying DOM node.
      * @param {String} name The attribute name.
@@ -529,14 +502,13 @@ Ext.define('Ext.dom.Element', {
         var dom = this.dom;
 
         return dom.getAttributeNS(namespace, name) || dom.getAttribute(namespace + ":" + name)
-               || dom.getAttribute(name) || dom[name];
+                || dom.getAttribute(name) || dom[name];
     },
-
     setSizeState: function(state) {
         var classes = ['x-sized', 'x-unsized', 'x-stretched'],
-            states = [true, false, null],
-            index = states.indexOf(state),
-            addedClass;
+                states = [true, false, null],
+                index = states.indexOf(state),
+                addedClass;
 
         if (index !== -1) {
             addedClass = classes[index];
@@ -548,7 +520,6 @@ Ext.define('Ext.dom.Element', {
 
         return this;
     },
-
     /**
      * Removes this element's DOM reference. Note that event and cache removal is handled at {@link Ext#removeNode}
      */
@@ -556,7 +527,7 @@ Ext.define('Ext.dom.Element', {
         this.isDestroyed = true;
 
         var cache = Ext.Element.cache,
-            dom = this.dom;
+                dom = this.dom;
 
         if (dom && dom.parentNode && dom.tagName != 'BODY') {
             dom.parentNode.removeChild(dom);
@@ -572,14 +543,11 @@ Ext.define('Ext.dom.Element', {
     this.addStatics({
         Fly: new Ext.Class({
             extend: Element,
-
             constructor: function(dom) {
                 this.dom = dom;
             }
         }),
-
         _flyweights: {},
-
         /**
          * Gets the globally shared flyweight Element, with the passed node as the active element. Do not store a reference
          * to this element - the dom node can be overwritten by other code. {@link Ext#fly} is alias for
@@ -598,8 +566,8 @@ Ext.define('Ext.dom.Element', {
          */
         fly: function(element, named) {
             var fly = null,
-                flyweights = Element._flyweights,
-                cachedElement;
+                    flyweights = Element._flyweights,
+                    cachedElement;
 
             named = named || '_global';
 

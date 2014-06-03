@@ -2,25 +2,22 @@
  * @private
  */
 Ext.define('Ext.ux.device.analytics.Abstract', {
-	config: {
-		accountID: null
-	},
-
-	updateAccountID: function(newID) {
-		if (newID) {
-			window.plugins.googleAnalyticsPlugin.startTrackerWithAccountID(newID);
-		}
-	},
-
-	/**
-	 * Registers yur Google Analytics account.
-	 * 
-	 * @param {String} accountID Your Google Analytics account ID
-	 */
-    registerAccount: function(accountID) {
-    	this.setAccountID(accountID);
+    config: {
+        accountID: null
     },
-
+    updateAccountID: function(newID) {
+        if (newID) {
+            window.plugins.googleAnalyticsPlugin.startTrackerWithAccountID(newID);
+        }
+    },
+    /**
+     * Registers yur Google Analytics account.
+     * 
+     * @param {String} accountID Your Google Analytics account ID
+     */
+    registerAccount: function(accountID) {
+        this.setAccountID(accountID);
+    },
     /**
      * Track an event in your application.
      *
@@ -41,7 +38,6 @@ Ext.define('Ext.ux.device.analytics.Abstract', {
      * not be used in bounce-rate calculation.
      */
     trackEvent: Ext.emptyFn,
-
     /**
      * Track an pageview in your application.
      *

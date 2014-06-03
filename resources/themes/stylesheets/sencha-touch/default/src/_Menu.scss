@@ -1,12 +1,12 @@
 .x-menu {
-	padding: $sheet-padding;
-	@include background-gradient($sheet-bg-color, $sheet-bg-gradient);
+    padding: $sheet-padding;
+    @include background-gradient($sheet-bg-color, $sheet-bg-gradient);
 
-	.x-button {
-		margin-bottom: $sheet-padding;
+    .x-button {
+        margin-bottom: $sheet-padding;
 
-		&:last-child {
-			margin-bottom: 0;
-		}
-	}
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
 }

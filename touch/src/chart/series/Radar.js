@@ -69,71 +69,61 @@ Ext.define('Ext.chart.series.Radar', {
      */
 
     config: {
-
     },
-
-    updateAngularAxis: function (axis) {
+    updateAngularAxis: function(axis) {
         axis.processData(this);
     },
-
-    updateRadialAxis: function (axis) {
+    updateRadialAxis: function(axis) {
         axis.processData(this);
     },
-
-    coordinateX: function () {
+    coordinateX: function() {
         return this.coordinate('X', 0, 2);
     },
-
-    coordinateY: function () {
+    coordinateY: function() {
         return this.coordinate('Y', 1, 2);
     },
-
-    updateCenter: function (center) {
+    updateCenter: function(center) {
         this.setStyle({
             translationX: center[0] + this.getOffsetX(),
             translationY: center[1] + this.getOffsetY()
         });
         this.doUpdateStyles();
     },
-
-    updateRadius: function (radius) {
+    updateRadius: function(radius) {
         this.setStyle({
             endRho: radius
         });
         this.doUpdateStyles();
     },
-
-    updateRotation: function (rotation) {
+    updateRotation: function(rotation) {
         this.setStyle({
             rotationRads: rotation
         });
         this.doUpdateStyles();
     },
-
-    updateTotalAngle: function (totalAngle) {
+    updateTotalAngle: function(totalAngle) {
         this.processData();
     },
-
-    getItemForPoint: function (x, y) {
+    getItemForPoint: function(x, y) {
         var me = this,
-            sprite = me.sprites && me.sprites[0],
-            attr = sprite.attr,
-            dataX = attr.dataX,
-            dataY = attr.dataY,
-            centerX = attr.centerX,
-            centerY = attr.centerY,
-            minX = attr.dataMinX,
-            maxX = attr.dataMaxX,
-            maxY = attr.dataMaxY,
-            endRho = attr.endRho,
-            startRho = attr.startRho,
-            baseRotation = attr.baseRotation,
-            i, length = dataX.length,
-            store = me.getStore(),
-            marker = me.getMarker(),
-            item, th, r;
+                sprite = me.sprites && me.sprites[0],
+                attr = sprite.attr,
+                dataX = attr.dataX,
+                dataY = attr.dataY,
+                centerX = attr.centerX,
+                centerY = attr.centerY,
+                minX = attr.dataMinX,
+                maxX = attr.dataMaxX,
+                maxY = attr.dataMaxY,
+                endRho = attr.endRho,
+                startRho = attr.startRho,
+                baseRotation = attr.baseRotation,
+                i, length = dataX.length,
+                store = me.getStore(),
+                marker = me.getMarker(),
+                item, th, r;
 
-        if(me.getHidden()) {
+        if (me.getHidden()) {
             return null;
         }
         if (sprite && marker) {
@@ -154,15 +144,13 @@ Ext.define('Ext.chart.series.Radar', {
         }
         return this.callSuper(arguments);
     },
-
-    getXRange: function () {
+    getXRange: function() {
         return [this.dataRange[0], this.dataRange[2]];
     },
-
-    getYRange: function () {
+    getYRange: function() {
         return [this.dataRange[1], this.dataRange[3]];
     }
-}, function () {
+}, function() {
     var klass = this;
     // TODO: [HACK] Steal from cartesian series.
     klass.prototype.onAxesChanged = Ext.chart.series.Cartesian.prototype.onAxesChanged;

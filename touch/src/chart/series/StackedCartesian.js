@@ -5,36 +5,29 @@
  * and bar series.
  */
 Ext.define('Ext.chart.series.StackedCartesian', {
-
     extend: 'Ext.chart.series.Cartesian',
-
     config: {
         /**
          * @cfg {Boolean}
          * 'true' to display the series in its stacked configuration.
          */
         stacked: true,
-
         /**
          * @cfg {Array} hidden
          */
         hidden: []
     },
-
     animatingSprites: 0,
-
-    updateStacked: function () {
+    updateStacked: function() {
         this.processData();
     },
-
-    coordinateY: function () {
+    coordinateY: function() {
         return this.coordinateStacked('Y', 1, 2);
     },
-
-    getFields: function (fieldCategory) {
+    getFields: function(fieldCategory) {
         var me = this,
-            fields = [], fieldsItem,
-            i, ln;
+                fields = [], fieldsItem,
+                i, ln;
         for (i = 0, ln = fieldCategory.length; i < ln; i++) {
             fieldsItem = me['get' + fieldCategory[i] + 'Field']();
             if (Ext.isArray(fieldsItem)) {
@@ -45,21 +38,19 @@ Ext.define('Ext.chart.series.StackedCartesian', {
         }
         return fields;
     },
-
-    updateLabelOverflowPadding: function (labelOverflowPadding) {
+    updateLabelOverflowPadding: function(labelOverflowPadding) {
         this.getLabel().setAttributes({labelOverflowPadding: labelOverflowPadding});
     },
-
-    getSprites: function () {
+    getSprites: function() {
         var me = this,
-            chart = this.getChart(),
-            animation = chart && chart.getAnimate(),
-            fields = me.getFields(me.fieldCategoryY),
-            itemInstancing = me.getItemInstancing(),
-            sprites = me.sprites, sprite,
-            hidden = me.getHidden(),
-            spritesCreated = false,
-            i, length = fields.length;
+                chart = this.getChart(),
+                animation = chart && chart.getAnimate(),
+                fields = me.getFields(me.fieldCategoryY),
+                itemInstancing = me.getItemInstancing(),
+                sprites = me.sprites, sprite,
+                hidden = me.getHidden(),
+                spritesCreated = false,
+                i, length = fields.length;
 
         if (!chart) {
             return [];
@@ -96,19 +87,18 @@ Ext.define('Ext.chart.series.StackedCartesian', {
         }
         return sprites;
     },
-
-    getItemForPoint: function (x, y) {
+    getItemForPoint: function(x, y) {
         if (this.getSprites()) {
             var me = this,
-                i, ln, sprite,
-                itemInstancing = me.getItemInstancing(),
-                sprites = me.getSprites(),
-                store = me.getStore(),
-                hidden = me.getHidden(),
-                item;
+                    i, ln, sprite,
+                    itemInstancing = me.getItemInstancing(),
+                    sprites = me.getSprites(),
+                    store = me.getStore(),
+                    hidden = me.getHidden(),
+                    item;
 
             for (i = 0, ln = sprites.length; i < ln; i++) {
-                if(!hidden[i]) {
+                if (!hidden[i]) {
                     sprite = sprites[i];
                     var index = sprite.getIndexNearPoint(x, y);
                     if (index !== -1) {
@@ -127,12 +117,11 @@ Ext.define('Ext.chart.series.StackedCartesian', {
             return null;
         }
     },
-
-    provideLegendInfo: function (target) {
+    provideLegendInfo: function(target) {
         var sprites = this.getSprites(),
-            title = this.getTitle(),
-            field = this.getYField(),
-            hidden = this.getHidden();
+                title = this.getTitle(),
+                field = this.getYField(),
+                hidden = this.getHidden();
         for (var i = 0; i < sprites.length; i++) {
             target.push({
                 name: this.getTitle() ? this.getTitle()[i] : (field && field[i]) || this.getId(),
@@ -143,15 +132,13 @@ Ext.define('Ext.chart.series.StackedCartesian', {
             });
         }
     },
-
-    onSpriteAnimationStart: function (sprite) {
+    onSpriteAnimationStart: function(sprite) {
         this.animatingSprites++;
         if (this.animatingSprites === 1) {
             this.fireEvent('animationstart');
         }
     },
-
-    onSpriteAnimationEnd: function (sprite) {
+    onSpriteAnimationEnd: function(sprite) {
         this.animatingSprites--;
         if (this.animatingSprites === 0) {
             this.fireEvent('animationend');

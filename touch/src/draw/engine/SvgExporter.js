@@ -28,49 +28,41 @@
 // TODO: http://stackoverflow.com/questions/18586808/canvas-todatauri-on-chrome-security-issue
 Ext.define('Ext.draw.engine.SvgExporter', {
     singleton: true,
-
     /**
      * @property {String} [defaultUrl="http://svg.sencha.io"]
      * The default URL to submit the form request.
      */
     defaultUrl: 'http://svg.sencha.io',
-
     /**
      * @property {Array} [supportedTypes=["image/png", "image/jpeg"]]
      * A list of export types supported by the server
      */
     supportedTypes: ['image/png', 'image/jpeg'],
-
     /**
      * @property {String} [widthParam="width"]
      * The name of the width parameter to be sent to the server.
      * The Sencha IO server expects it to be the default value.
      */
     widthParam: 'width',
-
     /**
      * @property {String} [heightParam="height"]
      * The name of the height parameter to be sent to the server.
      * The Sencha IO server expects it to be the default value.
      */
     heightParam: 'height',
-
     /**
      * @property {String} [typeParam="type"]
      * The name of the type parameter to be sent to the server.
      * The Sencha IO server expects it to be the default value.
      */
     typeParam: 'type',
-
     /**
      * @property {String} [svgParam="svg"]
      * The name of the svg parameter to be sent to the server.
      * The Sencha IO server expects it to be the default value.
      */
     svgParam: 'svg',
-
     formCls: Ext.baseCSSPrefix + 'hide-display',
-
     /**
      * Exports the surface to an image
      * @param {String} svg The SVG document.
@@ -105,8 +97,8 @@ Ext.define('Ext.draw.engine.SvgExporter', {
     generate: function(svg, config) {
         config = config || {};
         var me = this,
-            type = config.type,
-            form;
+                type = config.type,
+                form;
 
         if (Ext.Array.indexOf(me.supportedTypes, type) === -1) {
             return false;
@@ -118,25 +110,25 @@ Ext.define('Ext.draw.engine.SvgExporter', {
             action: config.url || me.defaultUrl,
             cls: me.formCls,
             children: [{
-                tag: 'input',
-                type: 'hidden',
-                name: config.widthParam || me.widthParam,
-                value: config.width
-            }, {
-                tag: 'input',
-                type: 'hidden',
-                name: config.heightParam || me.heightParam,
-                value: config.height
-            }, {
-                tag: 'input',
-                type: 'hidden',
-                name: config.typeParam || me.typeParam,
-                value: type
-            }, {
-                tag: 'input',
-                type: 'hidden',
-                name: config.svgParam || me.svgParam
-            }]
+                    tag: 'input',
+                    type: 'hidden',
+                    name: config.widthParam || me.widthParam,
+                    value: config.width
+                }, {
+                    tag: 'input',
+                    type: 'hidden',
+                    name: config.heightParam || me.heightParam,
+                    value: config.height
+                }, {
+                    tag: 'input',
+                    type: 'hidden',
+                    name: config.typeParam || me.typeParam,
+                    value: type
+                }, {
+                    tag: 'input',
+                    type: 'hidden',
+                    name: config.svgParam || me.svgParam
+                }]
         });
 
         // Assign the data on the value so it doesn't get messed up in the html insertion

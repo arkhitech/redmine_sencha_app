@@ -2,7 +2,6 @@
  * @private
  */
 Ext.define('Ext.util.Offset', {
-
     /* Begin Definitions */
 
     statics: {
@@ -10,7 +9,6 @@ Ext.define('Ext.util.Offset', {
             return new this(obj.x, obj.y);
         }
     },
-
     /* End Definitions */
 
     constructor: function(x, y) {
@@ -19,30 +17,25 @@ Ext.define('Ext.util.Offset', {
 
         return this;
     },
-
     copy: function() {
         return new Ext.util.Offset(this.x, this.y);
     },
-
     copyFrom: function(p) {
         this.x = p.x;
         this.y = p.y;
     },
-
     toString: function() {
         return "Offset[" + this.x + "," + this.y + "]";
     },
-
     equals: function(offset) {
         //<debug>
-        if(!(offset instanceof this.statics())) {
+        if (!(offset instanceof this.statics())) {
             Ext.Error.raise('Offset must be an instance of Ext.util.Offset');
         }
         //</debug>
 
         return (this.x == offset.x && this.y == offset.y);
     },
-
     round: function(to) {
         if (!isNaN(to)) {
             var factor = Math.pow(10, to);
@@ -53,7 +46,6 @@ Ext.define('Ext.util.Offset', {
             this.y = Math.round(this.y);
         }
     },
-
     isZero: function() {
         return this.x == 0 && this.y == 0;
     }

@@ -9,18 +9,15 @@
  * 
  */
 Ext.define('Ext.chart.axis.segmenter.Segmenter', {
-
     config: {
         /**
          * @cfg {Ext.chart.axis.Axis} axis The axis that the Segmenter is bound.
          */
         axis: null
     },
-
-    constructor: function (config) {
+    constructor: function(config) {
         this.initConfig(config);
     },
-
     /**
      * This method formats the value.
      * 
@@ -28,19 +25,17 @@ Ext.define('Ext.chart.axis.segmenter.Segmenter', {
      * @param {Object} context Axis layout context.
      * @return {String}
      */
-    renderer: function (value, context) {
+    renderer: function(value, context) {
         return String(value);
     },
-    
     /**
      * Convert from any data into the target type.
      * @param {*} value The value to convert from
      * @return {*} The converted value. 
      */
-    from: function (value) {
+    from: function(value) {
         return value;
     },
-
     /**
      * Returns the difference between the min and max value based on the given unit scale.
      * 
@@ -50,7 +45,6 @@ Ext.define('Ext.chart.axis.segmenter.Segmenter', {
      * @return {Number} The number of `unit`s between min and max. It is the minimum n that min + n * unit >= max.
      */
     diff: Ext.emptyFn,
-
     /**
      * Align value with step of units.
      * For example, for the date segmenter, if the unit is "Month" and step is 3, the value will be aligned by
@@ -62,7 +56,6 @@ Ext.define('Ext.chart.axis.segmenter.Segmenter', {
      * @return {*} Aligned value.
      */
     align: Ext.emptyFn,
-
     /**
      * Add `step` `unit`s to the value. 
      * @param {*} value  The value to be added.
@@ -70,7 +63,6 @@ Ext.define('Ext.chart.axis.segmenter.Segmenter', {
      * @param {*} unit The unit.
      */
     add: Ext.emptyFn,
-
     /**
      * Given a start point and estimated step size of a range, determine the preferred step size.
      * 

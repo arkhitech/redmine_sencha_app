@@ -3,95 +3,84 @@
  */
 Ext.define('Ext.fx.runner.Css', {
     extend: 'Ext.Evented',
-
     requires: [
         'Ext.fx.Animation'
     ],
-
     prefixedProperties: {
-        'transform'                 : true,
-        'transform-origin'          : true,
-        'perspective'               : true,
-        'transform-style'           : true,
-        'transition'                : true,
-        'transition-property'       : true,
-        'transition-duration'       : true,
+        'transform': true,
+        'transform-origin': true,
+        'perspective': true,
+        'transform-style': true,
+        'transition': true,
+        'transition-property': true,
+        'transition-duration': true,
         'transition-timing-function': true,
-        'transition-delay'          : true,
-        'animation'                 : true,
-        'animation-name'            : true,
-        'animation-duration'        : true,
-        'animation-iteration-count' : true,
-        'animation-direction'       : true,
-        'animation-timing-function' : true,
-        'animation-delay'           : true
+        'transition-delay': true,
+        'animation': true,
+        'animation-name': true,
+        'animation-duration': true,
+        'animation-iteration-count': true,
+        'animation-direction': true,
+        'animation-timing-function': true,
+        'animation-delay': true
     },
-
     lengthProperties: {
-        'top'                : true,
-        'right'              : true,
-        'bottom'             : true,
-        'left'               : true,
-        'width'              : true,
-        'height'             : true,
-        'max-height'         : true,
-        'max-width'          : true,
-        'min-height'         : true,
-        'min-width'          : true,
-        'margin-bottom'      : true,
-        'margin-left'        : true,
-        'margin-right'       : true,
-        'margin-top'         : true,
-        'padding-bottom'     : true,
-        'padding-left'       : true,
-        'padding-right'      : true,
-        'padding-top'        : true,
+        'top': true,
+        'right': true,
+        'bottom': true,
+        'left': true,
+        'width': true,
+        'height': true,
+        'max-height': true,
+        'max-width': true,
+        'min-height': true,
+        'min-width': true,
+        'margin-bottom': true,
+        'margin-left': true,
+        'margin-right': true,
+        'margin-top': true,
+        'padding-bottom': true,
+        'padding-left': true,
+        'padding-right': true,
+        'padding-top': true,
         'border-bottom-width': true,
-        'border-left-width'  : true,
-        'border-right-width' : true,
-        'border-spacing'     : true,
-        'border-top-width'   : true,
-        'border-width'       : true,
-        'outline-width'      : true,
-        'letter-spacing'     : true,
-        'line-height'        : true,
-        'text-indent'        : true,
-        'word-spacing'       : true,
-        'font-size'          : true,
-        'translate'          : true,
-        'translateX'         : true,
-        'translateY'         : true,
-        'translateZ'         : true,
-        'translate3d'        : true
+        'border-left-width': true,
+        'border-right-width': true,
+        'border-spacing': true,
+        'border-top-width': true,
+        'border-width': true,
+        'outline-width': true,
+        'letter-spacing': true,
+        'line-height': true,
+        'text-indent': true,
+        'word-spacing': true,
+        'font-size': true,
+        'translate': true,
+        'translateX': true,
+        'translateY': true,
+        'translateZ': true,
+        'translate3d': true
     },
-
     durationProperties: {
-        'transition-duration'   : true,
-        'transition-delay'      : true,
-        'animation-duration'    : true,
-        'animation-delay'       : true
+        'transition-duration': true,
+        'transition-delay': true,
+        'animation-duration': true,
+        'animation-delay': true
     },
-
     angleProperties: {
-        rotate     : true,
-        rotateX    : true,
-        rotateY    : true,
-        rotateZ    : true,
-        skew       : true,
-        skewX      : true,
-        skewY      : true
+        rotate: true,
+        rotateX: true,
+        rotateY: true,
+        rotateZ: true,
+        skew: true,
+        skewX: true,
+        skewY: true
     },
-
     lengthUnitRegex: /([a-z%]*)$/,
-
     DEFAULT_UNIT_LENGTH: 'px',
-
     DEFAULT_UNIT_ANGLE: 'deg',
-
     DEFAULT_UNIT_DURATION: 'ms',
-
     formattedNameCache: {},
-
     constructor: function() {
         var supports3dTransform = Ext.feature.has.Css3dTransforms;
 
@@ -108,10 +97,9 @@ Ext.define('Ext.fx.runner.Css', {
 
         return this;
     },
-
     getStyleSheet: function() {
         var styleSheet = this.styleSheet,
-            styleElement, styleSheets;
+                styleElement, styleSheets;
 
         if (!styleSheet) {
             styleElement = document.createElement('style');
@@ -126,13 +114,12 @@ Ext.define('Ext.fx.runner.Css', {
 
         return styleSheet;
     },
-
     applyRules: function(selectors) {
         var styleSheet = this.getStyleSheet(),
-            ruleStylesCache = this.ruleStylesCache,
-            rules = styleSheet.cssRules,
-            selector, properties, ruleStyle,
-            ruleStyleCache, rulesLength, name, value;
+                ruleStylesCache = this.ruleStylesCache,
+                rules = styleSheet.cssRules,
+                selector, properties, ruleStyle,
+                ruleStyleCache, rulesLength, name, value;
 
         for (selector in selectors) {
             properties = selectors[selector];
@@ -170,7 +157,6 @@ Ext.define('Ext.fx.runner.Css', {
 
         return this;
     },
-
     applyStyles: function(styles) {
         var id, element, elementStyle, properties, name, value;
 
@@ -203,10 +189,9 @@ Ext.define('Ext.fx.runner.Css', {
 
         return this;
     },
-
     formatName: function(name) {
         var cache = this.formattedNameCache,
-            formattedName = cache[name];
+                formattedName = cache[name];
 
         if (!formattedName) {
             if ((Ext.os.is.Tizen || !Ext.feature.has.CssTransformNoPrefix) && this.prefixedProperties[name]) {
@@ -221,13 +206,12 @@ Ext.define('Ext.fx.runner.Css', {
 
         return formattedName;
     },
-
     formatValue: function(value, name) {
         var type = typeof value,
-            lengthUnit = this.DEFAULT_UNIT_LENGTH,
-            transformMethods,
-            method, i, ln,
-            transformValues, values, unit;
+                lengthUnit = this.DEFAULT_UNIT_LENGTH,
+                transformMethods,
+                method, i, ln,
+                transformValues, values, unit;
 
         if (value === null) {
             return '';
@@ -241,7 +225,7 @@ Ext.define('Ext.fx.runner.Css', {
                     //<debug error>
                     if (unit !== lengthUnit) {
                         Ext.Logger.error("Length unit: '" + unit + "' in value: '" + value + "' of property: '" + name + "' is not " +
-                            "valid for animation. Only 'px' is allowed");
+                                "valid for animation. Only 'px' is allowed");
                     }
                     //</debug>
                 }
@@ -273,7 +257,7 @@ Ext.define('Ext.fx.runner.Css', {
             transformMethods = this.transformMethods;
             transformValues = [];
 
-            for (i = 0,ln = transformMethods.length; i < ln; i++) {
+            for (i = 0, ln = transformMethods.length; i < ln; i++) {
                 method = transformMethods[i];
 
                 transformValues.push(method + '(' + this.formatValue(value[method], method) + ')');
@@ -284,7 +268,7 @@ Ext.define('Ext.fx.runner.Css', {
         else if (Ext.isArray(value)) {
             values = [];
 
-            for (i = 0,ln = value.length; i < ln; i++) {
+            for (i = 0, ln = value.length; i < ln; i++) {
                 values.push(this.formatValue(value[i], name));
             }
 

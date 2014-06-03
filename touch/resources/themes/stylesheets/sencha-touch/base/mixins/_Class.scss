@@ -183,7 +183,7 @@
         /* Shared Properties for all the bars */
         & > span,
         & > span:before,
-        & > span:after {
+            & > span:after {
             display: block;
             position: absolute;
             width: $bar-width;
@@ -276,19 +276,19 @@
 }
 
 @mixin inline-icon($name, $font-family: 'Pictos') {
-  $character: icon-character-for-name($name);
+    $character: icon-character-for-name($name);
 
-  &:before {
-      @include absolute-position;
-      text-align: center;
-      font-family: $font-family;
+    &:before {
+        @include absolute-position;
+        text-align: center;
+        font-family: $font-family;
 
-      @if $character {
-          content: "#{$character}";
-      } @else {
-          content: "#{$name}";
-      }
-  }
+        @if $character {
+            content: "#{$character}";
+        } @else {
+            content: "#{$name}";
+        }
+    }
 }
 
 @mixin pictos-iconmask($name) {
@@ -409,25 +409,25 @@
     @else if ($name == "screens") { @return "|"; }
     @else if ($name == "bell") { @return ":"; }
     @else if ($name == "quote") { @return "\""; }
-    @else if ($name == "volume_mute") { @return "<"; }
-    @else if ($name == "volume") { @return ">"; }
-    @else if ($name == "question") { @return "?"; }
+                                  @else if ($name == "volume_mute") { @return "<"; }
+                                  @else if ($name == "volume") { @return ">"; }
+                                  @else if ($name == "question") { @return "?"; }
 
-    // Backwards compat; icons that are not in the font
-    @else if ($name == "arrow_left") { @return "["; }
-    @else if ($name == "arrow_right") { @return "]"; }
-    @else if ($name == "arrow_up") { @return "{"; }
-    @else if ($name == "arrow_down") { @return "}"; }
-    @else if ($name == "organize") { @return "I"; }
-    @else if ($name == "bookmarks") { @return "I"; }
-    @else if ($name == "loop2") { @return "r"; }
-    @else if ($name == "star") { @return "S"; }
-    @else if ($name == "maps") { @return "@"; }
-    @else if ($name == "reply") { @return "R"; }
+                                  // Backwards compat; icons that are not in the font
+                                  @else if ($name == "arrow_left") { @return "["; }
+                                  @else if ($name == "arrow_right") { @return "]"; }
+                                  @else if ($name == "arrow_up") { @return "{"; }
+                                  @else if ($name == "arrow_down") { @return "}"; }
+                                  @else if ($name == "organize") { @return "I"; }
+                                  @else if ($name == "bookmarks") { @return "I"; }
+                                  @else if ($name == "loop2") { @return "r"; }
+                                  @else if ($name == "star") { @return "S"; }
+                                  @else if ($name == "maps") { @return "@"; }
+                                  @else if ($name == "reply") { @return "R"; }
 
-    @else {
-        @return null;
+                                  @else {
+                                      @return null;
+                                  }
     }
-}
 
-$include-pictos-font: true !default;
+    $include-pictos-font: true !default;

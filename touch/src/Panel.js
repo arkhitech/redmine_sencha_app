@@ -38,16 +38,11 @@
 Ext.define('Ext.Panel', {
     extend: 'Ext.Container',
     requires: ['Ext.util.LineSegment'],
-
     alternateClassName: 'Ext.lib.Panel',
-
     xtype: 'panel',
-
     isPanel: true,
-
     config: {
         baseCls: Ext.baseCSSPrefix + 'panel',
-
         /**
          * @cfg {Number/Boolean/String} bodyPadding
          * A shortcut for setting a padding style on the body element. The value can either be
@@ -55,7 +50,6 @@ Ext.define('Ext.Panel', {
          * @deprecated 2.0.0
          */
         bodyPadding: null,
-
         /**
          * @cfg {Number/Boolean/String} bodyMargin
          * A shortcut for setting a margin style on the body element. The value can either be
@@ -63,7 +57,6 @@ Ext.define('Ext.Panel', {
          * @deprecated 2.0.0
          */
         bodyMargin: null,
-
         /**
          * @cfg {Number/Boolean/String} bodyBorder
          * A shortcut for setting a border style on the body element. The value can either be
@@ -72,7 +65,6 @@ Ext.define('Ext.Panel', {
          */
         bodyBorder: null
     },
-
     getElementConfig: function() {
         return {
             reference: 'element',
@@ -90,7 +82,6 @@ Ext.define('Ext.Panel', {
             ]
         };
     },
-
     applyBodyPadding: function(bodyPadding) {
         if (bodyPadding === true) {
             bodyPadding = 5;
@@ -102,11 +93,9 @@ Ext.define('Ext.Panel', {
 
         return bodyPadding;
     },
-
     updateBodyPadding: function(newBodyPadding) {
         this.element.setStyle('padding', newBodyPadding);
     },
-
     applyBodyMargin: function(bodyMargin) {
         if (bodyMargin === true) {
             bodyMargin = 5;
@@ -118,11 +107,9 @@ Ext.define('Ext.Panel', {
 
         return bodyMargin;
     },
-
     updateBodyMargin: function(newBodyMargin) {
         this.element.setStyle('margin', newBodyMargin);
     },
-
     applyBodyBorder: function(bodyBorder) {
         if (bodyBorder === true) {
             bodyBorder = 1;
@@ -134,14 +121,13 @@ Ext.define('Ext.Panel', {
 
         return bodyBorder;
     },
-
     updateBodyBorder: function(newBodyBorder) {
         this.element.setStyle('border-width', newBodyBorder);
     },
-
     alignTo: function(component, alignment) {
         var alignmentInfo = this.getAlignmentInfo(component, alignment);
-        if(alignmentInfo.isAligned) return;
+        if (alignmentInfo.isAligned)
+            return;
         var tipElement = this.tipElement;
 
         tipElement.hide();
@@ -153,28 +139,28 @@ Ext.define('Ext.Panel', {
         this.callParent(arguments);
 
         var LineSegment = Ext.util.LineSegment,
-            alignToElement = component.isComponent ? component.renderElement : component,
-            element = this.renderElement,
-            alignToBox = alignToElement.getPageBox(),
-            box = element.getPageBox(),
-            left = box.left,
-            top = box.top,
-            right = box.right,
-            bottom = box.bottom,
-            centerX = left + (box.width / 2),
-            centerY = top + (box.height / 2),
-            leftTopPoint = { x: left, y: top },
-            rightTopPoint = { x: right, y: top },
-            leftBottomPoint = { x: left, y: bottom },
-            rightBottomPoint = { x: right, y: bottom },
-            boxCenterPoint = { x: centerX, y: centerY },
-            alignToCenterX = alignToBox.left + (alignToBox.width / 2),
-            alignToCenterY = alignToBox.top + (alignToBox.height / 2),
-            alignToBoxCenterPoint = { x: alignToCenterX, y: alignToCenterY },
-            centerLineSegment = new LineSegment(boxCenterPoint, alignToBoxCenterPoint),
-            offsetLeft = 0,
-            offsetTop = 0,
-            tipSize, tipWidth, tipHeight, tipPosition, tipX, tipY;
+                alignToElement = component.isComponent ? component.renderElement : component,
+                element = this.renderElement,
+                alignToBox = alignToElement.getPageBox(),
+                box = element.getPageBox(),
+                left = box.left,
+                top = box.top,
+                right = box.right,
+                bottom = box.bottom,
+                centerX = left + (box.width / 2),
+                centerY = top + (box.height / 2),
+                leftTopPoint = {x: left, y: top},
+        rightTopPoint = {x: right, y: top},
+        leftBottomPoint = {x: left, y: bottom},
+        rightBottomPoint = {x: right, y: bottom},
+        boxCenterPoint = {x: centerX, y: centerY},
+        alignToCenterX = alignToBox.left + (alignToBox.width / 2),
+                alignToCenterY = alignToBox.top + (alignToBox.height / 2),
+                alignToBoxCenterPoint = {x: alignToCenterX, y: alignToCenterY},
+        centerLineSegment = new LineSegment(boxCenterPoint, alignToBoxCenterPoint),
+                offsetLeft = 0,
+                offsetTop = 0,
+                tipSize, tipWidth, tipHeight, tipPosition, tipX, tipY;
 
         tipElement.setVisibility(false);
         tipElement.show();

@@ -33,14 +33,12 @@
  */
 Ext.define('Ext.device.Camera', {
     singleton: true,
-
     requires: [
         'Ext.device.Communicator',
         'Ext.device.camera.Cordova',
         'Ext.device.camera.Sencha',
         'Ext.device.camera.Simulator'
     ],
-
     constructor: function() {
         var browserEnv = Ext.browser.is;
 

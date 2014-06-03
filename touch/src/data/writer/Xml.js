@@ -8,14 +8,11 @@
  * up the XML document.
  */
 Ext.define('Ext.data.writer.Xml', {
-
     /* Begin Definitions */
 
     extend: 'Ext.data.writer.Writer',
     alternateClassName: 'Ext.data.XmlWriter',
-
     alias: 'writer.xml',
-
     /* End Definitions */
 
     config: {
@@ -25,24 +22,20 @@ Ext.define('Ext.data.writer.Xml', {
          * to ensure a valid XML document is created.
          */
         documentRoot: 'xmlData',
-
         /**
          * @cfg {String} defaultDocumentRoot The root to be used if {@link #documentRoot} is empty and a root is required
          * to form a valid XML document.
          */
         defaultDocumentRoot: 'xmlData',
-
         /**
          * @cfg {String} header A header to use in the XML document (such as setting the encoding or version).
          */
         header: '',
-
         /**
          * @cfg {String} record The name of the node to use for each record.
          */
         record: 'record'
     },
-
     /**
      * @param {Object} request
      * @param {Array} data
@@ -50,14 +43,14 @@ Ext.define('Ext.data.writer.Xml', {
      */
     writeRecords: function(request, data) {
         var me = this,
-            xml = [],
-            i = 0,
-            len = data.length,
-            root = me.getDocumentRoot(),
-            record = me.getRecord(),
-            needsRoot = data.length !== 1,
-            item,
-            key;
+                xml = [],
+                i = 0,
+                len = data.length,
+                root = me.getDocumentRoot(),
+                record = me.getRecord(),
+                needsRoot = data.length !== 1,
+                item,
+                key;
 
         // may not exist
         xml.push(me.getHeader() || '');

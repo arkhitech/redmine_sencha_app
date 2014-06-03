@@ -7,13 +7,12 @@
 Ext.define('Ext.chart.axis.layout.Discrete', {
     extend: 'Ext.chart.axis.layout.Layout',
     alias: 'axisLayout.discrete',
-
-    processData: function () {
+    processData: function() {
         var me = this,
-            axis = me.getAxis(),
-            boundSeries = axis.boundSeries,
-            direction = axis.getDirection(),
-            i, ln, item;
+                axis = me.getAxis(),
+                boundSeries = axis.boundSeries,
+                direction = axis.getDirection(),
+                i, ln, item;
         this.labels = [];
         this.labelMap = {};
         for (i = 0, ln = boundSeries.length; i < ln; i++) {
@@ -40,25 +39,23 @@ Ext.define('Ext.chart.axis.layout.Discrete', {
         // sets the dirtyTrigger which calls doLayout() which calls calculateLayout() etc...
         // Note that the sprite's data attribute could be set to any value and it would still result in the  
         // dirtyTrigger we need. For consistency, however, it is set to the labels.
-        axis.getSprites()[0].setAttributes({data:this.labels});
+        axis.getSprites()[0].setAttributes({data: this.labels});
     },
-
     // @inheritdoc
-    calculateLayout: function (context) {
+    calculateLayout: function(context) {
         context.data = this.labels;
         this.callSuper([context]);
     },
-
     //@inheritdoc
-    calculateMajorTicks: function (context) {
+    calculateMajorTicks: function(context) {
         var me = this,
-            attr = context.attr,
-            data = context.data,
-            range = attr.max - attr.min,
-            zoom = range / Math.max(1, attr.length) * (attr.visibleMax - attr.visibleMin),
-            viewMin = attr.min + range * attr.visibleMin,
-            viewMax = attr.min + range * attr.visibleMax,
-            estStepSize = attr.estStepSize * zoom;
+                attr = context.attr,
+                data = context.data,
+                range = attr.max - attr.min,
+                zoom = range / Math.max(1, attr.length) * (attr.visibleMax - attr.visibleMin),
+                viewMin = attr.min + range * attr.visibleMin,
+                viewMax = attr.min + range * attr.visibleMax,
+                estStepSize = attr.estStepSize * zoom;
 
         var out = me.snapEnds(context, Math.max(0, attr.min), Math.min(attr.max, data.length - 1), estStepSize);
         if (out) {
@@ -66,12 +63,11 @@ Ext.define('Ext.chart.axis.layout.Discrete', {
             context.majorTicks = out;
         }
     },
-
     // @inheritdoc
-    snapEnds: function (context, min, max, estStepSize) {
+    snapEnds: function(context, min, max, estStepSize) {
         estStepSize = Math.ceil(estStepSize);
         var steps = Math.floor((max - min) / estStepSize),
-            data = context.data;
+                data = context.data;
         return {
             min: min,
             max: max,
@@ -80,22 +76,21 @@ Ext.define('Ext.chart.axis.layout.Discrete', {
             step: estStepSize,
             steps: steps,
             unit: 1,
-            getLabel: function (current) {
+            getLabel: function(current) {
                 return data[this.from + this.step * current];
             },
-            get: function (current) {
+            get: function(current) {
                 return this.from + this.step * current;
             }
         };
     },
-
     // @inheritdoc
-    trimByRange: function (context, out, trimMin, trimMax) {
+    trimByRange: function(context, out, trimMin, trimMax) {
         var unit = out.unit,
-            beginIdx = Math.ceil((trimMin - out.from) / unit) * unit,
-            endIdx = Math.floor((trimMax - out.from) / unit) * unit,
-            begin = Math.max(0, Math.ceil(beginIdx / out.step)),
-            end = Math.min(out.steps, Math.floor(endIdx / out.step));
+                beginIdx = Math.ceil((trimMin - out.from) / unit) * unit,
+                endIdx = Math.floor((trimMax - out.from) / unit) * unit,
+                begin = Math.max(0, Math.ceil(beginIdx / out.step)),
+                end = Math.min(out.steps, Math.floor(endIdx / out.step));
 
         if (end < out.steps) {
             out.to = end;
@@ -119,8 +114,7 @@ Ext.define('Ext.chart.axis.layout.Discrete', {
 
         out.steps = end - begin;
     },
-
-    getCoordFor: function (value, field, idx, items) {
+    getCoordFor: function(value, field, idx, items) {
         this.labels.push(value);
         return this.labels.length - 1;
     }

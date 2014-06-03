@@ -7,7 +7,6 @@
  */
 Ext.define('Ext.device.FileSystem', {
     singleton: true,
-
     requires: [
         'Ext.device.Communicator',
         'Ext.device.filesystem.Cordova',
@@ -15,7 +14,6 @@ Ext.define('Ext.device.FileSystem', {
         'Ext.device.filesystem.Simulator',
         'Ext.device.filesystem.Sencha'
     ],
-
     constructor: function() {
         var browserEnv = Ext.browser.is;
         if (browserEnv.WebView) {

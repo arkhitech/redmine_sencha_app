@@ -5,20 +5,15 @@
  */
 Ext.define('Ext.plugin.SortableList', {
     extend: 'Ext.Component',
-
     alias: 'plugin.sortablelist',
-
     mixins: ['Ext.mixin.Bindable'],
-
     config: {
         list: null,
         handleSelector: '.' + Ext.baseCSSPrefix + 'list-sortablehandle'
     },
-
     init: function(list) {
         this.setList(list);
     },
-
     updateList: function(list) {
         if (list) {
             if (list.initialized) {
@@ -33,10 +28,9 @@ Ext.define('Ext.plugin.SortableList', {
             }
         }
     },
-
     attachListeners: function() {
         var list = this.getList(),
-            scrollerElement = list.getScrollable().getScroller().getContainer();
+                scrollerElement = list.getScrollable().getScroller().getContainer();
 
         this.scrollerElement = scrollerElement;
 
@@ -45,7 +39,6 @@ Ext.define('Ext.plugin.SortableList', {
             scope: this
         });
     },
-
     onScrollerDragStart: function(e, target) {
         if (Ext.DomQuery.is(target, this.getHandleSelector())) {
             if (!this.animating) {
@@ -54,11 +47,10 @@ Ext.define('Ext.plugin.SortableList', {
             return false;
         }
     },
-
     onDragStart: function(e) {
         var row = Ext.getCmp(e.getTarget('.' + Ext.baseCSSPrefix + 'list-item').id),
-            list = this.getList(),
-            store = list.getStore();
+                list = this.getList(),
+                store = list.getStore();
 
         this.scrollerElement.on({
             drag: 'onDrag',
@@ -85,18 +77,17 @@ Ext.define('Ext.plugin.SortableList', {
 
         row.addCls(Ext.baseCSSPrefix + 'list-item-dragging');
     },
-
     onDrag: function(e) {
         var list = this.getList(),
-            listItems = list.listItems,
-            collection = list.getStore().data,
-            dragRow = this.dragRow,
-            dragRecordKey = collection.getKey(dragRow.getRecord()),
-            listItemInfo = list.getListItemInfo(),
-            positionMap = this.positionMap,
-            distance = 0,
-            i, item, ln, targetItem, targetIndex, itemIndex,
-            swapIndex, swapPosition, record, swapKey, draggingUp;
+                listItems = list.listItems,
+                collection = list.getStore().data,
+                dragRow = this.dragRow,
+                dragRecordKey = collection.getKey(dragRow.getRecord()),
+                listItemInfo = list.getListItemInfo(),
+                positionMap = this.positionMap,
+                distance = 0,
+                i, item, ln, targetItem, targetIndex, itemIndex,
+                swapIndex, swapPosition, record, swapKey, draggingUp;
 
         this.dragRowPosition = this.startTranslate + e.deltaY;
         dragRow.translate(0, this.dragRowPosition);
@@ -148,13 +139,12 @@ Ext.define('Ext.plugin.SortableList', {
             }
         }
     },
-
     onDragEnd: function() {
         var me = this,
-            row = this.dragRow,
-            list = this.getList(),
-            listItemInfo = list.getListItemInfo(),
-            position = row.$position;
+                row = this.dragRow,
+                list = this.getList(),
+                listItemInfo = list.getListItemInfo(),
+                position = row.$position;
 
         this.scrollerElement.un({
             drag: 'onDrag',

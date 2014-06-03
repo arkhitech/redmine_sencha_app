@@ -12,7 +12,6 @@ Ext.define('Ext.env.Browser', {
     requires: [
         'Ext.Version'
     ],
-
     statics: {
         browserNames: {
             ie: 'IE',
@@ -53,7 +52,6 @@ Ext.define('Ext.env.Browser', {
             silk: 'Silk/'
         }
     },
-
     styleDashPrefixes: {
         WebKit: '-webkit-',
         Gecko: '-moz-',
@@ -61,7 +59,6 @@ Ext.define('Ext.env.Browser', {
         Presto: '-o-',
         Other: ''
     },
-
     stylePrefixes: {
         WebKit: 'Webkit',
         Gecko: 'Moz',
@@ -69,7 +66,6 @@ Ext.define('Ext.env.Browser', {
         Presto: 'O',
         Other: ''
     },
-
     propertyPrefixes: {
         WebKit: 'webkit',
         Gecko: 'moz',
@@ -77,7 +73,6 @@ Ext.define('Ext.env.Browser', {
         Presto: 'o',
         Other: ''
     },
-
     // scope: Ext.env.Browser.prototype
 
     /**
@@ -120,7 +115,6 @@ Ext.define('Ext.env.Browser', {
      * @return {Boolean}
      */
     is: Ext.emptyFn,
-
     /**
      * The full name of the current browser.
      * Possible values are:
@@ -135,14 +129,12 @@ Ext.define('Ext.env.Browser', {
      * @readonly
      */
     name: null,
-
     /**
      * Refer to {@link Ext.Version}.
      * @type Ext.Version
      * @readonly
      */
     version: null,
-
     /**
      * The full name of the current browser's engine.
      * Possible values are:
@@ -156,14 +148,12 @@ Ext.define('Ext.env.Browser', {
      * @readonly
      */
     engineName: null,
-
     /**
      * Refer to {@link Ext.Version}.
      * @type Ext.Version
      * @readonly
      */
     engineVersion: null,
-
     setFlag: function(name, value) {
         if (typeof value == 'undefined') {
             value = true;
@@ -174,7 +164,6 @@ Ext.define('Ext.env.Browser', {
 
         return this;
     },
-
     constructor: function(userAgent) {
         /**
          * @property {String}
@@ -183,16 +172,16 @@ Ext.define('Ext.env.Browser', {
         this.userAgent = userAgent;
 
         var statics = this.statics(),
-            browserMatch = userAgent.match(new RegExp('((?:' + Ext.Object.getValues(statics.browserPrefixes).join(')|(?:') + '))([\\w\\._]+)')),
-            engineMatch = userAgent.match(new RegExp('((?:' + Ext.Object.getValues(statics.enginePrefixes).join(')|(?:') + '))([\\w\\._]+)')),
-            browserNames = statics.browserNames,
-            browserName = browserNames.other,
-            engineNames = statics.engineNames,
-            engineName = engineNames.other,
-            browserVersion = '',
-            engineVersion = '',
-            isWebView = false,
-            is, i, name;
+                browserMatch = userAgent.match(new RegExp('((?:' + Ext.Object.getValues(statics.browserPrefixes).join(')|(?:') + '))([\\w\\._]+)')),
+                engineMatch = userAgent.match(new RegExp('((?:' + Ext.Object.getValues(statics.enginePrefixes).join(')|(?:') + '))([\\w\\._]+)')),
+                browserNames = statics.browserNames,
+                browserName = browserNames.other,
+                engineNames = statics.engineNames,
+                engineName = engineNames.other,
+                browserVersion = '',
+                engineVersion = '',
+                isWebView = false,
+                is, i, name;
 
         is = this.is = function(name) {
             return is[name] === true;
@@ -308,15 +297,12 @@ Ext.define('Ext.env.Browser', {
 
         return this;
     },
-
     getStyleDashPrefix: function() {
         return this.styleDashPrefixes[this.engineName];
     },
-
     getStylePrefix: function() {
         return this.stylePrefixes[this.engineName];
     },
-
     getVendorProperyName: function(name) {
         var prefix = this.propertyPrefixes[this.engineName];
 
@@ -326,7 +312,6 @@ Ext.define('Ext.env.Browser', {
 
         return name;
     },
-
     getPreferredTranslationMethod: function(config) {
         if (typeof config == 'object' && 'translationMethod' in config && config.translationMethod !== 'auto') {
             return config.translationMethod;
@@ -367,7 +352,7 @@ Ext.define('Ext.env.Browser', {
 
     //<deprecated product=touch since=2.0>
     var flags = browserEnv.is,
-        name;
+            name;
 
     if (!Ext.is) {
         Ext.is = {};
@@ -376,13 +361,13 @@ Ext.define('Ext.env.Browser', {
     for (name in flags) {
         if (flags.hasOwnProperty(name)) {
             Ext.deprecatePropertyValue(Ext.is, name, flags[name], "Ext.is." + name + " is deprecated, " +
-                "please use Ext.browser.is." + name + " instead");
+                    "please use Ext.browser.is." + name + " instead");
         }
     }
 
     Ext.deprecatePropertyValue(Ext, 'isStrict', browserEnv.isStrict, "Ext.isStrict is deprecated, " +
-        "please use Ext.browser.isStrict instead");
+            "please use Ext.browser.isStrict instead");
     Ext.deprecatePropertyValue(Ext, 'userAgent', browserEnv.userAgent, "Ext.userAgent is deprecated, " +
-        "please use Ext.browser.userAgent instead");
+            "please use Ext.browser.userAgent instead");
     //</deprecated>
 });

@@ -4,15 +4,13 @@
 Ext.define('Ext.device.notification.Simulator', {
     extend: 'Ext.device.notification.Abstract',
     requires: ['Ext.MessageBox', 'Ext.util.Audio'],
-
     // @private
     msg: null,
-
-	show: function() {
+    show: function() {
         var config = this.callParent(arguments),
-            buttons = [],
-            ln = config.buttons.length,
-            button, i, callback;
+                buttons = [],
+                ln = config.buttons.length,
+                button, i, callback;
 
         //buttons
         for (i = 0; i < ln; i++) {
@@ -36,14 +34,13 @@ Ext.define('Ext.device.notification.Simulator', {
         };
 
         this.msg.show({
-            title  : config.title,
+            title: config.title,
             message: config.message,
-            scope  : this.msg,
+            scope: this.msg,
             buttons: buttons,
-            fn     : callback
+            fn: callback
         });
     },
-
     alert: function() {
         var config = this.callParent(arguments);
 
@@ -53,17 +50,15 @@ Ext.define('Ext.device.notification.Simulator', {
 
         this.show(config);
     },
-
     confirm: function() {
         var config = this.callParent(arguments);
         this.show(config);
     },
-
     prompt: function() {
         var config = this.callParent(arguments),
-            buttons = [],
-            ln = config.buttons.length,
-            button, i, callback;
+                buttons = [],
+                ln = config.buttons.length,
+                button, i, callback;
 
         //buttons
         for (i = 0; i < ln; i++) {
@@ -88,12 +83,12 @@ Ext.define('Ext.device.notification.Simulator', {
 
         this.msg.prompt(config.title, config.message, callback, this.msg, config.multiLine, config.value, config.prompt);
     },
-
     beep: function(times) {
-        if(!Ext.isNumber(times)) times = 1;
+        if (!Ext.isNumber(times))
+            times = 1;
         var count = 0;
         var callback = function() {
-            if(count < times) {
+            if (count < times) {
                 setTimeout(function() {
                     Ext.util.Audio.beep(callback);
                 }, 50);
@@ -103,7 +98,6 @@ Ext.define('Ext.device.notification.Simulator', {
 
         callback();
     },
-
     vibrate: function() {
         //nice animation to fake vibration
         var animation = [
@@ -115,7 +109,6 @@ Ext.define('Ext.device.notification.Simulator', {
             "        -webkit-transform: rotate(2deg);",
             "    }",
             "}",
-
             "body {",
             "    -webkit-animation: vibrate 50ms linear 10 alternate;",
             "}"

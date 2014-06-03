@@ -2,77 +2,47 @@
  * @private
  */
 Ext.define('Ext.fx.animation.Abstract', {
-
     extend: 'Ext.Evented',
-
     isAnimation: true,
-
     requires: [
         'Ext.fx.State'
     ],
-
     config: {
         name: '',
-
         element: null,
-
         /**
          * @cfg
          * Before configuration.
          */
         before: null,
-
         from: {},
-
         to: {},
-
         after: null,
-
         states: {},
-
-        duration:  300,
-
+        duration: 300,
         /**
          * @cfg
          * Easing type.
          */
         easing: 'linear',
-
         iteration: 1,
-
         direction: 'normal',
-
         delay: 0,
-
         onBeforeStart: null,
-
         onEnd: null,
-
         onBeforeEnd: null,
-
         scope: null,
-
         reverse: null,
-
         preserveEndState: false,
-
         replacePrevious: true
     },
-
     STATE_FROM: '0%',
-
     STATE_TO: '100%',
-
     DIRECTION_UP: 'up',
-
     DIRECTION_DOWN: 'down',
-
     DIRECTION_LEFT: 'left',
-
     DIRECTION_RIGHT: 'right',
-
     stateNameRegex: /^(?:[\d\.]+)%$/,
-
     constructor: function() {
         this.states = {};
 
@@ -80,42 +50,34 @@ Ext.define('Ext.fx.animation.Abstract', {
 
         return this;
     },
-
     applyElement: function(element) {
         return Ext.get(element);
     },
-
     applyBefore: function(before, current) {
         if (before) {
             return Ext.factory(before, Ext.fx.State, current);
         }
     },
-
     applyAfter: function(after, current) {
         if (after) {
             return Ext.factory(after, Ext.fx.State, current);
         }
     },
-
     setFrom: function(from) {
         return this.setState(this.STATE_FROM, from);
     },
-
     setTo: function(to) {
         return this.setState(this.STATE_TO, to);
     },
-
     getFrom: function() {
         return this.getState(this.STATE_FROM);
     },
-
     getTo: function() {
         return this.getState(this.STATE_TO);
     },
-
     setStates: function(states) {
         var validNameRegex = this.stateNameRegex,
-            name;
+                name;
 
         for (name in states) {
             if (validNameRegex.test(name)) {
@@ -125,23 +87,19 @@ Ext.define('Ext.fx.animation.Abstract', {
 
         return this;
     },
-
     getStates: function() {
         return this.states;
     },
-
     stop: function() {
         this.fireEvent('stop', this);
     },
-
     destroy: function() {
         this.stop();
         this.callParent();
     },
-
     setState: function(name, state) {
         var states = this.getStates(),
-            stateInstance;
+                stateInstance;
 
         stateInstance = Ext.factory(state, Ext.fx.State, states[name]);
 
@@ -156,21 +114,19 @@ Ext.define('Ext.fx.animation.Abstract', {
 
         return this;
     },
-
     getState: function(name) {
         return this.getStates()[name];
     },
-
     getData: function() {
         var states = this.getStates(),
-            statesData = {},
-            before = this.getBefore(),
-            after = this.getAfter(),
-            from = states[this.STATE_FROM],
-            to = states[this.STATE_TO],
-            fromData = from.getData(),
-            toData = to.getData(),
-            data, name, state;
+                statesData = {},
+                before = this.getBefore(),
+                after = this.getAfter(),
+                from = states[this.STATE_FROM],
+                to = states[this.STATE_TO],
+                fromData = from.getData(),
+                toData = to.getData(),
+                data, name, state;
 
         for (name in states) {
             if (states.hasOwnProperty(name)) {

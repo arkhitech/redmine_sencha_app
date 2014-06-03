@@ -14,14 +14,14 @@
     $transparent: rgba(black, 0);
     background-color: $bg-color;
     @include background-image(
-        radial-gradient(
-            $dot-color $size,
-            $transparent $size + 1
-        ),
-        radial-gradient(
-            $dot-color $size,
-            $transparent $size + 1
-        )
+    radial-gradient(
+    $dot-color $size,
+    $transparent $size + 1
+    ),
+    radial-gradient(
+    $dot-color $size,
+    $transparent $size + 1
+    )
     );
     background-size: $spacing $spacing;
     background-position: 0 0, ($spacing / 2) ($spacing / 2);

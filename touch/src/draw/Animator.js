@@ -6,28 +6,25 @@
 Ext.define('Ext.draw.Animator', {
     uses: ['Ext.draw.Draw'],
     singleton: true,
-
     frameCallbacks: {},
     frameCallbackId: 0,
     scheduled: 0,
-    frameStartTimeOffset:Date.now(),
+    frameStartTimeOffset: Date.now(),
     animations: [],
     running: false,
-
     /**
      *  Cross platform `animationTime` implementation.
      *  @return {Number}
      */
-    animationTime: function () {
+    animationTime: function() {
         return Ext.AnimationQueue.frameStartTime - this.frameStartTimeOffset;
     },
-
     /**
      * Adds an animated object to the animation pool.
      *
      * @param {Object} animation The animation descriptor to add to the pool.
      */
-    add: function (animation) {
+    add: function(animation) {
         if (!this.contains(animation)) {
             this.animations.push(animation);
             Ext.draw.Animator.ignite();
@@ -36,17 +33,16 @@ Ext.define('Ext.draw.Animator', {
             }
         }
     },
-
     /**
      * Removes an animation from the pool.
      * TODO: This is broken when called within `step` method.
      * @param {Object} animation The animation to remove from the pool.
      */
-    remove: function (animation) {
+    remove: function(animation) {
         var me = this,
-            animations = me.animations,
-            i = 0,
-            l = animations.length;
+                animations = me.animations,
+                i = 0,
+                l = animations.length;
 
         for (; i < l; ++i) {
             if (animations[i] === animation) {
@@ -58,36 +54,33 @@ Ext.define('Ext.draw.Animator', {
             }
         }
     },
-
     /**
      * Returns `true` or `false` whether it contains the given animation or not.
      *
      * @param {Object} animation The animation to check for.
      * @return {Boolean}
      */
-    contains: function (animation) {
+    contains: function(animation) {
         return this.animations.indexOf(animation) > -1;
     },
-
     /**
      * Returns `true` or `false` whether the pool is empty or not.
      * @return {Boolean}
      */
-    empty: function () {
+    empty: function() {
         return this.animations.length === 0;
     },
-
     /**
      * Given a frame time it will filter out finished animations from the pool.
      *
      * @param {Number} frameTime The frame's start time, in milliseconds.
      */
-    step: function (frameTime) {
+    step: function(frameTime) {
         var me = this,
-            animations = me.animations,
-            animation,
-            i = 0,
-            ln = animations.length;
+                animations = me.animations,
+                animation,
+                i = 0,
+                ln = animations.length;
 
         for (; i < ln; i++) {
             animation = animations[i];
@@ -102,14 +95,13 @@ Ext.define('Ext.draw.Animator', {
             }
         }
     },
-
     /**
      * Register an one-time callback that will be called at the next frame.
      * @param {Function} callback
      * @param {Object} scope
      * @return {String}
      */
-    schedule: function (callback, scope) {
+    schedule: function(callback, scope) {
         scope = scope || this;
         var id = 'frameCallback' + (this.frameCallbackId++);
 
@@ -121,18 +113,16 @@ Ext.define('Ext.draw.Animator', {
         Ext.draw.Animator.ignite();
         return id;
     },
-
     /**
      * Cancel a registered one-time callback
      * @param {String} id
      */
-    cancel: function (id) {
+    cancel: function(id) {
         if (Ext.draw.Animator.frameCallbacks[id] && Ext.draw.Animator.frameCallbacks[id].once) {
             this.scheduled--;
             delete Ext.draw.Animator.frameCallbacks[id];
         }
     },
-
     /**
      * Register a recursive callback that will be called at every frame.
      *
@@ -140,7 +130,7 @@ Ext.define('Ext.draw.Animator', {
      * @param {Object} scope
      * @return {String}
      */
-    addFrameCallback: function (callback, scope) {
+    addFrameCallback: function(callback, scope) {
         scope = scope || this;
         if (Ext.isString(callback)) {
             callback = scope[callback];
@@ -150,21 +140,19 @@ Ext.define('Ext.draw.Animator', {
         Ext.draw.Animator.frameCallbacks[id] = {fn: callback, scope: scope};
         return id;
     },
-
     /**
      * Unregister a recursive callback.
      * @param {String} id
      */
-    removeFrameCallback: function (id) {
+    removeFrameCallback: function(id) {
         delete Ext.draw.Animator.frameCallbacks[id];
     },
-
     /**
      * @private
      */
-    fireFrameCallbacks: function () {
+    fireFrameCallbacks: function() {
         var callbacks = this.frameCallbacks,
-            id, fn, cb;
+                id, fn, cb;
 
         for (id in callbacks) {
             cb = callbacks[id];
@@ -181,7 +169,6 @@ Ext.define('Ext.draw.Animator', {
             }
         }
     },
-
     handleFrame: function() {
         this.step(this.animationTime());
         this.fireFrameCallbacks();
@@ -190,7 +177,6 @@ Ext.define('Ext.draw.Animator', {
             this.running = false;
         }
     },
-
     ignite: function() {
         if (!this.running) {
             this.running = true;

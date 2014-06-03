@@ -4,13 +4,9 @@
  */
 Ext.define('Ext.TaskQueue', {
     requires: 'Ext.AnimationQueue',
-
     singleton: true,
-
     pending: false,
-
     mode: true,
-
     constructor: function() {
         this.readQueue = [];
         this.writeQueue = [];
@@ -27,17 +23,14 @@ Ext.define('Ext.TaskQueue', {
             setInterval(this.watch, 500);
         }
     },
-
     requestRead: function(fn, scope, args) {
         this.request(true);
         this.readQueue.push(arguments);
     },
-
     requestWrite: function(fn, scope, args) {
         this.request(false);
         this.writeQueue.push(arguments);
     },
-
     request: function(mode) {
         if (!this.pending) {
             this.pendingTime = Date.now();
@@ -50,20 +43,18 @@ Ext.define('Ext.TaskQueue', {
             }
         }
     },
-
     watch: function() {
         if (this.pending && Date.now() - this.pendingTime >= 500) {
             this.run();
         }
     },
-
     run: function() {
         this.pending = false;
 
         var readQueue = this.readQueue,
-            writeQueue = this.writeQueue,
-            request = null,
-            queue;
+                writeQueue = this.writeQueue,
+                request = null,
+                queue;
 
         if (this.mode) {
             queue = readQueue;
@@ -81,7 +72,7 @@ Ext.define('Ext.TaskQueue', {
         }
 
         var tasks = queue.slice(),
-            i, ln, task, fn, scope;
+                i, ln, task, fn, scope;
 
         queue.length = 0;
 

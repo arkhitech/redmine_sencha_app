@@ -8,25 +8,19 @@
  */
 Ext.define('Ext.scroll.View', {
     extend: 'Ext.Evented',
-
     alternateClassName: 'Ext.util.ScrollView',
-
     requires: [
         'Ext.scroll.Scroller',
         'Ext.scroll.Indicator'
     ],
-
     config: {
         /**
          * @cfg {String} indicatorsUi
          * The style of the indicators of this view. Available options are `dark` or `light`.
          */
         indicatorsUi: 'dark',
-
         element: null,
-
         scroller: {},
-
         indicators: {
             x: {
                 axis: 'x'
@@ -35,12 +29,9 @@ Ext.define('Ext.scroll.View', {
                 axis: 'y'
             }
         },
-
         indicatorsHidingDelay: 100,
-
         cls: Ext.baseCSSPrefix + 'scroll-view'
     },
-
     /**
      * @method getScroller
      * Returns the scroller instance in this view. Checkout the documentation of {@link Ext.scroll.Scroller} and
@@ -65,7 +56,7 @@ Ext.define('Ext.scroll.View', {
         config = Ext.merge({}, config);
 
         var scrollerConfig = config.scroller,
-            name;
+                name;
 
         if (!scrollerConfig) {
             config.scroller = scrollerConfig = {};
@@ -82,34 +73,29 @@ Ext.define('Ext.scroll.View', {
 
         return config;
     },
-
     constructor: function(config) {
         config = this.processConfig(config);
 
-        this.useIndicators = { x: true, y: true };
+        this.useIndicators = {x: true, y: true};
 
         this.doHideIndicators = Ext.Function.bind(this.doHideIndicators, this);
 
         this.initConfig(config);
     },
-
     setConfig: function(config) {
         return this.callParent([this.processConfig(config)]);
     },
-
     updateIndicatorsUi: function(newUi) {
         var indicators = this.getIndicators();
         indicators.x.setUi(newUi);
         indicators.y.setUi(newUi);
     },
-
     applyScroller: function(config, currentScroller) {
         return Ext.factory(config, Ext.scroll.Scroller, currentScroller);
     },
-
     applyIndicators: function(config, indicators) {
         var defaultClass = Ext.scroll.Indicator,
-            useIndicators = this.useIndicators;
+                useIndicators = this.useIndicators;
 
         if (!config) {
             config = {};
@@ -130,28 +116,26 @@ Ext.define('Ext.scroll.View', {
             y: Ext.factory(config.y, defaultClass, indicators && indicators.y)
         };
     },
-
     updateIndicators: function(indicators) {
         this.indicatorsGrid = Ext.Element.create({
             className: 'x-scroll-bar-grid-wrapper',
             children: [{
-                className: 'x-scroll-bar-grid',
-                children: [
-                    {
-                        children: [{}, {
-                            children: [indicators.y.barElement]
-                        }]
-                    },
-                    {
-                        children: [{
-                            children: [indicators.x.barElement]
-                        }, {}]
-                    }
-                ]
-            }]
+                    className: 'x-scroll-bar-grid',
+                    children: [
+                        {
+                            children: [{}, {
+                                    children: [indicators.y.barElement]
+                                }]
+                        },
+                        {
+                            children: [{
+                                    children: [indicators.x.barElement]
+                                }, {}]
+                        }
+                    ]
+                }]
         });
     },
-
     updateScroller: function(scroller) {
         scroller.on({
             scope: this,
@@ -161,20 +145,17 @@ Ext.define('Ext.scroll.View', {
             refresh: 'refreshIndicators'
         });
     },
-
     isAxisEnabled: function(axis) {
         return this.getScroller().isAxisEnabled(axis) && this.useIndicators[axis];
     },
-
     applyElement: function(element) {
         if (element) {
             return Ext.get(element);
         }
     },
-
     updateElement: function(element) {
         var scroller = this.getScroller(),
-            scrollerElement;
+                scrollerElement;
 
 
         scrollerElement = element.getFirstChild().getFirstChild();
@@ -191,7 +172,6 @@ Ext.define('Ext.scroll.View', {
 
         return this;
     },
-
     showIndicators: function() {
         var indicators = this.getIndicators();
 
@@ -208,7 +188,6 @@ Ext.define('Ext.scroll.View', {
             indicators.y.show();
         }
     },
-
     hideIndicators: function() {
         var delay = this.getIndicatorsHidingDelay();
 
@@ -219,7 +198,6 @@ Ext.define('Ext.scroll.View', {
             this.doHideIndicators();
         }
     },
-
     doHideIndicators: function() {
         var indicators = this.getIndicators();
 
@@ -231,16 +209,13 @@ Ext.define('Ext.scroll.View', {
             indicators.y.hide();
         }
     },
-
     onScrollStart: function() {
         this.onScroll.apply(this, arguments);
         this.showIndicators();
     },
-
     onScrollEnd: function() {
         this.hideIndicators();
     },
-
     onScroll: function(scroller, x, y) {
         this.setIndicatorValue('x', x);
         this.setIndicatorValue('y', y);
@@ -251,15 +226,12 @@ Ext.define('Ext.scroll.View', {
         }
         //</debug>
     },
-
     //<debug>
     isBenchmarking: false,
-
     framesCount: 0,
-
     getCurrentFps: function() {
         var now = Date.now(),
-            fps;
+                fps;
 
         if (!this.isBenchmarking) {
             this.isBenchmarking = true;
@@ -282,9 +254,9 @@ Ext.define('Ext.scroll.View', {
         }
 
         var scroller = this.getScroller(),
-            scrollerMaxPosition = scroller.getMaxPosition()[axis],
-            scrollerContainerSize = scroller.getContainerSize()[axis],
-            value;
+                scrollerMaxPosition = scroller.getMaxPosition()[axis],
+                scrollerContainerSize = scroller.getContainerSize()[axis],
+                value;
 
         if (scrollerMaxPosition === 0) {
             value = scrollerPosition / scrollerContainerSize;
@@ -307,26 +279,23 @@ Ext.define('Ext.scroll.View', {
 
         this.getIndicators()[axis].setValue(value);
     },
-
     refreshIndicator: function(axis) {
         if (!this.isAxisEnabled(axis)) {
             return this;
         }
 
         var scroller = this.getScroller(),
-            indicator = this.getIndicators()[axis],
-            scrollerContainerSize = scroller.getContainerSize()[axis],
-            scrollerSize = scroller.getSize()[axis],
-            ratio = scrollerContainerSize / scrollerSize;
+                indicator = this.getIndicators()[axis],
+                scrollerContainerSize = scroller.getContainerSize()[axis],
+                scrollerSize = scroller.getSize()[axis],
+                ratio = scrollerContainerSize / scrollerSize;
 
         indicator.setRatio(ratio);
         indicator.refresh();
     },
-
     refresh: function() {
         return this.getScroller().refresh();
     },
-
     refreshIndicators: function() {
         var indicators = this.getIndicators();
 
@@ -336,10 +305,9 @@ Ext.define('Ext.scroll.View', {
         this.refreshIndicator('x');
         this.refreshIndicator('y');
     },
-
     destroy: function() {
         var element = this.getElement(),
-            indicators = this.getIndicators();
+                indicators = this.getIndicators();
 
         Ext.destroy(this.getScroller(), this.indicatorsGrid);
 

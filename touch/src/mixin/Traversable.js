@@ -4,17 +4,14 @@
  */
 Ext.define('Ext.mixin.Traversable', {
     extend: 'Ext.mixin.Mixin',
-
     mixinConfig: {
         id: 'traversable'
     },
-
     setParent: function(parent) {
         this.parent = parent;
 
         return this;
     },
-
     /**
      * @member Ext.Component
      * Returns `true` if this component has a parent.
@@ -23,7 +20,6 @@ Ext.define('Ext.mixin.Traversable', {
     hasParent: function() {
         return Boolean(this.parent);
     },
-
     /**
      * @member Ext.Component
      * Returns the parent of this component, if it has one.
@@ -32,10 +28,9 @@ Ext.define('Ext.mixin.Traversable', {
     getParent: function() {
         return this.parent;
     },
-
     getAncestors: function() {
         var ancestors = [],
-            parent = this.getParent();
+                parent = this.getParent();
 
         while (parent) {
             ancestors.push(parent);
@@ -44,10 +39,9 @@ Ext.define('Ext.mixin.Traversable', {
 
         return ancestors;
     },
-
     getAncestorIds: function() {
         var ancestorIds = [],
-            parent = this.getParent();
+                parent = this.getParent();
 
         while (parent) {
             ancestorIds.push(parent.getId());

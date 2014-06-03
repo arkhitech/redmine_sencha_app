@@ -16,7 +16,6 @@ Ext.define('Ext.device.capture.Cordova', {
 
         navigator.device.capture.captureAudio(config.success, config.failure, options);
     },
-
     captureVideo: function(config) {
         // <debug>
         if (!config.success) {

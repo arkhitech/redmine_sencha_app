@@ -218,11 +218,9 @@
  */
 Ext.define('Ext.data.proxy.Ajax', {
     extend: 'Ext.data.proxy.Server',
-
     requires: ['Ext.util.MixedCollection', 'Ext.Ajax'],
     alias: 'proxy.ajax',
     alternateClassName: ['Ext.data.HttpProxy', 'Ext.data.AjaxProxy'],
-
     config: {
         /**
          * @cfg {Boolean} withCredentials
@@ -230,7 +228,6 @@ Ext.define('Ext.data.proxy.Ajax', {
          * @accessor
          */
         withCredentials: false,
-
         /**
          * @cfg {Boolean} useDefaultXhrHeader
          * Set this to false to not send the default Xhr header (X-Requested-With) with every request.
@@ -238,7 +235,6 @@ Ext.define('Ext.data.proxy.Ajax', {
          * @accessor
          */
         useDefaultXhrHeader: true,
-
         /**
          * @cfg {String} username
          * Most oData feeds require basic HTTP authentication. This configuration allows
@@ -246,7 +242,6 @@ Ext.define('Ext.data.proxy.Ajax', {
          * @accessor
          */
         username: null,
-
         /**
          * @cfg {String} password
          * Most oData feeds require basic HTTP authentication. This configuration allows
@@ -254,7 +249,6 @@ Ext.define('Ext.data.proxy.Ajax', {
          * @accessor
          */
         password: null,
-
         /**
          * @property {Object} actionMethods
          * Mapping of action name to HTTP request method. In the basic AjaxProxy these are set to
@@ -262,19 +256,17 @@ Ext.define('Ext.data.proxy.Ajax', {
          * The {@link Ext.data.proxy.Rest} maps these to the correct RESTful methods.
          */
         actionMethods: {
-            create : 'POST',
-            read   : 'GET',
-            update : 'POST',
+            create: 'POST',
+            read: 'GET',
+            update: 'POST',
             destroy: 'POST'
         },
-
         /**
          * @cfg {Object} [headers=undefined]
          * Any headers to add to the Ajax request.
          */
         headers: {}
     },
-
     /**
      * Performs Ajax request.
      * @protected
@@ -285,8 +277,8 @@ Ext.define('Ext.data.proxy.Ajax', {
      */
     doRequest: function(operation, callback, scope) {
         var me = this,
-            writer  = me.getWriter(),
-            request = me.buildRequest(operation);
+                writer = me.getWriter(),
+                request = me.buildRequest(operation);
 
         request.setConfig({
             headers: me.getHeaders(),
@@ -311,7 +303,6 @@ Ext.define('Ext.data.proxy.Ajax', {
 
         return request;
     },
-
     /**
      * Returns the HTTP method name for a given request. By default this returns based on a lookup on
      * {@link #actionMethods}.
@@ -321,7 +312,6 @@ Ext.define('Ext.data.proxy.Ajax', {
     getMethod: function(request) {
         return this.getActionMethods()[request.getAction()];
     },
-
     /**
      * @private
      * @param {Ext.data.Request} request The Request object.

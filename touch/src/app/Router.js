@@ -14,14 +14,12 @@
  */
 Ext.define('Ext.app.Router', {
     requires: ['Ext.app.Route'],
-
     config: {
         /**
          * @cfg {Array} routes The set of routes contained within this Router.
          * @readonly
          */
         routes: [],
-
         /**
          * @cfg {Object} defaults Default configuration options for each Route connected to this Router.
          */
@@ -29,11 +27,9 @@ Ext.define('Ext.app.Router', {
             action: 'index'
         }
     },
-
     constructor: function(config) {
         this.initConfig(config);
     },
-
     /**
      * Connects a url-based route to a controller/action pair plus additional params.
      * @param {String} url The url to recognize.
@@ -47,7 +43,6 @@ Ext.define('Ext.app.Router', {
 
         return route;
     },
-
     /**
      * Recognizes a url string connected to the Router, return the controller/action pair plus any additional
      * config associated with it.
@@ -56,8 +51,8 @@ Ext.define('Ext.app.Router', {
      */
     recognize: function(url) {
         var routes = this.getRoutes(),
-            length = routes.length,
-            i, result;
+                length = routes.length,
+                i, result;
 
         for (i = 0; i < length; i++) {
             result = routes[i].recognize(url);
@@ -69,7 +64,6 @@ Ext.define('Ext.app.Router', {
 
         return undefined;
     },
-
     /**
      * Convenience method which just calls the supplied function with the Router instance. Example usage:
      *
@@ -83,7 +77,6 @@ Ext.define('Ext.app.Router', {
     draw: function(fn) {
         fn.call(this, this);
     },
-
     /**
      * @private
      */
@@ -120,12 +113,12 @@ Ext.define('Ext.app.Router', {
 
     Ext.Router.draw = function(mapperFn) {
         Ext.Logger.deprecate(
-            'Ext.Router.map is deprecated, please define your routes inline inside each Controller. ' +
-            'Please see the 1.x -> 2.x migration guide for more details.'
-        );
+                'Ext.Router.map is deprecated, please define your routes inline inside each Controller. ' +
+                'Please see the 1.x -> 2.x migration guide for more details.'
+                );
 
         var app = Ext.Router.appInstance,
-            router;
+                router;
 
         if (app) {
             router = app.getRouter();

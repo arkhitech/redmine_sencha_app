@@ -17,7 +17,7 @@
  *
  */
 
- @mixin flexible-box-layout {
+@mixin flexible-box-layout {
     .box {
         @include display-box;
         @include box-align(stretch);
@@ -32,28 +32,28 @@
         @extend .box;
         @include display-orient(horizontal);
     }
-     
+
     .vbox {
         @extend .box;
         @include display-orient(vertical);
     }
-     
+
     .reverse {
         @include box-direction(reverse);
     }
-     
+
     .flex-0 {
         @include box-flex(0);
     }
-     
+
     .flex, .spacer, .flex-1 {
         @include box-flex(1);
     }
-     
+
     .flex-2 {
         @include box-flex(2);
     }
-     
+
     .start {
         @include box-pack(start);
     }
@@ -61,7 +61,7 @@
     .end {
         @include box-pack(end);
     }
-     
+
     .center {
         @include box-pack(center);
     }

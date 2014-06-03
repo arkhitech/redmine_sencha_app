@@ -7,12 +7,13 @@
  */
 (function() {
     var global = this,
-        objectPrototype = Object.prototype,
-        toString = objectPrototype.toString,
-        enumerables = true,
-        enumerablesTest = { toString: 1 },
-        emptyFn = function(){},
-        i;
+            objectPrototype = Object.prototype,
+            toString = objectPrototype.toString,
+            enumerables = true,
+            enumerablesTest = {toString: 1},
+    emptyFn = function() {
+    },
+            i;
 
     if (typeof Ext === 'undefined') {
         global.Ext = {};
@@ -26,7 +27,7 @@
 
     if (enumerables) {
         enumerables = ['hasOwnProperty', 'valueOf', 'isPrototypeOf', 'propertyIsEnumerable',
-                       'toLocaleString', 'toString', 'constructor'];
+            'toLocaleString', 'toString', 'constructor'];
     }
 
     /**
@@ -57,7 +58,7 @@
             }
 
             if (enumerables) {
-                for (j = enumerables.length; j--;) {
+                for (j = enumerables.length; j--; ) {
                     k = enumerables[j];
                     if (config.hasOwnProperty(k)) {
                         object[k] = config[k];
@@ -80,9 +81,7 @@
          * A reusable empty function
          */
         emptyFn: emptyFn,
-
         baseCSSPrefix: Ext.buildSettings.baseCSSPrefix,
-
         /**
          * Copies all the properties of config to object if they don't already exist.
          * @param {Object} object The receiver of the properties.
@@ -102,7 +101,6 @@
 
             return object;
         },
-
         /**
          * Iterates either an array or an object. This method delegates to
          * {@link Ext.Array#each Ext.Array.each} if the given value is iterable, and {@link Ext.Object#each Ext.Object.each} otherwise.
@@ -133,7 +131,6 @@
     });
 
     Ext.apply(Ext, {
-
         /**
          * This method deprecated. Use {@link Ext#define Ext.define} instead.
          * @method
@@ -145,14 +142,14 @@
         extend: function() {
             // inline overrides
             var objectConstructor = objectPrototype.constructor,
-                inlineOverrides = function(o) {
-                for (var m in o) {
-                    if (!o.hasOwnProperty(m)) {
-                        continue;
-                    }
-                    this[m] = o[m];
-                }
-            };
+                    inlineOverrides = function(o) {
+                        for (var m in o) {
+                            if (!o.hasOwnProperty(m)) {
+                                continue;
+                            }
+                            this[m] = o[m];
+                        }
+                    };
 
             return function(subclass, superclass, overrides) {
                 // First we check if the user passed in just the superClass with overrides
@@ -175,8 +172,9 @@
                 //</debug>
 
                 // We create a new temporary class
-                var F = function() {},
-                    subclassProto, superclassProto = superclass.prototype;
+                var F = function() {
+                },
+                        subclassProto, superclassProto = superclass.prototype;
 
                 F.prototype = superclassProto;
                 subclassProto = subclass.prototype = new F();
@@ -202,7 +200,6 @@
                 return subclass;
             };
         }(),
-
         /**
          * Proxy to {@link Ext.Base#override}. Please refer {@link Ext.Base#override} for further details.
          *
@@ -224,7 +221,6 @@
 
     // A full set of static methods to do type checking
     Ext.apply(Ext, {
-
         /**
          * Returns the given value itself if it's not empty, as described in {@link Ext#isEmpty}; returns the default
          * value (second argument) otherwise.
@@ -234,10 +230,9 @@
          * @param {Boolean} [allowBlank=false] (optional) `true` to allow zero length strings to qualify as non-empty.
          * @return {Object} `value`, if non-empty, else `defaultValue`.
          */
-        valueFrom: function(value, defaultValue, allowBlank){
+        valueFrom: function(value, defaultValue, allowBlank) {
             return Ext.isEmpty(value, allowBlank) ? defaultValue : value;
         },
-
         /**
          * Returns the type of the given variable in string format. List of possible values are:
          *
@@ -271,7 +266,7 @@
 
             var typeToString = toString.call(value);
 
-            switch(typeToString) {
+            switch (typeToString) {
                 case '[object Array]':
                     return 'array';
                 case '[object Date]':
@@ -309,7 +304,6 @@
             });
             //</debug>
         },
-
         /**
          * Returns `true` if the passed value is empty, `false` otherwise. The value is deemed to be empty if it is either:
          *
@@ -325,7 +319,6 @@
         isEmpty: function(value, allowEmptyString) {
             return (value === null) || (value === undefined) || (!allowEmptyString ? value === '' : false) || (Ext.isArray(value) && value.length === 0);
         },
-
         /**
          * Returns `true` if the passed value is a JavaScript Array, `false` otherwise.
          *
@@ -336,7 +329,6 @@
         isArray: ('isArray' in Array) ? Array.isArray : function(value) {
             return toString.call(value) === '[object Array]';
         },
-
         /**
          * Returns `true` if the passed value is a JavaScript Date object, `false` otherwise.
          * @param {Object} object The object to test.
@@ -345,7 +337,6 @@
         isDate: function(value) {
             return toString.call(value) === '[object Date]';
         },
-
         /**
          * Returns 'true' if the passed value is a String that matches the MS Date JSON encoding format
          * @param {String} value The string to test
@@ -358,7 +349,6 @@
                 return value.match("\\\\?/Date\\(([-+])?(\\d+)(?:[+-]\\d{4})?\\)\\\\?/") !== null;
             }
         },
-
         /**
          * Returns `true` if the passed value is a JavaScript Object, `false` otherwise.
          * @param {Object} value The value to test.
@@ -366,14 +356,13 @@
          * @method
          */
         isObject: (toString.call(null) === '[object Object]') ?
-        function(value) {
-            // check ownerDocument here as well to exclude DOM nodes
-            return value !== null && value !== undefined && toString.call(value) === '[object Object]' && value.ownerDocument === undefined;
-        } :
-        function(value) {
-            return toString.call(value) === '[object Object]';
-        },
-
+                function(value) {
+                    // check ownerDocument here as well to exclude DOM nodes
+                    return value !== null && value !== undefined && toString.call(value) === '[object Object]' && value.ownerDocument === undefined;
+                } :
+                function(value) {
+                    return toString.call(value) === '[object Object]';
+                },
         /**
          * @private
          */
@@ -390,7 +379,6 @@
 
             return type === 'string' || type === 'number' || type === 'boolean';
         },
-
         /**
          * Returns `true` if the passed value is a JavaScript Function, `false` otherwise.
          * @param {Object} value The value to test.
@@ -398,230 +386,218 @@
          * @method
          */
         isFunction:
-        // Safari 3.x and 4.x returns 'function' for typeof <NodeList>, hence we need to fall back to using
-        // Object.prorotype.toString (slower)
-        (typeof document !== 'undefined' && typeof document.getElementsByTagName('body') === 'function') ? function(value) {
-            return toString.call(value) === '[object Function]';
-        } : function(value) {
-            return typeof value === 'function';
-        },
+                // Safari 3.x and 4.x returns 'function' for typeof <NodeList>, hence we need to fall back to using
+                        // Object.prorotype.toString (slower)
+                                (typeof document !== 'undefined' && typeof document.getElementsByTagName('body') === 'function') ? function(value) {
+                            return toString.call(value) === '[object Function]';
+                        } : function(value) {
+                            return typeof value === 'function';
+                        },
+                        /**
+                         * Returns `true` if the passed value is a number. Returns `false` for non-finite numbers.
+                         * @param {Object} value The value to test.
+                         * @return {Boolean}
+                         */
+                        isNumber: function(value) {
+                            return typeof value === 'number' && isFinite(value);
+                        },
+                        /**
+                         * Validates that a value is numeric.
+                         * @param {Object} value Examples: 1, '1', '2.34'
+                         * @return {Boolean} `true` if numeric, `false` otherwise.
+                         */
+                        isNumeric: function(value) {
+                            return !isNaN(parseFloat(value)) && isFinite(value);
+                        },
+                        /**
+                         * Returns `true` if the passed value is a string.
+                         * @param {Object} value The value to test.
+                         * @return {Boolean}
+                         */
+                        isString: function(value) {
+                            return typeof value === 'string';
+                        },
+                        /**
+                         * Returns `true` if the passed value is a Boolean.
+                         *
+                         * @param {Object} value The value to test.
+                         * @return {Boolean}
+                         */
+                        isBoolean: function(value) {
+                            return typeof value === 'boolean';
+                        },
+                        /**
+                         * Returns `true` if the passed value is an HTMLElement.
+                         * @param {Object} value The value to test.
+                         * @return {Boolean}
+                         */
+                        isElement: function(value) {
+                            return value ? value.nodeType === 1 : false;
+                        },
+                        /**
+                         * Returns `true` if the passed value is a TextNode.
+                         * @param {Object} value The value to test.
+                         * @return {Boolean}
+                         */
+                        isTextNode: function(value) {
+                            return value ? value.nodeName === "#text" : false;
+                        },
+                        /**
+                         * Returns `true` if the passed value is defined.
+                         * @param {Object} value The value to test.
+                         * @return {Boolean}
+                         */
+                        isDefined: function(value) {
+                            return typeof value !== 'undefined';
+                        },
+                        /**
+                         * Returns `true` if the passed value is iterable, `false` otherwise.
+                         * @param {Object} value The value to test.
+                         * @return {Boolean}
+                         */
+                        isIterable: function(value) {
+                            return (value && typeof value !== 'string') ? value.length !== undefined : false;
+                        }
+                    });
 
-        /**
-         * Returns `true` if the passed value is a number. Returns `false` for non-finite numbers.
-         * @param {Object} value The value to test.
-         * @return {Boolean}
-         */
-        isNumber: function(value) {
-            return typeof value === 'number' && isFinite(value);
-        },
+            Ext.apply(Ext, {
+                /**
+                 * Clone almost any type of variable including array, object, DOM nodes and Date without keeping the old reference.
+                 * @param {Object} item The variable to clone.
+                 * @return {Object} clone
+                 */
+                clone: function(item) {
+                    if (item === null || item === undefined) {
+                        return item;
+                    }
 
-        /**
-         * Validates that a value is numeric.
-         * @param {Object} value Examples: 1, '1', '2.34'
-         * @return {Boolean} `true` if numeric, `false` otherwise.
-         */
-        isNumeric: function(value) {
-            return !isNaN(parseFloat(value)) && isFinite(value);
-        },
+                    // DOM nodes
+                    if (item.nodeType && item.cloneNode) {
+                        return item.cloneNode(true);
+                    }
 
-        /**
-         * Returns `true` if the passed value is a string.
-         * @param {Object} value The value to test.
-         * @return {Boolean}
-         */
-        isString: function(value) {
-            return typeof value === 'string';
-        },
+                    // Strings
+                    var type = toString.call(item);
 
-        /**
-         * Returns `true` if the passed value is a Boolean.
-         *
-         * @param {Object} value The value to test.
-         * @return {Boolean}
-         */
-        isBoolean: function(value) {
-            return typeof value === 'boolean';
-        },
+                    // Dates
+                    if (type === '[object Date]') {
+                        return new Date(item.getTime());
+                    }
 
-        /**
-         * Returns `true` if the passed value is an HTMLElement.
-         * @param {Object} value The value to test.
-         * @return {Boolean}
-         */
-        isElement: function(value) {
-            return value ? value.nodeType === 1 : false;
-        },
+                    var i, j, k, clone, key;
 
-        /**
-         * Returns `true` if the passed value is a TextNode.
-         * @param {Object} value The value to test.
-         * @return {Boolean}
-         */
-        isTextNode: function(value) {
-            return value ? value.nodeName === "#text" : false;
-        },
+                    // Arrays
+                    if (type === '[object Array]') {
+                        i = item.length;
 
-        /**
-         * Returns `true` if the passed value is defined.
-         * @param {Object} value The value to test.
-         * @return {Boolean}
-         */
-        isDefined: function(value) {
-            return typeof value !== 'undefined';
-        },
+                        clone = [];
 
-        /**
-         * Returns `true` if the passed value is iterable, `false` otherwise.
-         * @param {Object} value The value to test.
-         * @return {Boolean}
-         */
-        isIterable: function(value) {
-            return (value && typeof value !== 'string') ? value.length !== undefined : false;
-        }
-    });
+                        while (i--) {
+                            clone[i] = Ext.clone(item[i]);
+                        }
+                    }
+                    // Objects
+                    else if (type === '[object Object]' && item.constructor === Object) {
+                        clone = {};
 
-    Ext.apply(Ext, {
+                        for (key in item) {
+                            clone[key] = Ext.clone(item[key]);
+                        }
 
-        /**
-         * Clone almost any type of variable including array, object, DOM nodes and Date without keeping the old reference.
-         * @param {Object} item The variable to clone.
-         * @return {Object} clone
-         */
-        clone: function(item) {
-            if (item === null || item === undefined) {
-                return item;
-            }
+                        if (enumerables) {
+                            for (j = enumerables.length; j--; ) {
+                                k = enumerables[j];
+                                clone[k] = item[k];
+                            }
+                        }
+                    }
 
-            // DOM nodes
-            if (item.nodeType && item.cloneNode) {
-                return item.cloneNode(true);
-            }
+                    return clone || item;
+                },
+                /**
+                 * @private
+                 * Generate a unique reference of Ext in the global scope, useful for sandboxing.
+                 */
+                getUniqueGlobalNamespace: function() {
+                    var uniqueGlobalNamespace = this.uniqueGlobalNamespace;
 
-            // Strings
-            var type = toString.call(item);
+                    if (uniqueGlobalNamespace === undefined) {
+                        var i = 0;
 
-            // Dates
-            if (type === '[object Date]') {
-                return new Date(item.getTime());
-            }
+                        do {
+                            uniqueGlobalNamespace = 'ExtBox' + (++i);
+                        } while (Ext.global[uniqueGlobalNamespace] !== undefined);
 
-            var i, j, k, clone, key;
+                        Ext.global[uniqueGlobalNamespace] = Ext;
+                        this.uniqueGlobalNamespace = uniqueGlobalNamespace;
+                    }
 
-            // Arrays
-            if (type === '[object Array]') {
-                i = item.length;
+                    return uniqueGlobalNamespace;
+                },
+                /**
+                 * @private
+                 */
+                functionFactory: function() {
+                    var args = Array.prototype.slice.call(arguments),
+                            ln = args.length;
 
-                clone = [];
+                    if (ln > 0) {
+                        args[ln - 1] = 'var Ext=window.' + this.getUniqueGlobalNamespace() + ';' + args[ln - 1];
+                    }
 
-                while (i--) {
-                    clone[i] = Ext.clone(item[i]);
+                    return Function.prototype.constructor.apply(Function.prototype, args);
+                },
+                /**
+                 * @private
+                 */
+                globalEval: ('execScript' in global) ? function(code) {
+                    global.execScript(code)
+                } : function(code) {
+                    (function() {
+                        eval(code);
+                    })();
                 }
-            }
-            // Objects
-            else if (type === '[object Object]' && item.constructor === Object) {
-                clone = {};
 
-                for (key in item) {
-                    clone[key] = Ext.clone(item[key]);
-                }
-
-                if (enumerables) {
-                    for (j = enumerables.length; j--;) {
-                        k = enumerables[j];
-                        clone[k] = item[k];
+                //<feature logger>
+                /**
+                 * @private
+                 * @property
+                 */
+                , Logger: {
+                    log: function(message, priority) {
+                        if ('console' in global) {
+                            if (!priority || !(priority in global.console)) {
+                                priority = 'log';
+                            }
+                            message = '[' + priority.toUpperCase() + '] ' + message;
+                            global.console[priority](message);
+                        }
+                    },
+                    verbose: function(message) {
+                        this.log(message, 'verbose');
+                    },
+                    info: function(message) {
+                        this.log(message, 'info');
+                    },
+                    warn: function(message) {
+                        this.log(message, 'warn');
+                    },
+                    error: function(message) {
+                        throw new Error(message);
+                    },
+                    deprecate: function(message) {
+                        this.log(message, 'warn');
                     }
                 }
-            }
+                //</feature>
+            });
 
-            return clone || item;
-        },
+            /**
+             * Old alias to {@link Ext#typeOf}.
+             * @deprecated 2.0.0 Please use {@link Ext#typeOf} instead.
+             * @method
+             * @alias Ext#typeOf
+             */
+            Ext.type = Ext.typeOf;
 
-        /**
-         * @private
-         * Generate a unique reference of Ext in the global scope, useful for sandboxing.
-         */
-        getUniqueGlobalNamespace: function() {
-            var uniqueGlobalNamespace = this.uniqueGlobalNamespace;
-
-            if (uniqueGlobalNamespace === undefined) {
-                var i = 0;
-
-                do {
-                    uniqueGlobalNamespace = 'ExtBox' + (++i);
-                } while (Ext.global[uniqueGlobalNamespace] !== undefined);
-
-                Ext.global[uniqueGlobalNamespace] = Ext;
-                this.uniqueGlobalNamespace = uniqueGlobalNamespace;
-            }
-
-            return uniqueGlobalNamespace;
-        },
-
-        /**
-         * @private
-         */
-        functionFactory: function() {
-            var args = Array.prototype.slice.call(arguments),
-                ln = args.length;
-
-            if (ln > 0) {
-                args[ln - 1] = 'var Ext=window.' + this.getUniqueGlobalNamespace() + ';' + args[ln - 1];
-            }
-
-            return Function.prototype.constructor.apply(Function.prototype, args);
-        },
-
-        /**
-         * @private
-         */
-        globalEval: ('execScript' in global) ? function(code) {
-            global.execScript(code)
-        } : function(code) {
-            (function(){
-                eval(code);
-            })();
-        }
-
-        //<feature logger>
-        /**
-         * @private
-         * @property
-         */
-        ,Logger: {
-            log: function(message, priority) {
-                if ('console' in global) {
-                    if (!priority || !(priority in global.console)) {
-                        priority = 'log';
-                    }
-                    message = '[' + priority.toUpperCase() + '] ' + message;
-                    global.console[priority](message);
-                }
-            },
-            verbose: function(message) {
-                this.log(message, 'verbose');
-            },
-            info: function(message) {
-                this.log(message, 'info');
-            },
-            warn: function(message) {
-                this.log(message, 'warn');
-            },
-            error: function(message) {
-                throw new Error(message);
-            },
-            deprecate: function(message) {
-                this.log(message, 'warn');
-            }
-        }
-        //</feature>
-    });
-
-    /**
-     * Old alias to {@link Ext#typeOf}.
-     * @deprecated 2.0.0 Please use {@link Ext#typeOf} instead.
-     * @method
-     * @alias Ext#typeOf
-     */
-    Ext.type = Ext.typeOf;
-
-})();
+        })();

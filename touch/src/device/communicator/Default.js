@@ -64,21 +64,15 @@
  * performance for a large amount of repetitive calls.
  */
 Ext.define('Ext.device.communicator.Default', {
-
     SERVER_URL: 'http://localhost:3000', // Change this to the correct server URL
 
     callbackDataMap: {},
-
     callbackIdMap: {},
-
     idSeed: 0,
-
     globalScopeId: '0',
-
     generateId: function() {
         return String(++this.idSeed);
     },
-
     getId: function(object) {
         var id = object.$callbackId;
 
@@ -88,11 +82,10 @@ Ext.define('Ext.device.communicator.Default', {
 
         return id;
     },
-
     getCallbackId: function(callback, scope) {
         var idMap = this.callbackIdMap,
-            dataMap = this.callbackDataMap,
-            id, scopeId, callbackId, data;
+                dataMap = this.callbackDataMap,
+                id, scopeId, callbackId, data;
 
         if (!scope) {
             scopeId = this.globalScopeId;
@@ -121,17 +114,14 @@ Ext.define('Ext.device.communicator.Default', {
 
         return idMap[scopeId][callbackId];
     },
-
     getCallbackData: function(id) {
         return this.callbackDataMap[id];
     },
-
     invoke: function(id, args) {
         var data = this.getCallbackData(id);
 
         data.callback.apply(data.scope, args);
     },
-
     send: function(args) {
         var callbacks, scope, name, callback;
 
@@ -161,7 +151,6 @@ Ext.define('Ext.device.communicator.Default', {
 
         return (result && result.length > 0) ? JSON.parse(result) : null;
     },
-
     doSend: function(args) {
         var xhr = new XMLHttpRequest();
 
@@ -173,7 +162,7 @@ Ext.define('Ext.device.communicator.Default', {
             xhr.send(null);
 
             return xhr.responseText;
-        } catch(e) {
+        } catch (e) {
             if (args.failure) {
                 this.invoke(args.failure);
             } else if (args.callback) {

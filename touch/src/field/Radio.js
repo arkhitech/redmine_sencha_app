@@ -43,16 +43,13 @@ Ext.define('Ext.field.Radio', {
     extend: 'Ext.field.Checkbox',
     xtype: 'radiofield',
     alternateClassName: 'Ext.form.Radio',
-
     isRadio: true,
-
     config: {
         /**
          * @cfg
          * @inheritdoc
          */
         ui: 'radio',
-
         /**
          * @cfg
          * @inheritdoc
@@ -62,16 +59,13 @@ Ext.define('Ext.field.Radio', {
             cls: Ext.baseCSSPrefix + 'input-radio'
         }
     },
-
     getValue: function() {
         return (typeof this._value === 'undefined') ? null : this._value;
     },
-
     setValue: function(value) {
         this._value = value;
         return this;
     },
-
     getSubmitValue: function() {
         var value = this._value;
         if (typeof value == "undefined" || value == null) {
@@ -79,7 +73,6 @@ Ext.define('Ext.field.Radio', {
         }
         return (this.getChecked()) ? value : null;
     },
-
     updateChecked: function(newChecked) {
         this.getComponent().setChecked(newChecked);
 
@@ -87,11 +80,10 @@ Ext.define('Ext.field.Radio', {
             this.refreshGroupValues();
         }
     },
-
     // @private
     onMaskTap: function(component, e) {
         var me = this,
-            dom = me.getComponent().input.dom;
+                dom = me.getComponent().input.dom;
 
         if (me.getDisabled()) {
             return false;
@@ -106,16 +98,15 @@ Ext.define('Ext.field.Radio', {
         //return false so the mask does not disappear
         return false;
     },
-
     /**
      * Returns the selected value if this radio is part of a group (other radio fields with the same name, in the same FormPanel),
      * @return {String}
      */
     getGroupValue: function() {
         var fields = this.getSameGroupFields(),
-            ln = fields.length,
-            i = 0,
-            field;
+                ln = fields.length,
+                i = 0,
+                field;
 
         for (; i < ln; i++) {
             field = fields[i];
@@ -126,7 +117,6 @@ Ext.define('Ext.field.Radio', {
 
         return null;
     },
-
     /**
      * Set the matched radio field's status (that has the same value as the given string) to checked.
      * @param {String} value The value of the radio field to check.
@@ -134,9 +124,9 @@ Ext.define('Ext.field.Radio', {
      */
     setGroupValue: function(value) {
         var fields = this.getSameGroupFields(),
-            ln = fields.length,
-            i = 0,
-            field;
+                ln = fields.length,
+                i = 0,
+                field;
 
         for (; i < ln; i++) {
             field = fields[i];
@@ -146,7 +136,6 @@ Ext.define('Ext.field.Radio', {
             }
         }
     },
-
     /**
      * Loops through each of the fields this radiofield is linked to (has the same name) and
      * calls `onChange` on those fields so the appropriate event is fired.
@@ -154,9 +143,9 @@ Ext.define('Ext.field.Radio', {
      */
     refreshGroupValues: function() {
         var fields = this.getSameGroupFields(),
-            ln = fields.length,
-            i = 0,
-            field;
+                ln = fields.length,
+                i = 0,
+                field;
 
         for (; i < ln; i++) {
             field = fields[i];

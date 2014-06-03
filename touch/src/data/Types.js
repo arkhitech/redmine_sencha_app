@@ -54,7 +54,6 @@
 Ext.define('Ext.data.Types', {
     singleton: true,
     requires: ['Ext.data.SortTypes'],
-
     /**
      * @property {RegExp} stripRe
      * A regular expression for stripping non-numeric characters from a numeric value.
@@ -67,7 +66,7 @@ Ext.define('Ext.data.Types', {
 
 }, function() {
     var Types = this,
-        sortTypes = Ext.data.SortTypes;
+            sortTypes = Ext.data.SortTypes;
 
     Ext.apply(Types, {
         /**
@@ -81,7 +80,6 @@ Ext.define('Ext.data.Types', {
             sortType: sortTypes.none,
             type: 'auto'
         },
-
         /**
          * @property {Object} STRING
          * This data type means that the raw data is converted into a String before it is placed into a Record.
@@ -90,13 +88,12 @@ Ext.define('Ext.data.Types', {
             convert: function(value) {
                 // 'this' is the actual field that calls this convert method
                 return (value === undefined || value === null)
-                    ? (this.getAllowNull() ? null : '')
-                    : String(value);
+                        ? (this.getAllowNull() ? null : '')
+                        : String(value);
             },
             sortType: sortTypes.asUCString,
             type: 'string'
         },
-
         /**
          * @property {Object} INT
          * This data type means that the raw data is converted into an integer before it is placed into a Record.
@@ -107,16 +104,15 @@ Ext.define('Ext.data.Types', {
         INT: {
             convert: function(value) {
                 return (value !== undefined && value !== null && value !== '')
-                    ? ((typeof value === 'number')
-                        ? parseInt(value, 10)
-                        : parseInt(String(value).replace(Types.stripRe, ''), 10)
-                    )
-                    : (this.getAllowNull() ? null : 0);
+                        ? ((typeof value === 'number')
+                                ? parseInt(value, 10)
+                                : parseInt(String(value).replace(Types.stripRe, ''), 10)
+                                )
+                        : (this.getAllowNull() ? null : 0);
             },
             sortType: sortTypes.none,
             type: 'int'
         },
-
         /**
          * @property {Object} FLOAT
          * This data type means that the raw data is converted into a number before it is placed into a Record.
@@ -127,16 +123,15 @@ Ext.define('Ext.data.Types', {
         FLOAT: {
             convert: function(value) {
                 return (value !== undefined && value !== null && value !== '')
-                    ? ((typeof value === 'number')
-                        ? value
-                        : parseFloat(String(value).replace(Types.stripRe, ''), 10)
-                    )
-                    : (this.getAllowNull() ? null : 0);
+                        ? ((typeof value === 'number')
+                                ? value
+                                : parseFloat(String(value).replace(Types.stripRe, ''), 10)
+                                )
+                        : (this.getAllowNull() ? null : 0);
             },
             sortType: sortTypes.none,
             type: 'float'
         },
-
         /**
          * @property {Object} BOOL
          * This data type means that the raw data is converted into a Boolean before it is placed into
@@ -154,7 +149,6 @@ Ext.define('Ext.data.Types', {
             sortType: sortTypes.none,
             type: 'bool'
         },
-
         /**
          * @property {Object} DATE
          * This data type means that the raw data is converted into a Date before it is placed into a Record.
@@ -164,7 +158,7 @@ Ext.define('Ext.data.Types', {
         DATE: {
             convert: function(value) {
                 var dateFormat = this.getDateFormat(),
-                    parsed;
+                        parsed;
 
                 if (!value) {
                     return null;
@@ -174,7 +168,7 @@ Ext.define('Ext.data.Types', {
                 }
                 if (dateFormat) {
                     if (dateFormat == 'timestamp') {
-                        return new Date(value*1000);
+                        return new Date(value * 1000);
                     }
                     if (dateFormat == 'time') {
                         return new Date(parseInt(value, 10));
@@ -187,7 +181,7 @@ Ext.define('Ext.data.Types', {
                     // Dates with ISO 8601 format are not well supported by mobile devices, this can work around the issue.
                     if (Types.iso8601TestRe.test(value)) {
                         parsed = value.split(Types.iso8601SplitRe);
-                        parsed = new Date(parsed[0], parsed[1]-1, parsed[2], parsed[3], parsed[4], parsed[5]);
+                        parsed = new Date(parsed[0], parsed[1] - 1, parsed[2], parsed[3], parsed[4], parsed[5]);
                     }
                     if (isNaN(parsed)) {
                         // Dates with the format "2012-01-20" fail, but "2012/01/20" work in some browsers. We'll try and
@@ -217,7 +211,6 @@ Ext.define('Ext.data.Types', {
          * The synonym `BOOL` is equivalent.
          */
         BOOLEAN: this.BOOL,
-
         /**
          * @property {Object} INTEGER
          * This data type means that the raw data is converted into an integer before it is placed into a Record.
@@ -225,7 +218,6 @@ Ext.define('Ext.data.Types', {
          *The synonym `INT` is equivalent.
          */
         INTEGER: this.INT,
-
         /**
          * @property {Object} NUMBER
          * This data type means that the raw data is converted into a number before it is placed into a Record.

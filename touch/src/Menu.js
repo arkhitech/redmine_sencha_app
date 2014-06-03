@@ -35,80 +35,66 @@ Ext.define('Ext.Menu', {
     extend: 'Ext.Sheet',
     xtype: 'menu',
     requires: ['Ext.Button'],
-
     config: {
         /**
          * @cfg
          * @inheritdoc
          */
         baseCls: Ext.baseCSSPrefix + 'menu',
-
         /**
          * @cfg
          * @inheritdoc
          */
         left: 0,
-
         /**
          * @cfg
          * @inheritdoc
          */
         right: 0,
-
         /**
          * @cfg
          * @inheritdoc
          */
         bottom: 0,
-
         /**
          * @cfg
          * @inheritdoc
          */
         height: 'auto',
-
         /**
          * @cfg
          * @inheritdoc
          */
         width: 'auto',
-
         /**
          * @cfg
          * @inheritdoc
          */
         defaultType: 'button',
-
         /**
          * @hide
          */
         showAnimation: null,
-
         /**
          * @hide
          */
         hideAnimation: null,
-
         /**
          * @hide
          */
         centered: false,
-
         /**
          * @hide
          */
         modal: true,
-
         /**
          * @hide
          */
         hidden: true,
-
         /**
          * @hide
          */
         hideOnMaskTap: true,
-
         /**
          * @hide
          */
@@ -116,22 +102,19 @@ Ext.define('Ext.Menu', {
             translationMethod: null
         }
     },
-
     constructor: function() {
         this.config.translatable.translationMethod = Ext.browser.is.AndroidStock2 ? 'cssposition' : 'csstransform';
         this.callParent(arguments);
     },
-
     platformConfig: [{
-        theme: ['Windows']
-    }, {
-        theme: ['Blackberry'],
-        ui: 'context',
-        layout: {
-            pack: 'center'
-        }
-    }],
-
+            theme: ['Windows']
+        }, {
+            theme: ['Blackberry'],
+            ui: 'context',
+            layout: {
+                pack: 'center'
+            }
+        }],
     updateUi: function(newUi, oldUi) {
         this.callParent(arguments);
 
@@ -144,8 +127,7 @@ Ext.define('Ext.Menu', {
             }
         }
     },
-
-    updateHideOnMaskTap : function(hide) {
+    updateHideOnMaskTap: function(hide) {
         var mask = this.getModal();
 
         if (mask) {
@@ -154,7 +136,6 @@ Ext.define('Ext.Menu', {
             }, this);
         }
     },
-
     /**
      * Only fire the hide event if it is initialized
      */

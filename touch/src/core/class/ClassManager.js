@@ -209,7 +209,6 @@
     var isNonBrowser = typeof window == 'undefined';
     //</if>
     var Manager = Ext.ClassManager = {
-
         /**
          * @property classes
          * @type Object
@@ -218,20 +217,17 @@
          * @private
          */
         classes: {},
-
         /**
          * @private
          */
         existCache: {},
-
         /**
          * @private
          */
         namespaceRewrites: [{
-            from: 'Ext.',
-            to: Ext
-        }],
-
+                from: 'Ext.',
+                to: Ext
+            }],
         /**
          * @private
          */
@@ -241,16 +237,12 @@
             nameToAliases: {},
             nameToAlternates: {}
         },
-
         /** @private */
         enableNamespaceParseCache: true,
-
         /** @private */
         namespaceParseCache: {},
-
         /** @private */
         instantiators: [],
-
         /**
          * Checks if a class has already been created.
          *
@@ -259,7 +251,7 @@
          */
         isCreated: function(className) {
             var existCache = this.existCache,
-                i, ln, part, root, parts;
+                    i, ln, part, root, parts;
 
             //<debug error>
             if (typeof className != 'string' || className.length < 1) {
@@ -294,28 +286,25 @@
 
             return true;
         },
-
         /**
          * @private
          */
         createdListeners: [],
-
         /**
          * @private
          */
         nameCreatedListeners: {},
-
         /**
          * @private
          */
         triggerCreated: function(className) {
             var listeners = this.createdListeners,
-                nameListeners = this.nameCreatedListeners,
-                alternateNames = this.maps.nameToAlternates[className],
-                names = [className],
-                i, ln, j, subLn, listener, name;
+                    nameListeners = this.nameCreatedListeners,
+                    alternateNames = this.maps.nameToAlternates[className],
+                    names = [className],
+                    i, ln, j, subLn, listener, name;
 
-            for (i = 0,ln = listeners.length; i < ln; i++) {
+            for (i = 0, ln = listeners.length; i < ln; i++) {
                 listener = listeners[i];
                 listener.fn.call(listener.scope, className);
             }
@@ -324,12 +313,12 @@
                 names.push.apply(names, alternateNames);
             }
 
-            for (i = 0,ln = names.length; i < ln; i++) {
+            for (i = 0, ln = names.length; i < ln; i++) {
                 name = names[i];
                 listeners = nameListeners[name];
 
                 if (listeners) {
-                    for (j = 0,subLn = listeners.length; j < subLn; j++) {
+                    for (j = 0, subLn = listeners.length; j < subLn; j++) {
                         listener = listeners[j];
                         listener.fn.call(listener.scope, name);
                     }
@@ -337,17 +326,16 @@
                 }
             }
         },
-
         /**
          * @private
          */
         onCreated: function(fn, scope, className) {
             var listeners = this.createdListeners,
-                nameListeners = this.nameCreatedListeners,
-                listener = {
-                    fn: fn,
-                    scope: scope
-                };
+                    nameListeners = this.nameCreatedListeners,
+                    listener = {
+                        fn: fn,
+                        scope: scope
+                    };
 
             if (className) {
                 if (this.isCreated(className)) {
@@ -365,7 +353,6 @@
                 listeners.push(listener);
             }
         },
-
         /**
          * Supports namespace rewriting.
          * @private
@@ -386,10 +373,10 @@
             }
 
             var parts = [],
-                rewrites = this.namespaceRewrites,
-                root = global,
-                name = namespace,
-                rewrite, from, to, i, ln;
+                    rewrites = this.namespaceRewrites,
+                    root = global,
+                    name = namespace,
+                    rewrite, from, to, i, ln;
 
             for (i = 0, ln = rewrites.length; i < ln; i++) {
                 rewrite = rewrites[i];
@@ -419,7 +406,6 @@
 
             return parts;
         },
-
         /**
          * Creates a namespace and assign the `value` to the created object.
          *
@@ -431,10 +417,10 @@
          */
         setNamespace: function(name, value) {
             var root = global,
-                parts = this.parseNamespace(name),
-                ln = parts.length - 1,
-                leaf = parts[ln],
-                i, part;
+                    parts = this.parseNamespace(name),
+                    ln = parts.length - 1,
+                    leaf = parts[ln],
+                    i, part;
 
             for (i = 0; i < ln; i++) {
                 part = parts[i];
@@ -454,14 +440,13 @@
 
             return root[leaf];
         },
-
         /**
          * The new Ext.ns, supports namespace rewriting.
          * @private
          */
         createNamespaces: function() {
             var root = global,
-                parts, part, i, j, ln, subLn;
+                    parts, part, i, j, ln, subLn;
 
             for (i = 0, ln = arguments.length; i < ln; i++) {
                 parts = this.parseNamespace(arguments[i]);
@@ -483,7 +468,6 @@
 
             return root;
         },
-
         /**
          * Sets a name reference to a class.
          *
@@ -493,10 +477,10 @@
          */
         set: function(name, value) {
             var me = this,
-                maps = me.maps,
-                nameToAlternates = maps.nameToAlternates,
-                targetName = me.getName(value),
-                alternates;
+                    maps = me.maps,
+                    nameToAlternates = maps.nameToAlternates,
+                    targetName = me.getName(value),
+                    alternates;
 
             me.classes[name] = me.setNamespace(name, value);
 
@@ -508,7 +492,6 @@
 
             return this;
         },
-
         /**
          * Retrieve a class by its name.
          *
@@ -523,8 +506,8 @@
             }
 
             var root = global,
-                parts = this.parseNamespace(name),
-                part, i, ln;
+                    parts = this.parseNamespace(name),
+                    part, i, ln;
 
             for (i = 0, ln = parts.length; i < ln; i++) {
                 part = parts[i];
@@ -542,7 +525,6 @@
 
             return root;
         },
-
         /**
          * Register the alias for a class.
          *
@@ -551,8 +533,8 @@
          */
         setAlias: function(cls, alias) {
             var aliasToNameMap = this.maps.aliasToName,
-                nameToAliasesMap = this.maps.nameToAliases,
-                className;
+                    nameToAliasesMap = this.maps.nameToAliases,
+                    className;
 
             if (typeof cls == 'string') {
                 className = cls;
@@ -564,7 +546,7 @@
                 //<debug info>
                 if (aliasToNameMap[alias]) {
                     Ext.Logger.info("[Ext.ClassManager] Overriding existing alias: '" + alias + "' " +
-                        "of: '" + aliasToNameMap[alias] + "' with: '" + className + "'. Be sure it's intentional.");
+                            "of: '" + aliasToNameMap[alias] + "' with: '" + className + "'. Be sure it's intentional.");
                 }
                 //</debug>
 
@@ -581,20 +563,19 @@
 
             return this;
         },
-
         /**
          * Adds a batch of class name to alias mappings
          * @param {Object} aliases The set of mappings of the form
          * className : [values...]
          */
-        addNameAliasMappings: function(aliases){
+        addNameAliasMappings: function(aliases) {
             var aliasToNameMap = this.maps.aliasToName,
-                nameToAliasesMap = this.maps.nameToAliases,
-                className, aliasList, alias, i;
+                    nameToAliasesMap = this.maps.nameToAliases,
+                    className, aliasList, alias, i;
 
             for (className in aliases) {
                 aliasList = nameToAliasesMap[className] ||
-                    (nameToAliasesMap[className] = []);
+                        (nameToAliasesMap[className] = []);
 
                 for (i = 0; i < aliases[className].length; i++) {
                     alias = aliases[className][i];
@@ -607,7 +588,6 @@
             }
             return this;
         },
-
         /**
          *
          * @param {Object} alternates The set of mappings of the form
@@ -615,14 +595,14 @@
          */
         addNameAlternateMappings: function(alternates) {
             var alternateToName = this.maps.alternateToName,
-                nameToAlternates = this.maps.nameToAlternates,
-                className, aliasList, alternate, i;
+                    nameToAlternates = this.maps.nameToAlternates,
+                    className, aliasList, alternate, i;
 
             for (className in alternates) {
                 aliasList = nameToAlternates[className] ||
-                    (nameToAlternates[className] = []);
+                        (nameToAlternates[className] = []);
 
-                for (i  = 0; i < alternates[className].length; i++) {
+                for (i = 0; i < alternates[className].length; i++) {
                     alternate = alternates[className];
                     if (!alternateToName[alternate]) {
                         alternateToName[alternate] = className;
@@ -633,7 +613,6 @@
             }
             return this;
         },
-
         /**
          * Get a reference to the class by its alias.
          *
@@ -643,7 +622,6 @@
         getByAlias: function(alias) {
             return this.get(this.getNameByAlias(alias));
         },
-
         /**
          * Get the name of a class by its alias.
          *
@@ -653,7 +631,6 @@
         getNameByAlias: function(alias) {
             return this.maps.aliasToName[alias] || '';
         },
-
         /**
          * Get the name of a class by its alternate name.
          *
@@ -663,7 +640,6 @@
         getNameByAlternate: function(alternate) {
             return this.maps.alternateToName[alternate] || '';
         },
-
         /**
          * Get the aliases of a class by the class name
          *
@@ -673,7 +649,6 @@
         getAliasesByName: function(name) {
             return this.maps.nameToAliases[name] || [];
         },
-
         /**
          * Get the name of the class by its reference or its instance;
          * usually invoked by the shorthand {@link Ext#getClassName Ext.getClassName}
@@ -686,7 +661,6 @@
         getName: function(object) {
             return object && object.$className || '';
         },
-
         /**
          * Get the class of the provided object; returns null if it's not an instance
          * of any class created with Ext.define. This is usually invoked by the shorthand {@link Ext#getClass Ext.getClass}.
@@ -701,7 +675,6 @@
         getClass: function(object) {
             return object && object.self || null;
         },
-
         /**
          * @private
          */
@@ -716,14 +689,14 @@
 
             return new Class(data, function() {
                 var postprocessorStack = data.postprocessors || Manager.defaultPostprocessors,
-                    registeredPostprocessors = Manager.postprocessors,
-                    index = 0,
-                    postprocessors = [],
-                    postprocessor, process, i, ln, j, subLn, postprocessorProperties, postprocessorProperty;
+                        registeredPostprocessors = Manager.postprocessors,
+                        index = 0,
+                        postprocessors = [],
+                        postprocessor, process, i, ln, j, subLn, postprocessorProperties, postprocessorProperty;
 
                 delete data.postprocessors;
 
-                for (i = 0,ln = postprocessorStack.length; i < ln; i++) {
+                for (i = 0, ln = postprocessorStack.length; i < ln; i++) {
                     postprocessor = postprocessorStack[i];
 
                     if (typeof postprocessor == 'string') {
@@ -734,7 +707,7 @@
                             postprocessors.push(postprocessor.fn);
                         }
                         else if (postprocessorProperties) {
-                            for (j = 0,subLn = postprocessorProperties.length; j < subLn; j++) {
+                            for (j = 0, subLn = postprocessorProperties.length; j < subLn; j++) {
                                 postprocessorProperty = postprocessorProperties[j];
 
                                 if (data.hasOwnProperty(postprocessorProperty)) {
@@ -771,10 +744,9 @@
                 process.call(Manager, className, this, data);
             });
         },
-
         createOverride: function(className, data, createdFn) {
             var overriddenClassName = data.override,
-                requires = Ext.Array.from(data.requires);
+                    requires = Ext.Array.from(data.requires);
 
             delete data.override;
             delete data.requires;
@@ -805,7 +777,6 @@
 
             return this;
         },
-
         /**
          * Instantiate a class by its alias; usually invoked by the convenient shorthand {@link Ext#createByAlias Ext.createByAlias}
          * If {@link Ext.Loader} is {@link Ext.Loader#setConfig enabled} and the class has not been defined yet, it will
@@ -819,8 +790,8 @@
          */
         instantiateByAlias: function() {
             var alias = arguments[0],
-                args = arraySlice.call(arguments),
-                className = this.getNameByAlias(alias);
+                    args = arraySlice.call(arguments),
+                    className = this.getNameByAlias(alias);
 
             if (!className) {
                 className = this.maps.aliasToName[alias];
@@ -833,7 +804,7 @@
 
                 //<debug warn>
                 Ext.Logger.warn("[Ext.Loader] Synchronously loading '" + className + "'; consider adding " +
-                     "Ext.require('" + alias + "') above Ext.onReady");
+                        "Ext.require('" + alias + "') above Ext.onReady");
                 //</debug>
 
                 Ext.syncRequire(className);
@@ -843,7 +814,6 @@
 
             return this.instantiate.apply(this, args);
         },
-
         /**
          * Instantiate a class by either full name, alias or alternate name; usually invoked by the convenient
          * shorthand {@link Ext.ClassManager#create Ext.create}.
@@ -868,9 +838,9 @@
          */
         instantiate: function() {
             var name = arguments[0],
-                args = arraySlice.call(arguments, 1),
-                alias = name,
-                possibleName, cls;
+                    args = arraySlice.call(arguments, 1),
+                    alias = name,
+                    possibleName, cls;
 
             if (typeof name != 'function') {
                 //<debug error>
@@ -912,9 +882,9 @@
                 //<debug warn>
                 //<if nonBrowser>
                 !isNonBrowser &&
-                //</if>
-                Ext.Logger.warn("[Ext.Loader] Synchronously loading '" + name + "'; consider adding '" +
-                    ((possibleName) ? alias : name) + "' explicitly as a require of the corresponding class");
+                        //</if>
+                        Ext.Logger.warn("[Ext.Loader] Synchronously loading '" + name + "'; consider adding '" +
+                                ((possibleName) ? alias : name) + "' explicitly as a require of the corresponding class");
                 //</debug>
 
                 Ext.syncRequire(name);
@@ -934,7 +904,6 @@
 
             return this.getInstantiator(args.length)(cls, args);
         },
-
         /**
          * @private
          * @param {String} name
@@ -946,20 +915,19 @@
 
             return this.instantiate.apply(this, args);
         },
-
         /**
          * @private
          * @param {Number} length
          */
         getInstantiator: function(length) {
             var instantiators = this.instantiators,
-                instantiator;
+                    instantiator;
 
             instantiator = instantiators[length];
 
             if (!instantiator) {
                 var i = length,
-                    args = [];
+                        args = [];
 
                 for (i = 0; i < length; i++) {
                     args.push('a[' + i + ']');
@@ -973,17 +941,14 @@
 
             return instantiator;
         },
-
         /**
          * @private
          */
         postprocessors: {},
-
         /**
          * @private
          */
         defaultPostprocessors: [],
-
         /**
          * Register a post-processor function.
          * @private
@@ -1007,7 +972,6 @@
 
             return this;
         },
-
         /**
          * Set the default post processors array stack which are applied to every class.
          *
@@ -1020,7 +984,6 @@
 
             return this;
         },
-
         /**
          * Insert this post-processor at a specific position in the stack, optionally relative to
          * any existing post-processor
@@ -1035,7 +998,7 @@
          */
         setDefaultPostprocessorPosition: function(name, offset, relativeName) {
             var defaultPostprocessors = this.defaultPostprocessors,
-                index;
+                    index;
 
             if (typeof offset == 'string') {
                 if (offset === 'first') {
@@ -1060,7 +1023,6 @@
 
             return this;
         },
-
         /**
          * Converts a string expression to an array of matching class names. An expression can either refers to class aliases
          * or class names. Expressions support wildcards:
@@ -1079,8 +1041,8 @@
          */
         getNamesByExpression: function(expression) {
             var nameToAliasesMap = this.maps.nameToAliases,
-                names = [],
-                name, alias, aliases, possibleName, regex, i, ln;
+                    names = [],
+                    name, alias, aliases, possibleName, regex, i, ln;
 
             //<debug error>
             if (typeof expression != 'string' || expression.length < 1) {
@@ -1187,9 +1149,9 @@
      */
     Manager.registerPostprocessor('alias', function(name, cls, data) {
         var aliases = data.alias,
-            i, ln;
+                i, ln;
 
-        for (i = 0,ln = aliases.length; i < ln; i++) {
+        for (i = 0, ln = aliases.length; i < ln; i++) {
             alias = aliases[i];
 
             this.setAlias(cls, alias);
@@ -1241,7 +1203,7 @@
      */
     Manager.registerPostprocessor('alternateClassName', function(name, cls, data) {
         var alternates = data.alternateClassName,
-            i, ln, alternate;
+                i, ln, alternate;
 
         if (!(alternates instanceof Array)) {
             alternates = [alternates];
@@ -1285,7 +1247,6 @@
          * @member Ext
          */
         create: alias(Manager, 'instantiate'),
-
         /**
          * Convenient shorthand to create a widget by its xtype, also see {@link Ext.ClassManager#instantiateByAlias}
          *
@@ -1303,7 +1264,6 @@
 
             return Manager.instantiateByAlias.apply(Manager, args);
         },
-
         /**
          * Convenient shorthand, see {@link Ext.ClassManager#instantiateByAlias}.
          * @member Ext
@@ -1313,7 +1273,6 @@
          * @return {Object} instance
          */
         createByAlias: alias(Manager, 'instantiateByAlias'),
-
         /**
          * Defines a class or override. A basic class is defined like this:
          *
@@ -1429,14 +1388,13 @@
          * @member Ext
          * @method define
          */
-        define: function (className, data, createdFn) {
+        define: function(className, data, createdFn) {
             if ('override' in data) {
                 return Manager.createOverride.apply(Manager, arguments);
             }
 
             return Manager.create.apply(Manager, arguments);
         },
-
         /**
          * Convenient shorthand for {@link Ext.ClassManager#getName}.
          * @member Ext
@@ -1444,7 +1402,6 @@
          * @inheritdoc Ext.ClassManager#getName
          */
         getClassName: alias(Manager, 'getName'),
-
         /**
          * Returns the display name for object.  This name is looked for in order from the following places:
          *
@@ -1475,14 +1432,12 @@
 
             return 'Anonymous';
         },
-
         /**
          * Convenient shorthand, see {@link Ext.ClassManager#getClass}.
          * @member Ext
          * @method getClass
          */
         getClass: alias(Manager, 'getClass'),
-
         /**
          * Creates namespaces to be used for scoping variables and classes so that they are not global.
          * Specifying the last node of a namespace implicitly creates all other nodes. Usage:
@@ -1536,15 +1491,15 @@
 
     Class.registerPreprocessor('alias', function(cls, data) {
         var prototype = cls.prototype,
-            xtypes = arrayFrom(data.xtype),
-            aliases = arrayFrom(data.alias),
-            widgetPrefix = 'widget.',
-            widgetPrefixLength = widgetPrefix.length,
-            xtypesChain = Array.prototype.slice.call(prototype.xtypesChain || []),
-            xtypesMap = Ext.merge({}, prototype.xtypesMap || {}),
-            i, ln, alias, xtype;
+                xtypes = arrayFrom(data.xtype),
+                aliases = arrayFrom(data.alias),
+                widgetPrefix = 'widget.',
+                widgetPrefixLength = widgetPrefix.length,
+                xtypesChain = Array.prototype.slice.call(prototype.xtypesChain || []),
+                xtypesMap = Ext.merge({}, prototype.xtypesMap || {}),
+                i, ln, alias, xtype;
 
-        for (i = 0,ln = aliases.length; i < ln; i++) {
+        for (i = 0, ln = aliases.length; i < ln; i++) {
             alias = aliases[i];
 
             //<debug error>
@@ -1562,7 +1517,7 @@
         cls.xtype = data.xtype = xtypes[0];
         data.xtypes = xtypes;
 
-        for (i = 0,ln = xtypes.length; i < ln; i++) {
+        for (i = 0, ln = xtypes.length; i < ln; i++) {
             xtype = xtypes[i];
 
             if (!xtypesMap[xtype]) {
@@ -1576,7 +1531,7 @@
 
         Ext.Function.interceptAfter(data, 'onClassCreated', function() {
             var mixins = prototype.mixins,
-                key, mixin;
+                    key, mixin;
 
             for (key in mixins) {
                 if (mixins.hasOwnProperty(key)) {
@@ -1585,7 +1540,7 @@
                     xtypes = mixin.xtypes;
 
                     if (xtypes) {
-                        for (i = 0,ln = xtypes.length; i < ln; i++) {
+                        for (i = 0, ln = xtypes.length; i < ln; i++) {
                             xtype = xtypes[i];
 
                             if (!xtypesMap[xtype]) {
@@ -1598,7 +1553,7 @@
             }
         });
 
-        for (i = 0,ln = xtypes.length; i < ln; i++) {
+        for (i = 0, ln = xtypes.length; i < ln; i++) {
             xtype = xtypes[i];
 
             //<debug error>

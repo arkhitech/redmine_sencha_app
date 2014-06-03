@@ -54,8 +54,8 @@
  *                         handler: function() {
  *                             var toolbar = Ext.ComponentQuery.query('toolbar')[0],
  *                                 titles = ['My Toolbar', 'Ext.Toolbar', 'Configurations are awesome!', 'Beautiful.'],
-                                   //internally, the title configuration gets converted into a {@link Ext.Title} component,
-                                   //so you must get the title configuration of that component
+ //internally, the title configuration gets converted into a {@link Ext.Title} component,
+ //so you must get the title configuration of that component
  *                                 title = toolbar.getTitle().getTitle(),
  *                                 newTitle = titles[titles.indexOf(title) + 1] || titles[0];
  *
@@ -84,46 +84,39 @@
  */
 Ext.define('Ext.Toolbar', {
     extend: 'Ext.Container',
-    xtype : 'toolbar',
-
+    xtype: 'toolbar',
     requires: [
         'Ext.Button',
         'Ext.Title',
         'Ext.Spacer',
         'Ext.layout.HBox'
     ],
-
     // @private
     isToolbar: true,
-
     config: {
         /**
          * @cfg baseCls
          * @inheritdoc
          */
         baseCls: Ext.baseCSSPrefix + 'toolbar',
-
         /**
          * @cfg {String} ui
          * The ui for this {@link Ext.Toolbar}. Either 'light' or 'dark'. You can create more UIs by using using the CSS Mixin {@link #sencha-toolbar-ui}
          * @accessor
          */
         ui: 'dark',
-
         /**
          * @cfg {String/Ext.Title} title
          * The title of the toolbar.
          * @accessor
          */
         title: null,
-
         /**
          * @cfg {String} defaultType
          * The default xtype to create.
          * @accessor
          */
         defaultType: 'button',
-
         /**
          * @cfg {String} docked
          * The docked position for this {@link Ext.Toolbar}.
@@ -138,7 +131,6 @@ Ext.define('Ext.Toolbar', {
          * @accessor
          */
         minHeight: null,
-
         /**
          * @cfg {Object/String} layout Configuration for this Container's layout. Example:
          *
@@ -173,9 +165,7 @@ Ext.define('Ext.Toolbar', {
             align: 'center'
         }
     },
-
     hasCSSMinHeight: true,
-
     constructor: function(config) {
         config = config || {};
 
@@ -188,19 +178,17 @@ Ext.define('Ext.Toolbar', {
 
         this.callParent([config]);
     },
-
     // @private
     applyTitle: function(title) {
         if (typeof title == 'string') {
             title = {
                 title: title,
-                centered : Ext.theme.is.Tizen ? false : true
+                centered: Ext.theme.is.Tizen ? false : true
             };
         }
 
         return Ext.factory(title, Ext.Title, this.getTitle());
     },
-
     // @private
     updateTitle: function(newTitle, oldTitle) {
         if (newTitle) {
@@ -211,7 +199,6 @@ Ext.define('Ext.Toolbar', {
             oldTitle.destroy();
         }
     },
-
     /**
      * Shows the title, if it exists.
      */
@@ -222,7 +209,6 @@ Ext.define('Ext.Toolbar', {
             title.show();
         }
     },
-
     /**
      * Hides the title, if it exists.
      */

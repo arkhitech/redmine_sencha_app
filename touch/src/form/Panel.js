@@ -135,10 +135,9 @@
  */
 Ext.define('Ext.form.Panel', {
     alternateClassName: 'Ext.form.FormPanel',
-    extend  : 'Ext.Panel',
-    xtype   : 'formpanel',
+    extend: 'Ext.Panel',
+    xtype: 'formpanel',
     requires: ['Ext.XTemplate', 'Ext.field.Checkbox', 'Ext.Ajax'],
-
     /**
      * @event submit
      * @preventable doSubmit
@@ -176,34 +175,29 @@ Ext.define('Ext.form.Panel', {
          * @inheritdoc
          */
         baseCls: Ext.baseCSSPrefix + 'form',
-
         /**
          * @cfg {Boolean} standardSubmit
          * Whether or not we want to perform a standard form submit.
          * @accessor
          */
         standardSubmit: false,
-
         /**
          * @cfg {String} url
          * The default url for submit actions.
          * @accessor
          */
         url: null,
-
         /**
          * @cfg (String} enctype
          * The enctype attribute for the form, specifies how the form should be encoded when submitting
          */
         enctype: null,
-
         /**
          * @cfg {Object} baseParams
          * Optional hash of params to be sent (when `standardSubmit` configuration is `false`) on every submit.
          * @accessor
          */
         baseParams: null,
-
         /**
          * @cfg {Object} submitOnAction
          * When this is set to `true`, the form will automatically submit itself whenever the `action`
@@ -212,19 +206,16 @@ Ext.define('Ext.form.Panel', {
          * @accessor
          */
         submitOnAction: false,
-
         /**
          * @cfg {Ext.data.Model} record The model instance of this form. Can by dynamically set at any time.
          * @accessor
          */
         record: null,
-
         /**
          * @cfg {String} method
          * The method which this form will be submitted. `post` or `get`.
          */
         method: 'post',
-
         /**
          * @cfg {Object} scrollable
          * Possible values are true, false, and null. The true value indicates that
@@ -245,14 +236,12 @@ Ext.define('Ext.form.Panel', {
                 translationMethod: 'scrollposition'
             }
         },
-
         /**
          * @cfg {Boolean} trackResetOnLoad
          * If set to true, {@link #reset}() resets to the last loaded or {@link #setValues}() data instead of
          * when the form was first created.
          */
-        trackResetOnLoad:false,
-
+        trackResetOnLoad: false,
         /**
          * @cfg {Object} api
          * If specified, load and submit actions will be loaded and submitted via Ext.Direct.  Methods which have been imported by
@@ -275,7 +264,6 @@ Ext.define('Ext.form.Panel', {
          * been imported by {@link Ext.direct.Manager}.
          */
         api: null,
-
         /**
          * @cfg {String/String[]} paramOrder
          * A list of params to be executed server side. Only used for the {@link #api} `load`
@@ -292,7 +280,6 @@ Ext.define('Ext.form.Panel', {
          *     paramOrder: 'param1|param2|param'
          */
         paramOrder: null,
-
         /**
          * @cfg {Boolean} paramsAsHash
          * Only used for the {@link #api} `load` configuration. If true, parameters will be sent as a
@@ -300,19 +287,16 @@ Ext.define('Ext.form.Panel', {
          * configuration.
          */
         paramsAsHash: null,
-
         /**
          * @cfg {Number} timeout
          * Timeout for form actions in seconds.
          */
         timeout: 30,
-
         /**
          * @cfg {Boolean} multipartDetection
          * If this is enabled the form will automatically detect the need to use 'multipart/form-data' during submission.
          */
         multipartDetection: true,
-
         /**
          * @cfg {Boolean} enableSubmissionForm
          * The submission form is generated but never added to the dom. It is a submittable version of your form panel, allowing for fields
@@ -323,7 +307,6 @@ Ext.define('Ext.form.Panel', {
          */
         enableSubmissionForm: true
     },
-
     getElementConfig: function() {
         var config = this.callParent();
         config.tag = "form";
@@ -336,7 +319,6 @@ Ext.define('Ext.form.Panel', {
 
         return config;
     },
-
     // @private
     initialize: function() {
         var me = this;
@@ -344,13 +326,12 @@ Ext.define('Ext.form.Panel', {
 
         me.element.on({
             submit: 'onSubmit',
-            scope : me
+            scope: me
         });
     },
-
     applyEnctype: function(newValue) {
-        var  form = this.element.dom || null;
-        if(form) {
+        var form = this.element.dom || null;
+        if (form) {
             if (newValue) {
                 form.setAttribute("enctype", newValue);
             } else {
@@ -358,7 +339,6 @@ Ext.define('Ext.form.Panel', {
             }
         }
     },
-
     updateRecord: function(newRecord) {
         var fields, values, name;
 
@@ -372,7 +352,6 @@ Ext.define('Ext.form.Panel', {
         }
         return this;
     },
-
     /**
      * Loads matching fields from a model instance into this form.
      * @param {Ext.data.Model} record The model instance.
@@ -389,7 +368,6 @@ Ext.define('Ext.form.Panel', {
 
         return this;
     },
-
     // @private
     onSubmit: function(e) {
         var me = this;
@@ -399,7 +377,6 @@ Ext.define('Ext.form.Panel', {
             this.submit(null, e);
         }
     },
-
     updateSubmitOnAction: function(newSubmitOnAction) {
         if (newSubmitOnAction) {
             this.on({
@@ -413,7 +390,6 @@ Ext.define('Ext.form.Panel', {
             });
         }
     },
-
     // @private
     onFieldAction: function(field) {
         if (this.getSubmitOnAction()) {
@@ -421,7 +397,6 @@ Ext.define('Ext.form.Panel', {
             this.submit();
         }
     },
-
     /**
      * Performs a Ajax-based submission of form values (if {@link #standardSubmit} is false) or otherwise
      * executes a standard HTML Form submit action.
@@ -517,34 +492,33 @@ Ext.define('Ext.form.Panel', {
      */
     submit: function(options, e) {
         var me = this,
-            formValues = me.getValues(me.getStandardSubmit() || !options.submitDisabled),
-            form = me.element.dom || {};
+                formValues = me.getValues(me.getStandardSubmit() || !options.submitDisabled),
+                form = me.element.dom || {};
 
-        if(this.getEnableSubmissionForm()) {
+        if (this.getEnableSubmissionForm()) {
             form = this.createSubmissionForm(form, formValues);
         }
 
         options = Ext.apply({
-            url : me.getUrl() || form.action,
+            url: me.getUrl() || form.action,
             submit: false,
             form: form,
-            method : me.getMethod() || form.method || 'post',
-            autoAbort : false,
-            params : null,
-            waitMsg : null,
-            headers : null,
-            success : null,
-            failure : null
+            method: me.getMethod() || form.method || 'post',
+            autoAbort: false,
+            params: null,
+            waitMsg: null,
+            headers: null,
+            success: null,
+            failure: null
         }, options || {});
 
         return me.fireAction('beforesubmit', [me, formValues, options, e], 'doBeforeSubmit');
     },
-
     createSubmissionForm: function(form, values) {
         var fields = this.getFields(),
-            name, input, field, fileinputElement, inputComponent;
+                name, input, field, fileinputElement, inputComponent;
 
-        if(form.nodeType === 1) {
+        if (form.nodeType === 1) {
             form = form.cloneNode(false);
 
             for (name in values) {
@@ -559,8 +533,9 @@ Ext.define('Ext.form.Panel', {
         for (name in fields) {
             if (fields.hasOwnProperty(name)) {
                 field = fields[name];
-                if(field.isFile) {
-                    if(!form.$fileswap) form.$fileswap = [];
+                if (field.isFile) {
+                    if (!form.$fileswap)
+                        form.$fileswap = [];
 
                     inputComponent = field.getComponent().input;
                     fileinputElement = inputComponent.dom;
@@ -574,25 +549,24 @@ Ext.define('Ext.form.Panel', {
 
         return form;
     },
-
     doBeforeSubmit: function(me, formValues, options) {
         var form = options.form || {},
-            multipartDetected = false;
+                multipartDetected = false;
 
-        if(this.getMultipartDetection() === true) {
+        if (this.getMultipartDetection() === true) {
             this.getFieldsAsArray().forEach(function(field) {
-                if(field.isFile === true) {
+                if (field.isFile === true) {
                     multipartDetected = true;
                     return false;
                 }
             });
 
-            if(multipartDetected) {
+            if (multipartDetected) {
                 form.setAttribute("enctype", "multipart/form-data");
             }
         }
 
-        if(options.enctype) {
+        if (options.enctype) {
             form.setAttribute("enctype", options.enctype);
         }
 
@@ -604,8 +578,8 @@ Ext.define('Ext.form.Panel', {
             // Spinner fields must have their components enabled *before* submitting or else the value
             // will not be posted.
             var fields = this.query('spinnerfield'),
-                ln = fields.length,
-                i, field;
+                    ln = fields.length,
+                    i, field;
 
             for (i = 0; i < ln; i++) {
                 field = fields[i];
@@ -618,30 +592,30 @@ Ext.define('Ext.form.Panel', {
             form.submit();
         } else {
             var api = me.getApi(),
-                url = options.url || me.getUrl(),
-                scope = options.scope || me,
-                waitMsg = options.waitMsg,
-                failureFn = function(response, responseText) {
-                    if (Ext.isFunction(options.failure)) {
-                        options.failure.call(scope, me, response, responseText);
-                    }
+                    url = options.url || me.getUrl(),
+                    scope = options.scope || me,
+                    waitMsg = options.waitMsg,
+                    failureFn = function(response, responseText) {
+                        if (Ext.isFunction(options.failure)) {
+                            options.failure.call(scope, me, response, responseText);
+                        }
 
-                    me.fireEvent('exception', me, response);
-                },
-                successFn = function(response, responseText) {
-                    if (Ext.isFunction(options.success)) {
-                        options.success.call(options.scope || me, me, response, responseText);
-                    }
+                        me.fireEvent('exception', me, response);
+                    },
+                    successFn = function(response, responseText) {
+                        if (Ext.isFunction(options.success)) {
+                            options.success.call(options.scope || me, me, response, responseText);
+                        }
 
-                    me.fireEvent('submit', me, response);
-                },
-                submit;
+                        me.fireEvent('submit', me, response);
+                    },
+                    submit;
 
             if (options.waitMsg) {
                 if (typeof waitMsg === 'string') {
                     waitMsg = {
-                        xtype   : 'loadmask',
-                        message : waitMsg
+                        xtype: 'loadmask',
+                        message: waitMsg
                     };
                 }
 
@@ -676,30 +650,30 @@ Ext.define('Ext.form.Panel', {
                 }
             } else {
                 var request = Ext.merge({},
-                    {
-                        url: url,
-                        timeout: this.getTimeout() * 1000,
-                        form: form,
-                        scope: me
-                    },
-                    options
-                );
+                        {
+                            url: url,
+                            timeout: this.getTimeout() * 1000,
+                            form: form,
+                            scope: me
+                        },
+                options
+                        );
                 delete request.success;
                 delete request.failure;
 
                 request.params = Ext.merge(me.getBaseParams() || {}, options.params);
                 request.header = Ext.apply(
-                    {
-                        'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
-                    },
-                    options.headers || {}
+                        {
+                            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+                        },
+                options.headers || {}
                 );
                 request.callback = function(callbackOptions, success, response) {
                     var responseText = response.responseText,
-                        responseXML = response.responseXML,
-                        statusResult = Ext.Ajax.parseStatus(response.status, response);
+                            responseXML = response.responseXML,
+                            statusResult = Ext.Ajax.parseStatus(response.status, response);
 
-                    if(form.$fileswap) {
+                    if (form.$fileswap) {
                         var original, placeholder;
                         Ext.each(form.$fileswap, function(item) {
                             original = item.original;
@@ -714,30 +688,31 @@ Ext.define('Ext.form.Panel', {
 
                     me.setMasked(false);
 
-                    if(response.success === false) success = false;
+                    if (response.success === false)
+                        success = false;
                     if (success) {
                         if (statusResult && responseText && responseText.length == 0) {
                             success = true;
                         } else {
-                            if(!Ext.isEmpty(response.responseBytes)) {
+                            if (!Ext.isEmpty(response.responseBytes)) {
                                 success = statusResult.success;
-                            }else {
-                                if(Ext.isString(responseText) && response.request.options.responseType === "text") {
+                            } else {
+                                if (Ext.isString(responseText) && response.request.options.responseType === "text") {
                                     response.success = true;
-                                } else if(Ext.isString(responseText)) {
+                                } else if (Ext.isString(responseText)) {
                                     try {
                                         response = Ext.decode(responseText);
-                                    }catch (e){
+                                    } catch (e) {
                                         response.success = false;
                                         response.error = e;
                                         response.message = e.message;
                                     }
-                                } else if(Ext.isSimpleObject(responseText)) {
+                                } else if (Ext.isSimpleObject(responseText)) {
                                     response = responseText;
-                                    Ext.applyIf(response, {success:true});
+                                    Ext.applyIf(response, {success: true});
                                 }
 
-                                if(!Ext.isEmpty(responseXML)){
+                                if (!Ext.isEmpty(responseXML)) {
                                     response.success = true;
                                 }
                                 success = !!response.success;
@@ -754,7 +729,7 @@ Ext.define('Ext.form.Panel', {
                     }
                 };
 
-                if(Ext.feature.has.XHR2 && request.xhr2) {
+                if (Ext.feature.has.XHR2 && request.xhr2) {
                     delete request.form;
                     var formData = new FormData(form);
                     if (request.params) {
@@ -776,7 +751,6 @@ Ext.define('Ext.form.Panel', {
             }
         }
     },
-
     /**
      * Performs an Ajax or Ext.Direct call to load values for this form.
      *
@@ -845,36 +819,36 @@ Ext.define('Ext.form.Panel', {
      *
      * @return {Ext.data.Connection} The request object.
      */
-    load : function(options) {
+    load: function(options) {
         options = options || {};
 
         var me = this,
-            api = me.getApi(),
-            url = me.getUrl() || options.url,
-            waitMsg = options.waitMsg,
-            successFn = function(data, response) {
-                me.setValues(data.data);
+                api = me.getApi(),
+                url = me.getUrl() || options.url,
+                waitMsg = options.waitMsg,
+                successFn = function(data, response) {
+                    me.setValues(data.data);
 
-                if (Ext.isFunction(options.success)) {
-                    options.success.call(options.scope || me, me, response, data);
-                }
+                    if (Ext.isFunction(options.success)) {
+                        options.success.call(options.scope || me, me, response, data);
+                    }
 
-                me.fireEvent('load', me, response);
-            },
-            failureFn = function(data, response) {
-                if (Ext.isFunction(options.failure)) {
-                    options.failure.call(scope, me, response, data);
-                }
+                    me.fireEvent('load', me, response);
+                },
+                failureFn = function(data, response) {
+                    if (Ext.isFunction(options.failure)) {
+                        options.failure.call(scope, me, response, data);
+                    }
 
-                me.fireEvent('exception', me, response);
-            },
-            load, method, args;
+                    me.fireEvent('exception', me, response);
+                },
+                load, method, args;
 
         if (options.waitMsg) {
             if (typeof waitMsg === 'string') {
                 waitMsg = {
-                    xtype   : 'loadmask',
-                    message : waitMsg
+                    xtype: 'loadmask',
+                    message: waitMsg
                 };
             }
 
@@ -916,15 +890,15 @@ Ext.define('Ext.form.Panel', {
                 method: options.method || 'GET',
                 autoAbort: options.autoAbort,
                 headers: Ext.apply(
-                    {
-                        'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
-                    },
-                    options.headers || {}
+                        {
+                            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+                        },
+                options.headers || {}
                 ),
                 callback: function(callbackOptions, success, response) {
                     var me = this,
-                        responseText = response.responseText,
-                        statusResult = Ext.Ajax.parseStatus(response.status, response);
+                            responseText = response.responseText,
+                            statusResult = Ext.Ajax.parseStatus(response.status, response);
 
                     me.setMasked(false);
 
@@ -948,12 +922,10 @@ Ext.define('Ext.form.Panel', {
             });
         }
     },
-
     //@private
-    getParams : function(params) {
+    getParams: function(params) {
         return Ext.apply({}, params, this.getBaseParams());
     },
-
     /**
      * Sets the values of form fields in bulk. Example usage:
      *
@@ -980,8 +952,8 @@ Ext.define('Ext.form.Panel', {
      */
     setValues: function(values) {
         var fields = this.getFields(),
-            me = this,
-            name, field, value, ln, i, f;
+                me = this,
+                name, field, value, ln, i, f;
 
         values = values || {};
 
@@ -1005,10 +977,10 @@ Ext.define('Ext.form.Panel', {
                                 break;
                             } else if (f.isCheckbox) {
                                 if (Ext.isArray(value)) {
-                                   f.setChecked((value.indexOf(f._value) != -1));
-                               } else {
-                                   f.setChecked((value == f._value));
-                               }
+                                    f.setChecked((value.indexOf(f._value) != -1));
+                                } else {
+                                    f.setChecked((value == f._value));
+                                }
                             } else {
                                 // If it is a bunch of fields with the same name, check if the value is also an array, so we can map it
                                 // to each field
@@ -1028,7 +1000,7 @@ Ext.define('Ext.form.Panel', {
                     }
 
                     if (me.getTrackResetOnLoad()) {
-                       field.resetOriginalValue();
+                        field.resetOriginalValue();
                     }
                 }
             }
@@ -1036,7 +1008,6 @@ Ext.define('Ext.form.Panel', {
 
         return this;
     },
-
     /**
      * Returns an object containing the value of each field in the form, keyed to the field's name.
      * For groups of checkbox fields with the same name, it will be arrays of values. For example:
@@ -1057,9 +1028,9 @@ Ext.define('Ext.form.Panel', {
      */
     getValues: function(enabled, all) {
         var fields = this.getFields(),
-            values = {},
-            isArray = Ext.isArray,
-            field, value, addValue, bucket, name, ln, i;
+                values = {},
+                isArray = Ext.isArray,
+                field, value, addValue, bucket, name, ln, i;
 
         // Function which you give a field and a name, and it will add it into the values
         // object accordingly
@@ -1125,7 +1096,6 @@ Ext.define('Ext.form.Panel', {
 
         return values;
     },
-
     /**
      * Resets all fields in the form back to their original values.
      * @return {Ext.form.Panel} This form.
@@ -1137,7 +1107,6 @@ Ext.define('Ext.form.Panel', {
 
         return this;
     },
-
     /**
      * A convenient method to disable all fields in this form.
      * @return {Ext.form.Panel} This form.
@@ -1149,27 +1118,25 @@ Ext.define('Ext.form.Panel', {
 
         return this;
     },
-
     /**
      * @private
      */
     getFieldsAsArray: function() {
         var fields = [],
-            getFieldsFrom = function(item) {
-                if (item.isField) {
-                    fields.push(item);
-                }
+                getFieldsFrom = function(item) {
+                    if (item.isField) {
+                        fields.push(item);
+                    }
 
-                if (item.isContainer) {
-                    item.getItems().each(getFieldsFrom);
-                }
-            };
+                    if (item.isContainer) {
+                        item.getItems().each(getFieldsFrom);
+                    }
+                };
 
         this.getItems().each(getFieldsFrom);
 
         return fields;
     },
-
     /**
      * @private
      * Returns all {@link Ext.field.Field field} instances inside this form.
@@ -1178,7 +1145,7 @@ Ext.define('Ext.form.Panel', {
      */
     getFields: function(byName) {
         var fields = {},
-            itemName;
+                itemName;
 
         var getFieldsFrom = function(item) {
             if (item.isField) {
@@ -1207,7 +1174,6 @@ Ext.define('Ext.form.Panel', {
 
         return (byName) ? (fields[byName] || []) : fields;
     },
-
     /**
      * Returns an array of fields in this formpanel.
      * @return {Ext.field.Field[]} An array of fields in this form panel.
@@ -1230,9 +1196,7 @@ Ext.define('Ext.form.Panel', {
 
         return fields;
     },
-
     getFieldsFromItem: Ext.emptyFn,
-
     /**
      * Shows a generic/custom mask over a designated Element.
      * @param {String/Object} cfg Either a string message or a configuration object supporting
@@ -1265,7 +1229,6 @@ Ext.define('Ext.form.Panel', {
 
         return this;
     },
-
     /**
      * Hides a previously shown wait mask (See {@link #showMask}).
      * @return {Ext.form.Panel} this
@@ -1275,7 +1238,6 @@ Ext.define('Ext.form.Panel', {
         this.setMasked(false);
         return this;
     },
-
     /**
      * Returns the currently focused field
      * @return {Ext.field.Field} The currently focused field, if one is focused or `null`.
@@ -1283,8 +1245,8 @@ Ext.define('Ext.form.Panel', {
      */
     getFocusedField: function() {
         var fields = this.getFieldsArray(),
-            ln = fields.length,
-            field, i;
+                ln = fields.length,
+                field, i;
 
         for (i = 0; i < ln; i++) {
             field = fields[i];
@@ -1295,15 +1257,14 @@ Ext.define('Ext.form.Panel', {
 
         return null;
     },
-
     /**
      * @return {Boolean/Ext.field.Field} The next field if one exists, or `false`.
      * @private
      */
     getNextField: function() {
         var fields = this.getFieldsArray(),
-            focusedField = this.getFocusedField(),
-            index;
+                focusedField = this.getFocusedField(),
+                index;
 
         if (focusedField) {
             index = fields.indexOf(focusedField);
@@ -1316,7 +1277,6 @@ Ext.define('Ext.form.Panel', {
 
         return false;
     },
-
     /**
      * Tries to focus the next field in the form, if there is currently a focused field.
      * @return {Boolean/Ext.field.Field} The next field that was focused, or `false`.
@@ -1331,15 +1291,14 @@ Ext.define('Ext.form.Panel', {
 
         return false;
     },
-
     /**
      * @private
      * @return {Boolean/Ext.field.Field} The next field if one exists, or `false`.
      */
     getPreviousField: function() {
         var fields = this.getFieldsArray(),
-            focusedField = this.getFocusedField(),
-            index;
+                focusedField = this.getFocusedField(),
+                index;
 
         if (focusedField) {
             index = fields.indexOf(focusedField);
@@ -1352,7 +1311,6 @@ Ext.define('Ext.form.Panel', {
 
         return false;
     },
-
     /**
      * Tries to focus the previous field in the form, if there is currently a focused field.
      * @return {Boolean/Ext.field.Field} The previous field that was focused, or `false`.

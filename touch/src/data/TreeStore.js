@@ -22,7 +22,6 @@
 Ext.define('Ext.data.TreeStore', {
     extend: 'Ext.data.NodeStore',
     alias: 'store.tree',
-
     config: {
         /**
          * @cfg {Ext.data.Model/Ext.data.NodeInterface/Object} root
@@ -43,14 +42,12 @@ Ext.define('Ext.data.TreeStore', {
          * @accessor
          */
         root: undefined,
-
         /**
          * @cfg {Boolean} clearOnLoad
          * Remove previously existing child nodes before loading. Default to true.
          * @accessor
          */
-        clearOnLoad : true,
-
+        clearOnLoad: true,
         /**
          * @cfg {String} nodeParam
          * The name of the parameter sent to the server which contains the identifier of the node.
@@ -58,21 +55,18 @@ Ext.define('Ext.data.TreeStore', {
          * @accessor
          */
         nodeParam: 'node',
-
         /**
          * @cfg {String} defaultRootId
          * The default root id. Defaults to 'root'
          * @accessor
          */
         defaultRootId: 'root',
-
         /**
          * @cfg {String} defaultRootProperty
          * The root property to specify on the reader if one is not explicitly defined.
          * @accessor
          */
         defaultRootProperty: 'children',
-
         /**
          * @cfg {Boolean} recursive
          * @private
@@ -80,17 +74,15 @@ Ext.define('Ext.data.TreeStore', {
          */
         recursive: true
 
-        /**
-         * @cfg {Object} node
-         * @private
-         * @hide
-         */
+                /**
+                 * @cfg {Object} node
+                 * @private
+                 * @hide
+                 */
     },
-
     applyProxy: function() {
         return Ext.data.Store.prototype.applyProxy.apply(this, arguments);
     },
-
     applyRoot: function(root) {
         var me = this;
         root = root || {};
@@ -111,14 +103,12 @@ Ext.define('Ext.data.TreeStore', {
 
         return root;
     },
-
     handleTreeInsertionIndex: function(items, item, collection, originalFn) {
         if (item.parentNode) {
             item.parentNode.sort(collection.getSortFn(), true, true);
         }
         return this.callParent(arguments);
     },
-
     handleTreeSort: function(data, collection) {
         if (this._sorting) {
             return data;
@@ -129,7 +119,6 @@ Ext.define('Ext.data.TreeStore', {
         delete this._sorting;
         return this.callParent(arguments);
     },
-
     updateRoot: function(root, oldRoot) {
         if (oldRoot) {
             oldRoot.unBefore({
@@ -162,7 +151,6 @@ Ext.define('Ext.data.TreeStore', {
          */
         this.fireEvent('rootchange', this, root, oldRoot);
     },
-
     /**
      * Returns the record node by id
      * @return {Ext.data.NodeInterface}
@@ -170,11 +158,9 @@ Ext.define('Ext.data.TreeStore', {
     getNodeById: function(id) {
         return this.data.getByKey(id);
     },
-
     getById: function(id) {
         return this.data.getByKey(id);
     },
-
     onNodeBeforeExpand: function(node, options, e) {
         if (node.isLoading()) {
             e.pause();
@@ -192,15 +178,14 @@ Ext.define('Ext.data.TreeStore', {
             });
         }
     },
-
     onNodeAppend: function(parent, node) {
         var proxy = this.getProxy(),
-            reader = proxy.getReader(),
-            Model = this.getModel(),
-            data = node.raw,
-            records = [],
-            rootProperty = reader.getRootProperty(),
-            dataRoot, processedData, i, ln, processedDataItem;
+                reader = proxy.getReader(),
+                Model = this.getModel(),
+                data = node.raw,
+                records = [],
+                rootProperty = reader.getRootProperty(),
+                dataRoot, processedData, i, ln, processedDataItem;
 
         if (!node.isLeaf()) {
             dataRoot = reader.getRoot(data);
@@ -229,7 +214,6 @@ Ext.define('Ext.data.TreeStore', {
             }
         }
     },
-
     updateAutoLoad: function(autoLoad) {
         if (autoLoad) {
             var root = this.getRoot();
@@ -238,7 +222,6 @@ Ext.define('Ext.data.TreeStore', {
             }
         }
     },
-
     /**
      * Loads the Store using its configured {@link #proxy}.
      * @param {Object} options (Optional) config object. This is passed into the {@link Ext.data.Operation Operation}
@@ -252,7 +235,7 @@ Ext.define('Ext.data.TreeStore', {
         options.params = options.params || {};
 
         var me = this,
-            node = options.node = options.node || me.getRoot();
+                node = options.node = options.node || me.getRoot();
 
         options.params[me.getNodeParam()] = node.getId();
 
@@ -263,7 +246,6 @@ Ext.define('Ext.data.TreeStore', {
 
         return me.callParent([options]);
     },
-
     updateProxy: function(proxy) {
         this.callParent(arguments);
 
@@ -273,7 +255,6 @@ Ext.define('Ext.data.TreeStore', {
             reader.buildExtractors();
         }
     },
-
     /**
      * @inheritdoc
      */
@@ -281,15 +262,14 @@ Ext.define('Ext.data.TreeStore', {
         this.getRoot().removeAll(true);
         this.callParent(arguments);
     },
-
     /**
      * @inheritdoc
      */
     onProxyLoad: function(operation) {
         var me = this,
-            records = operation.getRecords(),
-            successful = operation.wasSuccessful(),
-            node = operation.getNode();
+                records = operation.getRecords(),
+                successful = operation.wasSuccessful(),
+                node = operation.getNode();
 
         node.beginEdit();
         node.set('loading', false);
@@ -307,7 +287,6 @@ Ext.define('Ext.data.TreeStore', {
         //this is a callback that would have been passed to the 'read' function and is optional
         Ext.callback(operation.getCallback(), operation.getScope() || me, [records, operation, successful]);
     },
-
     /**
      * Fills a node with a series of child records.
      * @private
@@ -316,7 +295,7 @@ Ext.define('Ext.data.TreeStore', {
      */
     fillNode: function(node, records) {
         var ln = records ? records.length : 0,
-            i, child;
+                i, child;
 
         for (i = 0; i < ln; i++) {
             // true/true to suppress any events fired by the node, or the new child node
@@ -343,7 +322,6 @@ Ext.define('Ext.data.TreeStore', {
             // </debug>
             return this.setRoot(node);
         },
-
         /**
          * Returns the root node for this tree.
          * @return {Ext.data.Model}

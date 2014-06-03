@@ -30,24 +30,19 @@
 Ext.define('Ext.direct.PollingProvider', {
     extend: 'Ext.direct.JsonProvider',
     alias: 'direct.pollingprovider',
-
     uses: ['Ext.direct.ExceptionEvent'],
-
     requires: ['Ext.Ajax', 'Ext.util.DelayedTask'],
-
     config: {
         /**
          * @cfg {Number} interval
          * How often to poll the server-side, in milliseconds.
          */
         interval: 3000,
-
         /**
          * @cfg {Object} baseParams
          * An object containing properties which are to be sent as parameters on every polling request.
          */
         baseParams: null,
-
         /**
          * @cfg {String/Function} url
          * The url which the PollingProvider should contact with each request. This can also be
@@ -55,7 +50,6 @@ Ext.define('Ext.direct.PollingProvider', {
          */
         url: null
     },
-
     /**
      * @event beforepoll
      * Fired immediately before a poll takes place, an event handler can return `false`
@@ -75,15 +69,14 @@ Ext.define('Ext.direct.PollingProvider', {
     isConnected: function() {
         return !!this.pollTask;
     },
-
     /**
      * Connect to the server-side and begin the polling process. To handle each
      * response subscribe to the `data` event.
      */
     connect: function() {
         var me = this,
-            url = me.getUrl(),
-            baseParams = me.getBaseParams();
+                url = me.getUrl(),
+                baseParams = me.getBaseParams();
 
         if (url && !me.pollTask) {
             me.pollTask = setInterval(function() {
@@ -107,7 +100,6 @@ Ext.define('Ext.direct.PollingProvider', {
             //</debug>
         }
     },
-
     /**
      * Disconnect from the server-side and stop the polling process. The `disconnect`
      * event will be fired on a successful disconnect.
@@ -121,13 +113,12 @@ Ext.define('Ext.direct.PollingProvider', {
             me.fireEvent('disconnect', me);
         }
     },
-
     // @private
     onData: function(opt, success, response) {
         var me = this,
-            i = 0,
-            len,
-            events;
+                i = 0,
+                len,
+                events;
 
         if (success) {
             events = me.createEvents(response);

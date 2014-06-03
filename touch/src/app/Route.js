@@ -14,7 +14,6 @@
  *
  */
 Ext.define('Ext.app.Route', {
-
     config: {
         /**
          * @cfg {Object} conditions Optional set of conditions for each token in the url string. Each key should be one
@@ -28,24 +27,20 @@ Ext.define('Ext.app.Route', {
          *
          */
         conditions: {},
-
         /**
          * @cfg {String} url (required) The url regex to match against.
          */
         url: null,
-
         /**
          * @cfg {String} controller The name of the Controller whose {@link #action} will be called if this route is
          * matched.
          */
         controller: null,
-
         /**
          * @cfg {String} action The name of the action that will be called on the {@link #controller} if this route is
          * matched.
          */
         action: null,
-
         /**
          * @private
          * @cfg {Boolean} initialized Indicates whether or not this Route has been initialized. We don't initialize
@@ -53,11 +48,9 @@ Ext.define('Ext.app.Route', {
          */
         initialized: false
     },
-
     constructor: function(config) {
         this.initConfig(config);
     },
-
     /**
      * Attempts to recognize a given url string and return controller/action pair for it.
      * @param {String} url The url to recognize.
@@ -70,22 +63,20 @@ Ext.define('Ext.app.Route', {
 
         if (this.recognizes(url)) {
             var matches = this.matchesFor(url),
-                args    = url.match(this.matcherRegex);
+                    args = url.match(this.matcherRegex);
 
             args.shift();
 
             return Ext.applyIf(matches, {
                 controller: this.getController(),
-                action    : this.getAction(),
-                url       : url,
-                args      : args,
-
+                action: this.getAction(),
+                url: url,
+                args: args,
                 // We keep the historyUrl in here for backwards compatibility
                 historyUrl: url
             });
         }
     },
-
     /**
      * @private
      * Sets up the relevant regular expressions used to match against this route.
@@ -108,7 +99,6 @@ Ext.define('Ext.app.Route', {
 
         this.setInitialized(true);
     },
-
     /**
      * @private
      * Returns true if this Route matches the given url string
@@ -118,7 +108,6 @@ Ext.define('Ext.app.Route', {
     recognizes: function(url) {
         return this.matcherRegex.test(url);
     },
-
     /**
      * @private
      * Returns a hash of matching url segments for the given url.
@@ -127,10 +116,10 @@ Ext.define('Ext.app.Route', {
      */
     matchesFor: function(url) {
         var params = {},
-            keys   = this.paramsInMatchString,
-            values = url.match(this.matcherRegex),
-            length = keys.length,
-            i;
+                keys = this.paramsInMatchString,
+                values = url.match(this.matcherRegex),
+                length = keys.length,
+                i;
 
         //first value is the entire match so reject
         values.shift();
@@ -141,7 +130,6 @@ Ext.define('Ext.app.Route', {
 
         return params;
     },
-
     /**
      * @private
      * Returns an array of matching url segments for the given url.
@@ -149,11 +137,11 @@ Ext.define('Ext.app.Route', {
      * @return {Array} matching url segments
      */
     argsFor: function(url) {
-        var args   = [],
-            keys   = this.paramsInMatchString,
-            values = url.match(this.matcherRegex),
-            length = keys.length,
-            i;
+        var args = [],
+                keys = this.paramsInMatchString,
+                values = url.match(this.matcherRegex),
+                length = keys.length,
+                i;
 
         //first value is the entire match so reject
         values.shift();
@@ -165,7 +153,6 @@ Ext.define('Ext.app.Route', {
 
         return params;
     },
-
     /**
      * @private
      * Constructs a url for the given config object by replacing wildcard placeholders in the Route's url
@@ -181,7 +168,6 @@ Ext.define('Ext.app.Route', {
 
         return url;
     },
-
     /**
      * @private
      * Takes the configured url string including wildcards and returns a regex that can be used to match
@@ -195,11 +181,11 @@ Ext.define('Ext.app.Route', {
          * ":controller/:action/:id" => [':controller', ':action', ':id']
          */
         var paramsInMatchString = this.paramsInMatchString,
-            length = paramsInMatchString.length,
-            i, cond, matcher;
+                length = paramsInMatchString.length,
+                i, cond, matcher;
 
         for (i = 0; i < length; i++) {
-            cond    = this.getConditions()[paramsInMatchString[i]];
+            cond = this.getConditions()[paramsInMatchString[i]];
             matcher = Ext.util.Format.format("({0})", cond || "[%a-zA-Z0-9\\-\\_\\s,]+");
 
             url = url.replace(new RegExp(paramsInMatchString[i]), matcher);

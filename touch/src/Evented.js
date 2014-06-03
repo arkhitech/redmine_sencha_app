@@ -2,22 +2,19 @@
  * @private
  */
 Ext.define('Ext.Evented', {
-
     alternateClassName: 'Ext.EventedBase',
-
     mixins: ['Ext.mixin.Observable'],
-
     statics: {
         generateSetter: function(nameMap) {
             var internalName = nameMap.internal,
-                applyName = nameMap.apply,
-                changeEventName = nameMap.changeEvent,
-                doSetName = nameMap.doSet;
+                    applyName = nameMap.apply,
+                    changeEventName = nameMap.changeEvent,
+                    doSetName = nameMap.doSet;
 
             return function(value) {
                 var initialized = this.initialized,
-                    oldValue = this[internalName],
-                    applier = this[applyName];
+                        oldValue = this[internalName],
+                        applier = this[applyName];
 
                 if (applier) {
                     value = applier.call(this, value, oldValue);
@@ -49,37 +46,32 @@ Ext.define('Ext.Evented', {
             }
         }
     },
-
     initialized: false,
-
     constructor: function(config) {
         this.initialConfig = config;
         this.initialize();
     },
-
     initialize: function() {
         this.initConfig(this.initialConfig);
         this.initialized = true;
     },
-
     doSet: function(me, value, oldValue, options) {
         var nameMap = options.nameMap;
 
         me[nameMap.internal] = value;
         if (me[nameMap.doSet]) {
-          me[nameMap.doSet].call(this, value, oldValue);
+            me[nameMap.doSet].call(this, value, oldValue);
         }
     },
-
     onClassExtended: function(Class, data) {
         if (!data.hasOwnProperty('eventedConfig')) {
             return;
         }
 
         var ExtClass = Ext.Class,
-            config = data.config,
-            eventedConfig = data.eventedConfig,
-            name, nameMap;
+                config = data.config,
+                eventedConfig = data.eventedConfig,
+                name, nameMap;
 
         data.config = (config) ? Ext.applyIf(config, eventedConfig) : eventedConfig;
 

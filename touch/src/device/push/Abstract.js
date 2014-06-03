@@ -17,7 +17,6 @@ Ext.define('Ext.device.push.Abstract', {
      * Notification type: sound.
      */
     SOUND: 4,
-
     /**
      * @method getInitialConfig
      * @hide
@@ -117,19 +116,16 @@ Ext.define('Ext.device.push.Abstract', {
             type: config.type
         };
     },
-
     onSuccess: function(token, callback, scope) {
         if (callback) {
             callback.call(scope, token);
         }
     },
-
     onFailure: function(error, callback, scope) {
         if (callback) {
             callback.call(scope, error);
         }
     },
-
     onReceived: function(notifications, callback, scope) {
         if (callback) {
             callback.call(scope, notifications);

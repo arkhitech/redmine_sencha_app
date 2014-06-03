@@ -15,32 +15,26 @@ Ext.define('Ext.draw.sprite.Sector', {
                  * @cfg {Number} [centerX=0] The center coordinate of the sprite on the x-axis.
                  */
                 centerX: 'number',
-
                 /**
                  * @cfg {Number} [centerY=0] The center coordinate of the sprite on the y-axis.
                  */
                 centerY: 'number',
-
                 /**
                  * @cfg {Number} [startAngle=0] The starting angle of the sprite.
                  */
                 startAngle: 'number',
-
                 /**
                  * @cfg {Number} [endAngle=0] The ending angle of the sprite.
                  */
                 endAngle: 'number',
-
                 /**
                  * @cfg {Number} [startRho=0] The starting point of the radius of the sprite.
                  */
                 startRho: 'number',
-
                 /**
                  * @cfg {Number} [endRho=150] The ending point of the radius of the sprite.
                  */
                 endRho: 'number',
-
                 /**
                  * @cfg {Number} [margin=0] The margin of the sprite from the center of pie.
                  */
@@ -70,16 +64,15 @@ Ext.define('Ext.draw.sprite.Sector', {
             }
         }
     },
-
-    updatePath: function (path, attr) {
+    updatePath: function(path, attr) {
         var startAngle = Math.min(attr.startAngle, attr.endAngle),
-            endAngle = Math.max(attr.startAngle, attr.endAngle),
-            midAngle = (startAngle + endAngle) * 0.5,
-            margin = attr.margin,
-            centerX = attr.centerX,
-            centerY = attr.centerY,
-            startRho = Math.min(attr.startRho, attr.endRho),
-            endRho = Math.max(attr.startRho, attr.endRho);
+                endAngle = Math.max(attr.startAngle, attr.endAngle),
+                midAngle = (startAngle + endAngle) * 0.5,
+                margin = attr.margin,
+                centerX = attr.centerX,
+                centerY = attr.centerY,
+                startRho = Math.min(attr.startRho, attr.endRho),
+                endRho = Math.max(attr.startRho, attr.endRho);
 
         if (margin) {
             centerX += margin * Math.cos(midAngle);

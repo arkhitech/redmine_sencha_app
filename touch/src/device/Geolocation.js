@@ -38,14 +38,12 @@
  */
 Ext.define('Ext.device.Geolocation', {
     singleton: true,
-
     requires: [
         'Ext.device.Communicator',
         'Ext.device.geolocation.Cordova',
         'Ext.device.geolocation.Sencha',
         'Ext.device.geolocation.Simulator'
     ],
-
     constructor: function() {
         var browserEnv = Ext.browser.is;
         if (browserEnv.WebView) {

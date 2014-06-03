@@ -6,8 +6,7 @@
  */
 Ext.define("Ext.chart.label.Callout", {
     extend: 'Ext.draw.modifier.Modifier',
-
-    prepareAttributes: function (attr) {
+    prepareAttributes: function(attr) {
         if (!attr.hasOwnProperty('calloutOriginal')) {
             attr.calloutOriginal = Ext.Object.chain(attr);
         }
@@ -15,14 +14,13 @@ Ext.define("Ext.chart.label.Callout", {
             this._previous.prepareAttributes(attr.calloutOriginal);
         }
     },
-
-    setAttrs: function (attr, changes) {
+    setAttrs: function(attr, changes) {
         var callout = attr.callout,
-            origin = attr.calloutOriginal,
-            bbox = attr.bbox.plain,
-            width = (bbox.width || 0) + attr.labelOverflowPadding,
-            height = (bbox.height || 0) + attr.labelOverflowPadding,
-            dx, dy;
+                origin = attr.calloutOriginal,
+                bbox = attr.bbox.plain,
+                width = (bbox.width || 0) + attr.labelOverflowPadding,
+                height = (bbox.height || 0) + attr.labelOverflowPadding,
+                dx, dy;
 
         if ('callout' in changes) {
             callout = changes.callout;
@@ -30,12 +28,12 @@ Ext.define("Ext.chart.label.Callout", {
 
         if ('callout' in changes || 'calloutPlaceX' in changes || 'calloutPlaceY' in changes || 'x' in changes || 'y' in changes) {
             var rotationRads = 'rotationRads' in changes ? origin.rotationRads = changes.rotationRads : origin.rotationRads,
-                x = 'x' in changes ? (origin.x = changes.x) : origin.x,
-                y = 'y' in changes ? (origin.y = changes.y) : origin.y,
-                calloutPlaceX = 'calloutPlaceX' in changes ? changes.calloutPlaceX : attr.calloutPlaceX,
-                calloutPlaceY = 'calloutPlaceY' in changes ? changes.calloutPlaceY : attr.calloutPlaceY,
-                calloutVertical = 'calloutVertical' in changes ? changes.calloutVertical : attr.calloutVertical,
-                temp;
+                    x = 'x' in changes ? (origin.x = changes.x) : origin.x,
+                    y = 'y' in changes ? (origin.y = changes.y) : origin.y,
+                    calloutPlaceX = 'calloutPlaceX' in changes ? changes.calloutPlaceX : attr.calloutPlaceX,
+                    calloutPlaceY = 'calloutPlaceY' in changes ? changes.calloutPlaceY : attr.calloutPlaceY,
+                    calloutVertical = 'calloutVertical' in changes ? changes.calloutVertical : attr.calloutVertical,
+                    temp;
 
             // Normalize Rotations
             rotationRads %= Math.PI * 2;
@@ -89,13 +87,11 @@ Ext.define("Ext.chart.label.Callout", {
 
         return changes;
     },
-
-    pushDown: function (attr, changes) {
+    pushDown: function(attr, changes) {
         changes = Ext.draw.modifier.Modifier.prototype.pushDown.call(this, attr.calloutOriginal, changes);
         return this.setAttrs(attr, changes);
     },
-
-    popUp: function (attr, changes) {
+    popUp: function(attr, changes) {
         attr = Object.getPrototypeOf(attr);
         changes = this.setAttrs(attr, changes);
         if (this._next) {

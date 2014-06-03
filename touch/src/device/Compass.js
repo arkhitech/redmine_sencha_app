@@ -36,12 +36,10 @@
  */
 Ext.define('Ext.device.Compass', {
     singleton: true,
-
     requires: [
         'Ext.device.compass.Cordova',
         'Ext.device.compass.Simulator'
     ],
-
     constructor: function() {
         var browserEnv = Ext.browser.is;
         if (browserEnv.WebView && browserEnv.Cordova) {

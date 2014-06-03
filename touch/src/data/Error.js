@@ -16,14 +16,12 @@ Ext.define('Ext.data.Error', {
          * The name of the field this error belongs to.
          */
         field: null,
-
         /**
          * @cfg {String} message
          * The message containing the description of the error.
          */
         message: ''
     },
-
     constructor: function(config) {
         this.initConfig(config);
     }

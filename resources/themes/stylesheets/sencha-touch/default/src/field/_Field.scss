@@ -41,20 +41,20 @@ $form-clear-size: 2.2em;
 }
 
 .x-ie .x-input-el {
-  background: transparent;
+    background: transparent;
 }
 
 .x-item-disabled {
-  .x-form-label,
-  input,
-  .x-input-el,
-  .x-spinner-body,
-  select,
-  textarea,
-  .x-field-clear-container {
-    color: #b3b3b3;
-    pointer-events: none;
-  }
+    .x-form-label,
+    input,
+    .x-input-el,
+    .x-spinner-body,
+    select,
+    textarea,
+    .x-field-clear-container {
+        color: #b3b3b3;
+        pointer-events: none;
+    }
 }
 
 .x-item-disabled .x-form-label {

@@ -13,47 +13,49 @@
 (function() {
 
     var arrayPrototype = Array.prototype,
-        slice = arrayPrototype.slice,
-        supportsSplice = function () {
-            var array = [],
-                lengthBefore,
-                j = 20;
+            slice = arrayPrototype.slice,
+            supportsSplice = function() {
+                var array = [],
+                        lengthBefore,
+                        j = 20;
 
-            if (!array.splice) {
-                return false;
-            }
+                if (!array.splice) {
+                    return false;
+                }
 
-            // This detects a bug in IE8 splice method:
-            // see http://social.msdn.microsoft.com/Forums/en-US/iewebdevelopment/thread/6e946d03-e09f-4b22-a4dd-cd5e276bf05a/
+                // This detects a bug in IE8 splice method:
+                // see http://social.msdn.microsoft.com/Forums/en-US/iewebdevelopment/thread/6e946d03-e09f-4b22-a4dd-cd5e276bf05a/
 
-            while (j--) {
-                array.push("A");
-            }
+                while (j--) {
+                    array.push("A");
+                }
 
-            array.splice(15, 0, "F", "F", "F", "F", "F","F","F","F","F","F","F","F","F","F","F","F","F","F","F","F","F");
+                array.splice(15, 0, "F", "F", "F", "F", "F", "F", "F", "F", "F", "F", "F", "F", "F", "F", "F", "F", "F", "F", "F", "F", "F");
 
-            lengthBefore = array.length; //41
-            array.splice(13, 0, "XXX"); // add one element
+                lengthBefore = array.length; //41
+                array.splice(13, 0, "XXX"); // add one element
 
-            if (lengthBefore+1 != array.length) {
-                return false;
-            }
-            // end IE8 bug
+                if (lengthBefore + 1 != array.length) {
+                    return false;
+                }
+                // end IE8 bug
 
-            return true;
-        }(),
-        supportsForEach = 'forEach' in arrayPrototype,
-        supportsMap = 'map' in arrayPrototype,
-        supportsIndexOf = 'indexOf' in arrayPrototype,
-        supportsEvery = 'every' in arrayPrototype,
-        supportsSome = 'some' in arrayPrototype,
-        supportsFilter = 'filter' in arrayPrototype,
-        supportsSort = function() {
-            var a = [1,2,3,4,5].sort(function(){ return 0; });
-            return a[0] === 1 && a[1] === 2 && a[2] === 3 && a[3] === 4 && a[4] === 5;
-        }(),
-        supportsSliceOnNodeList = true,
-        ExtArray;
+                return true;
+            }(),
+            supportsForEach = 'forEach' in arrayPrototype,
+            supportsMap = 'map' in arrayPrototype,
+            supportsIndexOf = 'indexOf' in arrayPrototype,
+            supportsEvery = 'every' in arrayPrototype,
+            supportsSome = 'some' in arrayPrototype,
+            supportsFilter = 'filter' in arrayPrototype,
+            supportsSort = function() {
+                var a = [1, 2, 3, 4, 5].sort(function() {
+                    return 0;
+                });
+                return a[0] === 1 && a[1] === 2 && a[2] === 3 && a[3] === 4 && a[4] === 5;
+            }(),
+            supportsSliceOnNodeList = true,
+            ExtArray;
 
     try {
         // IE 6 - 8 will throw an error when using Array.prototype.slice on NodeList
@@ -64,45 +66,45 @@
         supportsSliceOnNodeList = false;
     }
 
-    function fixArrayIndex (array, index) {
+    function fixArrayIndex(array, index) {
         return (index < 0) ? Math.max(0, array.length + index)
-                           : Math.min(array.length, index);
+                : Math.min(array.length, index);
     }
 
     /*
-    Does the same work as splice, but with a slightly more convenient signature. The splice
-    method has bugs in IE8, so this is the implementation we use on that platform.
-
-    The rippling of items in the array can be tricky. Consider two use cases:
-
-                  index=2
-                  removeCount=2
-                 /=====\
-        +---+---+---+---+---+---+---+---+
-        | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 |
-        +---+---+---+---+---+---+---+---+
-                         /  \/  \/  \/  \
-                        /   /\  /\  /\   \
-                       /   /  \/  \/  \   +--------------------------+
-                      /   /   /\  /\   +--------------------------+   \
-                     /   /   /  \/  +--------------------------+   \   \
-                    /   /   /   /+--------------------------+   \   \   \
-                   /   /   /   /                             \   \   \   \
-                  v   v   v   v                               v   v   v   v
-        +---+---+---+---+---+---+       +---+---+---+---+---+---+---+---+---+
-        | 0 | 1 | 4 | 5 | 6 | 7 |       | 0 | 1 | a | b | c | 4 | 5 | 6 | 7 |
-        +---+---+---+---+---+---+       +---+---+---+---+---+---+---+---+---+
-        A                               B        \=========/
-                                                 insert=[a,b,c]
-
-    In case A, it is obvious that copying of [4,5,6,7] must be left-to-right so
-    that we don't end up with [0,1,6,7,6,7]. In case B, we have the opposite; we
-    must go right-to-left or else we would end up with [0,1,a,b,c,4,4,4,4].
-    */
-    function replaceSim (array, index, removeCount, insert) {
+     Does the same work as splice, but with a slightly more convenient signature. The splice
+     method has bugs in IE8, so this is the implementation we use on that platform.
+     
+     The rippling of items in the array can be tricky. Consider two use cases:
+     
+     index=2
+     removeCount=2
+     /=====\
+     +---+---+---+---+---+---+---+---+
+     | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 |
+     +---+---+---+---+---+---+---+---+
+     /  \/  \/  \/  \
+     /   /\  /\  /\   \
+     /   /  \/  \/  \   +--------------------------+
+     /   /   /\  /\   +--------------------------+   \
+     /   /   /  \/  +--------------------------+   \   \
+     /   /   /   /+--------------------------+   \   \   \
+     /   /   /   /                             \   \   \   \
+     v   v   v   v                               v   v   v   v
+     +---+---+---+---+---+---+       +---+---+---+---+---+---+---+---+---+
+     | 0 | 1 | 4 | 5 | 6 | 7 |       | 0 | 1 | a | b | c | 4 | 5 | 6 | 7 |
+     +---+---+---+---+---+---+       +---+---+---+---+---+---+---+---+---+
+     A                               B        \=========/
+     insert=[a,b,c]
+     
+     In case A, it is obvious that copying of [4,5,6,7] must be left-to-right so
+     that we don't end up with [0,1,6,7,6,7]. In case B, we have the opposite; we
+     must go right-to-left or else we would end up with [0,1,a,b,c,4,4,4,4].
+     */
+    function replaceSim(array, index, removeCount, insert) {
         var add = insert ? insert.length : 0,
-            length = array.length,
-            pos = fixArrayIndex(array, index);
+                length = array.length,
+                pos = fixArrayIndex(array, index);
 
         // we try to use Array.push when we can for efficiency...
         if (pos === length) {
@@ -111,19 +113,19 @@
             }
         } else {
             var remove = Math.min(removeCount, length - pos),
-                tailOldPos = pos + remove,
-                tailNewPos = tailOldPos + add - remove,
-                tailCount = length - tailOldPos,
-                lengthAfterRemove = length - remove,
-                i;
+                    tailOldPos = pos + remove,
+                    tailNewPos = tailOldPos + add - remove,
+                    tailCount = length - tailOldPos,
+                    lengthAfterRemove = length - remove,
+                    i;
 
             if (tailNewPos < tailOldPos) { // case A
                 for (i = 0; i < tailCount; ++i) {
-                    array[tailNewPos+i] = array[tailOldPos+i];
+                    array[tailNewPos + i] = array[tailOldPos + i];
                 }
             } else if (tailNewPos > tailOldPos) { // case B
                 for (i = tailCount; i--; ) {
-                    array[tailNewPos+i] = array[tailOldPos+i];
+                    array[tailNewPos + i] = array[tailOldPos + i];
                 }
             } // else, add == remove (nothing to do)
 
@@ -133,7 +135,7 @@
             } else {
                 array.length = lengthAfterRemove + add; // reserves space
                 for (i = 0; i < add; ++i) {
-                    array[pos+i] = insert[i];
+                    array[pos + i] = insert[i];
                 }
             }
         }
@@ -141,7 +143,7 @@
         return array;
     }
 
-    function replaceNative (array, index, removeCount, insert) {
+    function replaceNative(array, index, removeCount, insert) {
         if (insert && insert.length) {
             if (index < array.length) {
                 array.splice.apply(array, [index, removeCount].concat(insert));
@@ -154,18 +156,18 @@
         return array;
     }
 
-    function eraseSim (array, index, removeCount) {
+    function eraseSim(array, index, removeCount) {
         return replaceSim(array, index, removeCount);
     }
 
-    function eraseNative (array, index, removeCount) {
+    function eraseNative(array, index, removeCount) {
         array.splice(index, removeCount);
         return array;
     }
 
-    function spliceSim (array, index, removeCount) {
+    function spliceSim(array, index, removeCount) {
         var pos = fixArrayIndex(array, index),
-            removed = array.slice(index, fixArrayIndex(array, pos+removeCount));
+                removed = array.slice(index, fixArrayIndex(array, pos + removeCount));
 
         if (arguments.length < 4) {
             replaceSim(array, pos, removeCount);
@@ -176,13 +178,13 @@
         return removed;
     }
 
-    function spliceNative (array) {
+    function spliceNative(array) {
         return array.splice.apply(array, slice.call(arguments, 1));
     }
 
     var erase = supportsSplice ? eraseNative : eraseSim,
-        replace = supportsSplice ? replaceNative : replaceSim,
-        splice = supportsSplice ? spliceNative : spliceSim;
+            replace = supportsSplice ? replaceNative : replaceSim,
+            splice = supportsSplice ? spliceNative : spliceSim;
 
     // NOTE: from here on, use erase, replace or splice (not native methods)...
     ExtArray = Ext.Array = {
@@ -233,7 +235,7 @@
             array = ExtArray.from(array);
 
             var i,
-                ln = array.length;
+                    ln = array.length;
 
             if (reverse !== true) {
                 for (i = 0; i < ln; i++) {
@@ -252,7 +254,6 @@
 
             return true;
         },
-
         /**
          * Iterates an array and invoke the given callback function for each item. Note that this will simply
          * delegate to the native `Array.prototype.forEach` method if supported. It doesn't support stopping the
@@ -267,16 +268,15 @@
          * @param {Object} scope (Optional) The execution scope (`this`) in which the specified function is executed.
          */
         forEach: supportsForEach ? function(array, fn, scope) {
-                return array.forEach(fn, scope);
+            return array.forEach(fn, scope);
         } : function(array, fn, scope) {
             var i = 0,
-                ln = array.length;
+                    ln = array.length;
 
             for (; i < ln; i++) {
                 fn.call(scope, array[i], i, array);
             }
         },
-
         /**
          * Get the index of the provided `item` in the given `array`, a supplement for the
          * missing arrayPrototype.indexOf in Internet Explorer.
@@ -299,7 +299,6 @@
 
             return -1;
         },
-
         /**
          * Checks whether or not the given `array` contains the specified `item`.
          *
@@ -320,7 +319,6 @@
 
             return false;
         },
-
         /**
          * Converts any iterable (numeric indices and a length property) into a true array.
          *
@@ -346,7 +344,7 @@
          * @param {Number} [end=-1] (Optional) a zero-based index that specifies the end of extraction.
          * @return {Array}
          */
-        toArray: function(iterable, start, end){
+        toArray: function(iterable, start, end) {
             if (!iterable || !iterable.length) {
                 return [];
             }
@@ -360,7 +358,7 @@
             }
 
             var array = [],
-                i;
+                    i;
 
             start = start || 0;
             end = end ? ((end < 0) ? iterable.length + end : end) : iterable.length;
@@ -371,7 +369,6 @@
 
             return array;
         },
-
         /**
          * Plucks the value of a property from each item in the Array. Example:
          *
@@ -383,7 +380,7 @@
          */
         pluck: function(array, propertyName) {
             var ret = [],
-                i, ln, item;
+                    i, ln, item;
 
             for (i = 0, ln = array.length; i < ln; i++) {
                 item = array[i];
@@ -393,7 +390,6 @@
 
             return ret;
         },
-
         /**
          * Creates a new array with the results of calling a provided function on every element in this array.
          *
@@ -406,8 +402,8 @@
             return array.map(fn, scope);
         } : function(array, fn, scope) {
             var results = [],
-                i = 0,
-                len = array.length;
+                    i = 0,
+                    len = array.length;
 
             for (; i < len; i++) {
                 results[i] = fn.call(scope, array[i], i, array);
@@ -415,7 +411,6 @@
 
             return results;
         },
-
         /**
          * Executes the specified function for each array element until the function returns a falsy value.
          * If such an item is found, the function will return `false` immediately.
@@ -437,7 +432,7 @@
             }
 
             var i = 0,
-                ln = array.length;
+                    ln = array.length;
 
             for (; i < ln; ++i) {
                 if (!fn.call(scope, array[i], i, array)) {
@@ -447,7 +442,6 @@
 
             return true;
         },
-
         /**
          * Executes the specified function for each array element until the function returns a truthy value.
          * If such an item is found, the function will return `true` immediately. Otherwise, it will return `false`.
@@ -468,7 +462,7 @@
             }
 
             var i = 0,
-                ln = array.length;
+                    ln = array.length;
 
             for (; i < ln; ++i) {
                 if (fn.call(scope, array[i], i, array)) {
@@ -478,7 +472,6 @@
 
             return false;
         },
-
         /**
          * Filter through an array and remove empty item as defined in {@link Ext#isEmpty Ext.isEmpty}.
          *
@@ -489,9 +482,9 @@
          */
         clean: function(array) {
             var results = [],
-                i = 0,
-                ln = array.length,
-                item;
+                    i = 0,
+                    ln = array.length,
+                    item;
 
             for (; i < ln; i++) {
                 item = array[i];
@@ -503,7 +496,6 @@
 
             return results;
         },
-
         /**
          * Returns a new array with unique items.
          *
@@ -512,9 +504,9 @@
          */
         unique: function(array) {
             var clone = [],
-                i = 0,
-                ln = array.length,
-                item;
+                    i = 0,
+                    ln = array.length,
+                    item;
 
             for (; i < ln; i++) {
                 item = array[i];
@@ -526,7 +518,6 @@
 
             return clone;
         },
-
         /**
          * Creates a new array with all of the elements of this array for which
          * the provided filtering function returns `true`.
@@ -542,8 +533,8 @@
             }
 
             var results = [],
-                i = 0,
-                ln = array.length;
+                    i = 0,
+                    ln = array.length;
 
             for (; i < ln; i++) {
                 if (fn.call(scope, array[i], i, array)) {
@@ -553,7 +544,6 @@
 
             return results;
         },
-
         /**
          * Converts a value to an array if it's not already an array; returns:
          *
@@ -581,7 +571,6 @@
 
             return [value];
         },
-
         /**
          * Removes the specified item from the array if it exists.
          *
@@ -598,7 +587,6 @@
 
             return array;
         },
-
         /**
          * Push an item into the array only if the array doesn't contain it yet.
          *
@@ -610,7 +598,6 @@
                 array.push(item);
             }
         },
-
         /**
          * Clone a flat array without referencing the previous one. Note that this is different
          * from `Ext.clone` since it doesn't handle recursive cloning. It's simply a convenient, easy-to-remember method
@@ -622,7 +609,6 @@
         clone: function(array) {
             return slice.call(array);
         },
-
         /**
          * Merge multiple arrays into one with unique items.
          *
@@ -635,8 +621,8 @@
          */
         merge: function() {
             var args = slice.call(arguments),
-                array = [],
-                i, ln;
+                    array = [],
+                    i, ln;
 
             for (i = 0, ln = args.length; i < ln; i++) {
                 array = array.concat(args[i]);
@@ -644,7 +630,6 @@
 
             return ExtArray.unique(array);
         },
-
         /**
          * Merge multiple arrays into one with unique items that exist in all of the arrays.
          *
@@ -655,8 +640,8 @@
          */
         intersect: function() {
             var intersect = [],
-                arrays = slice.call(arguments),
-                item, minArray, itemIndex, arrayIndex;
+                    arrays = slice.call(arguments),
+                    item, minArray, itemIndex, arrayIndex;
 
             if (!arrays.length) {
                 return intersect;
@@ -692,7 +677,6 @@
 
             return intersect;
         },
-
         /**
          * Perform a set difference A-B by subtracting all items in array B from array A.
          *
@@ -702,10 +686,10 @@
          */
         difference: function(arrayA, arrayB) {
             var clone = slice.call(arrayA),
-                ln = clone.length,
-                i, j, lnB;
+                    ln = clone.length,
+                    i, j, lnB;
 
-            for (i = 0,lnB = arrayB.length; i < lnB; i++) {
+            for (i = 0, lnB = arrayB.length; i < lnB; i++) {
                 for (j = 0; j < ln; j++) {
                     if (clone[j] === arrayB[i]) {
                         erase(clone, j, 1);
@@ -717,7 +701,6 @@
 
             return clone;
         },
-
         /**
          * Returns a shallow copy of a part of an array. This is equivalent to the native
          * call `Array.prototype.slice.call(array, begin, end)`. This is often used when "array"
@@ -735,7 +718,6 @@
         slice: function(array, begin, end) {
             return slice.call(array, begin, end);
         },
-
         /**
          * Sorts the elements of an Array.
          * By default, this method sorts the elements alphabetically and ascending.
@@ -754,9 +736,9 @@
             }
 
             var length = array.length,
-                i = 0,
-                comparison,
-                j, min, tmp;
+                    i = 0,
+                    comparison,
+                    j, min, tmp;
 
             for (; i < length; i++) {
                 min = i;
@@ -779,7 +761,6 @@
 
             return array;
         },
-
         /**
          * Recursively flattens into 1-d Array. Injects Arrays inline.
          *
@@ -807,7 +788,6 @@
 
             return rFlatten(array);
         },
-
         /**
          * Returns the minimum value in the Array.
          *
@@ -819,7 +799,7 @@
          */
         min: function(array, comparisonFn) {
             var min = array[0],
-                i, ln, item;
+                    i, ln, item;
 
             for (i = 0, ln = array.length; i < ln; i++) {
                 item = array[i];
@@ -838,7 +818,6 @@
 
             return min;
         },
-
         /**
          * Returns the maximum value in the Array.
          *
@@ -850,7 +829,7 @@
          */
         max: function(array, comparisonFn) {
             var max = array[0],
-                i, ln, item;
+                    i, ln, item;
 
             for (i = 0, ln = array.length; i < ln; i++) {
                 item = array[i];
@@ -869,7 +848,6 @@
 
             return max;
         },
-
         /**
          * Calculates the mean of all items in the array.
          *
@@ -879,7 +857,6 @@
         mean: function(array) {
             return array.length > 0 ? ExtArray.sum(array) / array.length : undefined;
         },
-
         /**
          * Calculates the sum of all items in the given array.
          *
@@ -888,9 +865,9 @@
          */
         sum: function(array) {
             var sum = 0,
-                i, ln, item;
+                    i, ln, item;
 
-            for (i = 0,ln = array.length; i < ln; i++) {
+            for (i = 0, ln = array.length; i < ln; i++) {
                 item = array[i];
 
                 sum += item;
@@ -898,7 +875,6 @@
 
             return sum;
         },
-
         //<debug>
         _replaceSim: replaceSim, // for unit testing
         _spliceSim: spliceSim,
@@ -916,7 +892,6 @@
          * @method
          */
         erase: erase,
-
         /**
          * Inserts items in to an array.
          *
@@ -925,10 +900,9 @@
          * @param {Array} items The array of items to insert at index.
          * @return {Array} The array passed.
          */
-        insert: function (array, index, items) {
+        insert: function(array, index, items) {
             return replace(array, index, 0, items);
         },
-
         /**
          * Replaces items in an array. This is functionally equivalent to the splice method
          * of Array, but works around bugs in IE8's splice method and is often more convenient
@@ -943,7 +917,6 @@
          * @method
          */
         replace: replace,
-
         /**
          * Replaces items in an array. This is equivalent to the splice method of Array, but
          * works around bugs in IE8's splice method. The signature is exactly the same as the

@@ -5,21 +5,19 @@ Ext.define('Ext.device.notification.Cordova', {
     alternateClassName: 'Ext.device.notification.PhoneGap',
     extend: 'Ext.device.notification.Abstract',
     requires: ['Ext.device.Communicator'],
-
     show: function(config) {
         config = this.callParent(arguments);
         this.confirm(config);
     },
-
     confirm: function(config) {
         config = this.callParent(arguments);
 
         var buttons = config.buttons,
-            ln = config.buttons.length;
+                ln = config.buttons.length;
 
         if (ln && typeof buttons[0] != "string") {
             var newButtons = [],
-                i;
+                    i;
 
             for (i = 0; i < ln; i++) {
                 newButtons.push(buttons[i].text);
@@ -35,30 +33,28 @@ Ext.define('Ext.device.notification.Cordova', {
 
 
         navigator.notification.confirm(
-            config.message,
-            callback,
-            config.title,
-            buttons
-        );
+                config.message,
+                callback,
+                config.title,
+                buttons
+                );
     },
-
     alert: function(config) {
         navigator.notification.alert(
-            config.message,
-            config.callback,
-            config.title,
-            config.buttonName
-        );
+                config.message,
+                config.callback,
+                config.title,
+                config.buttonName
+                );
     },
-
     prompt: function(config) {
         config = this.callParent(arguments);
         var buttons = config.buttons,
-            ln = config.buttons.length;
+                ln = config.buttons.length;
 
         if (ln && typeof buttons[0] != "string") {
             var newButtons = [],
-                i;
+                    i;
 
             for (i = 0; i < ln; i++) {
                 newButtons.push(buttons[i].text);
@@ -73,17 +69,15 @@ Ext.define('Ext.device.notification.Cordova', {
         };
 
         navigator.notification.prompt(
-            config.message,
-            callback,
-            config.title,
-            buttons
-        );
+                config.message,
+                callback,
+                config.title,
+                buttons
+                );
     },
-
     vibrate: function(time) {
         navigator.notification.vibrate(time);
     },
-
     beep: function(times) {
         navigator.notification.vibrate(times);
     }

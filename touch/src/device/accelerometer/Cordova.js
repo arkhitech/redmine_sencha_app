@@ -10,7 +10,6 @@ Ext.define('Ext.device.accelerometer.Cordova', {
         navigator.accelerometer.getCurrentAcceleration(config.success, config.failure);
         return config;
     },
-
     watchAcceleration: function(config) {
         config = this.callParent(arguments);
         if (this.activeWatchID) {
@@ -19,7 +18,6 @@ Ext.define('Ext.device.accelerometer.Cordova', {
         this.activeWatchID = navigator.accelerometer.watchAcceleration(config.callback, config.failure, config);
         return config;
     },
-
     clearWatch: function() {
         if (this.activeWatchID) {
             navigator.accelerometer.clearWatch(this.activeWatchID);

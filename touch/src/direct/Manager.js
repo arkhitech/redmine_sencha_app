@@ -44,22 +44,17 @@
  */
 Ext.define('Ext.direct.Manager', {
     singleton: true,
-
     mixins: {
         observable: 'Ext.mixin.Observable'
     },
-
     requires: ['Ext.util.Collection'],
-
     alternateClassName: 'Ext.Direct',
-
     exceptions: {
         TRANSPORT: 'xhr',
         PARSE: 'parse',
         LOGIN: 'login',
         SERVER: 'exception'
     },
-
     /**
      * @event event
      * Fires after an event.
@@ -79,11 +74,9 @@ Ext.define('Ext.direct.Manager', {
         me.transactions = Ext.create('Ext.util.Collection', this.getKey);
         me.providers = Ext.create('Ext.util.Collection', this.getKey);
     },
-
     getKey: function(item) {
         return item.getId();
     },
-
     /**
      * Adds an Ext.Direct Provider and creates the proxy or stub methods to execute server-side methods. If the provider
      * is not already connected, it will auto-connect.
@@ -114,10 +107,10 @@ Ext.define('Ext.direct.Manager', {
      * client-side stub methods.
      * @return {Object}
      */
-    addProvider : function(provider) {
+    addProvider: function(provider) {
         var me = this,
-            args = Ext.toArray(arguments),
-            i = 0, ln;
+                args = Ext.toArray(arguments),
+                i = 0, ln;
 
         if (args.length > 1) {
             for (ln = args.length; i < ln; ++i) {
@@ -139,25 +132,23 @@ Ext.define('Ext.direct.Manager', {
 
         return provider;
     },
-
     /**
      * Retrieves a {@link Ext.direct.Provider provider} by the **{@link Ext.direct.Provider#id id}** specified when the
      * provider is {@link #addProvider added}.
      * @param {String/Ext.direct.Provider} id The id of the provider, or the provider instance.
      * @return {Object}
      */
-    getProvider : function(id){
+    getProvider: function(id) {
         return id.isProvider ? id : this.providers.get(id);
     },
-
     /**
      * Removes the provider.
      * @param {String/Ext.direct.Provider} provider The provider instance or the id of the provider.
      * @return {Ext.direct.Provider/null} The provider, `null` if not found.
      */
-    removeProvider : function(provider) {
+    removeProvider: function(provider) {
         var me = this,
-            providers = me.providers;
+                providers = me.providers;
 
         provider = provider.isProvider ? provider : providers.get(provider);
 
@@ -168,7 +159,6 @@ Ext.define('Ext.direct.Manager', {
         }
         return null;
     },
-
     /**
      * Adds a transaction to the manager.
      * @private
@@ -179,7 +169,6 @@ Ext.define('Ext.direct.Manager', {
         this.transactions.add(transaction);
         return transaction;
     },
-
     /**
      * Removes a transaction from the manager.
      * @private
@@ -191,7 +180,6 @@ Ext.define('Ext.direct.Manager', {
         this.transactions.remove(transaction);
         return transaction;
     },
-
     /**
      * Gets a transaction
      * @private
@@ -201,11 +189,10 @@ Ext.define('Ext.direct.Manager', {
     getTransaction: function(transaction) {
         return Ext.isObject(transaction) ? transaction : this.transactions.get(transaction);
     },
-
-    onProviderData : function(provider, event) {
+    onProviderData: function(provider, event) {
         var me = this,
-            i = 0, ln,
-            name;
+                i = 0, ln,
+                name;
 
         if (Ext.isArray(event)) {
             for (ln = event.length; i < ln; ++i) {
@@ -224,7 +211,6 @@ Ext.define('Ext.direct.Manager', {
 
         me.fireEvent('event', event, provider);
     },
-
     /**
      * Parses a direct function. It may be passed in a string format, for example:
      * "MyApp.Person.read".
@@ -235,9 +221,9 @@ Ext.define('Ext.direct.Manager', {
     parseMethod: function(fn) {
         if (Ext.isString(fn)) {
             var parts = fn.split('.'),
-                i = 0,
-                ln = parts.length,
-                current = window;
+                    i = 0,
+                    ln = parts.length,
+                    current = window;
 
             while (current && i < ln) {
                 current = current[parts[i]];

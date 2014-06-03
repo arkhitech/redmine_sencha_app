@@ -10,30 +10,27 @@ Ext.define("Ext.draw.Group", {
     mixins: {
         observable: 'Ext.mixin.Observable'
     },
-
     config: {
         surface: null
     },
-
     statics: {
         /**
          * @private
          * @param {String} name
          * @return {Function}
          */
-        createRelayEvent: function (name) {
-            return (function (e) {
+        createRelayEvent: function(name) {
+            return (function(e) {
                 this.fireEvent(name, e);
             });
         },
-
         /**
          * @private
          * @param {String} name
          * @return {Function}
          */
-        createDispatcherMethod: function (name) {
-            return function () {
+        createDispatcherMethod: function(name) {
+            return function() {
                 var args = Array.prototype.slice.call(arguments, 0), items = this.items, i = 0, ln = items.length, item;
                 while (i < ln) {
                     item = items[i++];
@@ -42,23 +39,20 @@ Ext.define("Ext.draw.Group", {
             };
         }
     },
-
     autoDestroy: false,
-
-    constructor: function (config) {
+    constructor: function(config) {
         this.initConfig(config);
         this.map = {};
         this.items = [];
         this.length = 0;
     },
-
     /**
      * Add sprite to group.
      * @param {Ext.draw.sprite.Sprite} sprite
      */
-    add: function (sprite) {
+    add: function(sprite) {
         var id = sprite.getId(),
-            oldSprite = this.map[id];
+                oldSprite = this.map[id];
         if (!oldSprite) {
             sprite.group.push(this.id);
             this.map[id] = sprite;
@@ -68,15 +62,14 @@ Ext.define("Ext.draw.Group", {
             Ext.Logger.error('Sprite with duplicated id.');
         }
     },
-
     /**
      * Remote sprite from group.
      * @param {Ext.draw.sprite.Sprite} sprite
      * @param {Boolean} [destroySprite]
      */
-    remove: function (sprite, destroySprite) {
+    remove: function(sprite, destroySprite) {
         var id = sprite.getId(),
-            oldSprite = this.map[id];
+                oldSprite = this.map[id];
 
         destroySprite = destroySprite || this.autoDestroy;
         if (oldSprite) {
@@ -94,12 +87,11 @@ Ext.define("Ext.draw.Group", {
             }
         }
     },
-
     /**
      * Add a list of sprites to group.
      * @param {Array|Ext.draw.sprite.Sprite} sprites
      */
-    addAll: function (sprites) {
+    addAll: function(sprites) {
         if (sprites.isSprite) {
             this.add(sprites);
         } else if (Ext.isArray(sprites)) {
@@ -109,28 +101,26 @@ Ext.define("Ext.draw.Group", {
             }
         }
     },
-
     /**
      * Iterate all sprites with specific function.
      * __Note:__ Avoid using this for performance consideration.
      * @param {Function} fn Function to iterate.
      */
-    each: function (fn) {
+    each: function(fn) {
         var i = 0,
-            items = this.items,
-            ln = items.length;
+                items = this.items,
+                ln = items.length;
         while (i < ln) {
             if (false === fn(items[i])) {
                 return;
             }
         }
     },
-
     /**
      * Clear the group
      * @param {Boolean} [destroySprite]
      */
-    clear: function (destroySprite) {
+    clear: function(destroySprite) {
         var i, ln, sprite, items;
 
         if (destroySprite || this.autoDestroy) {
@@ -149,35 +139,32 @@ Ext.define("Ext.draw.Group", {
         this.map = {};
         this.items.length = 0;
     },
-
     /**
      * Get the i-th sprite of the group.
      * __Note:__ Do not reply on the order of the sprite. It could be changed by {@link Ext.draw.Surface#stableSort}.
      * @param {Number}  index
      * @return {Ext.draw.sprite.Sprite}
      */
-    getAt: function (index) {
+    getAt: function(index) {
         return this.items[index];
     },
-
     /**
      * Get the sprite with id or index.
      * It will first find sprite with given id, otherwise will try to use the id as an index.
      * @param {String|Number} id
      * @return {Ext.draw.sprite.Sprite}
      */
-    get: function (id) {
+    get: function(id) {
         return this.map[id] || this.items[id];
     },
-
     /**
      * Destroy the group and remove it from surface.
      */
-    destroy: function () {
+    destroy: function() {
         this.clear();
         this.getSurface().getGroups().remove(this);
     }
-}, function () {
+}, function() {
 
     this.addMembers({
         /**
@@ -187,7 +174,6 @@ Ext.define("Ext.draw.Group", {
          * @method
          */
         setAttributes: this.createDispatcherMethod('setAttributes'),
-
         /**
          * Display all sprites in the group.
          *
@@ -195,7 +181,6 @@ Ext.define("Ext.draw.Group", {
          * @method
          */
         show: this.createDispatcherMethod('show'),
-
         /**
          * Hide all sprites in the group.
          *
@@ -203,19 +188,17 @@ Ext.define("Ext.draw.Group", {
          * @method
          */
         hide: this.createDispatcherMethod('hide'),
-
         /**
          * Set dirty flag for all sprites in the group
          * @method
          */
         setDirty: this.createDispatcherMethod('setDirty'),
-
         /**
          * Return the minimal bounding box that contains all the sprites bounding boxes in this group.
          *
          * Bad performance. Avoid using it.
          */
-        getBBox: function (isWithTransform) {
+        getBBox: function(isWithTransform) {
             if (this.length === 0) {
                 return {x: 0, y: 0, width: 0, height: 0};
             }

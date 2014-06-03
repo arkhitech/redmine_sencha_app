@@ -11,9 +11,7 @@ Ext.define('Ext.chart.axis.sprite.Axis', {
     mixins: {
         markerHolder: 'Ext.chart.MarkerHolder'
     },
-
     requires: ['Ext.draw.sprite.Text'],
-
     inheritableStatics: {
         def: {
             processors: {
@@ -21,140 +19,114 @@ Ext.define('Ext.chart.axis.sprite.Axis', {
                  * @cfg {Boolean} grid 'true' if the axis has a grid.
                  */
                 grid: 'bool',
-
                 /**
                  * @cfg {Boolean} axisLine 'true' if the main line of the axis is drawn.
                  */
                 axisLine: 'bool',
-
                 /**
                  * @cfg {Boolean} minorTricks 'true' if the axis has sub ticks.
                  */
                 minorTicks: 'bool',
-
                 /**
                  * @cfg {Number} minorTickSize The length of the minor ticks.
                  */
                 minorTickSize: 'number',
-
                 /**
                  * @cfg {Boolean} majorTicks 'true' if the axis has major ticks.
                  */
                 majorTicks: 'bool',
-
                 /**
                  * @cfg {Number} majorTickSize The length of the major ticks.
                  */
                 majorTickSize: 'number',
-
                 /**
                  * @cfg {Number} length The total length of the axis.
                  */
                 length: 'number',
-
                 /**
                  * @private
                  * @cfg {Number} startGap Axis start determined by the chart inset padding.
                  */
                 startGap: 'number',
-
                 /**
                  * @private
                  * @cfg {Number} endGap Axis end determined by the chart inset padding.
                  */
                 endGap: 'number',
-
                 /**
                  * @cfg {Number} dataMin The minimum value of the axis data.
                  */
                 dataMin: 'number',
-
                 /**
                  * @cfg {Number} dataMax The maximum value of the axis data.
                  */
                 dataMax: 'number',
-
                 /**
                  * @cfg {Number} visibleMin The minimum value that is displayed.
                  */
                 visibleMin: 'number',
-
                 /**
                  * @cfg {Number} visibleMax The maximum value that is displayed.
                  */
                 visibleMax: 'number',
-
                 /**
                  * @cfg {String} position The position of the axis on the chart.
                  */
                 position: 'enums(left,right,top,bottom,angular,radial)',
-
                 /**
                  * @cfg {Number} minStepSize The minimum step size between ticks.
                  */
                 minStepSize: 'number',
-
                 /**
                  * @private
                  * @cfg {Number} estStepSize The estimated step size between ticks.
                  */
                 estStepSize: 'number',
-
                 /**
                  * @private
                  * Unused.
                  */
                 titleOffset: 'number',
-
                 /**
                  * @cfg {Number} textPadding The padding around axis labels to determine collision.
                  */
                 textPadding: 'number',
-
                 /**
                  * @cfg {Number} min The minimum value of the axis.
                  */
                 min: 'number',
-
                 /**
                  * @cfg {Number} max The maximum value of the axis.
                  */
                 max: 'number',
-
                 /**
                  * @cfg {Number} centerX The central point of the angular axis on the x-axis.
                  */
                 centerX: 'number',
-
                 /**
                  * @cfg {Number} centerY The central point of the angular axis on the y-axis.
                  */
                 centerY: 'number',
-
                 /**
                  * @private
                  * @cfg {Number} radius
                  * Unused.
                  */
                 radius: 'number',
-
                 /**
                  * @cfg {Number} The starting rotation of the angular axis.
                  */
                 baseRotation: 'number',
-
                 /**
                  * @private
                  * Unused.
                  */
                 data: 'default',
-
                 /**
                  * @cfg {Boolean} 'true' if the estimated step size is adjusted by text size.
                  */
                 enlargeEstStepSizeByText: 'bool'
             },
-
             defaults: {
                 grid: false,
                 axisLine: true,
@@ -187,7 +159,6 @@ Ext.define('Ext.chart.axis.sprite.Axis', {
                 strokeStyle: 'black',
                 enlargeEstStepSizeByText: false
             },
-
             dirtyTriggers: {
                 minorTickSize: 'bbox',
                 majorTickSize: 'bbox',
@@ -206,15 +177,13 @@ Ext.define('Ext.chart.axis.sprite.Axis', {
                 enlargeEstStepSizeByText: 'layout'
             },
             updaters: {
-                'layout': function () {
+                'layout': function() {
                     this.doLayout();
                 }
             }
         }
     },
-
     config: {
-
         /**
          * @cfg {Object} label
          *
@@ -223,50 +192,43 @@ Ext.define('Ext.chart.axis.sprite.Axis', {
          * returns a new string with the modified values.
          */
         label: null,
-
         /**
          * @cfg {Object|Ext.chart.axis.layout.Layout} layout The layout configuration used by the axis.
          */
         layout: null,
-
         /**
          * @cfg {Object|Ext.chart.axis.segmenter.Segmenter} segmenter The method of segmenter used by the axis.
          */
         segmenter: null,
-
         /**
          * @cfg {Function} renderer Allows direct customisation of rendered axis sprites.
          */
         renderer: null,
-
         /**
          * @private
          * @cfg {Object} layoutContext Stores the context after calculating layout.
          */
         layoutContext: null,
-
         /**
          * @cfg {Ext.chart.axis.Axis} axis The axis represented by the this sprite.
          */
         axis: null
     },
-
     thickness: 0,
-
     stepSize: 0,
-
-    getBBox: function () { return null; },
-
-    doLayout: function () {
+    getBBox: function() {
+        return null;
+    },
+    doLayout: function() {
         var me = this,
-            attr = me.attr,
-            layout = me.getLayout(),
-            min = attr.dataMin + (attr.dataMax - attr.dataMin) * attr.visibleMin,
-            max = attr.dataMin + (attr.dataMax - attr.dataMin) * attr.visibleMax,
-            context = {
-                attr: attr,
-                segmenter: me.getSegmenter()
-            };
+                attr = me.attr,
+                layout = me.getLayout(),
+                min = attr.dataMin + (attr.dataMax - attr.dataMin) * attr.visibleMin,
+                max = attr.dataMin + (attr.dataMax - attr.dataMin) * attr.visibleMax,
+                context = {
+                    attr: attr,
+                    segmenter: me.getSegmenter()
+                };
 
         if (attr.position === 'left' || attr.position === 'right') {
             attr.translationX = 0;
@@ -291,8 +253,7 @@ Ext.define('Ext.chart.axis.sprite.Axis', {
             me.setLayoutContext(context);
         }
     },
-
-    iterate: function (snaps, fn) {
+    iterate: function(snaps, fn) {
         var i, position;
         if (snaps.getLabel) {
             if (snaps.min < snaps.from) {
@@ -317,27 +278,26 @@ Ext.define('Ext.chart.axis.sprite.Axis', {
             }
         }
     },
-
-    renderTicks: function (surface, ctx, layout, clipRegion) {
+    renderTicks: function(surface, ctx, layout, clipRegion) {
         var me = this,
-            attr = me.attr,
-            docked = attr.position,
-            matrix = attr.matrix,
-            halfLineWidth = 0.5 * attr.lineWidth,
-            xx = matrix.getXX(),
-            dx = matrix.getDX(),
-            yy = matrix.getYY(),
-            dy = matrix.getDY(),
-            majorTicks = layout.majorTicks,
-            majorTickSize = attr.majorTickSize,
-            minorTicks = layout.minorTicks,
-            minorTickSize = attr.minorTickSize;
+                attr = me.attr,
+                docked = attr.position,
+                matrix = attr.matrix,
+                halfLineWidth = 0.5 * attr.lineWidth,
+                xx = matrix.getXX(),
+                dx = matrix.getDX(),
+                yy = matrix.getYY(),
+                dy = matrix.getDY(),
+                majorTicks = layout.majorTicks,
+                majorTickSize = attr.majorTickSize,
+                minorTicks = layout.minorTicks,
+                minorTickSize = attr.minorTickSize;
 
         if (majorTicks) {
             switch (docked) {
                 case 'right':
                     function getRightTickFn(size) {
-                        return function (position, labelText, i) {
+                        return function(position, labelText, i) {
                             position = surface.roundPixel(position * yy + dy) + halfLineWidth;
                             ctx.moveTo(0, position);
                             ctx.lineTo(size, position);
@@ -348,7 +308,7 @@ Ext.define('Ext.chart.axis.sprite.Axis', {
                     break;
                 case 'left':
                     function getLeftTickFn(size) {
-                        return function (position, labelText, i) {
+                        return function(position, labelText, i) {
                             position = surface.roundPixel(position * yy + dy) + halfLineWidth;
                             ctx.moveTo(clipRegion[2] - size, position);
                             ctx.lineTo(clipRegion[2], position);
@@ -359,7 +319,7 @@ Ext.define('Ext.chart.axis.sprite.Axis', {
                     break;
                 case 'bottom':
                     function getBottomTickFn(size) {
-                        return function (position, labelText, i) {
+                        return function(position, labelText, i) {
                             position = surface.roundPixel(position * xx + dx) - halfLineWidth;
                             ctx.moveTo(position, 0);
                             ctx.lineTo(position, size);
@@ -370,7 +330,7 @@ Ext.define('Ext.chart.axis.sprite.Axis', {
                     break;
                 case 'top':
                     function getTopTickFn(size) {
-                        return function (position, labelText, i) {
+                        return function(position, labelText, i) {
                             position = surface.roundPixel(position * xx + dx) - halfLineWidth;
                             ctx.moveTo(position, clipRegion[3]);
                             ctx.lineTo(position, clipRegion[3] - size);
@@ -380,42 +340,41 @@ Ext.define('Ext.chart.axis.sprite.Axis', {
                     minorTicks && me.iterate(minorTicks, getTopTickFn(minorTickSize));
                     break;
                 case 'angular':
-                    me.iterate(majorTicks, function (position, labelText, i) {
+                    me.iterate(majorTicks, function(position, labelText, i) {
                         position = position / (attr.max + 1) * Math.PI * 2 + attr.baseRotation;
                         ctx.moveTo(
-                            attr.centerX + (attr.length) * Math.cos(position),
-                            attr.centerY + (attr.length) * Math.sin(position)
-                        );
+                                attr.centerX + (attr.length) * Math.cos(position),
+                                attr.centerY + (attr.length) * Math.sin(position)
+                                );
                         ctx.lineTo(
-                            attr.centerX + (attr.length + majorTickSize) * Math.cos(position),
-                            attr.centerY + (attr.length + majorTickSize) * Math.sin(position)
-                        );
+                                attr.centerX + (attr.length + majorTickSize) * Math.cos(position),
+                                attr.centerY + (attr.length + majorTickSize) * Math.sin(position)
+                                );
                     });
                     break;
             }
         }
     },
-
-    renderLabels: function (surface, ctx, layout, clipRegion) {
+    renderLabels: function(surface, ctx, layout, clipRegion) {
         var me = this,
-            attr = me.attr,
-            halfLineWidth = 0.5 * attr.lineWidth,
-            docked = attr.position,
-            matrix = attr.matrix,
-            textPadding = attr.textPadding,
-            xx = matrix.getXX(),
-            dx = matrix.getDX(),
-            yy = matrix.getYY(),
-            dy = matrix.getDY(),
-            thickness = 0,
-            majorTicks = layout.majorTicks,
-            padding = Math.max(attr.majorTickSize, attr.minorTickSize) + attr.lineWidth,
-            label = this.getLabel(), font,
-            lastLabelText = null,
-            textSize = 0, textCount = 0,
-            segmenter = layout.segmenter,
-            renderer = this.getRenderer(),
-            labelInverseMatrix, lastBBox = null, bbox, fly, text;
+                attr = me.attr,
+                halfLineWidth = 0.5 * attr.lineWidth,
+                docked = attr.position,
+                matrix = attr.matrix,
+                textPadding = attr.textPadding,
+                xx = matrix.getXX(),
+                dx = matrix.getDX(),
+                yy = matrix.getYY(),
+                dy = matrix.getDY(),
+                thickness = 0,
+                majorTicks = layout.majorTicks,
+                padding = Math.max(attr.majorTickSize, attr.minorTickSize) + attr.lineWidth,
+                label = this.getLabel(), font,
+                lastLabelText = null,
+                textSize = 0, textCount = 0,
+                segmenter = layout.segmenter,
+                renderer = this.getRenderer(),
+                labelInverseMatrix, lastBBox = null, bbox, fly, text;
         if (majorTicks && label && !label.attr.hidden) {
             font = label.attr.font;
             if (ctx.font !== font) {
@@ -459,7 +418,7 @@ Ext.define('Ext.chart.axis.sprite.Axis', {
 
             // TODO: there are better ways to detect collision.
             if (docked === 'left' || docked === 'right') {
-                me.iterate(majorTicks, function (position, labelText, i) {
+                me.iterate(majorTicks, function(position, labelText, i) {
                     if (labelText === undefined) {
                         return;
                     }
@@ -484,7 +443,7 @@ Ext.define('Ext.chart.axis.sprite.Axis', {
                     }
                 });
             } else if (docked === 'top' || docked === 'bottom') {
-                me.iterate(majorTicks, function (position, labelText, i) {
+                me.iterate(majorTicks, function(position, labelText, i) {
                     if (labelText === undefined) {
                         return;
                     }
@@ -509,7 +468,7 @@ Ext.define('Ext.chart.axis.sprite.Axis', {
                     }
                 });
             } else if (docked === 'radial') {
-                me.iterate(majorTicks, function (position, labelText, i) {
+                me.iterate(majorTicks, function(position, labelText, i) {
                     if (labelText === undefined) {
                         return;
                     }
@@ -532,7 +491,7 @@ Ext.define('Ext.chart.axis.sprite.Axis', {
                     }
                 });
             } else if (docked === 'angular') {
-                me.iterate(majorTicks, function (position, labelText, i) {
+                me.iterate(majorTicks, function(position, labelText, i) {
                     if (labelText === undefined) {
                         return;
                     }
@@ -577,13 +536,12 @@ Ext.define('Ext.chart.axis.sprite.Axis', {
             }
         }
     },
-
-    renderAxisLine: function (surface, ctx, layout, clipRegion) {
+    renderAxisLine: function(surface, ctx, layout, clipRegion) {
         var me = this,
-            attr = me.attr,
-            halfLineWidth = attr.lineWidth * 0.5,
-            docked = attr.position,
-            position;
+                attr = me.attr,
+                halfLineWidth = attr.lineWidth * 0.5,
+                docked = attr.position,
+                position;
         if (attr.axisLine) {
             switch (docked) {
                 case 'left':
@@ -611,25 +569,24 @@ Ext.define('Ext.chart.axis.sprite.Axis', {
             }
         }
     },
-
-    renderGridLines: function (surface, ctx, layout, clipRegion) {
+    renderGridLines: function(surface, ctx, layout, clipRegion) {
         var me = this,
-            attr = me.attr,
-            matrix = attr.matrix,
-            startGap = attr.startGap,
-            endGap = attr.endGap,
-            xx = matrix.getXX(),
-            yy = matrix.getYY(),
-            dx = matrix.getDX(),
-            dy = matrix.getDY(),
-            position = attr.position,
-            majorTicks = layout.majorTicks,
-            anchor, j, lastAnchor;
+                attr = me.attr,
+                matrix = attr.matrix,
+                startGap = attr.startGap,
+                endGap = attr.endGap,
+                xx = matrix.getXX(),
+                yy = matrix.getYY(),
+                dx = matrix.getDX(),
+                dy = matrix.getDY(),
+                position = attr.position,
+                majorTicks = layout.majorTicks,
+                anchor, j, lastAnchor;
         if (attr.grid) {
             if (majorTicks) {
                 if (position === 'left' || position === 'right') {
                     lastAnchor = attr.min * yy + dy + endGap + startGap;
-                    me.iterate(majorTicks, function (position, labelText, i) {
+                    me.iterate(majorTicks, function(position, labelText, i) {
                         anchor = position * yy + dy + endGap;
                         me.putMarker('horizontal-' + (i % 2 ? 'odd' : 'even'), {
                             y: anchor,
@@ -651,7 +608,7 @@ Ext.define('Ext.chart.axis.sprite.Axis', {
                             width: lastAnchor
                         }, -1, true);
                     }
-                    me.iterate(majorTicks, function (position, labelText, i) {
+                    me.iterate(majorTicks, function(position, labelText, i) {
                         anchor = position * xx + dx + startGap;
                         me.putMarker('vertical-' + (i % 2 ? 'odd' : 'even'), {
                             x: anchor,
@@ -666,7 +623,7 @@ Ext.define('Ext.chart.axis.sprite.Axis', {
                         width: lastAnchor - anchor
                     }, j, true);
                 } else if (position === 'radial') {
-                    me.iterate(majorTicks, function (position, labelText, i) {
+                    me.iterate(majorTicks, function(position, labelText, i) {
                         anchor = position / attr.max * attr.length;
                         me.putMarker('circular-' + (i % 2 ? 'odd' : 'even'), {
                             scalingX: anchor,
@@ -675,7 +632,7 @@ Ext.define('Ext.chart.axis.sprite.Axis', {
                         lastAnchor = anchor;
                     });
                 } else if (position === 'angular') {
-                    me.iterate(majorTicks, function (position, labelText, i) {
+                    me.iterate(majorTicks, function(position, labelText, i) {
                         anchor = position / (attr.max + 1) * Math.PI * 2 + attr.baseRotation;
                         me.putMarker('radial-' + (i % 2 ? 'odd' : 'even'), {
                             rotationRads: anchor,
@@ -690,17 +647,15 @@ Ext.define('Ext.chart.axis.sprite.Axis', {
             }
         }
     },
-
-    doThicknessChanged: function () {
+    doThicknessChanged: function() {
         var axis = this.getAxis();
         if (axis) {
             axis.onThicknessChanged();
         }
     },
-
-    render: function (surface, ctx, clipRegion) {
+    render: function(surface, ctx, clipRegion) {
         var me = this,
-            layout = me.getLayoutContext();
+                layout = me.getLayoutContext();
         if (layout) {
             if (false === me.renderLabels(surface, ctx, layout, clipRegion)) {
                 return false;

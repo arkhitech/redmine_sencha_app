@@ -8,18 +8,16 @@
 Ext.define("Ext.chart.Markers", {
     extend: 'Ext.draw.sprite.Instancing',
     revisions: 0,
-
-    constructor: function () {
+    constructor: function() {
         this.callSuper(arguments);
         this.map = {};
         this.revisions = {};
     },
-
     /**
      * Clear the markers in the category
      * @param {String} category
      */
-    clear: function (category) {
+    clear: function(category) {
         category = category || 'default';
         if (!(category in this.revisions)) {
             this.revisions[category] = 1;
@@ -27,7 +25,6 @@ Ext.define("Ext.chart.Markers", {
             this.revisions[category]++;
         }
     },
-
     /**
      * Put a marker in the category with additional
      * attributes.
@@ -37,11 +34,11 @@ Ext.define("Ext.chart.Markers", {
      * @param {Boolean} [canonical]
      * @param {Boolean} [keepRevision]
      */
-    putMarkerFor: function (category, markerAttr, index, canonical, keepRevision) {
+    putMarkerFor: function(category, markerAttr, index, canonical, keepRevision) {
         category = category || 'default';
 
         var me = this,
-            map = me.map[category] || (me.map[category] = {});
+                map = me.map[category] || (me.map[category] = {});
         if (index in map) {
             me.setAttributesFor(map[index], markerAttr, canonical);
         } else {
@@ -53,31 +50,30 @@ Ext.define("Ext.chart.Markers", {
             me.instances[map[index]].revision = me.revisions[category] || (me.revisions[category] = 1);
         }
     },
-
     /**
      *
      * @param {String} category
      * @param {Mixed} index
      * @param {Boolean} [isWithoutTransform]
      */
-    getMarkerBBoxFor: function (category, index, isWithoutTransform) {
+    getMarkerBBoxFor: function(category, index, isWithoutTransform) {
         if (category in this.map) {
             if (index in this.map[category]) {
                 return this.getBBoxFor(this.map[category][index], isWithoutTransform);
             }
         }
     },
-
-    getBBox: function () { return null; },
-
-    render: function (surface, ctx, clipRegion) {
+    getBBox: function() {
+        return null;
+    },
+    render: function(surface, ctx, clipRegion) {
         var me = this,
-            revisions = me.revisions,
-            mat = me.attr.matrix,
-            template = me.getTemplate(),
-            originalAttr = template.attr,
-            instances = me.instances,
-            i, ln = me.instances.length;
+                revisions = me.revisions,
+                mat = me.attr.matrix,
+                template = me.getTemplate(),
+                originalAttr = template.attr,
+                instances = me.instances,
+                i, ln = me.instances.length;
         mat.toContext(ctx);
         template.preRender(surface, ctx, clipRegion);
         template.useAttributes(ctx);

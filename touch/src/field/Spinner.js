@@ -19,7 +19,6 @@ Ext.define('Ext.field.Spinner', {
     xtype: 'spinnerfield',
     alternateClassName: 'Ext.form.Spinner',
     requires: ['Ext.util.TapRepeater'],
-
     /**
      * @event spin
      * Fires when the value is changed via either spinner buttons.
@@ -66,64 +65,54 @@ Ext.define('Ext.field.Spinner', {
          * @inheritdoc
          */
         cls: Ext.baseCSSPrefix + 'spinner',
-
         /**
          * @cfg {Number} [minValue=-infinity] The minimum allowed value.
          * @accessor
          */
         minValue: Number.NEGATIVE_INFINITY,
-
         /**
          * @cfg {Number} [maxValue=infinity] The maximum allowed value.
          * @accessor
          */
         maxValue: Number.MAX_VALUE,
-
         /**
          * @cfg {Number} stepValue Value that is added or subtracted from the current value when a spinner is used.
          * @accessor
          */
         stepValue: 0.1,
-
         /**
          * @cfg {Boolean} accelerateOnTapHold True if autorepeating should start slowly and accelerate.
          * @accessor
          */
         accelerateOnTapHold: true,
-
         /**
          * @cfg {Boolean} cycle When set to `true`, it will loop the values of a minimum or maximum is reached.
          * If the maximum value is reached, the value will be set to the minimum.
          * @accessor
          */
         cycle: false,
-
         /**
          * @cfg {Boolean} clearIcon
          * @hide
          * @accessor
          */
         clearIcon: false,
-
         /**
          * @cfg {Number} defaultValue The default value for this field when no value has been set.
          * It is also used when the value is set to `NaN`.
          */
         defaultValue: 0,
-
         /**
          * @cfg {Number} tabIndex
          * @hide
          */
         tabIndex: -1,
-
         /**
          * @cfg {Boolean} groupButtons
          * `true` if you want to group the buttons to the right of the fields. `false` if you want the buttons
          * to be at either side of the field.
          */
         groupButtons: true,
-
         /**
          * @cfg component
          * @inheritdoc
@@ -132,15 +121,13 @@ Ext.define('Ext.field.Spinner', {
             disabled: true
         }
     },
-
     platformConfig: [{
-        platform: 'android',
-        component: {
-            disabled: false,
-            readOnly: true
-        }
-    }],
-
+            platform: 'android',
+            component: {
+                disabled: false,
+                readOnly: true
+            }
+        }],
     constructor: function() {
         var me = this;
 
@@ -152,9 +139,7 @@ Ext.define('Ext.field.Spinner', {
             me.resumeEvents();
         }
     },
-
     syncEmptyCls: Ext.emptyFn,
-
     /**
      * Updates the {@link #component} configuration
      */
@@ -165,24 +150,23 @@ Ext.define('Ext.field.Spinner', {
 
         if (newComponent) {
             this.spinDownButton = Ext.Element.create({
-                cls : cls + '-button ' + cls + '-button-down',
+                cls: cls + '-button ' + cls + '-button-down',
                 html: '-'
             });
 
             this.spinUpButton = Ext.Element.create({
-                cls : cls + '-button ' + cls + '-button-up',
+                cls: cls + '-button ' + cls + '-button-up',
                 html: '+'
             });
 
             this.downRepeater = this.createRepeater(this.spinDownButton, this.onSpinDown);
-            this.upRepeater = this.createRepeater(this.spinUpButton,     this.onSpinUp);
+            this.upRepeater = this.createRepeater(this.spinUpButton, this.onSpinUp);
         }
     },
-
     updateGroupButtons: function(newGroupButtons, oldGroupButtons) {
         var me = this,
-            innerElement = me.innerElement,
-            cls = me.getBaseCls() + '-grouped-buttons';
+                innerElement = me.innerElement,
+                cls = me.getBaseCls() + '-grouped-buttons';
 
         me.getComponent();
 
@@ -198,7 +182,6 @@ Ext.define('Ext.field.Spinner', {
             }
         }
     },
-
     applyValue: function(value) {
         value = parseFloat(value);
         if (isNaN(value) || value === null) {
@@ -210,14 +193,13 @@ Ext.define('Ext.field.Spinner', {
 
         return this.callParent([value]);
     },
-
     // @private
     createRepeater: function(el, fn) {
         var me = this,
-            repeater = Ext.create('Ext.util.TapRepeater', {
-                el: el,
-                accelerate: me.getAccelerateOnTapHold()
-            });
+                repeater = Ext.create('Ext.util.TapRepeater', {
+                    el: el,
+                    accelerate: me.getAccelerateOnTapHold()
+                });
 
         repeater.on({
             tap: fn,
@@ -228,42 +210,37 @@ Ext.define('Ext.field.Spinner', {
 
         return repeater;
     },
-
     // @private
     onSpinDown: function() {
         if (!this.getDisabled() && !this.getReadOnly()) {
             this.spin(true);
         }
     },
-
     // @private
     onSpinUp: function() {
         if (!this.getDisabled() && !this.getReadOnly()) {
             this.spin(false);
         }
     },
-
     // @private
     onTouchStart: function(repeater) {
         if (!this.getDisabled() && !this.getReadOnly()) {
             repeater.getEl().addCls(Ext.baseCSSPrefix + 'button-pressed');
         }
     },
-
     // @private
     onTouchEnd: function(repeater) {
         repeater.getEl().removeCls(Ext.baseCSSPrefix + 'button-pressed');
     },
-
     // @private
     spin: function(down) {
         var me = this,
-            originalValue = me.getValue(),
-            stepValue = me.getStepValue(),
-            direction = down ? 'down' : 'up',
-            minValue = me.getMinValue(),
-            maxValue = me.getMaxValue(),
-            value;
+                originalValue = me.getValue(),
+                stepValue = me.getStepValue(),
+                direction = down ? 'down' : 'up',
+                minValue = me.getMinValue(),
+                maxValue = me.getMaxValue(),
+                value;
 
         if (down) {
             value = originalValue - stepValue;
@@ -289,29 +266,25 @@ Ext.define('Ext.field.Spinner', {
         me.fireEvent('spin', me, value, direction);
         me.fireEvent('spin' + direction, me, value);
     },
-
     /**
      * @private
      */
     doSetDisabled: function(disabled) {
         Ext.Component.prototype.doSetDisabled.apply(this, arguments);
     },
-
     /**
      * @private
      */
     setDisabled: function() {
         Ext.Component.prototype.setDisabled.apply(this, arguments);
     },
-
     reset: function() {
         this.setValue(this.getDefaultValue());
     },
-
 //    setValue: function(value){
 //        this.callSuper(arguments);
 
-        // @TODO: Isn't this already done by the framework by default?
+    // @TODO: Isn't this already done by the framework by default?
 //        if(Ext.getThemeName() == 'WP'){
 //            this.getComponent().element.dom.setAttribute('value',value);
 //        }

@@ -3,12 +3,9 @@
  */
 Ext.define("Ext.draw.TextMeasurer", {
     singleton: true,
-
     uses: ['Ext.draw.engine.Canvas'],
-
     measureDiv: null,
     measureCache: {},
-
     /**
      * @private Measure the size of a text with specific font by using DOM to measure it.
      * Could be very expensive therefore should be used lazily.
@@ -18,11 +15,11 @@ Ext.define("Ext.draw.TextMeasurer", {
      * @return {Number} return.width
      * @return {Number} return.height
      */
-    actualMeasureText: function (text, font) {
+    actualMeasureText: function(text, font) {
         var me = Ext.draw.TextMeasurer,
-            measureDiv = me.measureDiv,
-            FARAWAY = 100000,
-            size;
+                measureDiv = me.measureDiv,
+                FARAWAY = 100000,
+                size;
 
         if (!measureDiv) {
             var parent = Ext.Element.create({
@@ -60,7 +57,6 @@ Ext.define("Ext.draw.TextMeasurer", {
         size.width -= measureDiv.getSize().width;
         return size;
     },
-
     /**
      * Measure a single-line text with specific font.
      * This will split the text to characters and add up their size.
@@ -71,13 +67,13 @@ Ext.define("Ext.draw.TextMeasurer", {
      * @return {Number} return.width
      * @return {Number} return.height
      */
-    measureTextSingleLine: function (text, font) {
+    measureTextSingleLine: function(text, font) {
         text = text.toString();
         var cache = this.measureCache,
-            chars = text.split(''),
-            width = 0,
-            height = 0,
-            cachedItem, charactor, i, ln, size;
+                chars = text.split(''),
+                width = 0,
+                height = 0,
+                cachedItem, charactor, i, ln, size;
 
         if (!cache[font]) {
             cache[font] = {};
@@ -102,7 +98,6 @@ Ext.define("Ext.draw.TextMeasurer", {
             height: height
         };
     },
-
     /**
      * Measure a text with specific font.
      * This will split the text to lines and add up their size.
@@ -114,13 +109,13 @@ Ext.define("Ext.draw.TextMeasurer", {
      * @return {Number} return.height
      * @return {Array} return.sizes Results of individual line measurements, in case of multiline text.
      */
-    measureText: function (text, font) {
+    measureText: function(text, font) {
         var lines = text.split('\n'),
-            ln = lines.length,
-            height = 0,
-            width = 0,
-            line, i,
-            sizes;
+                ln = lines.length,
+                height = 0,
+                width = 0,
+                line, i,
+                sizes;
 
         if (ln === 1) {
             return this.measureTextSingleLine(text, font);

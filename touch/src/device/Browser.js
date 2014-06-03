@@ -7,13 +7,11 @@
  */
 Ext.define('Ext.device.Browser', {
     singleton: true,
-
     requires: [
         'Ext.device.Communicator',
         'Ext.device.browser.Cordova',
         'Ext.device.browser.Simulator'
     ],
-
     constructor: function() {
         var browserEnv = Ext.browser.is;
 

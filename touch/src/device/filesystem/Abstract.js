@@ -8,7 +8,6 @@ Ext.define('Ext.device.filesystem.Abstract', {
         readerType: "text",
         stringEncoding: "UTF8"
     },
-
     requestFileSystem: function(config) {
         var defaultConfig = Ext.device.filesystem.Abstract.prototype.config;
 

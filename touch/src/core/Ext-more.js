@@ -40,12 +40,10 @@ Ext.apply(Ext, {
      * @type String
      */
     version: Ext.getVersion('touch'),
-
     /**
      * @private
      */
     idSeed: 0,
-
     /**
      * Repaints the whole page. This fixes frequently encountered painting issues in mobile Safari.
      */
@@ -57,7 +55,6 @@ Ext.apply(Ext, {
             mask.destroy();
         }, 0);
     },
-
     /**
      * Generates unique ids. If the element is passes and it already has an `id`, it is unchanged.
      * @param {Mixed} el (optional) The element to generate an id for.
@@ -85,7 +82,6 @@ Ext.apply(Ext, {
 
         return el.id;
     },
-
     /**
      * Returns the current document body as an {@link Ext.Element}.
      * @return {Ext.Element} The document body.
@@ -101,7 +97,6 @@ Ext.apply(Ext, {
 
         return Ext.documentBodyElement;
     },
-
     /**
      * Returns the current document head as an {@link Ext.Element}.
      * @return {Ext.Element} The document head.
@@ -113,7 +108,6 @@ Ext.apply(Ext, {
 
         return Ext.documentHeadElement;
     },
-
     /**
      * Returns the current HTML document object as an {@link Ext.Element}.
      * @return {Ext.Element} The document.
@@ -125,18 +119,16 @@ Ext.apply(Ext, {
 
         return Ext.documentElement;
     },
-
     /**
      * This is shorthand reference to {@link Ext.ComponentMgr#get}.
      * Looks up an existing {@link Ext.Component Component} by {@link Ext.Component#getId id}
      * @param {String} id The component {@link Ext.Component#getId id}
      * @return {Ext.Component} The Component, `undefined` if not found, or `null` if a
      * Class was found.
-    */
+     */
     getCmp: function(id) {
         return Ext.ComponentMgr.get(id);
     },
-
     /**
      * Copies a set of named properties from the source object to the destination object.
      *
@@ -159,18 +151,17 @@ Ext.apply(Ext, {
      * @param {Boolean} [usePrototypeKeys=false] (optional) Pass `true` to copy keys off of the prototype as well as the instance.
      * @return {Object} The modified object.
      */
-    copyTo : function(dest, source, names, usePrototypeKeys) {
+    copyTo: function(dest, source, names, usePrototypeKeys) {
         if (typeof names == 'string') {
             names = names.split(/[,;\s]/);
         }
-        Ext.each (names, function(name) {
+        Ext.each(names, function(name) {
             if (usePrototypeKeys || source.hasOwnProperty(name)) {
                 dest[name] = source[name];
             }
         }, this);
         return dest;
     },
-
     /**
      * Attempts to destroy any objects passed to it by removing all event listeners, removing them from the
      * DOM (if applicable) and calling their destroy functions (if available).  This method is primarily
@@ -181,8 +172,8 @@ Ext.apply(Ext, {
      */
     destroy: function() {
         var args = arguments,
-            ln = args.length,
-            i, item;
+                ln = args.length,
+                i, item;
 
         for (i = 0; i < ln; i++) {
             item = args[i];
@@ -197,7 +188,6 @@ Ext.apply(Ext, {
             }
         }
     },
-
     /**
      * Return the dom node for the passed String (id), dom node, or Ext.Element.
      * Here are some examples:
@@ -227,7 +217,6 @@ Ext.apply(Ext, {
 
         return el.dom ? el.dom : (typeof el == 'string' ? document.getElementById(el) : el);
     },
-
     /**
      * Removes this element from the document, removes all DOM event listeners, and deletes the cache reference.
      * All DOM event listeners are removed from this element.
@@ -240,7 +229,6 @@ Ext.apply(Ext, {
             delete Ext.cache[node.id];
         }
     },
-
     /**
      * @private
      */
@@ -294,12 +282,11 @@ Ext.apply(Ext, {
                 xclass: 'Ext.event.publisher.ElementSize'
             }
             //<feature charts>
-            ,seriesItemEvents: {
+            , seriesItemEvents: {
                 xclass: 'Ext.chart.series.ItemPublisher'
             }
             //</feature>
         },
-
         //<feature logger>
         logger: {
             enabled: true,
@@ -320,29 +307,24 @@ Ext.apply(Ext, {
         animator: {
             xclass: 'Ext.fx.Runner'
         },
-
         viewport: {
             xclass: 'Ext.viewport.Viewport'
         }
     },
-
     /**
      * @private
      */
     isSetup: false,
-
     /**
      * This indicate the start timestamp of current cycle.
      * It is only reliable during dom-event-initiated cycles and
      * {@link Ext.draw.Animator} initiated cycles.
      */
     frameStartTime: +new Date(),
-
     /**
      * @private
      */
     setupListeners: [],
-
     /**
      * @private
      */
@@ -357,7 +339,6 @@ Ext.apply(Ext, {
             });
         }
     },
-
     /**
      * Ext.setup() is the entry-point to initialize a Sencha Touch application. Note that if your application makes
      * use of MVC architecture, use {@link Ext#application} instead.
@@ -540,14 +521,14 @@ Ext.apply(Ext, {
      */
     setup: function(config) {
         var defaultSetupConfig = Ext.defaultSetupConfig,
-            emptyFn = Ext.emptyFn,
-            onReady = config.onReady || emptyFn,
-            onUpdated = config.onUpdated || emptyFn,
-            scope = config.scope,
-            requires = Ext.Array.from(config.requires),
-            extOnReady = Ext.onReady,
-            head = Ext.getHead(),
-            callback, viewport, precomposed;
+                emptyFn = Ext.emptyFn,
+                onReady = config.onReady || emptyFn,
+                onUpdated = config.onUpdated || emptyFn,
+                scope = config.scope,
+                requires = Ext.Array.from(config.requires),
+                extOnReady = Ext.onReady,
+                head = Ext.getHead(),
+                callback, viewport, precomposed;
 
         Ext.setup = function() {
             throw new Error("Ext.setup has already been called before");
@@ -562,8 +543,8 @@ Ext.apply(Ext, {
 
         callback = function() {
             var listeners = Ext.setupListeners,
-                ln = listeners.length,
-                i, listener;
+                    ln = listeners.length,
+                    i, listener;
 
             delete Ext.setupListeners;
             Ext.isSetup = true;
@@ -620,15 +601,15 @@ Ext.apply(Ext, {
             if (!Ext.microloaded && navigator.userAgent.match(/IEMobile\/10\.0/)) {
                 var msViewportStyle = document.createElement("style");
                 msViewportStyle.appendChild(
-                    document.createTextNode(
-                        "@media screen and (orientation: portrait) {" +
-                            "@-ms-viewport {width: 320px !important;}" +
-                        "}" +
-                        "@media screen and (orientation: landscape) {" +
-                            "@-ms-viewport {width: 560px !important;}" +
-                        "}"
-                    )
-                );
+                        document.createTextNode(
+                                "@media screen and (orientation: portrait) {" +
+                                "@-ms-viewport {width: 320px !important;}" +
+                                "}" +
+                                "@media screen and (orientation: landscape) {" +
+                                "@-ms-viewport {width: 560px !important;}" +
+                                "}"
+                                )
+                        );
                 head.appendChild(msViewportStyle);
             }
         });
@@ -662,10 +643,10 @@ Ext.apply(Ext, {
         }
 
         var icon = config.icon,
-            isIconPrecomposed = Boolean(config.isIconPrecomposed),
-            startupImage = config.startupImage || {},
-            statusBarStyle = config.statusBarStyle || 'black',
-            devicePixelRatio = window.devicePixelRatio || 1;
+                isIconPrecomposed = Boolean(config.isIconPrecomposed),
+                startupImage = config.startupImage || {},
+                statusBarStyle = config.statusBarStyle || 'black',
+                devicePixelRatio = window.devicePixelRatio || 1;
 
 
         if (navigator.standalone) {
@@ -701,7 +682,7 @@ Ext.apply(Ext, {
         if ('phoneStartupScreen' in config) {
             //<debug warn>
             Ext.Logger.deprecate("[Ext.setup()] 'phoneStartupScreen' config is deprecated, please use 'startupImage' " +
-                "config instead. Refer to the latest API docs for more details");
+                    "config instead. Refer to the latest API docs for more details");
             //</debug>
             config['320x460'] = config.phoneStartupScreen;
         }
@@ -709,7 +690,7 @@ Ext.apply(Ext, {
         if ('tabletStartupScreen' in config) {
             //<debug warn>
             Ext.Logger.deprecate("[Ext.setup()] 'tabletStartupScreen' config is deprecated, please use 'startupImage' " +
-                "config instead. Refer to the latest API docs for more details");
+                    "config instead. Refer to the latest API docs for more details");
             //</debug>
             config['768x1004'] = config.tabletStartupScreen;
         }
@@ -717,7 +698,7 @@ Ext.apply(Ext, {
         if ('glossOnIcon' in config) {
             //<debug warn>
             Ext.Logger.deprecate("[Ext.setup()] 'glossOnIcon' config is deprecated, please use 'isIconPrecomposed' " +
-                "config instead. Refer to the latest API docs for more details");
+                    "config instead. Refer to the latest API docs for more details");
             //</debug>
             isIconPrecomposed = Boolean(config.glossOnIcon);
         }
@@ -779,7 +760,6 @@ Ext.apply(Ext, {
             }
         }
     },
-
     /**
      * @member Ext
      * @method application
@@ -974,7 +954,7 @@ Ext.apply(Ext, {
      */
     application: function(config) {
         var appName = config.name,
-            onReady, scope, requires;
+                onReady, scope, requires;
 
         if (!config) {
             config = {};
@@ -1001,7 +981,6 @@ Ext.apply(Ext, {
 
         Ext.setup(config);
     },
-
     /**
      * @private
      * @param {Object} config
@@ -1026,8 +1005,8 @@ Ext.apply(Ext, {
         }
 
         var isArray = Ext.isArray(config),
-            keys = [],
-            key, value, i, ln;
+                keys = [],
+                key, value, i, ln;
 
         if (isSimpleObject || isArray) {
             if (isSimpleObject) {
@@ -1041,7 +1020,7 @@ Ext.apply(Ext, {
                 }
             }
             else {
-                for (i = 0,ln = config.length; i < ln; i++) {
+                for (i = 0, ln = config.length; i < ln; i++) {
                     value = config[i];
 
                     if (Ext.isSimpleObject(value) || Ext.isArray(value)) {
@@ -1082,7 +1061,6 @@ Ext.apply(Ext, {
 
         callback(config);
     },
-
     /**
      * A global factory method to instantiate a class from a config object. For example, these two calls are equivalent:
      *
@@ -1104,7 +1082,7 @@ Ext.apply(Ext, {
      */
     factory: function(config, classReference, instance, aliasNamespace) {
         var manager = Ext.ClassManager,
-            newInstance;
+                newInstance;
 
         // If config is falsy or a valid instance, destroy the current instance
         // (if it exists) and replace with the new one
@@ -1117,7 +1095,7 @@ Ext.apply(Ext, {
         }
 
         if (aliasNamespace) {
-             // If config is a string value, treat it as an alias
+            // If config is a string value, treat it as an alias
             if (typeof config == 'string') {
                 return manager.instantiateByAlias(aliasNamespace + '.' + config);
             }
@@ -1158,7 +1136,6 @@ Ext.apply(Ext, {
 
         return manager.instantiate(classReference, config);
     },
-
     /**
      * @private
      * @member Ext
@@ -1166,24 +1143,22 @@ Ext.apply(Ext, {
     deprecateClassMember: function(cls, oldName, newName, message) {
         return this.deprecateProperty(cls.prototype, oldName, newName, message);
     },
-
     /**
      * @private
      * @member Ext
      */
     deprecateClassMembers: function(cls, members) {
-       var prototype = cls.prototype,
-           oldName, newName;
+        var prototype = cls.prototype,
+                oldName, newName;
 
-       for (oldName in members) {
-           if (members.hasOwnProperty(oldName)) {
-               newName = members[oldName];
+        for (oldName in members) {
+            if (members.hasOwnProperty(oldName)) {
+                newName = members[oldName];
 
-               this.deprecateProperty(prototype, oldName, newName);
-           }
-       }
+                this.deprecateProperty(prototype, oldName, newName);
+            }
+        }
     },
-
     /**
      * @private
      * @member Ext
@@ -1215,7 +1190,6 @@ Ext.apply(Ext, {
             });
         }
     },
-
     /**
      * @private
      * @member Ext
@@ -1231,7 +1205,6 @@ Ext.apply(Ext, {
             configurable: true
         });
     },
-
     /**
      * @private
      * @member Ext
@@ -1246,7 +1219,6 @@ Ext.apply(Ext, {
             }
         };
     },
-
     /**
      * @private
      * @member Ext
@@ -1265,11 +1237,11 @@ Ext.apply(Ext, {
         }
 
         var isLateBinding = typeof method == 'string',
-            member;
+                member;
 
         if (!message) {
             message = "'" + name + "()' is deprecated, please use '" + (isLateBinding ? method : method.name) +
-                "()' instead";
+                    "()' instead";
         }
 
         if (isLateBinding) {
@@ -1301,7 +1273,6 @@ Ext.apply(Ext, {
 
         cls.addMember(name, member);
     },
-
     //<debug>
     /**
      * Useful snippet to show an exact, narrowed-down list of top-level Components that are not yet destroyed.
@@ -1309,8 +1280,8 @@ Ext.apply(Ext, {
      */
     showLeaks: function() {
         var map = Ext.ComponentManager.all.map,
-            leaks = [],
-            parent;
+                leaks = [],
+                parent;
 
         Ext.Object.each(map, function(id, component) {
             while ((parent = component.getParent()) && map.hasOwnProperty(parent.getId())) {
@@ -1332,33 +1303,30 @@ Ext.apply(Ext, {
      * @member Ext
      * @private
      */
-    isReady : false,
-
+    isReady: false,
     /**
      * @private
      * @member Ext
      */
     readyListeners: [],
-
     /**
      * @private
      * @member Ext
      */
     triggerReady: function() {
         var listeners = Ext.readyListeners,
-            i, ln, listener;
+                i, ln, listener;
 
         if (!Ext.isReady) {
             Ext.isReady = true;
 
-            for (i = 0,ln = listeners.length; i < ln; i++) {
+            for (i = 0, ln = listeners.length; i < ln; i++) {
                 listener = listeners[i];
                 listener.fn.call(listener.scope);
             }
             delete Ext.readyListeners;
         }
     },
-
     /**
      * @private
      * @member Ext
@@ -1382,7 +1350,7 @@ Ext.apply(Ext, {
                 }
             }
             else {
-                var readyStateRe =  (/MSIE 10/.test(navigator.userAgent)) ? /complete|loaded/ : /interactive|complete|loaded/;
+                var readyStateRe = (/MSIE 10/.test(navigator.userAgent)) ? /complete|loaded/ : /interactive|complete|loaded/;
                 if (document.readyState.match(readyStateRe) !== null) {
                     triggerFn();
                 }
@@ -1401,16 +1369,15 @@ Ext.apply(Ext, {
                             }, 1);
                         }
                         else {
-                          setTimeout(function() {
-                              triggerFn();
-                          }, 1);
+                            setTimeout(function() {
+                                triggerFn();
+                            }, 1);
                         }
                     }, false);
                 }
             }
         }
     },
-
     /**
      * Calls function after specified delay, or right away when delay == 0.
      * @param {Function} callback The callback to execute.
@@ -1474,7 +1441,7 @@ Ext.deprecateMethod(Ext.Function, 'createDelegate', Ext.Function.bind, "Ext.crea
  * Please use {@link Ext.Function#createInterceptor createInterceptor} instead
  */
 Ext.deprecateMethod(Ext, 'createInterceptor', Ext.Function.createInterceptor, "Ext.createInterceptor() is deprecated, " +
-    "please use Ext.Function.createInterceptor() instead");
+        "please use Ext.Function.createInterceptor() instead");
 
 /**
  * @member Ext
@@ -1525,7 +1492,7 @@ Ext.deprecateMethod(Ext, 'dispatch', null, "Ext.dispatch() is deprecated, please
  * Please use {@link Ext.Viewport#getOrientation getOrientation} instead
  */
 Ext.deprecateMethod(Ext, 'getOrientation', null, "Ext.getOrientation() has been removed, " +
-    "please use Ext.Viewport.getOrientation() instead");
+        "please use Ext.Viewport.getOrientation() instead");
 
 /**
  * @member Ext

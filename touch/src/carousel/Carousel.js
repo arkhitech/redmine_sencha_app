@@ -73,18 +73,14 @@
  */
 Ext.define('Ext.carousel.Carousel', {
     extend: 'Ext.Container',
-
     alternateClassName: 'Ext.Carousel',
-
     xtype: 'carousel',
-
     requires: [
         'Ext.fx.easing.EaseOut',
         'Ext.carousel.Item',
         'Ext.carousel.Indicator',
         'Ext.util.TranslatableGroup'
     ],
-
     config: {
         /**
          * @cfg layout
@@ -98,23 +94,19 @@ Ext.define('Ext.carousel.Carousel', {
          * @inheritdoc
          */
         baseCls: 'x-carousel',
-
         /**
          * @cfg {String} direction
          * The direction of the Carousel, either 'horizontal' or 'vertical'.
          * @accessor
          */
         direction: 'horizontal',
-
         directionLock: false,
-
         animation: {
             duration: 250,
             easing: {
                 type: 'ease-out'
             }
         },
-
         /**
          * @cfg draggable
          * @hide
@@ -127,37 +119,24 @@ Ext.define('Ext.carousel.Carousel', {
          * @accessor
          */
         indicator: true,
-
         /**
          * @cfg {String} ui
          * Style options for Carousel. Default is 'dark'. 'light' is also available.
          * @accessor
          */
         ui: 'dark',
-
         itemConfig: {},
-
         bufferSize: 1,
-
         itemLength: null
     },
-
     itemLength: 0,
-
     offset: 0,
-
     flickStartOffset: 0,
-
     flickStartTime: 0,
-
     dragDirection: 0,
-
     count: 0,
-
     painted: false,
-
     activeIndex: -1,
-
     beforeInitialize: function() {
         this.element.on({
             dragstart: 'onDragStart',
@@ -176,19 +155,18 @@ Ext.define('Ext.carousel.Carousel', {
 
         this.hiddenTranslation = 0;
     },
-
     updateBufferSize: function(size) {
         var ItemClass = Ext.carousel.Item,
-            total = size * 2 + 1,
-            isRendered = this.isRendered(),
-            innerElement = this.innerElement,
-            items = this.carouselItems,
-            ln = items.length,
-            itemConfig = this.getItemConfig(),
-            itemLength = this.getItemLength(),
-            direction = this.getDirection(),
-            setterName = direction === 'horizontal' ? 'setWidth' : 'setHeight',
-            i, item;
+                total = size * 2 + 1,
+                isRendered = this.isRendered(),
+                innerElement = this.innerElement,
+                items = this.carouselItems,
+                ln = items.length,
+                itemConfig = this.getItemConfig(),
+                itemLength = this.getItemLength(),
+                direction = this.getDirection(),
+                setterName = direction === 'horizontal' ? 'setWidth' : 'setHeight',
+                i, item;
 
         for (i = ln; i < total; i++) {
             item = Ext.factory(itemConfig, ItemClass);
@@ -207,7 +185,6 @@ Ext.define('Ext.carousel.Carousel', {
 
         this.getTranslatable().setActiveIndex(size);
     },
-
     setRendered: function(rendered) {
         var wasRendered = this.rendered;
 
@@ -215,10 +192,10 @@ Ext.define('Ext.carousel.Carousel', {
             this.rendered = rendered;
 
             var items = this.items.items,
-                carouselItems = this.carouselItems,
-                i, ln, item;
+                    carouselItems = this.carouselItems,
+                    i, ln, item;
 
-            for (i = 0,ln = items.length; i < ln; i++) {
+            for (i = 0, ln = items.length; i < ln; i++) {
                 item = items[i];
 
                 if (!item.isInnerItem()) {
@@ -226,7 +203,7 @@ Ext.define('Ext.carousel.Carousel', {
                 }
             }
 
-            for (i = 0,ln = carouselItems.length; i < ln; i++) {
+            for (i = 0, ln = carouselItems.length; i < ln; i++) {
                 carouselItems[i].setRendered(rendered);
             }
 
@@ -235,18 +212,16 @@ Ext.define('Ext.carousel.Carousel', {
 
         return false;
     },
-
     onSizeChange: function() {
         this.refreshSizing();
         this.refreshCarouselItems();
         this.refreshActiveItem();
     },
-
     onItemAdd: function(item, index) {
         this.callParent(arguments);
 
         var innerIndex = this.getInnerItems().indexOf(item),
-            indicator = this.getIndicator();
+                indicator = this.getIndicator();
 
         if (indicator && item.isInnerItem()) {
             indicator.addIndicator();
@@ -260,7 +235,6 @@ Ext.define('Ext.carousel.Carousel', {
             this.refreshActiveItem();
         }
     },
-
     doItemLayoutAdd: function(item) {
         if (item.isInnerItem()) {
             return;
@@ -268,14 +242,13 @@ Ext.define('Ext.carousel.Carousel', {
 
         this.callParent(arguments);
     },
-
     onItemRemove: function(item, index) {
         this.callParent(arguments);
 
         var innerIndex = this.getInnerItems().indexOf(item),
-            indicator = this.getIndicator(),
-            carouselItems = this.carouselItems,
-            i, ln, carouselItem;
+                indicator = this.getIndicator(),
+                carouselItems = this.carouselItems,
+                i, ln, carouselItem;
 
         if (item.isInnerItem() && indicator) {
             indicator.removeIndicator();
@@ -286,7 +259,7 @@ Ext.define('Ext.carousel.Carousel', {
         }
 
         if (this.isIndexDirty(innerIndex)) {
-            for (i = 0,ln = carouselItems.length; i < ln; i++) {
+            for (i = 0, ln = carouselItems.length; i < ln; i++) {
                 carouselItem = carouselItems[i];
 
                 if (carouselItem.getComponent() === item) {
@@ -297,7 +270,6 @@ Ext.define('Ext.carousel.Carousel', {
             this.refreshActiveItem();
         }
     },
-
     doItemLayoutRemove: function(item) {
         if (item.isInnerItem()) {
             return;
@@ -305,13 +277,11 @@ Ext.define('Ext.carousel.Carousel', {
 
         this.callParent(arguments);
     },
-
     onInnerItemMove: function(item, toIndex, fromIndex) {
         if ((this.isIndexDirty(toIndex) || this.isIndexDirty(fromIndex))) {
             this.refreshActiveItem();
         }
     },
-
     doItemLayoutMove: function(item) {
         if (item.isInnerItem()) {
             return;
@@ -319,14 +289,12 @@ Ext.define('Ext.carousel.Carousel', {
 
         this.callParent(arguments);
     },
-
     isIndexDirty: function(index) {
         var activeIndex = this.getActiveIndex(),
-            bufferSize = this.getBufferSize();
+                bufferSize = this.getBufferSize();
 
         return (index >= activeIndex - bufferSize && index <= activeIndex + bufferSize);
     },
-
     getTranslatable: function() {
         var translatable = this.translatable;
 
@@ -338,18 +306,17 @@ Ext.define('Ext.carousel.Carousel', {
 
         return translatable;
     },
-
     onDragStart: function(e) {
         var direction = this.getDirection(),
-            absDeltaX = e.absDeltaX,
-            absDeltaY = e.absDeltaY,
-            directionLock = this.getDirectionLock();
+                absDeltaX = e.absDeltaX,
+                absDeltaY = e.absDeltaY,
+                directionLock = this.getDirectionLock();
 
         this.isDragging = true;
 
         if (directionLock) {
             if ((direction === 'horizontal' && absDeltaX > absDeltaY)
-                || (direction === 'vertical' && absDeltaY > absDeltaX)) {
+                    || (direction === 'vertical' && absDeltaY > absDeltaX)) {
                 e.stopPropagation();
             }
             else {
@@ -363,23 +330,22 @@ Ext.define('Ext.carousel.Carousel', {
         this.dragStartOffset = this.offset;
         this.dragDirection = 0;
     },
-
     onDrag: function(e) {
         if (!this.isDragging) {
             return;
         }
 
         var startOffset = this.dragStartOffset,
-            direction = this.getDirection(),
-            delta = direction === 'horizontal' ? e.deltaX : e.deltaY,
-            lastOffset = this.offset,
-            flickStartTime = this.flickStartTime,
-            dragDirection = this.dragDirection,
-            now = Ext.Date.now(),
-            currentActiveIndex = this.getActiveIndex(),
-            maxIndex = this.getMaxItemIndex(),
-            lastDragDirection = dragDirection,
-            offset;
+                direction = this.getDirection(),
+                delta = direction === 'horizontal' ? e.deltaX : e.deltaY,
+                lastOffset = this.offset,
+                flickStartTime = this.flickStartTime,
+                dragDirection = this.dragDirection,
+                now = Ext.Date.now(),
+                currentActiveIndex = this.getActiveIndex(),
+                maxIndex = this.getMaxItemIndex(),
+                lastDragDirection = dragDirection,
+                offset;
 
         if ((currentActiveIndex === 0 && delta > 0) || (currentActiveIndex === maxIndex && delta < 0)) {
             delta *= 0.5;
@@ -403,7 +369,6 @@ Ext.define('Ext.carousel.Carousel', {
 
         this.setOffset(offset);
     },
-
     onDragEnd: function(e) {
         if (!this.isDragging) {
             return;
@@ -414,16 +379,16 @@ Ext.define('Ext.carousel.Carousel', {
         this.isDragging = false;
 
         var now = Ext.Date.now(),
-            itemLength = this.itemLength,
-            threshold = itemLength / 2,
-            offset = this.offset,
-            activeIndex = this.getActiveIndex(),
-            maxIndex = this.getMaxItemIndex(),
-            animationDirection = 0,
-            flickDistance = offset - this.flickStartOffset,
-            flickDuration = now - this.flickStartTime,
-            indicator = this.getIndicator(),
-            velocity;
+                itemLength = this.itemLength,
+                threshold = itemLength / 2,
+                offset = this.offset,
+                activeIndex = this.getActiveIndex(),
+                maxIndex = this.getMaxItemIndex(),
+                animationDirection = 0,
+                flickDistance = offset - this.flickStartOffset,
+                flickDuration = now - this.flickStartTime,
+                indicator = this.getIndicator(),
+                velocity;
 
         if (flickDuration > 0 && Math.abs(flickDistance) >= 10) {
             velocity = flickDistance / flickDuration;
@@ -455,13 +420,11 @@ Ext.define('Ext.carousel.Carousel', {
 
         this.setOffsetAnimated(animationDirection * itemLength);
     },
-
     applyAnimation: function(animation) {
         animation.easing = Ext.factory(animation.easing, Ext.fx.easing.EaseOut);
 
         return animation;
     },
-
     updateDirection: function(direction) {
         var indicator = this.getIndicator();
 
@@ -471,7 +434,6 @@ Ext.define('Ext.carousel.Carousel', {
             indicator.setDirection(direction);
         }
     },
-
     /**
      * @private
      * @chainable
@@ -485,7 +447,6 @@ Ext.define('Ext.carousel.Carousel', {
 
         return this;
     },
-
     /**
      * @private
      * @return {Ext.carousel.Carousel} this
@@ -504,14 +465,13 @@ Ext.define('Ext.carousel.Carousel', {
 
         return this;
     },
-
     onAnimationEnd: function(translatable) {
         var currentActiveIndex = this.getActiveIndex(),
-            animationDirection = this.animationDirection,
-            axis = this.currentAxis,
-            currentOffset = translatable[axis],
-            itemLength = this.itemLength,
-            offset;
+                animationDirection = this.animationDirection,
+                axis = this.currentAxis,
+                currentOffset = translatable[axis],
+                itemLength = this.itemLength,
+                offset;
 
         if (animationDirection === -1) {
             offset = itemLength + currentOffset;
@@ -527,20 +487,18 @@ Ext.define('Ext.carousel.Carousel', {
         this.offset = offset;
         this.setActiveItem(currentActiveIndex - animationDirection);
     },
-
     refresh: function() {
         this.refreshSizing();
         this.refreshActiveItem();
     },
-
     refreshSizing: function() {
         var element = this.element,
-            itemLength = this.getItemLength(),
-            translatableItemLength = {
-                x: 0,
-                y: 0
-            },
-            itemOffset, containerSize;
+                itemLength = this.getItemLength(),
+                translatableItemLength = {
+                    x: 0,
+                    y: 0
+                },
+        itemOffset, containerSize;
 
         if (this.getDirection() === 'horizontal') {
             containerSize = element.getWidth();
@@ -564,15 +522,12 @@ Ext.define('Ext.carousel.Carousel', {
         translatableItemLength[this.currentAxis] = itemLength;
         this.getTranslatable().setItemLength(translatableItemLength);
     },
-
     refreshOffset: function() {
         this.setOffset(this.offset);
     },
-
     refreshActiveItem: function() {
         this.doSetActiveItem(this.getActiveItem());
     },
-
     /**
      * Returns the index of the currently active card.
      * @return {Number} The index of the currently active card.
@@ -580,35 +535,31 @@ Ext.define('Ext.carousel.Carousel', {
     getActiveIndex: function() {
         return this.activeIndex;
     },
-
     refreshActiveIndex: function() {
         this.activeIndex = this.getInnerItemIndex(this.getActiveItem());
     },
-
     refreshCarouselItems: function() {
         var items = this.carouselItems,
-            i, ln, item;
+                i, ln, item;
 
-        for (i = 0,ln = items.length; i < ln; i++) {
+        for (i = 0, ln = items.length; i < ln; i++) {
             item = items[i];
             item.getTranslatable().refresh();
         }
 
         this.refreshInactiveCarouselItems();
     },
-
     refreshInactiveCarouselItems: function() {
         var items = this.inactiveCarouselItems,
-            hiddenTranslation = this.hiddenTranslation,
-            axis = this.currentAxis,
-            i, ln, item;
+                hiddenTranslation = this.hiddenTranslation,
+                axis = this.currentAxis,
+                i, ln, item;
 
-        for (i = 0,ln = items.length; i < ln; i++) {
+        for (i = 0, ln = items.length; i < ln; i++) {
             item = items[i];
             item.translateAxis(axis, hiddenTranslation);
         }
     },
-
     /**
      * @private
      * @return {Number}
@@ -616,7 +567,6 @@ Ext.define('Ext.carousel.Carousel', {
     getMaxItemIndex: function() {
         return this.innerItems.length - 1;
     },
-
     /**
      * @private
      * @return {Number}
@@ -624,7 +574,6 @@ Ext.define('Ext.carousel.Carousel', {
     getInnerItemIndex: function(item) {
         return this.innerItems.indexOf(item);
     },
-
     /**
      * @private
      * @return {Object}
@@ -632,14 +581,13 @@ Ext.define('Ext.carousel.Carousel', {
     getInnerItemAt: function(index) {
         return this.innerItems[index];
     },
-
     /**
      * @private
      * @return {Object}
      */
     applyActiveItem: function() {
         var activeItem = this.callParent(arguments),
-            activeIndex;
+                activeIndex;
 
         if (activeItem) {
             activeIndex = this.getInnerItemIndex(activeItem);
@@ -650,17 +598,16 @@ Ext.define('Ext.carousel.Carousel', {
             }
         }
     },
-
     doSetActiveItem: function(activeItem) {
         var activeIndex = this.getActiveIndex(),
-            maxIndex = this.getMaxItemIndex(),
-            indicator = this.getIndicator(),
-            bufferSize = this.getBufferSize(),
-            carouselItems = this.carouselItems.slice(),
-            orderedCarouselItems = this.orderedCarouselItems,
-            visibleIndexes = {},
-            visibleItems = {},
-            visibleItem, component, id, i, index, ln, carouselItem;
+                maxIndex = this.getMaxItemIndex(),
+                indicator = this.getIndicator(),
+                bufferSize = this.getBufferSize(),
+                carouselItems = this.carouselItems.slice(),
+                orderedCarouselItems = this.orderedCarouselItems,
+                visibleIndexes = {},
+                visibleItems = {},
+                visibleItem, component, id, i, index, ln, carouselItem;
 
         if (carouselItems.length === 0) {
             return;
@@ -705,7 +652,7 @@ Ext.define('Ext.carousel.Carousel', {
                 }
             }
 
-            for (i = 0,ln = carouselItems.length; i < ln; i++) {
+            for (i = 0, ln = carouselItems.length; i < ln; i++) {
                 carouselItem = carouselItems[i];
                 component = carouselItem.getComponent();
 
@@ -741,7 +688,6 @@ Ext.define('Ext.carousel.Carousel', {
             indicator.setActiveIndex(activeIndex);
         }
     },
-
     /**
      * Switches to the next card.
      * @return {Ext.carousel.Carousel} this
@@ -758,7 +704,6 @@ Ext.define('Ext.carousel.Carousel', {
         this.setOffsetAnimated(-this.itemLength);
         return this;
     },
-
     /**
      * Switches to the previous card.
      * @return {Ext.carousel.Carousel} this
@@ -775,12 +720,10 @@ Ext.define('Ext.carousel.Carousel', {
         this.setOffsetAnimated(this.itemLength);
         return this;
     },
-
     // @private
     applyIndicator: function(indicator, currentIndicator) {
         return Ext.factory(indicator, Ext.carousel.Indicator, currentIndicator);
     },
-
     // @private
     updateIndicator: function(indicator) {
         if (indicator) {
@@ -794,7 +737,6 @@ Ext.define('Ext.carousel.Carousel', {
             });
         }
     },
-
     destroy: function() {
         var carouselItems = this.carouselItems.slice();
 

@@ -53,17 +53,17 @@
             background-color: $base-color;
         }
 
-				&.x-item-pressed,
-				&.x-item-selected {
-					border-color: $base-color !important;
-				}
+        &.x-item-pressed,
+        &.x-item-selected {
+            border-color: $base-color !important;
+        }
 
         .x-list-item-body,
         &.x-list-item-tpl .x-innerhtml {
             padding: 12px 5px;
         }
     }
-    
+
     .x-list-header {
         color: $secondary-text-color;
         font-size: 12pt;

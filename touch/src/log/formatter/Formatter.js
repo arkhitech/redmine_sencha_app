@@ -1,15 +1,12 @@
 //<feature logger>
 Ext.define('Ext.log.formatter.Formatter', {
     extend: 'Ext.log.Base',
-
     config: {
         messageFormat: "{message}"
     },
-
     format: function(event) {
         return this.substitute(this.getMessageFormat(), event);
     },
-
     substitute: function(template, data) {
         var name, value;
 

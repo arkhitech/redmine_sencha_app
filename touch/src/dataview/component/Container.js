@@ -3,11 +3,9 @@
  */
 Ext.define('Ext.dataview.component.Container', {
     extend: 'Ext.Container',
-
     requires: [
         'Ext.dataview.component.DataItem'
     ],
-
     /**
      * @event itemtouchstart
      * Fires whenever an item is touched
@@ -84,7 +82,6 @@ Ext.define('Ext.dataview.component.Container', {
         this.itemCache = [];
         this.callParent(arguments);
     },
-
     //@private
     doInitialize: function() {
         this.innerElement.on({
@@ -100,93 +97,83 @@ Ext.define('Ext.dataview.component.Container', {
             scope: this
         });
     },
-
     //@private
     initialize: function() {
         this.callParent();
         this.doInitialize();
     },
-
     onItemTouchStart: function(e) {
         var me = this,
-            target = e.getTarget(),
-            item = Ext.getCmp(target.id);
+                target = e.getTarget(),
+                item = Ext.getCmp(target.id);
 
         item.on({
             touchmove: 'onItemTouchMove',
-            scope   : me,
+            scope: me,
             single: true
         });
 
         me.fireEvent('itemtouchstart', me, item, me.indexOf(item), e);
     },
-
     onItemTouchMove: function(e) {
         var me = this,
-            target = e.getTarget(),
-            item = Ext.getCmp(target.id);
+                target = e.getTarget(),
+                item = Ext.getCmp(target.id);
         me.fireEvent('itemtouchmove', me, item, me.indexOf(item), e);
     },
-
     onItemTouchEnd: function(e) {
         var me = this,
-            target = e.getTarget(),
-            item = Ext.getCmp(target.id);
+                target = e.getTarget(),
+                item = Ext.getCmp(target.id);
 
         item.un({
             touchmove: 'onItemTouchMove',
-            scope   : me
+            scope: me
         });
 
         me.fireEvent('itemtouchend', me, item, me.indexOf(item), e);
     },
-
     onItemTap: function(e) {
         var me = this,
-            target = e.getTarget(),
-            item = Ext.getCmp(target.id);
+                target = e.getTarget(),
+                item = Ext.getCmp(target.id);
         me.fireEvent('itemtap', me, item, me.indexOf(item), e);
     },
-
     onItemTapHold: function(e) {
         var me = this,
-            target = e.getTarget(),
-            item = Ext.getCmp(target.id);
+                target = e.getTarget(),
+                item = Ext.getCmp(target.id);
         me.fireEvent('itemtaphold', me, item, me.indexOf(item), e);
     },
-
     onItemSingleTap: function(e) {
         var me = this,
-            target = e.getTarget(),
-            item = Ext.getCmp(target.id);
+                target = e.getTarget(),
+                item = Ext.getCmp(target.id);
         me.fireEvent('itemsingletap', me, item, me.indexOf(item), e);
     },
-
     onItemDoubleTap: function(e) {
         var me = this,
-            target = e.getTarget(),
-            item = Ext.getCmp(target.id);
+                target = e.getTarget(),
+                item = Ext.getCmp(target.id);
         me.fireEvent('itemdoubletap', me, item, me.indexOf(item), e);
     },
-
     onItemSwipe: function(e) {
         var me = this,
-            target = e.getTarget(),
-            item = Ext.getCmp(target.id);
+                target = e.getTarget(),
+                item = Ext.getCmp(target.id);
         me.fireEvent('itemswipe', me, item, me.indexOf(item), e);
     },
-
     moveItemsToCache: function(from, to) {
         var me = this,
-            dataview = me.dataview,
-            maxItemCache = dataview.getMaxItemCache(),
-            items = me.getViewItems(),
-            itemCache = me.itemCache,
-            cacheLn = itemCache.length,
-            pressedCls = dataview.getPressedCls(),
-            selectedCls = dataview.getSelectedCls(),
-            i = to - from,
-            item;
+                dataview = me.dataview,
+                maxItemCache = dataview.getMaxItemCache(),
+                items = me.getViewItems(),
+                itemCache = me.itemCache,
+                cacheLn = itemCache.length,
+                pressedCls = dataview.getPressedCls(),
+                selectedCls = dataview.getSelectedCls(),
+                i = to - from,
+                item;
 
         for (; i >= 0; i--) {
             item = items[from + i];
@@ -205,18 +192,17 @@ Ext.define('Ext.dataview.component.Container', {
             this.dataview.showEmptyText();
         }
     },
-
     moveItemsFromCache: function(records) {
         var me = this,
-            dataview = me.dataview,
-            store = dataview.getStore(),
-            ln = records.length,
-            xtype = dataview.getDefaultType(),
-            itemConfig = dataview.getItemConfig(),
-            itemCache = me.itemCache,
-            cacheLn = itemCache.length,
-            items = [],
-            i, item, record;
+                dataview = me.dataview,
+                store = dataview.getStore(),
+                ln = records.length,
+                xtype = dataview.getDefaultType(),
+                itemConfig = dataview.getItemConfig(),
+                itemCache = me.itemCache,
+                cacheLn = itemCache.length,
+                items = [],
+                i, item, record;
 
         if (ln) {
             dataview.hideEmptyText();
@@ -245,11 +231,9 @@ Ext.define('Ext.dataview.component.Container', {
         }
         return items;
     },
-
     getViewItems: function() {
         return this.getInnerItems();
     },
-
     updateListItem: function(record, item) {
         if (item.updateRecord) {
             if (item.getRecord() === record) {
@@ -259,49 +243,44 @@ Ext.define('Ext.dataview.component.Container', {
             }
         }
     },
-
     getDataItemConfig: function(xtype, record, itemConfig) {
         var dataview = this.dataview,
-            dataItemConfig = {
-                xtype: xtype,
-                record: record,
-                itemCls: dataview.getItemCls(),
-                defaults: itemConfig,
-                dataview: dataview
-            };
+                dataItemConfig = {
+                    xtype: xtype,
+                    record: record,
+                    itemCls: dataview.getItemCls(),
+                    defaults: itemConfig,
+                    dataview: dataview
+                };
         return Ext.merge(dataItemConfig, itemConfig);
     },
-
     doRemoveItemCls: function(cls) {
         var items = this.getViewItems(),
-            ln = items.length,
-            i = 0;
+                ln = items.length,
+                i = 0;
 
         for (; i < ln; i++) {
             items[i].removeCls(cls);
         }
     },
-
     doAddItemCls: function(cls) {
         var items = this.getViewItems(),
-            ln = items.length,
-            i = 0;
+                ln = items.length,
+                i = 0;
 
         for (; i < ln; i++) {
             items[i].addCls(cls);
         }
     },
-
     updateAtNewIndex: function(oldIndex, newIndex, record) {
         this.moveItemsToCache(oldIndex, oldIndex);
         this.moveItemsFromCache([record]);
     },
-
     destroy: function() {
         var me = this,
-            itemCache = me.itemCache,
-            ln = itemCache.length,
-            i = 0;
+                itemCache = me.itemCache,
+                ln = itemCache.length,
+                i = 0;
 
         for (; i < ln; i++) {
             itemCache[i].destroy();

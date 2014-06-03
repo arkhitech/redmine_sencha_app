@@ -43,7 +43,6 @@ Ext.define('Ext.field.Hidden', {
     extend: 'Ext.field.Text',
     alternateClassName: 'Ext.form.Hidden',
     xtype: 'hiddenfield',
-
     config: {
         /**
          * @cfg
@@ -51,21 +50,18 @@ Ext.define('Ext.field.Hidden', {
          */
         component: {
             xtype: 'input',
-            type : 'hidden'
+            type: 'hidden'
         },
-
         /**
          * @cfg
          * @inheritdoc
          */
         ui: 'hidden',
-
         /**
          * @cfg hidden
          * @hide
          */
         hidden: true,
-
         /**
          * @cfg {Number} tabIndex
          * @hide

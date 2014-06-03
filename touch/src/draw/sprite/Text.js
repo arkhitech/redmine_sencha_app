@@ -35,43 +35,37 @@ Ext.define("Ext.draw.sprite.Text", {
                  * @cfg {Number} [x=0] The position of the sprite on the x-axis.
                  */
                 x: "number",
-
                 /**
                  * @cfg {Number} [y=0] The position of the sprite on the y-axis.
                  */
                 y: "number",
-
                 /**
                  * @cfg {String} [text=''] The text represented in the sprite.
                  */
                 text: "string",
-
                 /**
                  * @cfg {String/Number} [fontSize='10px'] The size of the font displayed.
                  */
-                fontSize: function (n) {
+                fontSize: function(n) {
                     if (!isNaN(n)) {
                         return +n + 'px';
                     } else if (n.match(Ext.dom.Element.unitRe)) {
                         return n;
                     }
                 },
-
                 /**
                  * @cfg {String} [fontStyle=''] The style of the font displayed. {normal, italic, oblique}
                  */
                 fontStyle: "enums(,italic,oblique)",
-
                 /**
                  * @cfg {String} [fontVariant=''] The variant of the font displayed. {normal, small-caps}
                  */
                 fontVariant: "enums(,small-caps)",
-
                 /**
                  * @cfg {String} [fontWeight=''] The weight of the font displayed. {normal, bold, bolder, lighter}
                  */
-                fontWeight: (function (fontWeights) {
-                    return function (n) {
+                fontWeight: (function(fontWeights) {
+                    return function(n) {
                         if (!n) {
                             return "";
                         } else if (n === 'normal') {
@@ -86,17 +80,15 @@ Ext.define("Ext.draw.sprite.Text", {
                         }
                     };
                 })({"normal": true, "bold": true, "bolder": true, "lighter": true}),
-
                 /**
                  * @cfg {String} [fontFamily='sans-serif'] The family of the font displayed.
                  */
                 fontFamily: "string",
-
                 /**
                  * @cfg {String} [textAlign='start'] The alignment of the text displayed. {left, right, center, start, end}
                  */
-                textAlign: (function (textAligns) {
-                    return function (n) {
+                textAlign: (function(textAligns) {
+                    return function(n) {
                         if (n === 'middle') {
                             return 'center';
                         } else if (!n) {
@@ -108,12 +100,11 @@ Ext.define("Ext.draw.sprite.Text", {
                         }
                     };
                 })({"left": true, "right": true, "center": true, "start": true, "end": true}),
-
                 /**
                  * @cfg {String} [textBaseline="alphabetic"] The baseline of the text displayed. {top, hanging, middle, alphabetic, ideographic, bottom}
                  */
-                textBaseline: (function (textBaselines) {
-                    return function (n) {
+                textBaseline: (function(textBaselines) {
+                    return function(n) {
                         if (n === false) {
                             return "alphabetic";
                         } else if (n in textBaselines) {
@@ -123,7 +114,6 @@ Ext.define("Ext.draw.sprite.Text", {
                         }
                     };
                 })({"top": true, "hanging": true, "middle": true, "alphabetic": true, "ideographic": true, "bottom": true}),
-
                 /**
                  * @cfg {String} [font='10px sans-serif'] The font displayed.
                  */
@@ -166,12 +156,12 @@ Ext.define("Ext.draw.sprite.Text", {
                 text: "bbox"
             },
             updaters: {
-                "font-short-hand": (function (dispatcher) {
-                    return function (attrs) {
+                "font-short-hand": (function(dispatcher) {
+                    return function(attrs) {
                         // TODO: Do this according to http://www.w3.org/TR/CSS21/fonts.html#font-shorthand
                         var value = attrs.font,
-                            parts, part, i, ln, dispKey;
-                        value = value.replace(Ext.draw.sprite.Text.shortHand1Re, function (a, arg1) {
+                                parts, part, i, ln, dispKey;
+                        value = value.replace(Ext.draw.sprite.Text.shortHand1Re, function(a, arg1) {
                             return arg1.replace(Ext.draw.sprite.Text.shortHand2Re, '$$$$');
                         });
                         value = value.replace(Ext.draw.sprite.Text.shortHand3Re, ',');
@@ -208,7 +198,7 @@ Ext.define("Ext.draw.sprite.Text", {
                     "900": "fontWeights",
                     "small-caps": "fontVariant"
                 }),
-                "font": function (attrs) {
+                "font": function(attrs) {
                     var font = '';
                     if (attrs.fontWeight) {
                         font += attrs.fontWeight + ' ';
@@ -229,27 +219,25 @@ Ext.define("Ext.draw.sprite.Text", {
             }
         }
     },
-
-    constructor: function (config) {
+    constructor: function(config) {
         Ext.draw.sprite.Sprite.prototype.constructor.call(this, config);
     },
-
-    updatePlainBBox: function (plain) {
+    updatePlainBBox: function(plain) {
         var me = this,
-            attr = me.attr,
-            x = attr.x,
-            y = attr.y,
-            dx = [],
-            font = attr.font,
-            text = attr.text,
-            baseline = attr.textBaseline,
-            alignment = attr.textAlign,
-            size = Ext.draw.TextMeasurer.measureText(text, font),
-            sizes = size.sizes,
-            height = size.height,
-            width = size.width,
-            ln = sizes ? sizes.length : 0,
-            i = 0;
+                attr = me.attr,
+                x = attr.x,
+                y = attr.y,
+                dx = [],
+                font = attr.font,
+                text = attr.text,
+                baseline = attr.textBaseline,
+                alignment = attr.textAlign,
+                size = Ext.draw.TextMeasurer.measureText(text, font),
+                sizes = size.sizes,
+                height = size.height,
+                width = size.width,
+                ln = sizes ? sizes.length : 0,
+                i = 0;
 
         switch (baseline) {
             case 'hanging' :
@@ -291,28 +279,25 @@ Ext.define("Ext.draw.sprite.Text", {
         plain.width = width;
         plain.height = height;
     },
-
-    setText: function (text) {
+    setText: function(text) {
         this.setAttributes({text: text}, true);
     },
-
-    setElementStyles: function (element, styles) {
+    setElementStyles: function(element, styles) {
         var stylesCache = element.stylesCache || (element.stylesCache = {}),
-            style = element.dom.style,
-            name;
+                style = element.dom.style,
+                name;
         for (name in styles) {
             if (stylesCache[name] !== styles[name]) {
                 stylesCache[name] = style[name] = styles[name];
             }
         }
     },
-
-    render: function (surface, ctx) {
+    render: function(surface, ctx) {
         var attr = this.attr,
-            mat = Ext.draw.Matrix.fly(attr.matrix.elements.slice(0)),
-            bbox = this.getBBox(true),
-            dx = attr.textAlignOffsets,
-            x, y, i, lines;
+                mat = Ext.draw.Matrix.fly(attr.matrix.elements.slice(0)),
+                bbox = this.getBBox(true),
+                dx = attr.textAlignOffsets,
+                x, y, i, lines;
         if (attr.text.length === 0) {
             return;
         }

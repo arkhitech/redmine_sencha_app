@@ -3,9 +3,7 @@
  */
 Ext.define('Ext.device.globalization.Cordova', {
     alternateClassName: 'Ext.device.globalization.PhoneGap',
-
     extend: 'Ext.device.globalization.Abstract',
-
     getPreferredLanguage: function(config) {
         config = this.callParent(arguments);
         navigator.globalization.getPreferredLanguage(config.success, config.error);
@@ -18,7 +16,7 @@ Ext.define('Ext.device.globalization.Cordova', {
         config = this.callParent(arguments);
         navigator.globalization.dateToString(config.date, config.success, config.error, config);
     },
-    stringToDate:function(config) {
+    stringToDate: function(config) {
         config = this.callParent(arguments);
         navigator.globalization.stringToDate(config.dateString, config.success, config.error, config);
     },
@@ -34,7 +32,7 @@ Ext.define('Ext.device.globalization.Cordova', {
         config = this.callParent(arguments);
         navigator.globalization.isDayLightSavingsTime(config.date, config.success, config.error, config);
     },
-    getFirstDayOfWeek:function(config) {
+    getFirstDayOfWeek: function(config) {
         config = this.callParent(arguments);
         navigator.globalization.getFirstDayOfWeek(config.success, config.error);
     },

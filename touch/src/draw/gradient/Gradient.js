@@ -13,18 +13,16 @@ Ext.define("Ext.draw.gradient.Gradient", {
     statics: {
         gradientCache: null
     },
-
     config: {
         /**
          * @cfg {Array/Object} Defines the stops of the gradient.
          */
         stops: []
     },
-
-    applyStops: function (newStops) {
+    applyStops: function(newStops) {
         var stops = [],
-            ln = newStops.length,
-            i, stop, color;
+                ln = newStops.length,
+                i, stop, color;
 
         for (i = 0; i < ln; i++) {
             stop = newStops[i];
@@ -34,22 +32,20 @@ Ext.define("Ext.draw.gradient.Gradient", {
                 color: color.toString()
             });
         }
-        stops.sort(function (a, b) {
+        stops.sort(function(a, b) {
             return a.offset - b.offset;
         });
         return stops;
     },
-
-    onClassExtended: function (subClass, member) {
+    onClassExtended: function(subClass, member) {
         if (!member.alias && member.type) {
             member.alias = 'gradient.' + member.type;
         }
     },
-
-    constructor: function (config) {
+    constructor: function(config) {
         config = config || {};
         this.gradientCache = new Ext.draw.LimitedCache({
-            feeder: function (gradient, ctx, bbox) {
+            feeder: function(gradient, ctx, bbox) {
                 return gradient.generateGradient(ctx, bbox);
             },
             scope: this
@@ -58,7 +54,6 @@ Ext.define("Ext.draw.gradient.Gradient", {
         this.id = config.id;
         this.getId();
     },
-
     /**
      * @protected
      * Generates the gradient for the given context.
@@ -67,21 +62,19 @@ Ext.define("Ext.draw.gradient.Gradient", {
      * @return {Object}
      */
     generateGradient: Ext.emptyFn,
-
     /**
      * @private
      * @param {Ext.draw.engine.SvgContext} ctx
      * @param {Object} bbox
      * @return {*}
      */
-    getGradient: function (ctx, bbox) {
+    getGradient: function(ctx, bbox) {
         return this.gradientCache.get(this.id + ',' + bbox.x + ',' + bbox.y + ',' + bbox.width + ',' + bbox.height, this, ctx, bbox);
     },
-
     /**
      * @private
      */
-    clearCache: function () {
+    clearCache: function() {
         this.gradientCache.clear();
     }
 

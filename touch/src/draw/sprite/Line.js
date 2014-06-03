@@ -2,7 +2,6 @@ Ext.define('Ext.draw.sprite.Line', {
     extend: 'Ext.draw.sprite.Sprite',
     alias: 'sprite.line',
     type: 'line',
-
     inheritableStatics: {
         def: {
             processors: {
@@ -11,7 +10,6 @@ Ext.define('Ext.draw.sprite.Line', {
                 toX: 'number',
                 toY: 'number'
             },
-
             defaults: {
                 fromX: 0,
                 fromY: 0,
@@ -20,10 +18,9 @@ Ext.define('Ext.draw.sprite.Line', {
             }
         }
     },
-
-    render: function (surface, ctx, clipRegion) {
+    render: function(surface, ctx, clipRegion) {
         var attr = this.attr,
-            matrix = this.attr.matrix;
+                matrix = this.attr.matrix;
 
         matrix.toContext(ctx);
 

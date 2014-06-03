@@ -260,14 +260,11 @@
  */
 Ext.define('Ext.XTemplate', {
     extend: 'Ext.Template',
-
     requires: 'Ext.XTemplateCompiler',
-
     /**
      * @private
      */
     emptyObj: {},
-
     /**
      * @cfg {Boolean} compiled
      * Only applies to {@link Ext.Template}, XTemplates are compiled automatically on the
@@ -278,7 +275,6 @@ Ext.define('Ext.XTemplate', {
     apply: function(values) {
         return this.applyOut(values, []).join('');
     },
-
     /**
      * Appends the result of this template to the provided output array.
      * @param {Object/Array} values The template values. See {@link #apply}.
@@ -287,15 +283,15 @@ Ext.define('Ext.XTemplate', {
      * @return {Array} The given out array.
      */
     applyOut: function(values, out, parent) {
-        var me     = this,
-            xindex = values.xindex,
-            xcount = values.xcount,
-            compiler;
+        var me = this,
+                xindex = values.xindex,
+                xcount = values.xcount,
+                compiler;
 
         if (!me.fn) {
             compiler = new Ext.XTemplateCompiler({
-                useFormat   : me.disableFormats !== true,
-                definitions : me.definitions
+                useFormat: me.disableFormats !== true,
+                definitions: me.definitions
             });
 
             me.fn = compiler.compile(me.html);
@@ -314,7 +310,6 @@ Ext.define('Ext.XTemplate', {
 
         return out;
     },
-
     /**
      * Does nothing. XTemplates are compiled automatically, so this function simply returns this.
      * @return {Ext.XTemplate} this
@@ -322,7 +317,6 @@ Ext.define('Ext.XTemplate', {
     compile: function() {
         return this;
     },
-
     statics: {
         /**
          * Gets an `XTemplate` from an object (an instance of an {@link Ext#define}'d class).
@@ -348,9 +342,9 @@ Ext.define('Ext.XTemplate', {
          * @return {Ext.XTemplate} The `XTemplate` instance or null if not found.
          * @protected
          */
-        getTpl: function (instance, name) {
+        getTpl: function(instance, name) {
             var tpl = instance[name], // go for it! 99% of the time we will get it!
-                proto;
+                    proto;
 
             if (tpl && !tpl.isTemplate) { // tpl is just a configuration (not an instance)
                 // create the template instance from the configuration:

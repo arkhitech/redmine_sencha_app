@@ -3,9 +3,7 @@
  */
 Ext.define('Ext.fx.layout.card.Reveal', {
     extend: 'Ext.fx.layout.card.Style',
-
     alias: 'fx.layout.card.reveal',
-
     config: {
         inAnimation: {
             easing: 'ease-out',
@@ -28,7 +26,6 @@ Ext.define('Ext.fx.layout.card.Reveal', {
             out: true
         }
     },
-
     updateReverse: function(reverse) {
         this.getInAnimation().setReverse(reverse);
         this.getOutAnimation().setReverse(reverse);

@@ -34,11 +34,8 @@
  */
 Ext.define('Ext.chart.interactions.Rotate', {
     extend: 'Ext.chart.interactions.Abstract',
-
     type: 'rotate',
-
     alias: 'interaction.rotate',
-
     /**
      * @event rotate
      * Fires on every tick of the rotation
@@ -60,7 +57,6 @@ Ext.define('Ext.chart.interactions.Rotate', {
          * supports `pinch` for two-finger rotation and `drag` for single-finger rotation.
          */
         gesture: 'rotate',
-
         /**
          * @cfg {Number} currentRotation
          * Saves the current rotation of the series. Accepts negative values and values > 360 ( / 180 * Math.PI)
@@ -68,9 +64,7 @@ Ext.define('Ext.chart.interactions.Rotate', {
          */
         currentRotation: 0
     },
-
     oldRotations: null,
-
     getGestures: function() {
         return {
             rotate: 'onRotate',
@@ -80,35 +74,32 @@ Ext.define('Ext.chart.interactions.Rotate', {
             dragend: 'onGestureEnd'
         };
     },
-
     getAngle: function(e) {
         var me = this,
-            chart = me.getChart(),
-            xy = chart.getEventXY(e),
-            center = chart.getCenter();
+                chart = me.getChart(),
+                xy = chart.getEventXY(e),
+                center = chart.getCenter();
 
         return Math.atan2(
-            xy[1] - center[1],
-            xy[0] - center[0]
-        );
+                xy[1] - center[1],
+                xy[0] - center[0]
+                );
     },
-
     getEventRadius: function(e) {
         var me = this,
-            chart = me.getChart(),
-            xy = chart.getEventXY(e),
-            center = chart.getCenter(),
-            dx = xy[0] - center[0],
-            dy = xy[1] - center[1];
+                chart = me.getChart(),
+                xy = chart.getEventXY(e),
+                center = chart.getCenter(),
+                dx = xy[0] - center[0],
+                dy = xy[1] - center[1];
 
         return Math.sqrt(dx * dx + dy * dy);
     },
-
     onGestureStart: function(e) {
         var me = this,
-            chart = me.getChart(),
-            radius = chart.getRadius(),
-            eventRadius = me.getEventRadius(e);
+                chart = me.getChart(),
+                radius = chart.getRadius(),
+                eventRadius = me.getEventRadius(e);
 
         if (radius >= eventRadius) {
             me.lockEvents('drag');
@@ -117,15 +108,14 @@ Ext.define('Ext.chart.interactions.Rotate', {
             return false;
         }
     },
-
     onGesture: function(e) {
         var me = this,
-            chart = me.getChart(),
-            angle = me.getAngle(e) - me.angle,
-            axes = chart.getAxes(),
-            series = chart.getSeries(), seriesItem,
-            oldRotations = me.oldRotations,
-            axis, oldRotation, i, ln;
+                chart = me.getChart(),
+                angle = me.getAngle(e) - me.angle,
+                axes = chart.getAxes(),
+                series = chart.getSeries(), seriesItem,
+                oldRotations = me.oldRotations,
+                axis, oldRotation, i, ln;
 
         if (me.getLocks().drag === me) {
             chart.suspendAnimation();
@@ -152,13 +142,12 @@ Ext.define('Ext.chart.interactions.Rotate', {
             return false;
         }
     },
-
     rotateTo: function(angle) {
         var me = this,
-            chart = me.getChart(),
-            axes = chart.getAxes(),
-            series = chart.getSeries(),
-            i, ln;
+                chart = me.getChart(),
+                axes = chart.getAxes(),
+                series = chart.getSeries(),
+                i, ln;
 
         chart.suspendAnimation();
 
@@ -177,7 +166,6 @@ Ext.define('Ext.chart.interactions.Rotate', {
         me.sync();
         chart.resumeAnimation();
     },
-
     onGestureEnd: function(e) {
         var me = this;
 
@@ -190,7 +178,6 @@ Ext.define('Ext.chart.interactions.Rotate', {
             return false;
         }
     },
-
     onRotate: function(e) {
 
     }

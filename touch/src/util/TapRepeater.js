@@ -5,11 +5,9 @@
  */
 Ext.define('Ext.util.TapRepeater', {
     requires: ['Ext.DateExtras'],
-
     mixins: {
         observable: 'Ext.mixin.Observable'
     },
-
     /**
      * @event touchstart
      * Fires when the touch is started.
@@ -41,7 +39,6 @@ Ext.define('Ext.util.TapRepeater', {
         timer: 0,
         pressCls: null
     },
-
     /**
      * Creates new TapRepeater.
      * @param {Object} config
@@ -58,20 +55,18 @@ Ext.define('Ext.util.TapRepeater', {
         //</debug>
         me.initConfig(config);
     },
-
     updateEl: function(newEl, oldEl) {
         var eventCfg = {
-                touchstart: 'onTouchStart',
-                touchend: 'onTouchEnd',
-                tap: 'eventOptions',
-                scope: this
-            };
+            touchstart: 'onTouchStart',
+            touchend: 'onTouchEnd',
+            tap: 'eventOptions',
+            scope: this
+        };
         if (oldEl) {
             oldEl.un(eventCfg)
         }
         newEl.on(eventCfg);
     },
-
     // @private
     eventOptions: function(e) {
         if (this.getPreventDefault()) {
@@ -81,17 +76,15 @@ Ext.define('Ext.util.TapRepeater', {
             e.stopEvent();
         }
     },
-
     // @private
     destroy: function() {
         this.clearListeners();
         Ext.destroy(this.el);
     },
-
     // @private
     onTouchStart: function(e) {
         var me = this,
-            pressCls = me.getPressCls();
+                pressCls = me.getPressCls();
         clearTimeout(me.getTimer());
         if (pressCls) {
             me.getEl().addCls(pressCls);
@@ -107,23 +100,20 @@ Ext.define('Ext.util.TapRepeater', {
         }
         me.setTimer(Ext.defer(me.tap, me.getDelay() || me.getInterval(), me, [e]));
     },
-
     // @private
     tap: function(e) {
         var me = this;
         me.fireEvent('tap', me, e);
         me.setTimer(Ext.defer(me.tap, me.getAccelerate() ? me.easeOutExpo(Ext.Date.getElapsed(me.tapStartTime),
-            400,
-            -390,
-            12000) : me.getInterval(), me, [e]));
+                400,
+                -390,
+                12000) : me.getInterval(), me, [e]));
     },
-
     // Easing calculation
     // @private
     easeOutExpo: function(t, b, c, d) {
-        return (t == d) ? b + c : c * ( - Math.pow(2, -10 * t / d) + 1) + b;
+        return (t == d) ? b + c : c * (-Math.pow(2, -10 * t / d) + 1) + b;
     },
-
     // @private
     onTouchEnd: function(e) {
         var me = this;

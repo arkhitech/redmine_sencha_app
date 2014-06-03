@@ -3,17 +3,13 @@
  */
 Ext.define('Ext.ProgressIndicator', {
     extend: 'Ext.Container',
-
     mixins: ['Ext.mixin.Progressable'],
-
     xtype: 'progressindicator',
-
     config: {
         baseCls: Ext.baseCSSPrefix + 'progressindicator',
         hidden: true,
         modal: true,
         centered: true,
-
         /**
          * @cfg {String/Ext.XTemplate/Object} loadingText
          * This template is used when progress is dynamic (many updates will be received). Template will be passed
@@ -30,7 +26,6 @@ Ext.define('Ext.ProgressIndicator', {
             upload: 'Uploading: {percent}%',
             download: 'Downloading: {percent}%'
         },
-
         /**
          * @cfg {String/Object} fallbackText
          * This String is used when progress is not dynamic (only start and end events will be received).
@@ -45,7 +40,6 @@ Ext.define('Ext.ProgressIndicator', {
             upload: 'Uploading',
             download: 'Downloading'
         },
-
         /**
          * @cfg {Object} monitoredStates
          * Object with the properties of 'upload' and 'download'. To disable progress monitoring of any state simply set
@@ -61,21 +55,18 @@ Ext.define('Ext.ProgressIndicator', {
             upload: true,
             download: true
         },
-
         showAnimation: !Ext.browser.is.AndroidStock ? {
             type: 'slideIn',
             direction: "left",
             duration: 250,
             easing: 'ease-out'
         } : null,
-
         hideAnimation: !Ext.browser.is.AndroidStock ? {
             type: 'slideOut',
             direction: "left",
             duration: 250,
             easing: 'ease-in'
         } : null,
-
         // @private
         minProgressOutput: 0,
         // @private
@@ -83,12 +74,10 @@ Ext.define('Ext.ProgressIndicator', {
         //@private
         state: null
     },
-
     constructor: function() {
         this.emptyTpl = new Ext.XTemplate("");
         this.callParent(arguments);
     },
-
     getElementConfig: function() {
         return {
             reference: 'element',
@@ -117,22 +106,18 @@ Ext.define('Ext.ProgressIndicator', {
             ]
         };
     },
-
     onStartProgress: function() {
         if (!this.getParent()) {
             Ext.Viewport.add(this);
         }
         this.show();
     },
-
     onEndProgress: function() {
         this.hide();
     },
-
     onUpdateProgress: function() {
         this.updateBar();
     },
-
     getLoadingText: function() {
         var state = this.getState();
         if (this._loadingText[state]) {
@@ -145,7 +130,6 @@ Ext.define('Ext.ProgressIndicator', {
 
         return this.emptyTpl;
     },
-
     applyLoadingText: function(loadingText) {
         var tpl = {}, property, value;
         if (Ext.isString(loadingText)) {
@@ -167,20 +151,18 @@ Ext.define('Ext.ProgressIndicator', {
         }
         return tpl;
     },
-
     getFallbackText: function() {
         var state = this.getState();
         if (this._fallbackText[state]) {
             return this._fallbackText[state];
         }
 
-        if(this._fallbackText["any"]) {
+        if (this._fallbackText["any"]) {
             return this._fallbackText["any"];
         }
 
         return "";
     },
-
     applyFallbackText: function(fallbackText) {
         var obj = {}, property, value;
         if (Ext.isString(fallbackText)) {
@@ -198,7 +180,6 @@ Ext.define('Ext.ProgressIndicator', {
         }
         return obj;
     },
-
     updateDynamic: function(value) {
         if (!value) {
             this.progressBarText.setHtml(this.getFallbackText());
@@ -208,25 +189,25 @@ Ext.define('Ext.ProgressIndicator', {
         }
         return value;
     },
-
     updateBar: function() {
         var state = this.getState();
-        if(this.getMonitoredStates()[state] !== true) {
+        if (this.getMonitoredStates()[state] !== true) {
             this.progressBarText.setHtml(this.getFallbackText());
             this.progressBar.setWidth("100%");
             return;
         }
 
         var percent = this.getProgress() * 100;
-        if (!Ext.isNumber(percent)) percent = 0;
+        if (!Ext.isNumber(percent))
+            percent = 0;
         this.progressBar.setWidth(percent + "%");
 
         var loadingText = this.getLoadingText();
         if (loadingText) {
-            this.progressBarText.setHtml(this.getLoadingText().apply({state:state, percent: Math.ceil(percent) || 0}));
+            this.progressBarText.setHtml(this.getLoadingText().apply({state: state, percent: Math.ceil(percent) || 0}));
         } else {
             this.progressBarText.setHtml('');
         }
     }
 })
-;
+        ;

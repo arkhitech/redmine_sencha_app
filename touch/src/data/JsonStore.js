@@ -41,10 +41,9 @@
  *
  * @xtype jsonstore
  */
-Ext.define('Ext.data.JsonStore',  {
+Ext.define('Ext.data.JsonStore', {
     extend: 'Ext.data.Store',
     alias: 'store.json',
-
     config: {
         proxy: {
             type: 'ajax',

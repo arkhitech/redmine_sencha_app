@@ -8,12 +8,10 @@
 
 Ext.define('Ext.fx.easing.BoundMomentum', {
     extend: 'Ext.fx.easing.Abstract',
-
     requires: [
         'Ext.fx.easing.Momentum',
         'Ext.fx.easing.Bounce'
     ],
-
     config: {
         /**
          * @cfg {Object} momentum
@@ -21,25 +19,20 @@ Ext.define('Ext.fx.easing.BoundMomentum', {
          * @accessor
          */
         momentum: null,
-
         /**
          * @cfg {Object} bounce
          * A valid config object for {@link Ext.fx.easing.Bounce}
          * @accessor
          */
         bounce: null,
-
         minMomentumValue: 0,
-
         maxMomentumValue: 0,
-
         /**
          * @cfg {Number} minVelocity
          * The minimum velocity to end this easing
          * @accessor
          */
         minVelocity: 0.01,
-
         /**
          * @cfg {Number} startVelocity
          * The start velocity
@@ -47,29 +40,23 @@ Ext.define('Ext.fx.easing.BoundMomentum', {
          */
         startVelocity: 0
     },
-
     applyMomentum: function(config, currentEasing) {
         return Ext.factory(config, Ext.fx.easing.Momentum, currentEasing);
     },
-
     applyBounce: function(config, currentEasing) {
         return Ext.factory(config, Ext.fx.easing.Bounce, currentEasing);
     },
-
     updateStartTime: function(startTime) {
         this.getMomentum().setStartTime(startTime);
 
         this.callParent(arguments);
     },
-
     updateStartVelocity: function(startVelocity) {
         this.getMomentum().setStartVelocity(startVelocity);
     },
-
     updateStartValue: function(startValue) {
         this.getMomentum().setStartValue(startValue);
     },
-
     reset: function() {
         this.lastValue = null;
 
@@ -79,17 +66,16 @@ Ext.define('Ext.fx.easing.BoundMomentum', {
 
         return this.callParent(arguments);
     },
-
     getValue: function() {
         var momentum = this.getMomentum(),
-            bounce = this.getBounce(),
-            startVelocity = momentum.getStartVelocity(),
-            direction = startVelocity > 0 ? 1 : -1,
-            minValue = this.getMinMomentumValue(),
-            maxValue = this.getMaxMomentumValue(),
-            boundedValue = (direction == 1) ? maxValue : minValue,
-            lastValue = this.lastValue,
-            value, velocity;
+                bounce = this.getBounce(),
+                startVelocity = momentum.getStartVelocity(),
+                direction = startVelocity > 0 ? 1 : -1,
+                minValue = this.getMinMomentumValue(),
+                maxValue = this.getMaxMomentumValue(),
+                boundedValue = (direction == 1) ? maxValue : minValue,
+                lastValue = this.lastValue,
+                value, velocity;
 
         if (startVelocity === 0) {
             return this.getStartValue();
@@ -110,8 +96,8 @@ Ext.define('Ext.fx.easing.BoundMomentum', {
             this.isOutOfBound = true;
 
             bounce.setStartTime(Ext.Date.now())
-                  .setStartVelocity(velocity)
-                  .setStartValue(boundedValue);
+                    .setStartVelocity(velocity)
+                    .setStartValue(boundedValue);
         }
 
         value = bounce.getValue();

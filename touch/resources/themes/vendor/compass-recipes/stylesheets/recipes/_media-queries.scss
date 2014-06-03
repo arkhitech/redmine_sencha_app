@@ -18,7 +18,7 @@ $media-query-width-small: 480px;
 {
     //@media (min-width: $media-query-width-big)
     @media (min-width: 1280px)
-    {
+        {
         @content;
     }
 }
@@ -28,37 +28,37 @@ $media-query-width-small: 480px;
 {
     //@media (max-width: $media-query-width-big - 1px)
     @media (max-width: 1279px)
-    {
+        {
         @content;
     }
 }
-    @mixin media-medium-only
-    {
-        //@media (min-width: $media-query-width-medium) and (max-width: $media-query-width-big - 1px)
-        @media (min-width: 960px) and (max-width: 1279px)
+@mixin media-medium-only
+{
+    //@media (min-width: $media-query-width-medium) and (max-width: $media-query-width-big - 1px)
+    @media (min-width: 960px) and (max-width: 1279px)
         {
-            @content;
-        }
+        @content;
     }
+}
 
 // old computer & tablet
 @mixin media-small
 {
     //@media (max-width: $media-query-width-medium - 1px)
     @media (max-width: 959px)
-    {
+        {
         @content;
     }
 }
 
-    @mixin media-small-only
-    {
-        //@media (min-width: $media-query-width-small) and (max-width: $media-query-width-medium - 1px)
-        @media (min-width: 480px) and (max-width: 959px)
+@mixin media-small-only
+{
+    //@media (min-width: $media-query-width-small) and (max-width: $media-query-width-medium - 1px)
+    @media (min-width: 480px) and (max-width: 959px)
         {
-            @content;
-        }
+        @content;
     }
+}
 
 
 // mobile
@@ -66,7 +66,7 @@ $media-query-width-small: 480px;
 {
     //@media (max-width: $media-query-width-small - 1px)
     @media (max-width: 479px)
-    {
+        {
         @content;
     }
 }
@@ -75,7 +75,7 @@ $media-query-width-small: 480px;
 @mixin media-portrait
 {
     @media (orientation:portrait)
-    {
+        {
         @content;
     }
 }
@@ -83,7 +83,7 @@ $media-query-width-small: 480px;
 @mixin media-landscape
 {
     @media (orientation:landscape)
-    {
+        {
         @content;
     }
 }
@@ -93,10 +93,10 @@ $media-query-width-small: 480px;
 {
 
     @media
-        (-webkit-min-device-pixel-ratio: 2),
+    (-webkit-min-device-pixel-ratio: 2),
         (-o-min-device-pixel-ratio: 3/2),
         (min-device-pixel-ratio: 2)
-    {
+        {
         @content;
     }
 }

@@ -4,19 +4,14 @@
  */
 Ext.define('Ext.viewport.Default', {
     extend: 'Ext.Container',
-
     xtype: 'viewport',
-
     PORTRAIT: 'portrait',
-
     LANDSCAPE: 'landscape',
-
     requires: [
         'Ext.LoadMask',
         'Ext.layout.Card',
         'Ext.util.InputBlocker'
     ],
-
     /**
      * @event ready
      * Fires when the Viewport is in the DOM and ready.
@@ -53,12 +48,10 @@ Ext.define('Ext.viewport.Default', {
          * @accessor
          */
         autoMaximize: false,
-
         /**
          * @private
          */
         autoBlurInput: true,
-
         /**
          * @cfg {Boolean} preventPanning
          * Whether or not to always prevent default panning behavior of the
@@ -66,7 +59,6 @@ Ext.define('Ext.viewport.Default', {
          * @accessor
          */
         preventPanning: true,
-
         /**
          * @cfg {Boolean} preventZooming
          * `true` to attempt to stop zooming when you double tap on the screen on mobile devices,
@@ -74,13 +66,11 @@ Ext.define('Ext.viewport.Default', {
          * @accessor
          */
         preventZooming: false,
-
         /**
          * @cfg
          * @private
          */
         autoRender: true,
-
         /**
          * @cfg {Object/String} layout Configuration for this Container's layout. Example:
          *
@@ -108,49 +98,37 @@ Ext.define('Ext.viewport.Default', {
          * @accessor
          */
         layout: 'card',
-
         /**
          * @cfg
          * @private
          */
         width: '100%',
-
         /**
          * @cfg
          * @private
          */
         height: '100%',
-
         useBodyElement: true,
-
         /**
          * An object of all the menus on this viewport.
          * @private
          */
         menus: {}
     },
-
     /**
      * @property {Boolean} isReady
      * `true` if the DOM is ready.
      */
     isReady: false,
-
     isViewport: true,
-
     isMaximizing: false,
-
     id: 'ext-viewport',
-
     isInputRegex: /^(input|textarea|select|a)$/i,
-
     focusedElement: null,
-
     /**
      * @private
      */
     fullscreenItemCls: Ext.baseCSSPrefix + 'fullscreen',
-
     constructor: function(config) {
         var bind = Ext.Function.bind;
 
@@ -159,11 +137,11 @@ Ext.define('Ext.viewport.Default', {
         this.doBlurInput = bind(this.doBlurInput, this);
 
         this.maximizeOnEvents = [
-          'ready',
-          'orientationchange'
+            'ready',
+            'orientationchange'
         ];
 
-      // set default devicePixelRatio if it is not explicitly defined
+        // set default devicePixelRatio if it is not explicitly defined
         window.devicePixelRatio = window.devicePixelRatio || 1;
 
         this.callSuper([config]);
@@ -174,7 +152,7 @@ Ext.define('Ext.viewport.Default', {
         this.windowOuterHeight = this.getWindowOuterHeight();
 
         if (!this.stretchHeights) {
-        this.stretchHeights = {};
+            this.stretchHeights = {};
         }
 
         // Android is handled separately
@@ -198,13 +176,11 @@ Ext.define('Ext.viewport.Default', {
 
         return this;
     },
-
     onDomReady: function() {
         this.isReady = true;
         this.updateSize();
         this.fireEvent('ready', this);
     },
-
     onReady: function() {
         if (this.getAutoRender()) {
             this.render();
@@ -213,25 +189,22 @@ Ext.define('Ext.viewport.Default', {
             this.setHeight('-webkit-calc(100% - ' + ((window.outerHeight - window.innerHeight) / 2) + 'px)');
         }
     },
-
     onElementFocus: function(e) {
         this.focusedElement = e.target;
     },
-
     onElementBlur: function() {
         this.focusedElement = null;
     },
-
     render: function() {
         if (!this.rendered) {
             var body = Ext.getBody(),
-                clsPrefix = Ext.baseCSSPrefix,
-                classList = [],
-                osEnv = Ext.os,
-                osName = osEnv.name.toLowerCase(),
-                browserName = Ext.browser.name.toLowerCase(),
-                osMajorVersion = osEnv.version.getMajor(),
-                orientation = this.getOrientation();
+                    clsPrefix = Ext.baseCSSPrefix,
+                    classList = [],
+                    osEnv = Ext.os,
+                    osName = osEnv.name.toLowerCase(),
+                    browserName = Ext.browser.name.toLowerCase(),
+                    osMajorVersion = osEnv.version.getMajor(),
+                    orientation = this.getOrientation();
 
             this.renderTo(body);
 
@@ -269,7 +242,6 @@ Ext.define('Ext.viewport.Default', {
             body.addCls(classList);
         }
     },
-
     applyAutoBlurInput: function(autoBlurInput) {
         var touchstart = (Ext.feature.has.Touch) ? 'touchstart' : 'mousedown';
 
@@ -282,13 +254,12 @@ Ext.define('Ext.viewport.Default', {
 
         return autoBlurInput;
     },
-
     applyAutoMaximize: function(autoMaximize) {
         if (Ext.browser.is.WebView) {
             autoMaximize = false;
         }
         if (autoMaximize) {
-            this.on('ready', 'doAutoMaximizeOnReady', this, { single: true });
+            this.on('ready', 'doAutoMaximizeOnReady', this, {single: true});
             this.on('orientationchange', 'doAutoMaximizeOnOrientationChange', this);
         }
         else {
@@ -298,7 +269,6 @@ Ext.define('Ext.viewport.Default', {
 
         return autoMaximize;
     },
-
     applyPreventPanning: function(preventPanning) {
         if (preventPanning) {
             this.addWindowListener('touchmove', this.doPreventPanning, false);
@@ -309,7 +279,6 @@ Ext.define('Ext.viewport.Default', {
 
         return preventPanning;
     },
-
     applyPreventZooming: function(preventZooming) {
         var touchstart = (Ext.feature.has.Touch) ? 'touchstart' : 'mousedown';
 
@@ -322,7 +291,6 @@ Ext.define('Ext.viewport.Default', {
 
         return preventZooming;
     },
-
     doAutoMaximizeOnReady: function() {
         var controller = arguments[arguments.length - 1];
 
@@ -338,14 +306,13 @@ Ext.define('Ext.viewport.Default', {
             controller.resume();
 
             this.fireEvent('ready', this);
-        }, this, { single: true });
+        }, this, {single: true});
 
         this.maximize();
     },
-
     doAutoMaximizeOnOrientationChange: function() {
         var controller = arguments[arguments.length - 1],
-            firingArguments = controller.firingArguments;
+                firingArguments = controller.firingArguments;
 
         controller.pause();
 
@@ -360,25 +327,22 @@ Ext.define('Ext.viewport.Default', {
             firingArguments[3] = this.windowHeight;
 
             controller.resume();
-        }, this, { single: true });
+        }, this, {single: true});
 
         this.maximize();
     },
-
     doBlurInput: function(e) {
         var target = e.target,
-            focusedElement = this.focusedElement;
+                focusedElement = this.focusedElement;
         //In IE9/10 browser window loses focus and becomes inactive if focused element is <body>. So we shouldn't call blur for <body>
         if (focusedElement && focusedElement.nodeName.toUpperCase() != 'BODY' && !this.isInputRegex.test(target.tagName)) {
             delete this.focusedElement;
             focusedElement.blur();
         }
     },
-
     doPreventPanning: function(e) {
         e.preventDefault();
     },
-
     doPreventZooming: function(e) {
         // Don't prevent right mouse event
         if ('button' in e && e.button !== 0) {
@@ -391,15 +355,12 @@ Ext.define('Ext.viewport.Default', {
             e.preventDefault();
         }
     },
-
     addWindowListener: function(eventName, fn, capturing) {
         window.addEventListener(eventName, fn, Boolean(capturing));
     },
-
     removeWindowListener: function(eventName, fn, capturing) {
         window.removeEventListener(eventName, fn, Boolean(capturing));
     },
-
     doAddListener: function(eventName, fn, scope, options) {
         if (eventName === 'ready' && this.isReady && !this.isMaximizing) {
             fn.call(scope);
@@ -408,18 +369,16 @@ Ext.define('Ext.viewport.Default', {
 
         return this.callSuper(arguments);
     },
-
     supportsOrientation: function() {
         return Ext.feature.has.Orientation;
     },
-
     onResize: function() {
         var oldWidth = this.windowWidth,
-            oldHeight = this.windowHeight,
-            width = this.getWindowWidth(),
-            height = this.getWindowHeight(),
-            currentOrientation = this.getOrientation(),
-            newOrientation = this.determineOrientation();
+                oldHeight = this.windowHeight,
+                width = this.getWindowWidth(),
+                height = this.getWindowHeight(),
+                currentOrientation = this.getOrientation(),
+                newOrientation = this.determineOrientation();
 
         // Determine orientation change via resize. BOTH width AND height much change, otherwise
         // this is a keyboard popping up.
@@ -427,16 +386,14 @@ Ext.define('Ext.viewport.Default', {
             this.fireOrientationChangeEvent(newOrientation, currentOrientation);
         }
     },
-
     onOrientationChange: function() {
         var currentOrientation = this.getOrientation(),
-            newOrientation = this.determineOrientation();
+                newOrientation = this.determineOrientation();
 
         if (newOrientation !== currentOrientation) {
             this.fireOrientationChangeEvent(newOrientation, currentOrientation);
         }
     },
-
     fireOrientationChangeEvent: function(newOrientation, oldOrientation) {
         var clsPrefix = Ext.baseCSSPrefix;
         Ext.getBody().replaceCls(clsPrefix + oldOrientation, clsPrefix + newOrientation);
@@ -446,14 +403,12 @@ Ext.define('Ext.viewport.Default', {
         this.updateSize();
         this.fireEvent('orientationchange', this, newOrientation, this.windowWidth, this.windowHeight);
     },
-
     updateSize: function(width, height) {
         this.windowWidth = width !== undefined ? width : this.getWindowWidth();
         this.windowHeight = height !== undefined ? height : this.getWindowHeight();
 
         return this;
     },
-
     waitUntil: function(condition, onSatisfied, onTimeout, delay, timeoutDuration) {
         if (!delay) {
             delay = 50;
@@ -464,7 +419,7 @@ Ext.define('Ext.viewport.Default', {
         }
 
         var scope = this,
-            elapse = 0;
+                elapse = 0;
 
         setTimeout(function repeat() {
             elapse += delay;
@@ -486,32 +441,26 @@ Ext.define('Ext.viewport.Default', {
             }
         }, delay);
     },
-
     maximize: function() {
         this.fireMaximizeEvent();
     },
-
     fireMaximizeEvent: function() {
         this.updateSize();
         this.fireEvent('maximize', this);
     },
-
     doSetHeight: function(height) {
         Ext.getBody().setHeight(height);
 
         this.callParent(arguments);
     },
-
     doSetWidth: function(width) {
         Ext.getBody().setWidth(width);
 
         this.callParent(arguments);
     },
-
     scrollToTop: function() {
         window.scrollTo(0, -1);
     },
-
     /**
      * Retrieves the document width.
      * @return {Number} width in pixels.
@@ -519,7 +468,6 @@ Ext.define('Ext.viewport.Default', {
     getWindowWidth: function() {
         return window.innerWidth;
     },
-
     /**
      * Retrieves the document height.
      * @return {Number} height in pixels.
@@ -527,15 +475,12 @@ Ext.define('Ext.viewport.Default', {
     getWindowHeight: function() {
         return window.innerHeight;
     },
-
     getWindowOuterHeight: function() {
         return window.outerHeight;
     },
-
     getWindowOrientation: function() {
         return window.orientation;
     },
-
     /**
      * Returns the current orientation.
      * @return {String} `portrait` or `landscape`
@@ -543,17 +488,15 @@ Ext.define('Ext.viewport.Default', {
     getOrientation: function() {
         return this.orientation;
     },
-
     getSize: function() {
         return {
             width: this.windowWidth,
             height: this.windowHeight
         };
     },
-
     determineOrientation: function() {
         var portrait = this.PORTRAIT,
-            landscape = this.LANDSCAPE;
+                landscape = this.LANDSCAPE;
 
         if (!Ext.os.is.Android && this.supportsOrientation()) {
             if (this.getWindowOrientation() % 180 === 0) {
@@ -570,12 +513,10 @@ Ext.define('Ext.viewport.Default', {
             return landscape;
         }
     },
-
     onItemFullscreenChange: function(item) {
         item.addCls(this.fullscreenItemCls);
         this.add(item);
     },
-
     /**
      * Sets a menu for a given side of the Viewport.
      *
@@ -646,7 +587,7 @@ Ext.define('Ext.viewport.Default', {
             if (window.blackberry) {
                 var toggleMenu = function() {
                     var menus = me.getMenus(),
-                        menu = menus['top'];
+                            menu = menus['top'];
 
                     if (!menu) {
                         return;
@@ -702,20 +643,19 @@ Ext.define('Ext.viewport.Default', {
 
         me.setMenus(menus);
     },
-
     /**
      * Removes a menu from a specified side.
      * @param {String} side The side to remove the menu from
      */
     removeMenu: function(side) {
         var menus = this.getMenus() || {},
-            menu = menus[side];
+                menu = menus[side];
 
-        if(menu) this.hideMenu(side);
+        if (menu)
+            this.hideMenu(side);
         delete menus[side];
         this.setMenus(menus);
     },
-
     /**
      * @private
      * Changes the sizing of the specified menu so that it displays correctly when shown.
@@ -728,16 +668,15 @@ Ext.define('Ext.viewport.Default', {
             menu.setHeight('100%');
         }
     },
-
     /**
      * Shows a menu specified by the menu's side.
      * @param {String} side The side which the menu is placed.
      */
     showMenu: function(side) {
         var menus = this.getMenus(),
-            menu = menus[side],
-            before, after,
-            viewportBefore, viewportAfter;
+                menu = menus[side],
+                before, after,
+                viewportBefore, viewportAfter;
 
         if (!menu || menu.isAnimating) {
             return;
@@ -835,16 +774,15 @@ Ext.define('Ext.viewport.Default', {
         // Make the menu as animating
         menu.isAnimating = true;
     },
-
     /**
      * Hides a menu specified by the menu's side.
      * @param {String} side The side which the menu is placed.
      */
     hideMenu: function(side, animate) {
         var menus = this.getMenus(),
-            menu = menus[side],
-            after, viewportAfter,
-            size;
+                menu = menus[side],
+                after, viewportAfter,
+                size;
 
         animate = (animate === false) ? false : true;
 
@@ -916,7 +854,6 @@ Ext.define('Ext.viewport.Default', {
             }
         }
     },
-
     /**
      * Hides all visible menus.
      */
@@ -927,13 +864,12 @@ Ext.define('Ext.viewport.Default', {
             this.hideMenu(side, animation);
         }
     },
-
     /**
      * Hides all menus except for the side specified
      * @param {String} side         Side(s) not to hide
      * @param {String} animation    Animation to hide with
      */
-    hideOtherMenus: function(side, animation){
+    hideOtherMenus: function(side, animation) {
         var menus = this.getMenus();
 
         for (var menu in menus) {
@@ -942,7 +878,6 @@ Ext.define('Ext.viewport.Default', {
             }
         }
     },
-
     /**
      * Toggles the menu specified by side
      * @param {String} side The side which the menu is placed.
@@ -958,7 +893,6 @@ Ext.define('Ext.viewport.Default', {
             }
         }
     },
-
     /**
      * @private
      */
@@ -976,7 +910,6 @@ Ext.define('Ext.viewport.Default', {
             return 'top';
         }
     },
-
     /**
      * @private
      */
@@ -989,14 +922,12 @@ Ext.define('Ext.viewport.Default', {
         }
         return direction;
     },
-
     /**
      * @private
      */
     onTap: function(e) {
         // this.hideAllMenus();
     },
-
     /**
      * @private
      */
@@ -1004,15 +935,14 @@ Ext.define('Ext.viewport.Default', {
         var side = this.sideForSwipeDirection(e.direction);
         this.hideMenu(side);
     },
-
     /**
      * @private
      */
     onEdgeSwipeStart: function(e) {
         var side = this.sideForDirection(e.direction),
-            menus = this.getMenus(),
-            menu = menus[side],
-            menuSide, checkMenu;
+                menus = this.getMenus(),
+                menu = menus[side],
+                menuSide, checkMenu;
 
         if (!menu || !menu.isHidden()) {
             return;
@@ -1039,7 +969,7 @@ Ext.define('Ext.viewport.Default', {
         menu.show();
 
         var size = (side == 'left' || side == 'right') ? menu.element.getWidth() : menu.element.getHeight(),
-            after, viewportAfter;
+                after, viewportAfter;
 
         after = {
             translateX: 0,
@@ -1065,7 +995,7 @@ Ext.define('Ext.viewport.Default', {
         }
 
         var transformStyleName = 'webkitTransform' in document.createElement('div').style ? 'webkitTransform' : 'transform',
-            setTransform = menu.element.dom.style[transformStyleName];
+                setTransform = menu.element.dom.style[transformStyleName];
 
         if (setTransform) {
             menu.element.dom.style[transformStyleName] = '';
@@ -1088,22 +1018,21 @@ Ext.define('Ext.viewport.Default', {
             this.translate(viewportAfter.translateX, viewportAfter.translateY);
         }
     },
-
     /**
      * @private
      */
     onEdgeSwipe: function(e) {
         var side = this.sideForDirection(e.direction),
-            menu = this.getMenus()[side];
+                menu = this.getMenus()[side];
 
         if (!menu || !this.$swiping) {
             return;
         }
 
         var size = (side == 'left' || side == 'right') ? menu.element.getWidth() : menu.element.getHeight(),
-            after, viewportAfter,
-            movement = Math.min(e.distance - size, 0),
-            viewportMovement = Math.min(e.distance, size);
+                after, viewportAfter,
+                movement = Math.min(e.distance - size, 0),
+                viewportMovement = Math.min(e.distance, size);
 
         after = {
             translateX: 0,
@@ -1139,21 +1068,20 @@ Ext.define('Ext.viewport.Default', {
             this.translate(viewportAfter.translateX, viewportAfter.translateY);
         }
     },
-
     /**
      * @private
      */
     onEdgeSwipeEnd: function(e) {
         var side = this.sideForDirection(e.direction),
-            menu = this.getMenus()[side],
-            shouldRevert = false;
+                menu = this.getMenus()[side],
+                shouldRevert = false;
 
         if (!menu) {
             return;
         }
 
         var size = (side == 'left' || side == 'right') ? menu.element.getWidth() : menu.element.getHeight(),
-            velocity = (e.flick) ? e.flick.velocity : 0;
+                velocity = (e.flick) ? e.flick.velocity : 0;
 
         // check if continuing in the right direction
         if (side == 'right') {
@@ -1178,8 +1106,8 @@ Ext.define('Ext.viewport.Default', {
         }
 
         var movement = (shouldRevert) ? size : 0,
-            viewportMovement = (shouldRevert) ? 0 : -size,
-            after, viewportAfter;
+                viewportMovement = (shouldRevert) ? 0 : -size,
+                after, viewportAfter;
 
         after = {
             translateX: 0,

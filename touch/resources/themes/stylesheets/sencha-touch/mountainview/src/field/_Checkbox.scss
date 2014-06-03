@@ -18,14 +18,14 @@
     text-align: right;
     line-height: 1.9em;
     @include text-shadow(
-        0 -1px $background-color,
-        0 1px $background-color,
-        -1px 0 $background-color,
-        1px 0 $background-color,
-        0 2px 4px rgba($base-color, .3),
-        0 -2px 4px rgba($base-color, .3),
-        2px 0 4px rgba($base-color, .3),
-        -2px 0 4px rgba($base-color, .3)
+    0 -1px $background-color,
+    0 1px $background-color,
+    -1px 0 $background-color,
+    1px 0 $background-color,
+    0 2px 4px rgba($base-color, .3),
+    0 -2px 4px rgba($base-color, .3),
+    2px 0 4px rgba($base-color, .3),
+    -2px 0 4px rgba($base-color, .3)
     );
 }
 

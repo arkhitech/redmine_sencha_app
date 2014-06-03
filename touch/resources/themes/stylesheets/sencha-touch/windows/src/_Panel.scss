@@ -90,7 +90,7 @@
         .x-spinner {
             &.x-item-disabled {
                 .x-field-input:before,
-                .x-spinner-button {
+                    .x-spinner-button {
                     color: $light-field-disabled-color !important;
                     border-color: $light-field-disabled-border-color !important;
                     background-color: $light-field-disabled-background-color !important;

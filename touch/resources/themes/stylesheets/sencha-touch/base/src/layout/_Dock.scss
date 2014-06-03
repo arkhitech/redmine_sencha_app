@@ -25,7 +25,7 @@
     &.x-unsized,
     &.x-stretched {
         height: 100%;
-        
+
         > .x-dock-body {
             position: relative;
             @include st-box();

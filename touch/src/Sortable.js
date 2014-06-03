@@ -6,16 +6,13 @@ Ext.define('Ext.Sortable', {
     mixins: {
         observable: 'Ext.mixin.Observable'
     },
-
     requires: ['Ext.util.Draggable'],
-
     config: {
         /**
          * @cfg
          * @inheritdoc
          */
         baseCls: Ext.baseCSSPrefix + 'sortable',
-
         /**
          * @cfg {Number} delay
          * How many milliseconds a user must hold the draggable before starting a
@@ -25,21 +22,18 @@ Ext.define('Ext.Sortable', {
          */
         delay: 0
 
-        },
-
+    },
     /**
      * @cfg {String} direction
      * Possible values: 'vertical', 'horizontal'.
      */
     direction: 'vertical',
-
     /**
      * @cfg {String} cancelSelector
      * A simple CSS selector that represents elements within the draggable
      * that should NOT initiate a drag.
      */
     cancelSelector: null,
-
     // not yet implemented
     //indicator: true,
     //proxy: true,
@@ -58,32 +52,27 @@ Ext.define('Ext.Sortable', {
      * capable of interacting.
      */
     group: 'base',
-
     /**
      * @cfg {Boolean} revert
      * This should NOT be changed.
      * @private
      */
     revert: true,
-
     /**
      * @cfg {String} itemSelector
      * A simple CSS selector that represents individual items within the Sortable.
      */
     itemSelector: null,
-
     /**
      * @cfg {String} handleSelector
      * A simple CSS selector to indicate what is the handle to drag the Sortable.
      */
     handleSelector: null,
-
     /**
      * @cfg {Boolean} disabled
      * Passing in `true` will disable this Sortable.
      */
     disabled: false,
-
     // Properties
 
     /**
@@ -93,7 +82,6 @@ Ext.define('Ext.Sortable', {
      * @readonly
      */
     sorting: false,
-
     /**
      * Read-only value representing whether the Draggable can be moved vertically.
      * This is automatically calculated by Draggable by the direction configuration.
@@ -102,46 +90,45 @@ Ext.define('Ext.Sortable', {
      * @readonly
      */
     vertical: false,
-
     /**
      * Creates new Sortable.
      * @param {Mixed} el
      * @param {Object} config
      */
-    constructor : function(el, config) {
+    constructor: function(el, config) {
         config = config || {};
         Ext.apply(this, config);
 
         this.addEvents(
-            /**
-             * @event sortstart
-             * @param {Ext.Sortable} this
-             * @param {Ext.event.Event} e
-             */
-            'sortstart',
-            /**
-             * @event sortend
-             * @param {Ext.Sortable} this
-             * @param {Ext.event.Event} e
-             */
-            'sortend',
-            /**
-             * @event sortchange
-             * @param {Ext.Sortable} this
-             * @param {Ext.Element} el The Element being dragged.
-             * @param {Number} index The index of the element after the sort change.
-             */
-            'sortchange'
+                /**
+                 * @event sortstart
+                 * @param {Ext.Sortable} this
+                 * @param {Ext.event.Event} e
+                 */
+                'sortstart',
+                /**
+                 * @event sortend
+                 * @param {Ext.Sortable} this
+                 * @param {Ext.event.Event} e
+                 */
+                'sortend',
+                /**
+                 * @event sortchange
+                 * @param {Ext.Sortable} this
+                 * @param {Ext.Element} el The Element being dragged.
+                 * @param {Number} index The index of the element after the sort change.
+                 */
+                'sortchange'
 
-            // not yet implemented.
-            // 'sortupdate',
-            // 'sortreceive',
-            // 'sortremove',
-            // 'sortenter',
-            // 'sortleave',
-            // 'sortactivate',
-            // 'sortdeactivate'
-        );
+                // not yet implemented.
+                // 'sortupdate',
+                // 'sortreceive',
+                // 'sortremove',
+                // 'sortenter',
+                // 'sortleave',
+                // 'sortactivate',
+                // 'sortdeactivate'
+                );
 
         this.el = Ext.get(el);
         this.callParent();
@@ -164,9 +151,8 @@ Ext.define('Ext.Sortable', {
             this.enable();
         }
     },
-
     // @private
-    onStart : function(e, t) {
+    onStart: function(e, t) {
         if (this.cancelSelector && e.getTarget(this.cancelSelector)) {
             return;
         }
@@ -178,9 +164,8 @@ Ext.define('Ext.Sortable', {
             this.onSortStart(e, t);
         }
     },
-
     // @private
-    onSortStart : function(e, t) {
+    onSortStart: function(e, t) {
         this.sorting = true;
         var draggable = Ext.create('Ext.util.Draggable', t, {
             threshold: 0,
@@ -204,12 +189,11 @@ Ext.define('Ext.Sortable', {
 
         this.fireEvent('sortstart', this, e);
     },
-
     // @private
-    calculateBoxes : function() {
+    calculateBoxes: function() {
         this.items = [];
         var els = this.el.select(this.itemSelector, false),
-            ln = els.length, i, item, el, box;
+                ln = els.length, i, item, el, box;
 
         for (i = 0; i < ln; i++) {
             el = els[i];
@@ -220,14 +204,13 @@ Ext.define('Ext.Sortable', {
             }
         }
     },
-
     // @private
-    onDrag : function(draggable, e) {
+    onDrag: function(draggable, e) {
         var items = this.items,
-            ln = items.length,
-            region = draggable.region,
-            sortChange = false,
-            i, intersect, overlap, item;
+                ln = items.length,
+                region = draggable.region,
+                sortChange = false,
+                i, intersect, overlap, item;
 
         for (i = 0; i < ln; i++) {
             item = items[i];
@@ -268,32 +251,28 @@ Ext.define('Ext.Sortable', {
             }
         }
     },
-
     // @private
-    onDragEnd : function(draggable, e) {
+    onDragEnd: function(draggable, e) {
         draggable.destroy();
         this.sorting = false;
         this.fireEvent('sortend', this, draggable, e);
     },
-
     /**
      * Enables sorting for this Sortable.
      * This method is invoked immediately after construction of a Sortable unless
      * the disabled configuration is set to `true`.
      */
-    enable : function() {
+    enable: function() {
         this.el.on(this.startEventName, this.onStart, this, {delegate: this.itemSelector, holdThreshold: this.getDelay()});
         this.disabled = false;
     },
-
     /**
      * Disables sorting for this Sortable.
      */
-    disable : function() {
+    disable: function() {
         this.el.un(this.startEventName, this.onStart, this);
         this.disabled = true;
     },
-
     /**
      * Method to determine whether this Sortable is currently disabled.
      * @return {Boolean} The disabled state of this Sortable.
@@ -301,28 +280,25 @@ Ext.define('Ext.Sortable', {
     isDisabled: function() {
         return this.disabled;
     },
-
     /**
      * Method to determine whether this Sortable is currently sorting.
      * @return {Boolean} The sorting state of this Sortable.
      */
-    isSorting : function() {
+    isSorting: function() {
         return this.sorting;
     },
-
     /**
      * Method to determine whether this Sortable is currently disabled.
      * @return {Boolean} The disabled state of this Sortable.
      */
-    isVertical : function() {
+    isVertical: function() {
         return this.vertical;
     },
-
     /**
      * Method to determine whether this Sortable is currently sorting.
      * @return {Boolean} The sorting state of this Sortable.
      */
-    isHorizontal : function() {
+    isHorizontal: function() {
         return this.horizontal;
     }
 });

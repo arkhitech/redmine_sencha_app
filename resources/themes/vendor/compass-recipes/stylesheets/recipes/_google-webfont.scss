@@ -6,8 +6,8 @@ $google-font-weights: false !default;
 }
 
 @mixin google-webfont(
-    $font-name,
-    $font-weights: 500
+$font-name,
+$font-weights: 500
 ) {
     // @debug join($font-name,'', '|');
 

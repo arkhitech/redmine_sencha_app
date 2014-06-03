@@ -3,21 +3,16 @@
  */
 Ext.define('Ext.fx.layout.card.Scroll', {
     extend: 'Ext.fx.layout.card.Abstract',
-
     requires: [
         'Ext.fx.easing.Linear'
     ],
-
     alias: 'fx.layout.card.scroll',
-
     config: {
         duration: 150
     },
-
     constructor: function(config) {
         this.initConfig(config);
     },
-
     getEasing: function() {
         var easing = this.easing;
 
@@ -27,15 +22,13 @@ Ext.define('Ext.fx.layout.card.Scroll', {
 
         return easing;
     },
-
     updateDuration: function(duration) {
         this.getEasing().setDuration(duration);
     },
-
     onActiveItemChange: function(cardLayout, newItem, oldItem, options, controller) {
         var direction = this.getDirection(),
-            easing = this.getEasing(),
-            containerElement, inElement, outElement, containerWidth, containerHeight, reverse;
+                easing = this.getEasing(),
+                containerElement, inElement, outElement, containerWidth, containerHeight, reverse;
 
         if (newItem && oldItem) {
             if (this.isAnimating) {
@@ -113,18 +106,16 @@ Ext.define('Ext.fx.layout.card.Scroll', {
             controller.pause();
         }
     },
-
     startAnimation: function() {
         this.isAnimating = true;
         this.getEasing().setStartTime(Date.now());
         Ext.AnimationQueue.start(this.doAnimationFrame, this);
     },
-
     doAnimationFrame: function() {
         var easing = this.getEasing(),
-            direction = this.getDirection(),
-            scroll = 'scrollTop',
-            value;
+                direction = this.getDirection(),
+                scroll = 'scrollTop',
+                value;
 
         if (direction == 'left' || direction == 'right') {
             scroll = 'scrollLeft';
@@ -138,13 +129,12 @@ Ext.define('Ext.fx.layout.card.Scroll', {
             this.containerElement.dom[scroll] = value;
         }
     },
-
     stopAnimation: function() {
         var me = this,
-            direction = me.getDirection(),
-            scroll = 'setTop',
-            oldItem = me.oldItem,
-            newItem = me.newItem;
+                direction = me.getDirection(),
+                scroll = 'setTop',
+                oldItem = me.oldItem,
+                newItem = me.newItem;
 
         if (direction == 'left' || direction == 'right') {
             scroll = 'setLeft';

@@ -34,7 +34,6 @@
 Ext.define('Ext.util.Geolocation', {
     extend: 'Ext.Evented',
     alternateClassName: ['Ext.util.GeoLocation'],
-
     config: {
         /**
          * @event locationerror
@@ -75,13 +74,11 @@ Ext.define('Ext.util.Geolocation', {
          * and fire {@link #locationupdate} and {@link #locationerror} events.
          */
         autoUpdate: true,
-
         /**
          * @cfg {Number} frequency
          * The frequency of each update if {@link #autoUpdate} is set to `true`.
          */
         frequency: 10000,
-
         /**
          * Read-only property representing the last retrieved
          * geographical coordinate specified in degrees.
@@ -89,7 +86,6 @@ Ext.define('Ext.util.Geolocation', {
          * @readonly
          */
         latitude: null,
-
         /**
          * Read-only property representing the last retrieved
          * geographical coordinate specified in degrees.
@@ -97,7 +93,6 @@ Ext.define('Ext.util.Geolocation', {
          * @readonly
          */
         longitude: null,
-
         /**
          * Read-only property representing the last retrieved
          * accuracy level of the latitude and longitude coordinates,
@@ -110,7 +105,6 @@ Ext.define('Ext.util.Geolocation', {
          * @readonly
          */
         accuracy: null,
-
         /**
          * Read-only property representing the last retrieved
          * height of the position, specified in meters above the ellipsoid
@@ -119,7 +113,6 @@ Ext.define('Ext.util.Geolocation', {
          * @readonly
          */
         altitude: null,
-
         /**
          * Read-only property representing the last retrieved
          * accuracy level of the altitude coordinate, specified in meters.
@@ -132,7 +125,6 @@ Ext.define('Ext.util.Geolocation', {
          * @readonly
          */
         altitudeAccuracy: null,
-
         /**
          * Read-only property representing the last retrieved
          * direction of travel of the hosting device,
@@ -144,7 +136,6 @@ Ext.define('Ext.util.Geolocation', {
          * @readonly
          */
         heading: null,
-
         /**
          * Read-only property representing the last retrieved
          * current ground speed of the device, specified in meters per second.
@@ -157,7 +148,6 @@ Ext.define('Ext.util.Geolocation', {
          * @readonly
          */
         speed: null,
-
         /**
          * Read-only property representing when the last retrieved
          * positioning information was acquired by the device.
@@ -165,7 +155,6 @@ Ext.define('Ext.util.Geolocation', {
          * @readonly
          */
         timestamp: null,
-
         //PositionOptions interface
         /**
          * @cfg {Boolean} allowHighAccuracy
@@ -175,7 +164,6 @@ Ext.define('Ext.util.Geolocation', {
          * results than if this option was set to `false`.
          */
         allowHighAccuracy: false,
-
         /**
          * @cfg {Number} timeout
          * The maximum number of milliseconds allowed to elapse between a location update operation
@@ -195,7 +183,6 @@ Ext.define('Ext.util.Geolocation', {
          */
 
         timeout: Infinity,
-
         /**
          * @cfg {Number} maximumAge
          * This option indicates that the application is willing to accept cached location information whose age
@@ -210,29 +197,24 @@ Ext.define('Ext.util.Geolocation', {
          * For example, if location information no older than 10 minutes is required, set this property to 600000.
          */
         maximumAge: 0,
-
         // @private
-        provider : undefined
+        provider: undefined
     },
-
     updateMaximumAge: function() {
         if (this.watchOperation) {
             this.updateWatchOperation();
         }
     },
-
     updateTimeout: function() {
         if (this.watchOperation) {
             this.updateWatchOperation();
         }
     },
-
     updateAllowHighAccuracy: function() {
         if (this.watchOperation) {
             this.updateWatchOperation();
         }
     },
-
     applyProvider: function(config) {
         if (Ext.feature.has.Geolocation) {
             if (!config) {
@@ -249,10 +231,9 @@ Ext.define('Ext.util.Geolocation', {
         }
         return config;
     },
-
     updateAutoUpdate: function(newAutoUpdate, oldAutoUpdate) {
         var me = this,
-            provider = me.getProvider();
+                provider = me.getProvider();
 
         if (oldAutoUpdate && provider) {
             clearInterval(me.watchOperationId);
@@ -268,16 +249,15 @@ Ext.define('Ext.util.Geolocation', {
             try {
                 me.updateWatchOperation();
             }
-            catch(e) {
+            catch (e) {
                 me.fireEvent('locationerror', me, false, false, true, e.message);
             }
         }
     },
-
     // @private
     updateWatchOperation: function() {
         var me = this,
-            provider = me.getProvider();
+                provider = me.getProvider();
 
         // The native watchPosition method is currently broken in iOS5...
 
@@ -287,16 +267,15 @@ Ext.define('Ext.util.Geolocation', {
 
         function pollPosition() {
             provider.getCurrentPosition(
-                Ext.bind(me.fireUpdate, me),
-                Ext.bind(me.fireError, me),
-                me.parseOptions()
-            );
+                    Ext.bind(me.fireUpdate, me),
+                    Ext.bind(me.fireError, me),
+                    me.parseOptions()
+                    );
         }
 
         pollPosition();
         me.watchOperationId = setInterval(pollPosition, this.getFrequency());
     },
-
     /**
      * Executes a onetime location update operation,
      * raising either a {@link #locationupdate} or {@link #locationerror} event.
@@ -323,7 +302,7 @@ Ext.define('Ext.util.Geolocation', {
      */
     updateLocation: function(callback, scope, positionOptions) {
         var me = this,
-            provider = me.getProvider();
+                provider = me.getProvider();
 
         var failFunction = function(message, error) {
             if (error) {
@@ -344,29 +323,28 @@ Ext.define('Ext.util.Geolocation', {
 
         try {
             provider.getCurrentPosition(
-                //success callback
-                function(position) {
-                    me.fireUpdate(position);
-                    if (callback) {
-                        callback.call(scope || me, me, me); //last parameter for legacy purposes
-                    }
-                },
-                //error callback
-                function(error) {
-                    failFunction(null, error);
-                },
-                positionOptions || me.parseOptions()
-            );
-        }
-        catch(e) {
-            failFunction(e.message);
-        }
-    },
-
+                    //success callback
+                            function(position) {
+                                me.fireUpdate(position);
+                                if (callback) {
+                                    callback.call(scope || me, me, me); //last parameter for legacy purposes
+                                }
+                            },
+                            //error callback
+                                    function(error) {
+                                        failFunction(null, error);
+                                    },
+                                    positionOptions || me.parseOptions()
+                                    );
+                        }
+                catch (e) {
+                    failFunction(e.message);
+                }
+            },
     // @private
     fireUpdate: function(position) {
         var me = this,
-            coords = position.coords;
+                coords = position.coords;
 
         this.position = position;
 
@@ -383,25 +361,23 @@ Ext.define('Ext.util.Geolocation', {
 
         me.fireEvent('locationupdate', me);
     },
-
     // @private
     fireError: function(error) {
         var errorCode = error.code;
         this.fireEvent('locationerror', this,
-            errorCode == error.TIMEOUT,
-            errorCode == error.PERMISSION_DENIED,
-            errorCode == error.POSITION_UNAVAILABLE,
-            error.message == undefined ? null : error.message
-        );
+                errorCode == error.TIMEOUT,
+                errorCode == error.PERMISSION_DENIED,
+                errorCode == error.POSITION_UNAVAILABLE,
+                error.message == undefined ? null : error.message
+                );
     },
-
     // @private
     parseOptions: function() {
         var timeout = this.getTimeout(),
-            ret = {
-                maximumAge: this.getMaximumAge(),
-                enableHighAccuracy: this.getAllowHighAccuracy()
-            };
+                ret = {
+                    maximumAge: this.getMaximumAge(),
+                    enableHighAccuracy: this.getAllowHighAccuracy()
+                };
 
         //Google doesn't like Infinity
         if (timeout !== Infinity) {
@@ -409,8 +385,7 @@ Ext.define('Ext.util.Geolocation', {
         }
         return ret;
     },
-
-    destroy : function() {
+    destroy: function() {
         this.setAutoUpdate(false);
     }
 });

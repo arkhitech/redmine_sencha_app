@@ -7,11 +7,9 @@ Ext.define('Ext.ux.parse.Model', {
         'Ext.ux.parse.association.Pointer',
         'Ext.ux.parse.association.Relation'
     ],
-
     config: {
         proxy: "parse"
     },
-
     inheritableStatics: {
         getParseClass: function() {
             if (!this.$parseClass) {
@@ -20,9 +18,7 @@ Ext.define('Ext.ux.parse.Model', {
             return this.$parseClass;
         }
     },
-
     isParseModel: true,
-
     $parseObject: null,
     getParseObject: function() {
         return this.$parseObject;
@@ -30,7 +26,6 @@ Ext.define('Ext.ux.parse.Model', {
     setParseObject: function(value) {
         this.$parseObject = value;
     },
-
     $parseClass: null,
     getParseClass: function() {
         if (!this.$parseClass) {
@@ -40,7 +35,6 @@ Ext.define('Ext.ux.parse.Model', {
 
         return this.$parseClass;
     },
-
     constructor: function(data, id, raw, convertedData) {
         if (data instanceof Parse.Object) {
             this.setParseObject(data);
@@ -54,21 +48,20 @@ Ext.define('Ext.ux.parse.Model', {
 
         return this.callParent([data, id, raw, convertedData]);
     },
-
     monitorRelations: function(config) {
         config = config || {};
         var me = this,
-            promise = new Ext.Promise,
-            callback = config.callback || Ext.emptyFn,
-            scope = config.scope || this;
+                promise = new Ext.Promise,
+                callback = config.callback || Ext.emptyFn,
+                scope = config.scope || this;
 
         (function run() {
             var status = me.getRelationsStatus();
-            if(status.loading){
+            if (status.loading) {
                 var association = status.loading.shift(),
-                    store = association.getStore(me);
+                        store = association.getStore(me);
 
-                store.on("load", run, me, {single:true})
+                store.on("load", run, me, {single: true})
             } else {
                 promise.fulfill();
                 callback.apply(scope);
@@ -77,33 +70,31 @@ Ext.define('Ext.ux.parse.Model', {
 
         return promise;
     },
-
     getRelationsStatus: function() {
         var me = this,
-            status = {relations: {}},
-            associations = this.getAssociations(),
-            relationStatus, relationStore;
+                status = {relations: {}},
+        associations = this.getAssociations(),
+                relationStatus, relationStore;
 
         associations.each(function(association) {
             if (association.getType() === "relation" && association.getStatus) {
                 relationStatus = association.getStatus(me);
                 relationStore = association.getStore(me);
 
-                if(!Ext.isArray(status[relationStatus])){
+                if (!Ext.isArray(status[relationStatus])) {
                     status[relationStatus] = []
                 }
                 status[relationStatus].push(association);
-                status.relations[association.getName()] = {store:relationStore, status: relationStatus};
+                status.relations[association.getName()] = {store: relationStore, status: relationStatus};
             }
         });
 
         return status;
     },
-
     relationsLoaded: function() {
         var associations = this.getAssociations(),
-            loaded = true,
-            relationStatus;
+                loaded = true,
+                relationStatus;
 
         associations.each(function(association) {
             if (association.getType() === "relation" && association.getStatus) {
@@ -114,11 +105,10 @@ Ext.define('Ext.ux.parse.Model', {
 
         return loaded;
     },
-
     getDataFlat: function() {
         var me = this,
-            data = Ext.merge({}, this.data),
-            associations = this.getAssociations();
+                data = Ext.merge({}, this.data),
+                associations = this.getAssociations();
 
         associations.each(function(association) {
             if (association.getData) {
@@ -128,21 +118,22 @@ Ext.define('Ext.ux.parse.Model', {
 
         return data;
     },
-
     load: function(options) {
         options = options || {};
         var me = this,
-            id = me.get("id") || options.id || null;
+                id = me.get("id") || options.id || null;
 
         if (id && id.indexOf("ext-record") === -1) {
             var modelClass = Ext.ModelManager.getModel(me.$className);
             modelClass.load(id, {
                 success: function(record, operation) {
                     me.syncParse(me.getFields().all);
-                    if (options.success) options.success.apply(options.scope || me, [me, operation]);
+                    if (options.success)
+                        options.success.apply(options.scope || me, [me, operation]);
                 },
                 failure: function(record, operation) {
-                    if (options.failure) options.failure.apply(options.scope || me, [me, operation]);
+                    if (options.failure)
+                        options.failure.apply(options.scope || me, [me, operation]);
                 }
             });
         } else {
@@ -151,7 +142,6 @@ Ext.define('Ext.ux.parse.Model', {
             // </debug>
         }
     },
-
     syncParse: function(fields) {
         var me = this, value;
 
@@ -170,12 +160,10 @@ Ext.define('Ext.ux.parse.Model', {
             me.$parseObject.set(field, value);
         });
     },
-
     afterEdit: function(modifiedFieldNames, modified) {
         this.callParent(arguments);
         this.syncParse(modifiedFieldNames);
     },
-
     /**
      * Sets the given field to the given value, marks the instance as dirty.
      * @param {String/Object} fieldName The field to set, or an object containing key/value pairs.
@@ -183,13 +171,13 @@ Ext.define('Ext.ux.parse.Model', {
      */
     set: function(fieldName, value) {
         var me = this,
-        // We are using the fields map since it saves lots of function calls
-            fieldMap = me.fields.map,
-            modified = me.modified,
-            notEditing = !me.editing,
-            modifiedCount = 0,
-            modifiedFieldNames = [],
-            field, key, i, ln, currentValue, convert;
+                // We are using the fields map since it saves lots of function calls
+                fieldMap = me.fields.map,
+                modified = me.modified,
+                notEditing = !me.editing,
+                modifiedCount = 0,
+                modifiedFieldNames = [],
+                field, key, i, ln, currentValue, convert;
 
         /*
          * If we're passed an object, iterate over that object. NOTE: we pull out fields with a convert function and
@@ -211,7 +199,8 @@ Ext.define('Ext.ux.parse.Model', {
                     }
                     ++modifiedCount;
 
-                    if (!field) field = this.get(key);
+                    if (!field)
+                        field = this.get(key);
                     if (field && field.isModel) {
                         field.set(fieldName[key]);
                     } else {
@@ -277,6 +266,7 @@ Ext.define('Ext.ux.parse.Model', {
             }
         }
 
-        if (this.dirty) this.fireEvent("dirty", this);
+        if (this.dirty)
+            this.fireEvent("dirty", this);
     }
 });

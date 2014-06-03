@@ -13,12 +13,10 @@
  */
 Ext.define('Ext.device.Splashscreen', {
     singleton: true,
-
     requires: [
         'Ext.device.splashscreen.Cordova',
         'Ext.device.splashscreen.Simulator'
     ],
-
     constructor: function() {
         var browserEnv = Ext.browser.is;
         if (browserEnv.WebView) {

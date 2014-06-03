@@ -1,7 +1,7 @@
 .x-carousel-indicator span {
-	@include border-radius(5px);
+    @include border-radius(5px);
 
-	&.x-carousel-indicator-active {
-		background-color: $ios7-blue;
-	}
+    &.x-carousel-indicator-active {
+        background-color: $ios7-blue;
+    }
 }

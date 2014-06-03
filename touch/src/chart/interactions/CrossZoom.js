@@ -76,12 +76,9 @@
  *     Ext.Viewport.add(lineChart);
  */
 Ext.define('Ext.chart.interactions.CrossZoom', {
-
     extend: 'Ext.chart.interactions.Abstract',
-
     type: 'crosszoom',
     alias: 'interaction.crosszoom',
-
     config: {
         /**
          * @cfg {Object/Array} axes
@@ -122,22 +119,16 @@ Ext.define('Ext.chart.interactions.CrossZoom', {
          * default axis options.
          */
         axes: true,
-
         gesture: 'drag',
-
         undoButton: {}
     },
-
     stopAnimationBeforeSync: false,
-
     zoomAnimationInProgress: false,
-
-    constructor: function () {
+    constructor: function() {
         this.callSuper(arguments);
         this.zoomHistory = [];
     },
-
-    applyAxes: function (axesConfig) {
+    applyAxes: function(axesConfig) {
         var result = {};
         if (axesConfig === true) {
             return {
@@ -149,11 +140,11 @@ Ext.define('Ext.chart.interactions.CrossZoom', {
         } else if (Ext.isArray(axesConfig)) {
             // array of axis names - translate to full object form
             result = {};
-            Ext.each(axesConfig, function (axis) {
+            Ext.each(axesConfig, function(axis) {
                 result[axis] = {};
             });
         } else if (Ext.isObject(axesConfig)) {
-            Ext.iterate(axesConfig, function (key, val) {
+            Ext.iterate(axesConfig, function(key, val) {
                 // axis name with `true` value -> translate to object
                 if (val === true) {
                     result[key] = {};
@@ -164,8 +155,7 @@ Ext.define('Ext.chart.interactions.CrossZoom', {
         }
         return result;
     },
-
-    applyUndoButton: function (button, oldButton) {
+    applyUndoButton: function(button, oldButton) {
         var me = this;
         if (button) {
             if (oldButton) {
@@ -176,7 +166,7 @@ Ext.define('Ext.chart.interactions.CrossZoom', {
                 iconCls: 'refresh',
                 text: 'Undo Zoom',
                 disabled: true,
-                handler: function () {
+                handler: function() {
                     me.undoZoom();
                 }
             }, button));
@@ -184,38 +174,34 @@ Ext.define('Ext.chart.interactions.CrossZoom', {
             oldButton.destroy();
         }
     },
-
-    getGestures: function () {
+    getGestures: function() {
         var me = this,
-            gestures = {};
+                gestures = {};
         gestures[me.getGesture()] = 'onGesture';
         gestures[me.getGesture() + 'start'] = 'onGestureStart';
         gestures[me.getGesture() + 'end'] = 'onGestureEnd';
         gestures.doubletap = 'onDoubleTap';
         return gestures;
     },
-
-    getSurface: function () {
+    getSurface: function() {
         return this.getChart() && this.getChart().getSurface('main');
     },
-    
-    setSeriesOpacity: function (opacity) {
+    setSeriesOpacity: function(opacity) {
         var surface = this.getChart() && this.getChart().getSurface('series-surface', 'series');
         if (surface) {
             surface.element.setStyle('opacity', opacity);
         }
     },
-
-    onGestureStart: function (e) {
+    onGestureStart: function(e) {
         var me = this,
-            chart = me.getChart(),
-            surface = me.getSurface(),
-            region = chart.getInnerRegion(),
-            chartWidth = region[2],
-            chartHeight = region[3],
-            xy = chart.element.getXY(),
-            x = e.pageX - xy[0] - region[0],
-            y = e.pageY - xy[1] - region[1];
+                chart = me.getChart(),
+                surface = me.getSurface(),
+                region = chart.getInnerRegion(),
+                chartWidth = region[2],
+                chartHeight = region[3],
+                xy = chart.element.getXY(),
+                x = e.pageX - xy[0] - region[0],
+                y = e.pageY - xy[1] - region[1];
 
         if (me.zoomAnimationInProgress) {
             return;
@@ -240,21 +226,20 @@ Ext.define('Ext.chart.interactions.CrossZoom', {
             return false;
         }
     },
-
-    onGesture: function (e) {
+    onGesture: function(e) {
         var me = this;
         if (me.zoomAnimationInProgress) {
             return;
         }
         if (me.getLocks()[me.getGesture()] === me) {
             var chart = me.getChart(),
-                surface = me.getSurface(),
-                region = chart.getInnerRegion(),
-                chartWidth = region[2],
-                chartHeight = region[3],
-                xy = chart.element.getXY(),
-                x = e.pageX - xy[0] - region[0],
-                y = e.pageY - xy[1] - region[1];
+                    surface = me.getSurface(),
+                    region = chart.getInnerRegion(),
+                    chartWidth = region[2],
+                    chartHeight = region[3],
+                    xy = chart.element.getXY(),
+                    x = e.pageX - xy[0] - region[0],
+                    y = e.pageY - xy[1] - region[1];
 
             if (x < 0) {
                 x = 0;
@@ -279,21 +264,20 @@ Ext.define('Ext.chart.interactions.CrossZoom', {
             return false;
         }
     },
-
-    onGestureEnd: function (e) {
+    onGestureEnd: function(e) {
         var me = this;
         if (me.zoomAnimationInProgress) {
             return;
         }
         if (me.getLocks()[me.getGesture()] === me) {
             var chart = me.getChart(),
-                surface = me.getSurface(),
-                region = chart.getInnerRegion(),
-                chartWidth = region[2],
-                chartHeight = region[3],
-                xy = chart.element.getXY(),
-                x = e.pageX - xy[0] - region[0],
-                y = e.pageY - xy[1] - region[1];
+                    surface = me.getSurface(),
+                    region = chart.getInnerRegion(),
+                    chartWidth = region[2],
+                    chartHeight = region[3],
+                    xy = chart.element.getXY(),
+                    x = e.pageX - xy[0] - region[0],
+                    y = e.pageY - xy[1] - region[1];
 
             if (x < 0) {
                 x = 0;
@@ -334,7 +318,7 @@ Ext.define('Ext.chart.interactions.CrossZoom', {
                 me.zoomAnimationInProgress = true;
 
                 chart.suspendThicknessChanged();
-                me.selectionRect.fx.on('animationend', function () {
+                me.selectionRect.fx.on('animationend', function() {
                     chart.resumeThicknessChanged();
 
                     surface.remove(me.selectionRect);
@@ -355,20 +339,19 @@ Ext.define('Ext.chart.interactions.CrossZoom', {
             }
         }
     },
-
-    zoomBy: function (region) {
+    zoomBy: function(region) {
         var me = this,
-            axisConfigs = me.getAxes(),
-            axes = me.getChart().getAxes(),
-            config,
-            zoomMap = {};
+                axisConfigs = me.getAxes(),
+                axes = me.getChart().getAxes(),
+                config,
+                zoomMap = {};
 
         for (var i = 0; i < axes.length; i++) {
             var axis = axes[i];
             config = axisConfigs[axis.getPosition()];
             if (config && config.allowZoom !== false) {
                 var isSide = axis.isSide(),
-                    oldRange = axis.getVisibleRange();
+                        oldRange = axis.getVisibleRange();
                 zoomMap[axis.getId()] = oldRange.slice(0);
                 if (!isSide) {
                     axis.setVisibleRange([
@@ -387,10 +370,9 @@ Ext.define('Ext.chart.interactions.CrossZoom', {
         me.zoomHistory.push(zoomMap);
         me.getUndoButton().setDisabled(false);
     },
-
-    undoZoom: function () {
+    undoZoom: function() {
         var zoomMap = this.zoomHistory.pop(),
-            axes = this.getChart().getAxes();
+                axes = this.getChart().getAxes();
         if (zoomMap) {
             for (var i = 0; i < axes.length; i++) {
                 var axis = axes[i];
@@ -402,8 +384,7 @@ Ext.define('Ext.chart.interactions.CrossZoom', {
         this.getUndoButton().setDisabled(this.zoomHistory.length === 0);
         this.sync();
     },
-
-    onDoubleTap: function (e) {
+    onDoubleTap: function(e) {
         this.undoZoom();
     }
 });

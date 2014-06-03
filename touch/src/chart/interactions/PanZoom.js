@@ -86,18 +86,14 @@
  *
  */
 Ext.define('Ext.chart.interactions.PanZoom', {
-
     extend: 'Ext.chart.interactions.Abstract',
-
     type: 'panzoom',
     alias: 'interaction.panzoom',
     requires: [
         'Ext.util.Region',
         'Ext.draw.Animator'
     ],
-
     config: {
-
         /**
          * @cfg {Object/Array} axes
          * Specifies which axes should be made navigable. The config value can take the following formats:
@@ -143,11 +139,8 @@ Ext.define('Ext.chart.interactions.PanZoom', {
             bottom: {},
             left: {}
         },
-
         minZoom: null,
-
         maxZoom: null,
-
         /**
          * @cfg {Boolean} showOverflowArrows
          * If `true`, arrows will be conditionally shown at either end of each axis to indicate that the
@@ -155,7 +148,6 @@ Ext.define('Ext.chart.interactions.PanZoom', {
          * prevent the arrows from being displayed.
          */
         showOverflowArrows: true,
-
         /**
          * @cfg {Object} overflowArrowOptions
          * A set of optional overrides for the overflow arrow sprites' options. Only relevant when
@@ -163,37 +155,29 @@ Ext.define('Ext.chart.interactions.PanZoom', {
          */
 
         gesture: 'pinch',
-
         panGesture: 'drag',
-
         zoomOnPanGesture: false,
-
         modeToggleButton: {
             cls: ['x-panzoom-toggle', 'x-zooming'],
             iconCls: 'expand'
         },
-
         hideLabelInGesture: false //Ext.os.is.Android
     },
-
     stopAnimationBeforeSync: true,
-
-    applyAxes: function (axesConfig, oldAxesConfig) {
+    applyAxes: function(axesConfig, oldAxesConfig) {
         return Ext.merge(oldAxesConfig || {}, axesConfig);
     },
-
-    applyZoomOnPanGesture: function (zoomOnPanGesture) {
+    applyZoomOnPanGesture: function(zoomOnPanGesture) {
         this.getChart();
         if (this.isMultiTouch()) {
             return false;
         }
         return zoomOnPanGesture;
     },
-
-    updateZoomOnPanGesture: function (zoomOnPanGesture) {
+    updateZoomOnPanGesture: function(zoomOnPanGesture) {
         if (!this.isMultiTouch()) {
             var button = this.getModeToggleButton(),
-                zoomModeCls = Ext.baseCSSPrefix + 'zooming';
+                    zoomModeCls = Ext.baseCSSPrefix + 'zooming';
             if (zoomOnPanGesture) {
                 button.addCls(zoomModeCls);
                 if (!button.config.hideText) {
@@ -207,28 +191,25 @@ Ext.define('Ext.chart.interactions.PanZoom', {
             }
         }
     },
-
-    toggleMode: function () {
+    toggleMode: function() {
         var me = this;
         if (!me.isMultiTouch()) {
             me.setZoomOnPanGesture(!me.getZoomOnPanGesture());
         }
     },
-
-    applyModeToggleButton: function (button, oldButton) {
+    applyModeToggleButton: function(button, oldButton) {
         var me = this,
-            result = Ext.factory(button, "Ext.Button", oldButton);
+                result = Ext.factory(button, "Ext.Button", oldButton);
         if (result && !oldButton) {
-            result.setHandler(function () {
+            result.setHandler(function() {
                 me.toggleMode();
             });
         }
         return result;
     },
-
-    getGestures: function () {
+    getGestures: function() {
         var me = this,
-            gestures = {};
+                gestures = {};
         gestures[me.getGesture()] = 'onGesture';
         gestures[me.getGesture() + 'start'] = 'onGestureStart';
         gestures[me.getGesture() + 'end'] = 'onGestureEnd';
@@ -238,16 +219,14 @@ Ext.define('Ext.chart.interactions.PanZoom', {
         gestures.doubletap = 'onDoubleTap';
         return gestures;
     },
-
-    onDoubleTap: function (e) {
+    onDoubleTap: function(e) {
 
     },
-
-    onPanGestureStart: function (e) {
+    onPanGestureStart: function(e) {
         if (!e || !e.touches || e.touches.length < 2) { //Limit drags to single touch
             var me = this,
-                region = me.getChart().getInnerRegion(),
-                xy = me.getChart().element.getXY();
+                    region = me.getChart().getInnerRegion(),
+                    xy = me.getChart().element.getXY();
             me.startX = e.pageX - xy[0] - region[0];
             me.startY = e.pageY - xy[1] - region[1];
             me.oldVisibleRanges = null;
@@ -257,12 +236,11 @@ Ext.define('Ext.chart.interactions.PanZoom', {
             return false;
         }
     },
-
-    onPanGesture: function (e) {
+    onPanGesture: function(e) {
         if (this.getLocks()[this.getPanGesture()] === this) { //Limit drags to single touch
             var me = this,
-                region = me.getChart().getInnerRegion(),
-                xy = me.getChart().element.getXY();
+                    region = me.getChart().getInnerRegion(),
+                    xy = me.getChart().element.getXY();
             if (me.getZoomOnPanGesture()) {
                 me.transformAxesBy(me.getZoomableAxes(e), 0, 0, (e.pageX - xy[0] - region[0]) / me.startX, me.startY / (e.pageY - xy[1] - region[1]));
             } else {
@@ -272,8 +250,7 @@ Ext.define('Ext.chart.interactions.PanZoom', {
             return false;
         }
     },
-
-    onPanGestureEnd: function (e) {
+    onPanGestureEnd: function(e) {
         var me = this;
         if (this.getLocks()[this.getPanGesture()] === this) {
             me.getChart().resumeThicknessChanged();
@@ -283,17 +260,16 @@ Ext.define('Ext.chart.interactions.PanZoom', {
             return false;
         }
     },
-
-    onGestureStart: function (e) {
+    onGestureStart: function(e) {
         if (e.touches && e.touches.length === 2) {
             var me = this,
-                xy = me.getChart().element.getXY(),
-                region = me.getChart().getInnerRegion(),
-                x = xy[0] + region[0],
-                y = xy[1] + region[1],
-                newPoints = [e.touches[0].point.x - x, e.touches[0].point.y - y, e.touches[1].point.x - x, e.touches[1].point.y - y],
-                xDistance = Math.max(44, Math.abs(newPoints[2] - newPoints[0])),
-                yDistance = Math.max(44, Math.abs(newPoints[3] - newPoints[1]));
+                    xy = me.getChart().element.getXY(),
+                    region = me.getChart().getInnerRegion(),
+                    x = xy[0] + region[0],
+                    y = xy[1] + region[1],
+                    newPoints = [e.touches[0].point.x - x, e.touches[0].point.y - y, e.touches[1].point.x - x, e.touches[1].point.y - y],
+                    xDistance = Math.max(44, Math.abs(newPoints[2] - newPoints[0])),
+                    yDistance = Math.max(44, Math.abs(newPoints[3] - newPoints[1]));
             me.getChart().suspendThicknessChanged();
             me.lastZoomDistances = [xDistance, yDistance];
             me.lastPoints = newPoints;
@@ -303,34 +279,32 @@ Ext.define('Ext.chart.interactions.PanZoom', {
             return false;
         }
     },
-
-    onGesture: function (e) {
+    onGesture: function(e) {
         if (this.getLocks()[this.getGesture()] === this) {
             var me = this,
-                region = me.getChart().getInnerRegion(),
-                xy = me.getChart().element.getXY(),
-                x = xy[0] + region[0],
-                y = xy[1] + region[1],
-                abs = Math.abs,
-                lastPoints = me.lastPoints,
-                newPoints = [e.touches[0].point.x - x, e.touches[0].point.y - y, e.touches[1].point.x - x, e.touches[1].point.y - y],
-                xDistance = Math.max(44, abs(newPoints[2] - newPoints[0])),
-                yDistance = Math.max(44, abs(newPoints[3] - newPoints[1])),
-                lastDistances = this.lastZoomDistances || [xDistance, yDistance],
-                zoomX = xDistance / lastDistances[0],
-                zoomY = yDistance / lastDistances[1];
+                    region = me.getChart().getInnerRegion(),
+                    xy = me.getChart().element.getXY(),
+                    x = xy[0] + region[0],
+                    y = xy[1] + region[1],
+                    abs = Math.abs,
+                    lastPoints = me.lastPoints,
+                    newPoints = [e.touches[0].point.x - x, e.touches[0].point.y - y, e.touches[1].point.x - x, e.touches[1].point.y - y],
+                    xDistance = Math.max(44, abs(newPoints[2] - newPoints[0])),
+                    yDistance = Math.max(44, abs(newPoints[3] - newPoints[1])),
+                    lastDistances = this.lastZoomDistances || [xDistance, yDistance],
+                    zoomX = xDistance / lastDistances[0],
+                    zoomY = yDistance / lastDistances[1];
 
             me.transformAxesBy(me.getZoomableAxes(e),
-                region[2] * (zoomX - 1) / 2 + newPoints[2] - lastPoints[2] * zoomX,
-                region[3] * (zoomY - 1) / 2 + newPoints[3] - lastPoints[3] * zoomY,
-                zoomX,
-                zoomY);
+                    region[2] * (zoomX - 1) / 2 + newPoints[2] - lastPoints[2] * zoomX,
+                    region[3] * (zoomY - 1) / 2 + newPoints[3] - lastPoints[3] * zoomY,
+                    zoomX,
+                    zoomY);
             me.sync();
             return false;
         }
     },
-
-    onGestureEnd: function (e) {
+    onGestureEnd: function(e) {
         var me = this;
         if (me.getLocks()[me.getGesture()] === me) {
             me.getChart().resumeThicknessChanged();
@@ -340,37 +314,33 @@ Ext.define('Ext.chart.interactions.PanZoom', {
             return false;
         }
     },
-
-    hideLabels: function () {
+    hideLabels: function() {
         if (this.getHideLabelInGesture()) {
-            this.eachInteractiveAxes(function (axis) {
+            this.eachInteractiveAxes(function(axis) {
                 axis.hideLabels();
             });
         }
     },
-
-    showLabels: function () {
+    showLabels: function() {
         if (this.getHideLabelInGesture()) {
-            this.eachInteractiveAxes(function (axis) {
+            this.eachInteractiveAxes(function(axis) {
                 axis.showLabels();
             });
         }
     },
-
-    isEventOnAxis: function (e, axis) {
+    isEventOnAxis: function(e, axis) {
         // TODO: right now this uses the current event position but really we want to only
         // use the gesture's start event. Pinch does not give that to us though.
         var region = axis.getSurface().getRegion();
         return region[0] <= e.pageX && e.pageX <= region[0] + region[2] && region[1] <= e.pageY && e.pageY <= region[1] + region[3];
     },
-
-    getPannableAxes: function (e) {
+    getPannableAxes: function(e) {
         var me = this,
-            axisConfigs = me.getAxes(),
-            axes = me.getChart().getAxes(),
-            i, ln = axes.length,
-            result = [], isEventOnAxis = false,
-            config;
+                axisConfigs = me.getAxes(),
+                axes = me.getChart().getAxes(),
+                i, ln = axes.length,
+                result = [], isEventOnAxis = false,
+                config;
 
         if (e) {
             for (i = 0; i < ln; i++) {
@@ -389,14 +359,13 @@ Ext.define('Ext.chart.interactions.PanZoom', {
         }
         return result;
     },
-
-    getZoomableAxes: function (e) {
+    getZoomableAxes: function(e) {
         var me = this,
-            axisConfigs = me.getAxes(),
-            axes = me.getChart().getAxes(),
-            result = [],
-            i, ln = axes.length, axis,
-            isEventOnAxis = false, config;
+                axisConfigs = me.getAxes(),
+                axes = me.getChart().getAxes(),
+                result = [],
+                i, ln = axes.length, axis,
+                isEventOnAxis = false, config;
 
         if (e) {
             for (i = 0; i < ln; i++) {
@@ -416,11 +385,10 @@ Ext.define('Ext.chart.interactions.PanZoom', {
         }
         return result;
     },
-
-    eachInteractiveAxes: function (fn) {
+    eachInteractiveAxes: function(fn) {
         var me = this,
-            axisConfigs = me.getAxes(),
-            axes = me.getChart().getAxes();
+                axisConfigs = me.getAxes(),
+                axes = me.getChart().getAxes();
         for (var i = 0; i < axes.length; i++) {
             if (axisConfigs[axes[i].getPosition()]) {
                 if (false === fn.call(this, axes[i])) {
@@ -429,16 +397,15 @@ Ext.define('Ext.chart.interactions.PanZoom', {
             }
         }
     },
-
-    transformAxesBy: function (axes, panX, panY, sx, sy) {
+    transformAxesBy: function(axes, panX, panY, sx, sy) {
         var region = this.getChart().getInnerRegion(),
-            axesCfg = this.getAxes(), axisCfg,
-            oldVisibleRanges = this.oldVisibleRanges,
-            result = false;
+                axesCfg = this.getAxes(), axisCfg,
+                oldVisibleRanges = this.oldVisibleRanges,
+                result = false;
 
         if (!oldVisibleRanges) {
             this.oldVisibleRanges = oldVisibleRanges = {};
-            this.eachInteractiveAxes(function (axis) {
+            this.eachInteractiveAxes(function(axis) {
                 oldVisibleRanges[axis.getId()] = axis.getVisibleRange();
             });
         }
@@ -453,22 +420,21 @@ Ext.define('Ext.chart.interactions.PanZoom', {
         }
         return result;
     },
-
-    transformAxisBy: function (axis, oldVisibleRange, panX, panY, sx, sy, minZoom, maxZoom) {
+    transformAxisBy: function(axis, oldVisibleRange, panX, panY, sx, sy, minZoom, maxZoom) {
         var me = this,
-            visibleLength = oldVisibleRange[1] - oldVisibleRange[0],
-            visibleRange = axis.getVisibleRange(),
-            actualMinZoom =  minZoom || me.getMinZoom() || axis.config.minZoom,
-            actualMaxZoom =  maxZoom || me.getMaxZoom() || axis.config.maxZoom,
-            region = me.getChart().getInnerRegion(),
-            left, right;
+                visibleLength = oldVisibleRange[1] - oldVisibleRange[0],
+                visibleRange = axis.getVisibleRange(),
+                actualMinZoom = minZoom || me.getMinZoom() || axis.config.minZoom,
+                actualMaxZoom = maxZoom || me.getMaxZoom() || axis.config.maxZoom,
+                region = me.getChart().getInnerRegion(),
+                left, right;
         if (!region) {
             return;
         }
 
         var isSide = axis.isSide(),
-            length = isSide ? region[3] : region[2],
-            pan = isSide ? -panY : panX;
+                length = isSide ? region[3] : region[2],
+                pan = isSide ? -panY : panX;
         visibleLength /= isSide ? sy : sx;
         if (visibleLength < 0) {
             visibleLength = -visibleLength;
@@ -494,8 +460,7 @@ Ext.define('Ext.chart.interactions.PanZoom', {
         ]);
         return (Math.abs(left - axis.getVisibleRange()[0]) > 1e-10 || Math.abs(right - axis.getVisibleRange()[1]) > 1e-10);
     },
-
-    destroy: function () {
+    destroy: function() {
         this.setModeToggleButton(null);
         this.callSuper();
     }

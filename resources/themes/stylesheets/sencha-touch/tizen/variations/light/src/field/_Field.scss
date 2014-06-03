@@ -6,13 +6,13 @@
 .x-field-select {
     .x-clear-icon, .x-input-el {
         background-color: $light-field-background-color;
-				color: $light-field-color;
+        color: $light-field-color;
     }
 
     &.x-field-focused {
         .x-clear-icon,
         .x-component-outer .x-input-el {
-						border-color: $light-field-border-color;
+            border-color: $light-field-border-color;
         }
     }
 }
@@ -22,41 +22,41 @@
 }
 
 .x-container.x-floating {
-	.x-field {
-		.x-input-el, .x-clear-icon {
-			background-color: $light-field-floating-input-background-color;
-		}
+    .x-field {
+        .x-input-el, .x-clear-icon {
+            background-color: $light-field-floating-input-background-color;
+        }
 
-		.x-pressing.x-clear-icon:before {
-			color: $light-field-floating-clear-icon-pressing-color;
-		}
+        .x-pressing.x-clear-icon:before {
+            color: $light-field-floating-clear-icon-pressing-color;
+        }
 
-		.x-clear-icon:before {
-			color: $light-field-floating-text-color;
-			border-color: $light-field-floating-text-color;
-		}
-	}
+        .x-clear-icon:before {
+            color: $light-field-floating-text-color;
+            border-color: $light-field-floating-text-color;
+        }
+    }
 
-	.x-toolbar.x-docked-bottom {
-		background-color: $light-field-floating-buttons-background-color;
-		.x-toolbar-inner {
-			.x-button {
-				background-color: $light-field-floating-button-background-color;
+    .x-toolbar.x-docked-bottom {
+        background-color: $light-field-floating-buttons-background-color;
+        .x-toolbar-inner {
+            .x-button {
+                background-color: $light-field-floating-button-background-color;
 
-				&.x-button-pressing {
-					background-color: $light-field-floating-button-pressing-background-color;
-					.x-button-label {
-						color: $light-field-floating-button-pressing-label-color;
-					}
-				}
+                &.x-button-pressing {
+                    background-color: $light-field-floating-button-pressing-background-color;
+                    .x-button-label {
+                        color: $light-field-floating-button-pressing-label-color;
+                    }
+                }
 
-				.x-button-label {
-					color: $light-field-floating-button-label-color;
-					@include text-shadow(none);
-				}
-			}
-		}
-	}
+                .x-button-label {
+                    color: $light-field-floating-button-label-color;
+                    @include text-shadow(none);
+                }
+            }
+        }
+    }
 
 }
 

@@ -9,10 +9,10 @@
     {
         $height: $width;
     }
-    
+
     width: 0;
     height: 0;
-    
+
     @if ($direction == 'top')
     {
         border-left: $width solid transparent;
@@ -67,7 +67,7 @@
     }
     @else
     {
-    	// @todo https://gist.github.com/1671259#comments
+        // @todo https://gist.github.com/1671259#comments
         @warn 'The direction used does not exist';
     }
 }

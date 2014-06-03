@@ -40,16 +40,13 @@
  */
 Ext.define('Ext.Decorator', {
     extend: 'Ext.Component',
-
     isDecorator: true,
-
     config: {
         /**
          * @cfg {Object} component The config object to factory the Component that this Decorator wraps around
          */
         component: {}
     },
-
     statics: {
         generateProxySetter: function(name) {
             return function(value) {
@@ -66,15 +63,14 @@ Ext.define('Ext.Decorator', {
             }
         }
     },
-
     onClassExtended: function(Class, members) {
         if (!members.hasOwnProperty('proxyConfig')) {
             return;
         }
 
         var ExtClass = Ext.Class,
-            proxyConfig = members.proxyConfig,
-            config = members.config;
+                proxyConfig = members.proxyConfig,
+                config = members.config;
 
         members.config = (config) ? Ext.applyIf(config, proxyConfig) : proxyConfig;
 
@@ -91,18 +87,16 @@ Ext.define('Ext.Decorator', {
             }
         }
     },
-
     // @private
     applyComponent: function(config) {
         return Ext.factory(config, Ext.Component);
     },
-
     // @private
     updateComponent: function(newComponent, oldComponent) {
         if (oldComponent) {
             if (this.isRendered() && oldComponent.setRendered(false)) {
                 oldComponent.fireAction('renderedchange', [this, oldComponent, false],
-                    'doUnsetComponent', this, { args: [oldComponent] });
+                        'doUnsetComponent', this, {args: [oldComponent]});
             }
             else {
                 this.doUnsetComponent(oldComponent);
@@ -112,14 +106,13 @@ Ext.define('Ext.Decorator', {
         if (newComponent) {
             if (this.isRendered() && newComponent.setRendered(true)) {
                 newComponent.fireAction('renderedchange', [this, newComponent, true],
-                    'doSetComponent', this, { args: [newComponent] });
+                        'doSetComponent', this, {args: [newComponent]});
             }
             else {
                 this.doSetComponent(newComponent);
             }
         }
     },
-
     // @private
     doUnsetComponent: function(component) {
         if (component.renderElement.dom) {
@@ -127,7 +120,6 @@ Ext.define('Ext.Decorator', {
             this.innerElement.dom.removeChild(component.renderElement.dom);
         }
     },
-
     // @private
     doSetComponent: function(component) {
         if (component.renderElement.dom) {
@@ -135,7 +127,6 @@ Ext.define('Ext.Decorator', {
             this.innerElement.dom.appendChild(component.renderElement.dom);
         }
     },
-
     // @private
     setRendered: function(rendered) {
         var component;
@@ -152,13 +143,11 @@ Ext.define('Ext.Decorator', {
 
         return false;
     },
-
     // @private
     setDisabled: function(disabled) {
         this.callParent(arguments);
         this.getComponent().setDisabled(disabled);
     },
-
     destroy: function() {
         Ext.destroy(this.getComponent());
         this.callParent();

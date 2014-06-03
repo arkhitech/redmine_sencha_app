@@ -56,11 +56,11 @@ Ext.define('Ext.device.filesystem.HTML5', {
         };
 
         window.requestFileSystem(
-            config.type,
-            config.size,
-            successCallback,
-            config.failure || Ext.emptyFn
-        );
+                config.type,
+                config.size,
+                successCallback,
+                config.failure || Ext.emptyFn
+                );
     }
 }, function() {
     /**
@@ -69,12 +69,10 @@ Ext.define('Ext.device.filesystem.HTML5', {
     Ext.define('Ext.device.filesystem.FileSystem', {
         fs: null,
         root: null,
-
         constructor: function(fs) {
             this.fs = fs;
             this.root = Ext.create('Ext.device.filesystem.DirectoryEntry', '/', this);
         },
-
         /**
          * Returns a {@link Ext.device.filesystem.DirectoryEntry} instance for the root of the file system.
          *
@@ -97,13 +95,11 @@ Ext.define('Ext.device.filesystem.HTML5', {
             path: 0,
             fileSystem: null,
             entry: null,
-
             constructor: function(directory, path, fileSystem) {
                 this.directory = directory;
                 this.path = path;
                 this.fileSystem = fileSystem;
             },
-
             /**
              * Returns whether the entry is a file.
              *
@@ -113,7 +109,6 @@ Ext.define('Ext.device.filesystem.HTML5', {
             isFile: function() {
                 return !this.directory;
             },
-
             /**
              * Returns whether the entry is a directory.
              *
@@ -123,7 +118,6 @@ Ext.define('Ext.device.filesystem.HTML5', {
             isDirectory: function() {
                 return this.directory;
             },
-
             /**
              * Returns the name of the entry, excluding the path leading to it.
              *
@@ -140,7 +134,6 @@ Ext.define('Ext.device.filesystem.HTML5', {
 
                 return '/';
             },
-
             /**
              * Returns the full absolute path from the root to the entry.
              *
@@ -150,7 +143,6 @@ Ext.define('Ext.device.filesystem.HTML5', {
             getFullPath: function() {
                 return this.path;
             },
-
             /**
              * Returns the file system on which the entry resides.
              *
@@ -160,11 +152,9 @@ Ext.define('Ext.device.filesystem.HTML5', {
             getFileSystem: function() {
                 return this.fileSystem;
             },
-
             getEntry: function() {
                 return null;
             },
-
             /**
              * Moves the entry to a different location on the file system.
              *
@@ -201,38 +191,37 @@ Ext.define('Ext.device.filesystem.HTML5', {
                 var me = this;
 
                 this.getEntry(
-                    {
-                        options: config.options || {},
-                        success: function(sourceEntry) {
-                            config.parent.getEntry(
-                                {
-                                    options: config.options || {},
-                                    success: function(destinationEntry) {
-                                        if (config.copy) {
-                                            sourceEntry.copyTo(destinationEntry, config.newName, function(entry) {
-                                                config.success.call(
-                                                    config.scope || me,
-                                                    entry.isDirectory ? Ext.create('Ext.device.filesystem.DirectoryEntry', entry.fullPath, me.fileSystem) : Ext.create('Ext.device.filesystem.FileEntry', entry.fullPath, me.fileSystem)
-                                                );
-                                            }, config.failure);
-                                        } else {
-                                            sourceEntry.moveTo(destinationEntry, config.newName, function(entry) {
-                                                config.success.call(
-                                                    config.scope || me,
-                                                    entry.isDirectory ? Ext.create('Ext.device.filesystem.DirectoryEntry', entry.fullPath, me.fileSystem) : Ext.create('Ext.device.filesystem.FileEntry', entry.fullPath, me.fileSystem)
-                                                );
-                                            }, config.failure);
+                        {
+                            options: config.options || {},
+                            success: function(sourceEntry) {
+                                config.parent.getEntry(
+                                        {
+                                            options: config.options || {},
+                                            success: function(destinationEntry) {
+                                                if (config.copy) {
+                                                    sourceEntry.copyTo(destinationEntry, config.newName, function(entry) {
+                                                        config.success.call(
+                                                                config.scope || me,
+                                                                entry.isDirectory ? Ext.create('Ext.device.filesystem.DirectoryEntry', entry.fullPath, me.fileSystem) : Ext.create('Ext.device.filesystem.FileEntry', entry.fullPath, me.fileSystem)
+                                                                );
+                                                    }, config.failure);
+                                                } else {
+                                                    sourceEntry.moveTo(destinationEntry, config.newName, function(entry) {
+                                                        config.success.call(
+                                                                config.scope || me,
+                                                                entry.isDirectory ? Ext.create('Ext.device.filesystem.DirectoryEntry', entry.fullPath, me.fileSystem) : Ext.create('Ext.device.filesystem.FileEntry', entry.fullPath, me.fileSystem)
+                                                                );
+                                                    }, config.failure);
+                                                }
+                                            },
+                                            failure: config.failure
                                         }
-                                    },
-                                    failure: config.failure
-                                }
-                            );
-                        },
-                        failure: config.failure
-                    }
+                                );
+                            },
+                            failure: config.failure
+                        }
                 );
             },
-
             /**
              * Works the same way as {@link Ext.device.filesystem.Entry#moveTo}, but copies the entry.
              */
@@ -241,7 +230,6 @@ Ext.define('Ext.device.filesystem.HTML5', {
                     copy: true
                 }));
             },
-
             /**
              * Removes the entry from the file system.
              *
@@ -265,19 +253,18 @@ Ext.define('Ext.device.filesystem.HTML5', {
              */
             remove: function(config) {
                 this.getEntry(
-                    {
-                        success: function(entry) {
-                            if (config.recursively && this.directory) {
-                                entry.removeRecursively(config.success, config.failure)
-                            } else {
-                                entry.remove(config.success, config.failure)
-                            }
-                        },
-                        failure: config.failure
-                    }
+                        {
+                            success: function(entry) {
+                                if (config.recursively && this.directory) {
+                                    entry.removeRecursively(config.success, config.failure)
+                                } else {
+                                    entry.remove(config.success, config.failure)
+                                }
+                            },
+                            failure: config.failure
+                        }
                 )
             },
-
             /**
              * Looks up the parent directory containing the entry.
              *
@@ -307,24 +294,24 @@ Ext.define('Ext.device.filesystem.HTML5', {
 
                 var me = this;
                 this.getEntry(
-                    {
-                        options: config.options || {},
-                        success: function(entry) {
-                            entry.getParent(
-                                function(parentEntry) {
-                                    config.success.call(
-                                        config.scope || me,
-                                        parentEntry.isDirectory
-                                            ? Ext.create('Ext.device.filesystem.DirectoryEntry', parentEntry.fullPath, me.fileSystem)
-                                            : Ext.create('Ext.device.filesystem.FileEntry', parentEntry.fullPath, me.fileSystem)
-                                    )
-                                },
-                                config.failure
-                            )
+                        {
+                            options: config.options || {},
+                            success: function(entry) {
+                                entry.getParent(
+                                        function(parentEntry) {
+                                            config.success.call(
+                                                    config.scope || me,
+                                                    parentEntry.isDirectory
+                                                    ? Ext.create('Ext.device.filesystem.DirectoryEntry', parentEntry.fullPath, me.fileSystem)
+                                                    : Ext.create('Ext.device.filesystem.FileEntry', parentEntry.fullPath, me.fileSystem)
+                                                    )
+                                        },
+                                        config.failure
+                                        )
 
-                        },
-                        failure: config.failure
-                    }
+                            },
+                            failure: config.failure
+                        }
                 )
             }
         });
@@ -335,11 +322,9 @@ Ext.define('Ext.device.filesystem.HTML5', {
         Ext.define('Ext.device.filesystem.DirectoryEntry', {
             extend: 'Ext.device.filesystem.Entry',
             cachedDirectory: null,
-
             constructor: function(path, fileSystem) {
                 this.callParent([true, path, fileSystem]);
             },
-
             /**
              * Requests a Directory from the Local File System
              *
@@ -386,14 +371,13 @@ Ext.define('Ext.device.filesystem.HTML5', {
                     recursiveCreation(this.fileSystem.fs.root);
                 } else {
                     this.fileSystem.fs.root.getDirectory(this.path, config.options,
-                        function(directory) {
-                            config.success.call(config.scope || me, directory);
-                        },
-                        config.failure
-                    );
+                            function(directory) {
+                                config.success.call(config.scope || me, directory);
+                            },
+                            config.failure
+                            );
                 }
             },
-
             /**
              * Lists all the entries in the directory.
              *
@@ -423,35 +407,34 @@ Ext.define('Ext.device.filesystem.HTML5', {
 
                 var me = this;
                 this.getEntry(
-                    {
-                        success: function(dirEntry) {
-                            var directoryReader = dirEntry.createReader();
-                            directoryReader.readEntries(
-                                function(entryInfos) {
-                                    var entries = [],
-                                        i = 0,
-                                        len = entryInfos.length;
+                        {
+                            success: function(dirEntry) {
+                                var directoryReader = dirEntry.createReader();
+                                directoryReader.readEntries(
+                                        function(entryInfos) {
+                                            var entries = [],
+                                                    i = 0,
+                                                    len = entryInfos.length;
 
-                                    for (; i < len; i++) {
-                                        entryInfo = entryInfos[i];
-                                        entries[i] = entryInfo.isDirectory
-                                            ? Ext.create('Ext.device.filesystem.DirectoryEntry', entryInfo.fullPath, me.fileSystem)
-                                            : Ext.create('Ext.device.filesystem.FileEntry', entryInfo.fullPath, me.fileSystem);
-                                    }
-                                    config.success.call(config.scope || this, entries);
-                                },
-                                function(error) {
-                                    if (config.failure) {
-                                        config.failure.call(config.scope || this, error);
-                                    }
-                                }
-                            );
-                        },
-                        failure: config.failure
-                    }
+                                            for (; i < len; i++) {
+                                                entryInfo = entryInfos[i];
+                                                entries[i] = entryInfo.isDirectory
+                                                        ? Ext.create('Ext.device.filesystem.DirectoryEntry', entryInfo.fullPath, me.fileSystem)
+                                                        : Ext.create('Ext.device.filesystem.FileEntry', entryInfo.fullPath, me.fileSystem);
+                                            }
+                                            config.success.call(config.scope || this, entries);
+                                        },
+                                        function(error) {
+                                            if (config.failure) {
+                                                config.failure.call(config.scope || this, error);
+                                            }
+                                        }
+                                );
+                            },
+                            failure: config.failure
+                        }
                 );
             },
-
             /**
              * Creates or looks up a file.
              *
@@ -495,16 +478,15 @@ Ext.define('Ext.device.filesystem.HTML5', {
                 var fullPath = this.path + config.path;
                 var fileEntry = Ext.create('Ext.device.filesystem.FileEntry', fullPath, this.fileSystem);
                 fileEntry.getEntry(
-                    {
-                        success: function() {
-                            config.success.call(config.scope || me, fileEntry);
-                        },
-                        options: config.options || {},
-                        failure: config.failure
-                    }
+                        {
+                            success: function() {
+                                config.success.call(config.scope || me, fileEntry);
+                            },
+                            options: config.options || {},
+                            failure: config.failure
+                        }
                 )
             },
-
             /**
              * Works the same way as {@link Ext.device.filesystem.DirectoryEntry#getFile},
              * but creates or looks up a directory.
@@ -519,16 +501,15 @@ Ext.define('Ext.device.filesystem.HTML5', {
                 var fullPath = this.path + config.path;
                 var directoryEntry = Ext.create('Ext.device.filesystem.DirectoryEntry', fullPath, this.fileSystem);
                 directoryEntry.getEntry(
-                    {
-                        success: function() {
-                            config.success.call(config.scope || me, directoryEntry);
-                        },
-                        options: config.options || {},
-                        failure: config.failure
-                    }
+                        {
+                            success: function() {
+                                config.success.call(config.scope || me, directoryEntry);
+                            },
+                            options: config.options || {},
+                            failure: config.failure
+                        }
                 )
             },
-
             /**
              * Works the same way as {@link Ext.device.filesystem.Entry#remove},
              * but removes the directory and all of its contents, if any.
@@ -545,16 +526,13 @@ Ext.define('Ext.device.filesystem.HTML5', {
          */
         Ext.define('Ext.device.filesystem.FileEntry', {
             extend: 'Ext.device.filesystem.Entry',
-
             length: 0,
             offset: 0,
-
             constructor: function(path, fileSystem) {
                 this.callParent([false, path, fileSystem]);
                 this.offset = 0;
                 this.length = 0;
             },
-
             /**
              * Requests a File Handle from the Local File System
              *
@@ -599,14 +577,14 @@ Ext.define('Ext.device.filesystem.HTML5', {
 
                                 var dirEntry = Ext.create('Ext.device.filesystem.DirectoryEntry', folders.join("/"), me.fileSystem);
                                 dirEntry.getEntry(
-                                    {
-                                        options: config.options,
-                                        success: function() {
-                                            originalConfig.recursive = true;
-                                            me.getEntry(originalConfig);
-                                        },
-                                        failure: config.failure
-                                    }
+                                        {
+                                            options: config.options,
+                                            success: function() {
+                                                originalConfig.recursive = true;
+                                                me.getEntry(originalConfig);
+                                            },
+                                            failure: config.failure
+                                        }
                                 );
                             } else {
                                 if (config.failure) {
@@ -621,26 +599,25 @@ Ext.define('Ext.device.filesystem.HTML5', {
                     };
 
                     this.fileSystem.fs.root.getFile(this.path, config.options || null,
-                        function(fileEntry) {
-                            fileEntry.file(
-                                function(file) {
-                                    me.length = file.size;
-                                    originalConfig.success.call(config.scope || me, fileEntry);
-                                },
-                                function(error) {
-                                    failure.call(config.scope || me, error);
-                                }
-                            );
-                        },
-                        function(error) {
-                            failure.call(config.scope || me, error);
-                        }
+                            function(fileEntry) {
+                                fileEntry.file(
+                                        function(file) {
+                                            me.length = file.size;
+                                            originalConfig.success.call(config.scope || me, fileEntry);
+                                        },
+                                        function(error) {
+                                            failure.call(config.scope || me, error);
+                                        }
+                                );
+                            },
+                            function(error) {
+                                failure.call(config.scope || me, error);
+                            }
                     );
                 } else {
                     config.failure({code: -1, message: "FileSystem not Initialized"});
                 }
             },
-
             /**
              * Returns the byte offset into the file at which the next read/write will occur.
              *
@@ -650,7 +627,6 @@ Ext.define('Ext.device.filesystem.HTML5', {
             getOffset: function() {
                 return this.offset;
             },
-
             /**
              * Sets the byte offset into the file at which the next read/write will occur.
              *
@@ -684,7 +660,6 @@ Ext.define('Ext.device.filesystem.HTML5', {
                     config.success.call(config.scope || this);
                 }
             },
-
             /**
              * Reads the data from the file starting at the file offset.
              *
@@ -728,64 +703,63 @@ Ext.define('Ext.device.filesystem.HTML5', {
             read: function(config) {
                 var me = this;
                 this.getEntry(
-                    {
-                        success: function(fileEntry) {
-                            fileEntry.file(
-                                function(file) {
-                                    if (Ext.isNumber(config.length)) {
-                                        if (Ext.isFunction(file.slice)) {
-                                            file = file.slice(me.offset, config.length);
-                                        } else {
-                                            if (config.failure) {
-                                                config.failure.call(config.scope || me, {code: -2, message: "File missing slice functionality"});
+                        {
+                            success: function(fileEntry) {
+                                fileEntry.file(
+                                        function(file) {
+                                            if (Ext.isNumber(config.length)) {
+                                                if (Ext.isFunction(file.slice)) {
+                                                    file = file.slice(me.offset, config.length);
+                                                } else {
+                                                    if (config.failure) {
+                                                        config.failure.call(config.scope || me, {code: -2, message: "File missing slice functionality"});
+                                                    }
+                                                    return;
+                                                }
                                             }
-                                            return;
+
+                                            var reader = new FileReader();
+                                            reader.onloadend = function(evt) {
+                                                config.success.call(config.scope || me, evt.target.result);
+                                            };
+
+                                            reader.onerror = function(error) {
+                                                config.failure.call(config.scope || me, error);
+                                            };
+
+                                            if (config.reader) {
+                                                reader = Ext.applyIf(reader, config.reader);
+                                            }
+
+                                            config.encoding = config.encoding || "UTF8";
+
+                                            switch (config.type) {
+                                                default:
+                                                case "text":
+                                                    reader.readAsText(file, config.encoding);
+                                                    break;
+                                                case "dataURL":
+                                                    reader.readAsDataURL(file);
+                                                    break;
+                                                case "binaryString":
+                                                    reader.readAsBinaryString(file);
+                                                    break;
+                                                case "arrayBuffer":
+                                                    reader.readAsArrayBuffer(file);
+                                                    break;
+                                            }
+                                        },
+                                        function(error) {
+                                            config.failure.call(config.scope || me, error)
                                         }
-                                    }
-
-                                    var reader = new FileReader();
-                                    reader.onloadend = function(evt) {
-                                        config.success.call(config.scope || me, evt.target.result);
-                                    };
-
-                                    reader.onerror = function(error) {
-                                        config.failure.call(config.scope || me, error);
-                                    };
-
-                                    if (config.reader) {
-                                        reader = Ext.applyIf(reader, config.reader);
-                                    }
-
-                                    config.encoding = config.encoding || "UTF8";
-
-                                    switch (config.type) {
-                                        default:
-                                        case "text":
-                                            reader.readAsText(file, config.encoding);
-                                            break;
-                                        case "dataURL":
-                                            reader.readAsDataURL(file);
-                                            break;
-                                        case "binaryString":
-                                            reader.readAsBinaryString(file);
-                                            break;
-                                        case "arrayBuffer":
-                                            reader.readAsArrayBuffer(file);
-                                            break;
-                                    }
-                                },
-                                function(error) {
-                                    config.failure.call(config.scope || me, error)
-                                }
-                            );
-                        },
-                        failure: function(error) {
-                            config.failure.call(config.scope || me, error)
+                                );
+                            },
+                            failure: function(error) {
+                                config.failure.call(config.scope || me, error)
+                            }
                         }
-                    }
                 )
             },
-
             /**
              * Writes the data to the file starting at the file offset.
              *
@@ -828,48 +802,46 @@ Ext.define('Ext.device.filesystem.HTML5', {
 
                 var me = this;
                 this.getEntry(
-                    {
-                        options: config.options || {},
-                        success: function(fileEntry) {
-                            fileEntry.createWriter(
-                                function(writer) {
-                                    writer.onwriteend = function(evt) {
-                                        me.length = evt.target.length;
-                                        config.success.call(config.scope || me, evt.result);
-                                    };
+                        {
+                            options: config.options || {},
+                            success: function(fileEntry) {
+                                fileEntry.createWriter(
+                                        function(writer) {
+                                            writer.onwriteend = function(evt) {
+                                                me.length = evt.target.length;
+                                                config.success.call(config.scope || me, evt.result);
+                                            };
 
-                                    writer.onerror = function(error) {
-                                        config.failure.call(config.scope || me, error);
-                                    };
+                                            writer.onerror = function(error) {
+                                                config.failure.call(config.scope || me, error);
+                                            };
 
-                                    if (config.writer) {
-                                        writer = Ext.applyIf(writer, config.writer);
-                                    }
+                                            if (config.writer) {
+                                                writer = Ext.applyIf(writer, config.writer);
+                                            }
 
-                                    if (me.offset) {
-                                        writer.seek(me.offset);
-                                    } else if (config.append) {
-                                        writer.seek(me.length);
-                                    }
+                                            if (me.offset) {
+                                                writer.seek(me.offset);
+                                            } else if (config.append) {
+                                                writer.seek(me.length);
+                                            }
 
-                                    me.writeData (writer, config.data);
-                                },
-                                function(error) {
-                                    config.failure.call(config.scope || me, error)
-                                }
-                            )
-                        },
-                        failure: function(error) {
-                            config.failure.call(config.scope || me, error)
+                                            me.writeData(writer, config.data);
+                                        },
+                                        function(error) {
+                                            config.failure.call(config.scope || me, error)
+                                        }
+                                )
+                            },
+                            failure: function(error) {
+                                config.failure.call(config.scope || me, error)
+                            }
                         }
-                    }
                 )
             },
-
             writeData: function(writer, data) {
                 writer.write(new Blob([data]));
             },
-
             /**
              * Truncates or extends the file to the specified size in bytes.
              * If the file is extended, the added bytes are null bytes.
@@ -901,22 +873,22 @@ Ext.define('Ext.device.filesystem.HTML5', {
                 var me = this;
                 //noinspection JSValidateTypes
                 this.getEntry(
-                    {
-                        success: function(fileEntry) {
-                            fileEntry.createWriter(
-                                function(writer) {
-                                    writer.truncate(config.size);
-                                    config.success.call(config.scope || me, me);
-                                },
-                                function(error) {
-                                    config.failure.call(config.scope || me, error)
-                                }
-                            )
-                        },
-                        failure: function(error) {
-                            config.failure.call(config.scope || me, error)
+                        {
+                            success: function(fileEntry) {
+                                fileEntry.createWriter(
+                                        function(writer) {
+                                            writer.truncate(config.size);
+                                            config.success.call(config.scope || me, me);
+                                        },
+                                        function(error) {
+                                            config.failure.call(config.scope || me, error)
+                                        }
+                                )
+                            },
+                            failure: function(error) {
+                                config.failure.call(config.scope || me, error)
+                            }
                         }
-                    }
                 )
             }
         });

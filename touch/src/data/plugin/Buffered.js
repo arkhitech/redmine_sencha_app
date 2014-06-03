@@ -4,30 +4,24 @@
  */
 Ext.define('Ext.data.plugin.Buffered', {
     alias: 'plugin.storebuffered',
-
     extend: 'Ext.Evented',
-
     requires: [
         'Ext.util.BufferedCollection'
     ],
-
     config: {
         store: null,
-
         /**
          * @cfg {Number} trailingBufferZone
          * When {@link #buffered}, the number of extra records to keep cached on the trailing side of scrolling buffer
          * as scrolling proceeds. A larger number means fewer replenishments from the server.
          */
         trailingBufferZone: 25,
-
         /**
          * @cfg {Number} leadingBufferZone
          * When {@link #buffered}, the number of extra rows to keep cached on the leading side of scrolling buffer
          * as scrolling proceeds. A larger number means fewer replenishments from the server.
          */
         leadingBufferZone: 50,
-
         /**
          * @cfg {Number} purgePageCount
          * *Valid only when used with a {@link Ext.data.Store#buffered buffered} Store.*
@@ -40,22 +34,17 @@ Ext.define('Ext.data.plugin.Buffered', {
          * A value of 0 indicates to never purge the prefetched data.
          */
         purgePageCount: 5,
-
         // Number of records to load into a buffered grid before it has been bound to a view of known size
         viewSize: 0,
-
         bufferedCollection: {}
     },
-
     init: function(store) {
         this.setStore(store);
         this.pageRequests = {};
     },
-
     applyBufferedCollection: function(config) {
         return Ext.factory(config, Ext.util.BufferedCollection, this.getBufferedCollection());
     },
-
     updateBufferedCollection: function(collection) {
         var store = this.getStore();
         if (store) {
@@ -63,7 +52,6 @@ Ext.define('Ext.data.plugin.Buffered', {
             store.data = collection;
         }
     },
-
     updateStore: function(store) {
         if (store) {
             store.setRemoteSort(true);
@@ -86,7 +74,6 @@ Ext.define('Ext.data.plugin.Buffered', {
             });
         }
     },
-
     updateViewSize: function(viewSize) {
         var store = this.getStore();
         if (store) {
@@ -94,7 +81,6 @@ Ext.define('Ext.data.plugin.Buffered', {
             this.getBufferedCollection().setPageSize(viewSize);
         }
     },
-
     requestRange: function(start, end, callback, scope) {
         if (this.isRangeCached(start, end)) {
             callback.call(scope || this, this.getBufferedCollection().getRange(start, end));
@@ -107,11 +93,10 @@ Ext.define('Ext.data.plugin.Buffered', {
             });
         }
     },
-
     load: function(options, scope) {
         var store = this.getStore(),
-            currentPage = store.currentPage,
-            viewSize = this.getViewSize();
+                currentPage = store.currentPage,
+                viewSize = this.getViewSize();
 
         options = options || {};
 
@@ -126,11 +111,9 @@ Ext.define('Ext.data.plugin.Buffered', {
             sorters: store.getSorters(),
             filters: store.getFilters(),
             grouper: store.getGrouper(),
-
             page: currentPage,
             start: (currentPage - 1) * viewSize,
             limit: viewSize,
-
             addRecords: false,
             action: 'read',
             model: store.getModel()
@@ -138,19 +121,18 @@ Ext.define('Ext.data.plugin.Buffered', {
 
         this.loadPrefetch(options);
     },
-
     loadPrefetch: function(options) {
         var me = this,
-            startIndex = options.start,
-            endIndex = options.start + options.limit - 1,
-            trailingBufferZone = me.getTrailingBufferZone(),
-            leadingBufferZone = me.getLeadingBufferZone(),
-            startPage = me.getPageFromRecordIndex(Math.max(startIndex - trailingBufferZone, 0)),
-            endPage = me.getPageFromRecordIndex(endIndex + leadingBufferZone),
-            bufferedCollection = me.getBufferedCollection(),
-            store = me.getStore(),
-            prefetchOptions = Ext.apply({}, options),
-            waitForRequestedRange, totalCount, i, records;
+                startIndex = options.start,
+                endIndex = options.start + options.limit - 1,
+                trailingBufferZone = me.getTrailingBufferZone(),
+                leadingBufferZone = me.getLeadingBufferZone(),
+                startPage = me.getPageFromRecordIndex(Math.max(startIndex - trailingBufferZone, 0)),
+                endPage = me.getPageFromRecordIndex(endIndex + leadingBufferZone),
+                bufferedCollection = me.getBufferedCollection(),
+                store = me.getStore(),
+                prefetchOptions = Ext.apply({}, options),
+                waitForRequestedRange, totalCount, i, records;
 
         // Wait for the viewable range to be available
         waitForRequestedRange = function() {
@@ -189,7 +171,6 @@ Ext.define('Ext.data.plugin.Buffered', {
 
         me.prefetchPage(startPage, prefetchOptions);
     },
-
     /**
      * Prefetches a page of data.
      * @param {Number} page The page to prefetch
@@ -198,7 +179,7 @@ Ext.define('Ext.data.plugin.Buffered', {
      */
     prefetchPage: function(page, options) {
         var me = this,
-            viewSize = me.getViewSize();
+                viewSize = me.getViewSize();
 
         // Copy options into a new object so as not to mutate passed in objects
         me.prefetch(Ext.applyIf({
@@ -207,7 +188,6 @@ Ext.define('Ext.data.plugin.Buffered', {
             limit: viewSize
         }, options));
     },
-
     /**
      * Prefetches data into the store using its configured {@link #proxy}.
      * @param {Object} options (Optional) config object, passed into the Ext.data.Operation object before loading.
@@ -215,9 +195,9 @@ Ext.define('Ext.data.plugin.Buffered', {
      */
     prefetch: function(options) {
         var me = this,
-            pageSize = me.getViewSize(),
-            store = me.getStore(),
-            operation;
+                pageSize = me.getViewSize(),
+                store = me.getStore(),
+                operation;
 
         // Always get whole pages.
         if (!options.page) {
@@ -230,7 +210,7 @@ Ext.define('Ext.data.plugin.Buffered', {
         if (!me.pageRequests[options.page]) {
             // Copy options into a new object so as not to mutate passed in objects
             options = Ext.applyIf({
-                action : 'read',
+                action: 'read',
                 sorters: store.getSorters(),
                 filters: store.getFilters(),
                 grouper: store.getGrouper()
@@ -245,7 +225,6 @@ Ext.define('Ext.data.plugin.Buffered', {
 
         return me;
     },
-
     /**
      * Called after the configured proxy completes a prefetch operation.
      * @private
@@ -253,13 +232,13 @@ Ext.define('Ext.data.plugin.Buffered', {
      */
     onProxyPrefetch: function(operation) {
         var me = this,
-            resultSet = operation.getResultSet(),
-            records = operation.getRecords(),
-            successful = operation.wasSuccessful(),
-            store = me.getStore(),
-            bufferedCollection = me.getBufferedCollection(),
-            page = operation.getPage(),
-            total;
+                resultSet = operation.getResultSet(),
+                records = operation.getRecords(),
+                successful = operation.wasSuccessful(),
+                store = me.getStore(),
+                bufferedCollection = me.getBufferedCollection(),
+                page = operation.getPage(),
+                total;
 
         if (resultSet) {
             total = resultSet.getTotal();
@@ -283,7 +262,6 @@ Ext.define('Ext.data.plugin.Buffered', {
         //this is a callback that would have been passed to the 'read' function and is optional
         Ext.callback(operation.callback, operation.scope || me, [records, operation, successful]);
     },
-
     /**
      * Caches the records in the prefetch and stripes them with their server-side
      * index.
@@ -293,8 +271,8 @@ Ext.define('Ext.data.plugin.Buffered', {
      */
     cachePage: function(records, page) {
         var me = this,
-            bufferedCollection = me.getBufferedCollection(),
-            ln = records.length, i;
+                bufferedCollection = me.getBufferedCollection(),
+                ln = records.length, i;
 
         // Add the fetched page into the pageCache
         for (i = 0; i < ln; i++) {
@@ -303,7 +281,6 @@ Ext.define('Ext.data.plugin.Buffered', {
 
         bufferedCollection.addPage(page, records);
     },
-
     /**
      * Determines the page from a record index
      * @param {Number} index The record index
@@ -312,7 +289,6 @@ Ext.define('Ext.data.plugin.Buffered', {
     getPageFromRecordIndex: function(index) {
         return Math.floor(index / this.getViewSize()) + 1;
     },
-
     /**
      * Determines if the passed range is available in the page cache.
      * @private

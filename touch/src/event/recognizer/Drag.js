@@ -3,17 +3,11 @@
  */
 Ext.define('Ext.event.recognizer.Drag', {
     extend: 'Ext.event.recognizer.SingleTouch',
-
     isStarted: false,
-
     startPoint: null,
-
     previousPoint: null,
-
     lastPoint: null,
-
     handledEvents: ['dragstart', 'drag', 'dragend'],
-
     config: {
         /**
          * @cfg {Number} minDistance
@@ -21,7 +15,6 @@ Ext.define('Ext.event.recognizer.Drag', {
          */
         minDistance: 8
     },
-
     constructor: function() {
         this.callSuper(arguments);
 
@@ -58,7 +51,6 @@ Ext.define('Ext.event.recognizer.Drag', {
             }
         };
     },
-
     onTouchStart: function(e) {
         if (this.callSuper(arguments) === false) {
             if (this.isStarted && this.lastMoveEvent !== null) {
@@ -71,14 +63,13 @@ Ext.define('Ext.event.recognizer.Drag', {
         this.startTime = e.time;
         this.startPoint = e.changedTouches[0].point;
     },
-
     tryDragStart: function(e) {
         var startPoint = this.startPoint,
-            touches = e.changedTouches,
-            touch = touches[0],
-            point = touch.point,
-            minDistance = this.getMinDistance(),
-            info = this.info;
+                touches = e.changedTouches,
+                touch = touches[0],
+                point = touch.point,
+                minDistance = this.getMinDistance(),
+                info = this.info;
 
         if (Math.abs(point.getDistanceTo(startPoint)) >= minDistance) {
             this.isStarted = true;
@@ -93,7 +84,6 @@ Ext.define('Ext.event.recognizer.Drag', {
             this.fire('dragstart', e, touches, info);
         }
     },
-
     onTouchMove: function(e) {
         if (!this.isStarted) {
             this.tryDragStart(e);
@@ -104,8 +94,8 @@ Ext.define('Ext.event.recognizer.Drag', {
         }
 
         var touches = e.changedTouches,
-            touch = touches[0],
-            point = touch.point;
+                touch = touches[0],
+                point = touch.point;
 
         if (this.lastPoint) {
             this.previousPoint = this.lastPoint;
@@ -121,7 +111,6 @@ Ext.define('Ext.event.recognizer.Drag', {
 
         this.fire('drag', e, touches, this.info);
     },
-
     onAxisDragEnd: function(axis, info) {
         var duration = info.time - info.previousTime[axis];
 
@@ -129,13 +118,12 @@ Ext.define('Ext.event.recognizer.Drag', {
             info.flick.velocity[axis] = (info[axis] - info.previous[axis]) / duration;
         }
     },
-
     resetInfo: function(axis, e, touch) {
         var value = this.lastPoint[axis],
-            startValue = this.startPoint[axis],
-            delta = value - startValue,
-            capAxis = axis.toUpperCase(),
-            info = this.info;
+                startValue = this.startPoint[axis],
+                delta = value - startValue,
+                capAxis = axis.toUpperCase(),
+                info = this.info;
 
         info.touch = touch;
 
@@ -155,18 +143,17 @@ Ext.define('Ext.event.recognizer.Drag', {
         info['previousDelta' + capAxis] = 0;
         info.startTime = this.startTime;
     },
-
     updateInfo: function(axis, e, touch, updatePrevious) {
         var time = e.time,
-            value = this.lastPoint[axis],
-            previousValue = this.previousPoint[axis],
-            startValue = this.startPoint[axis],
-            delta = value - startValue,
-            info = this.info,
-            direction = info.direction,
-            capAxis = axis.toUpperCase(),
-            previousFlick = info.previous[axis],
-            previousDelta;
+                value = this.lastPoint[axis],
+                previousValue = this.previousPoint[axis],
+                startValue = this.startPoint[axis],
+                delta = value - startValue,
+                info = this.info,
+                direction = info.direction,
+                capAxis = axis.toUpperCase(),
+                previousFlick = info.previous[axis],
+                previousDelta;
 
         info.touch = touch;
 
@@ -196,7 +183,6 @@ Ext.define('Ext.event.recognizer.Drag', {
         info['previousDelta' + capAxis] = previousDelta;
         info.startTime = this.startTime;
     },
-
     onTouchEnd: function(e) {
         if (!this.isStarted) {
             this.tryDragStart(e);
@@ -204,9 +190,9 @@ Ext.define('Ext.event.recognizer.Drag', {
 
         if (this.isStarted) {
             var touches = e.changedTouches,
-                touch = touches[0],
-                point = touch.point,
-                info = this.info;
+                    touch = touches[0],
+                    point = touch.point,
+                    info = this.info;
 
             this.isStarted = false;
             this.lastPoint = point;

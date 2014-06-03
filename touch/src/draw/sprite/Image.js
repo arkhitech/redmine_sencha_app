@@ -11,7 +11,6 @@ Ext.define("Ext.draw.sprite.Image", {
     statics: {
         imageLoaders: {}
     },
-
     inheritableStatics: {
         def: {
             processors: {
@@ -27,19 +26,18 @@ Ext.define("Ext.draw.sprite.Image", {
             }
         }
     },
-
-    render: function (surface, ctx) {
+    render: function(surface, ctx) {
         var me = this,
-            attr = me.attr,
-            mat = attr.matrix,
-            src = attr.src,
-            x = attr.x,
-            y = attr.y,
-            width = attr.width,
-            height = attr.height,
-            loadingStub = Ext.draw.sprite.Image.imageLoaders[src],
-            imageLoader,
-            i;
+                attr = me.attr,
+                mat = attr.matrix,
+                src = attr.src,
+                x = attr.x,
+                y = attr.y,
+                width = attr.width,
+                height = attr.height,
+                loadingStub = Ext.draw.sprite.Image.imageLoaders[src],
+                imageLoader,
+                i;
 
         if (loadingStub && loadingStub.done) {
             mat.toContext(ctx);
@@ -54,7 +52,7 @@ Ext.define("Ext.draw.sprite.Image", {
             };
             imageLoader.width = width;
             imageLoader.height = height;
-            imageLoader.onload = function () {
+            imageLoader.onload = function() {
                 if (!loadingStub.done) {
                     loadingStub.done = true;
                     for (i = 0; i < loadingStub.pendingSprites.length; i++) {

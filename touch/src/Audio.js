@@ -89,8 +89,7 @@
  */
 Ext.define('Ext.Audio', {
     extend: 'Ext.Media',
-    xtype : 'audio',
-
+    xtype: 'audio',
     config: {
         /**
          * @cfg
@@ -98,19 +97,18 @@ Ext.define('Ext.Audio', {
          */
         cls: Ext.baseCSSPrefix + 'audio'
 
-        /**
-         * @cfg {String} url
-         * The location of the audio to play.
-         *
-         * ### Recommended file types are:
-         * * Uncompressed WAV and AIF audio
-         * * MP3 audio
-         * * AAC-LC
-         * * HE-AAC audio
-         * @accessor
-         */
+                /**
+                 * @cfg {String} url
+                 * The location of the audio to play.
+                 *
+                 * ### Recommended file types are:
+                 * * Uncompressed WAV and AIF audio
+                 * * MP3 audio
+                 * * AAC-LC
+                 * * HE-AAC audio
+                 * @accessor
+                 */
     },
-
     // @private
     onActivate: function() {
         var me = this;
@@ -121,7 +119,6 @@ Ext.define('Ext.Audio', {
             me.element.show();
         }
     },
-
     // @private
     onDeactivate: function() {
         var me = this;
@@ -132,11 +129,10 @@ Ext.define('Ext.Audio', {
             me.element.hide();
         }
     },
-
     template: [{
-        reference: 'media',
-        preload: 'auto',
-        tag: 'audio',
-        cls: Ext.baseCSSPrefix + 'component'
-    }]
+            reference: 'media',
+            preload: 'auto',
+            tag: 'audio',
+            cls: Ext.baseCSSPrefix + 'component'
+        }]
 });

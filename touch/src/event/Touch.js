@@ -4,14 +4,12 @@
  */
 Ext.define('Ext.event.Touch', {
     extend: 'Ext.event.Dom',
-
     requires: [
         'Ext.util.Point'
     ],
-
     constructor: function(event, info, map, list) {
         var touches = [],
-            touch, i, ln, identifier;
+                touch, i, ln, identifier;
 
         if (info) {
             this.set(info);
@@ -35,12 +33,11 @@ Ext.define('Ext.event.Touch', {
         this.pageX = touch.pageX;
         this.pageY = touch.pageY;
     },
-
     cloneTouches: function(touches, map) {
         var clonedTouches = [],
-            i, ln, touch, identifier;
+                i, ln, touch, identifier;
 
-        for (i = 0,ln = touches.length; i < ln; i++) {
+        for (i = 0, ln = touches.length; i < ln; i++) {
             touch = touches[i];
             identifier = touch.identifier;
             clonedTouches[i] = map[identifier];

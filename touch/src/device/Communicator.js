@@ -6,9 +6,7 @@ Ext.define('Ext.device.Communicator', {
         'Ext.device.communicator.Default',
         'Ext.device.communicator.Android'
     ],
-
     singleton: true,
-
     constructor: function() {
         if (Ext.os.is.Android) {
             return new Ext.device.communicator.Android();

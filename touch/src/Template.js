@@ -24,11 +24,9 @@
  * - `disableFormats` reduces `{@link #apply}` time when no formatting is required.
  */
 Ext.define('Ext.Template', {
-
     /* Begin Definitions */
 
     requires: ['Ext.dom.Helper', 'Ext.util.Format'],
-
     inheritableStatics: {
         /**
          * Creates a template from the passed element's value (_display:none_ textarea, preferred) or `innerHTML`.
@@ -43,7 +41,6 @@ Ext.define('Ext.Template', {
             return new this(el.value || el.innerHTML, config || '');
         }
     },
-
     /* End Definitions */
 
     /**
@@ -75,14 +72,14 @@ Ext.define('Ext.Template', {
      */
     constructor: function(html) {
         var me = this,
-            args = arguments,
-            buffer = [],
-            i = 0,
-            length = args.length,
-            value;
+                args = arguments,
+                buffer = [],
+                i = 0,
+                length = args.length,
+                value;
 
         me.initialConfig = {};
-        
+
         // Allow an array to be passed here so we can
         // pass an array of strings and an object
         // at the end
@@ -112,13 +109,11 @@ Ext.define('Ext.Template', {
             me.compile();
         }
     },
-
     /**
      * @property {Boolean} isTemplate
      * `true` in this class to identify an object as an instantiated Template, or subclass thereof.
      */
     isTemplate: true,
-
     /**
      * @cfg {Boolean} [compiled=false]
      * `true` to immediately compile the template.
@@ -130,9 +125,7 @@ Ext.define('Ext.Template', {
      * format functions, setting `disableFormats` to `true` will reduce apply time.
      */
     disableFormats: false,
-
     re: /\{([\w\-]+)(?:\:([\w\.]*)(?:\((.*?)?\))?)?\}/g,
-
     /**
      * Returns an HTML fragment of this template with the specified values applied.
      *
@@ -150,10 +143,10 @@ Ext.define('Ext.Template', {
      */
     apply: function(values) {
         var me = this,
-            useFormat = me.disableFormats !== true,
-            fm = Ext.util.Format,
-            tpl = me,
-            ret;
+                useFormat = me.disableFormats !== true,
+                fm = Ext.util.Format,
+                tpl = me,
+                ret;
 
         if (me.compiled) {
             return me.compiled(values).join('');
@@ -162,7 +155,7 @@ Ext.define('Ext.Template', {
         function fn(m, name, format, args) {
             if (format && useFormat) {
                 if (args) {
-                    args = [values[name]].concat(Ext.functionFactory('return ['+ args +'];')());
+                    args = [values[name]].concat(Ext.functionFactory('return [' + args + '];')());
                 } else {
                     args = [values[name]];
                 }
@@ -181,7 +174,6 @@ Ext.define('Ext.Template', {
         ret = me.html.replace(me.re, fn);
         return ret;
     },
-
     /**
      * Appends the result of this template to the provided output array.
      * @param {Object/Array} values The template values. See {@link #apply}.
@@ -199,17 +191,15 @@ Ext.define('Ext.Template', {
 
         return out;
     },
-
     /**
      * @method applyTemplate
      * @member Ext.Template
      * Alias for {@link #apply}.
      * @inheritdoc Ext.Template#apply
      */
-    applyTemplate: function () {
+    applyTemplate: function() {
         return this.apply.apply(this, arguments);
     },
-
     /**
      * Sets the HTML used as the template and optionally compiles it.
      * @param {String} html
@@ -222,24 +212,22 @@ Ext.define('Ext.Template', {
         me.compiled = null;
         return compile ? me.compile() : me;
     },
-
     compileARe: /\\/g,
     compileBRe: /(\r\n|\n)/g,
     compileCRe: /'/g,
-
     /**
      * Compiles the template into an internal function, eliminating the RegEx overhead.
      * @return {Ext.Template} this
      */
     compile: function() {
         var me = this,
-            fm = Ext.util.Format,
-            useFormat = me.disableFormats !== true,
-            body, bodyReturn;
+                fm = Ext.util.Format,
+                useFormat = me.disableFormats !== true,
+                body, bodyReturn;
 
         function fn(m, name, format, args) {
             if (format && useFormat) {
-                args = args ? ',' + args: "";
+                args = args ? ',' + args : "";
                 if (format.substr(0, 5) != "this.") {
                     format = "fm." + format + '(';
                 }
@@ -259,7 +247,6 @@ Ext.define('Ext.Template', {
         eval(body);
         return me;
     },
-
     /**
      * Applies the supplied values to the template and inserts the new node(s) as the first child of el.
      *
@@ -271,7 +258,6 @@ Ext.define('Ext.Template', {
     insertFirst: function(el, values, returnElement) {
         return this.doInsert('afterBegin', el, values, returnElement);
     },
-
     /**
      * Applies the supplied values to the template and inserts the new node(s) before el.
      *
@@ -283,7 +269,6 @@ Ext.define('Ext.Template', {
     insertBefore: function(el, values, returnElement) {
         return this.doInsert('beforeBegin', el, values, returnElement);
     },
-
     /**
      * Applies the supplied values to the template and inserts the new node(s) after el.
      *
@@ -295,7 +280,6 @@ Ext.define('Ext.Template', {
     insertAfter: function(el, values, returnElement) {
         return this.doInsert('afterEnd', el, values, returnElement);
     },
-
     /**
      * Applies the supplied `values` to the template and appends the new node(s) to the specified `el`.
      *
@@ -309,12 +293,10 @@ Ext.define('Ext.Template', {
     append: function(el, values, returnElement) {
         return this.doInsert('beforeEnd', el, values, returnElement);
     },
-
     doInsert: function(where, el, values, returnElement) {
         var newNode = Ext.DomHelper.insertHtml(where, Ext.getDom(el), this.apply(values));
         return returnElement ? Ext.get(newNode) : newNode;
     },
-
     /**
      * Applies the supplied values to the template and overwrites the content of el with the new node(s).
      *

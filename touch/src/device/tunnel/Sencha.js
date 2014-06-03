@@ -1,16 +1,14 @@
 Ext.define('Ext.device.tunnel.Sencha', {
     extend: 'Ext.device.tunnel.Abstract',
-
     requires: ['Ext.device.tunnel.Connection'],
-
     constructor: function() {
         var me = this,
-            i, ln, message;
+                i, ln, message;
 
         this.callSuper(arguments);
 
         var pendingMessages = window.__tunnelMessages,
-            appId = window.__tunnelAppId;
+                appId = window.__tunnelAppId;
 
         delete window.__tunnelAppId;
         this.appId = appId;
@@ -36,7 +34,6 @@ Ext.define('Ext.device.tunnel.Sencha', {
             }, 1);
         }
     },
-
     broadcast: function(message) {
         var promise = new Ext.Promise;
 
@@ -63,7 +60,6 @@ Ext.define('Ext.device.tunnel.Sencha', {
 
         return promise;
     },
-
     doSend: function(receiverId, messageId, message, foreground) {
         var promise = new Ext.Promise;
 

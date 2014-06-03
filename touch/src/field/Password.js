@@ -44,20 +44,18 @@ Ext.define('Ext.field.Password', {
     extend: 'Ext.field.Text',
     xtype: 'passwordfield',
     alternateClassName: 'Ext.form.Password',
-
     config: {
         /**
          * @cfg
          * @inheritdoc
          */
         autoCapitalize: false,
-
         /**
          * @cfg
          * @inheritdoc
          */
         component: {
-	        type: 'password'
-	    }
+            type: 'password'
+        }
     }
 });

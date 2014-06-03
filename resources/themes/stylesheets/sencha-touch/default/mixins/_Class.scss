@@ -17,13 +17,13 @@
         @include color-by-background($bg-color);
 
         &.x-button-back:before,
-        &.x-button-forward:before {
+            &.x-button-forward:before {
             background: darken($bg-color, 20%);
         }
 
         &,
         &.x-button-back:after,
-        &.x-button-forward:after {
+            &.x-button-forward:after {
             @include background-gradient($bg-color, $type);
         }
 

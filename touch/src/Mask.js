@@ -21,44 +21,37 @@ Ext.define('Ext.Mask', {
     extend: 'Ext.Component',
     xtype: 'mask',
     requires: ['Ext.util.InputBlocker'],
-
     config: {
         /**
          * @cfg
          * @inheritdoc
          */
         baseCls: Ext.baseCSSPrefix + 'mask',
-
         /**
          * @cfg {Boolean} transparent True to make this mask transparent.
          */
         transparent: false,
-
         /**
          * @cfg
          * @hide
          */
         top: 0,
-
         /**
          * @cfg
          * @hide
          */
         left: 0,
-
         /**
          * @cfg
          * @hide
          */
         right: 0,
-
         /**
          * @cfg
          * @hide
          */
         bottom: 0
     },
-
     /**
      * @event tap
      * A tap event fired when a user taps on this mask
@@ -74,8 +67,7 @@ Ext.define('Ext.Mask', {
             hide: 'onHide'
         });
     },
-
-    onHide: function(){
+    onHide: function() {
         Ext.util.InputBlocker.unblockInputs();
 
         // Oh how I loves the Android
@@ -86,7 +78,6 @@ Ext.define('Ext.Mask', {
             }
         }
     },
-
     onEvent: function(e) {
         var controller = arguments[arguments.length - 1];
 
@@ -101,7 +92,6 @@ Ext.define('Ext.Mask', {
 
         return false;
     },
-
     updateTransparent: function(newTransparent) {
         this[newTransparent ? 'addCls' : 'removeCls'](this.getBaseCls() + '-transparent');
     }

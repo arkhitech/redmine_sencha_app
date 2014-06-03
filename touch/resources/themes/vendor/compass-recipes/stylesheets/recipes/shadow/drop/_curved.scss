@@ -11,12 +11,12 @@
 
     //@if ($side == 'vertical')
     //{
-        $top: $distance;
-        $bottom: $distance;
-        $left: 0;
-        $right: 0;
-        $border-radius-1: $radius-1;
-        $border-radius-2: $radius-2;
+    $top: $distance;
+    $bottom: $distance;
+    $left: 0;
+    $right: 0;
+    $border-radius-1: $radius-1;
+    $border-radius-2: $radius-2;
     //}
 
 
@@ -59,7 +59,7 @@
     }
 
     &:before
-    {
+        {
         content: "";
         position: absolute;
         z-index: -1;

@@ -64,9 +64,7 @@ Ext.define('Ext.chart.axis.Numeric', {
     requires: ['Ext.chart.axis.layout.Continuous', 'Ext.chart.axis.segmenter.Numeric'],
     config: {
         layout: 'continuous',
-
         segmenter: 'numeric',
-
         aggregator: 'double'
     }
 });

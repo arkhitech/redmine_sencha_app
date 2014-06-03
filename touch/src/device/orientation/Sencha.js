@@ -3,11 +3,9 @@
  */
 Ext.define('Ext.device.orientation.Sencha', {
     extend: 'Ext.device.orientation.Abstract',
-
     requires: [
         'Ext.device.Communicator'
     ],
-
     /**
      * From the native shell, the callback needs to be invoked infinitely using a timer, ideally 50 times per second.
      * The callback expects one event object argument, the format of which should looks like this:

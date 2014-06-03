@@ -29,29 +29,24 @@ Ext.define('Ext.draw.sprite.Rect', {
                  * @cfg {Number} [x=0] The position of the sprite on the x-axis.
                  */
                 x: 'number',
-
                 /**
                  * @cfg {Number} [y=0] The position of the sprite on the y-axis.
                  */
                 y: 'number',
-
                 /**
                  * @cfg {Number} [width=1] The width of the sprite.
                  */
                 width: 'number',
-
                 /**
                  * @cfg {Number} [height=1] The height of the sprite.
                  */
                 height: 'number',
-
                 /**
                  * @cfg {Number} [radius=0] The radius of the rounded corners.
                  */
                 radius: 'number'
             },
             aliases: {
-
             },
             dirtyTriggers: {
                 x: 'path',
@@ -69,25 +64,22 @@ Ext.define('Ext.draw.sprite.Rect', {
             }
         }
     },
-
-    updatePlainBBox: function (plain) {
+    updatePlainBBox: function(plain) {
         var attr = this.attr;
         plain.x = attr.x;
         plain.y = attr.y;
         plain.width = attr.width;
         plain.height = attr.height;
     },
-
-    updateTransformedBBox: function (transform, plain) {
+    updateTransformedBBox: function(transform, plain) {
         this.attr.matrix.transformBBox(plain, this.attr.radius, transform);
     },
-
-    updatePath: function (path, attr) {
+    updatePath: function(path, attr) {
         var x = attr.x,
-            y = attr.y,
-            width = attr.width,
-            height = attr.height,
-            radius = Math.min(attr.radius, Math.abs(attr.height) * 0.5, Math.abs(attr.width) * 0.5);
+                y = attr.y,
+                width = attr.width,
+                height = attr.height,
+                radius = Math.min(attr.radius, Math.abs(attr.height) * 0.5, Math.abs(attr.width) * 0.5);
         if (radius === 0) {
             path.rect(x, y, width, height);
         } else {

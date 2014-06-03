@@ -45,7 +45,7 @@
         font-weight: bold;
 
         &.x-item-pressed {
-        	color: #fff;
+            color: #fff;
 
             &.x-list-item-tpl,
             .x-dock-horizontal {
@@ -55,14 +55,14 @@
 
         &.x-item-pressed,
         &.x-item-selected {
-        	border-top-color: #228afa !important;
+            border-top-color: #228afa !important;
         }
 
         &.x-item-selected .x-dock-horizontal,
         &.x-item-selected.x-list-item-tpl {
-        	color: #fff;
+            color: #fff;
 
-        	@include background-image(linear-gradient(top, #228afa, #105aeb));
+            @include background-image(linear-gradient(top, #228afa, #105aeb));
         }
 
         .x-list-item-body,
@@ -174,7 +174,7 @@
             background: transparent;
             border: 0;
         }
-    
+
         .x-list-header-wrap,
         .x-list-item-first  {
             @include border-top-radius($list-rounded-radius);

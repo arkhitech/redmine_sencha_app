@@ -3,15 +3,12 @@
  */
 Ext.define('Ext.mixin.Sortable', {
     extend: 'Ext.mixin.Mixin',
-
     requires: [
         'Ext.util.Sorter'
     ],
-
     mixinConfig: {
         id: 'sortable'
     },
-
     config: {
         /**
          * @cfg {Array} sorters
@@ -20,13 +17,11 @@ Ext.define('Ext.mixin.Sortable', {
          * or a sort function.
          */
         sorters: null,
-
         /**
          * @cfg {String} defaultSortDirection
          * The default sort direction to use if one is not specified.
          */
         defaultSortDirection: "ASC",
-
         /**
          * @cfg {String} sortRoot
          * The root inside each item in which the properties exist that we want to sort on.
@@ -34,14 +29,12 @@ Ext.define('Ext.mixin.Sortable', {
          */
         sortRoot: null
     },
-
     /**
      * @property {Boolean} dirtySortFn
      * A flag indicating whether the currently cashed sort function is still valid.
      * @readonly
      */
     dirtySortFn: false,
-
     /**
      * @property currentSortFn
      * This is the cached sorting function which is a generated function that calls all the
@@ -49,14 +42,12 @@ Ext.define('Ext.mixin.Sortable', {
      * @readonly
      */
     sortFn: null,
-
     /**
      * @property {Boolean} sorted
      * A read-only flag indicating if this object is sorted.
      * @readonly
      */
     sorted: false,
-
     applySorters: function(sorters, collection) {
         if (!collection) {
             collection = this.createSortersCollection();
@@ -71,14 +62,12 @@ Ext.define('Ext.mixin.Sortable', {
 
         return collection;
     },
-
     createSortersCollection: function() {
         this._sorters = Ext.create('Ext.util.Collection', function(sorter) {
             return sorter.getId();
         });
         return this._sorters;
     },
-
     /**
      * This method adds a sorter.
      * @param {Ext.util.Sorter/String/Function/Object} sorter Can be an instance of
@@ -90,7 +79,6 @@ Ext.define('Ext.mixin.Sortable', {
     addSorter: function(sorter, defaultDirection) {
         this.addSorters([sorter], defaultDirection);
     },
-
     /**
      * This method adds all the sorters in a passed array.
      * @param {Array} sorters An array with sorters. A sorter can be an instance of Ext.util.Sorter, a string
@@ -103,7 +91,6 @@ Ext.define('Ext.mixin.Sortable', {
         var currentSorters = this.getSorters();
         return this.insertSorters(currentSorters ? currentSorters.length : 0, sorters, defaultDirection);
     },
-
     /**
      * This method adds a sorter at a given index.
      * @param {Number} index The index at which to insert the sorter.
@@ -116,7 +103,6 @@ Ext.define('Ext.mixin.Sortable', {
     insertSorter: function(index, sorter, defaultDirection) {
         return this.insertSorters(index, [sorter], defaultDirection);
     },
-
     /**
      * This method inserts all the sorters in the passed array at the given index.
      * @param {Number} index The index at which to insert the sorters.
@@ -132,11 +118,11 @@ Ext.define('Ext.mixin.Sortable', {
         }
 
         var ln = sorters.length,
-            direction = defaultDirection || this.getDefaultSortDirection(),
-            sortRoot = this.getSortRoot(),
-            currentSorters = this.getSorters(),
-            newSorters = [],
-            sorterConfig, i, sorter, currentSorter;
+                direction = defaultDirection || this.getDefaultSortDirection(),
+                sortRoot = this.getSortRoot(),
+                currentSorters = this.getSorters(),
+                newSorters = [],
+                sorterConfig, i, sorter, currentSorter;
 
         if (!currentSorters) {
             // This will guarantee that we get the collection
@@ -214,7 +200,6 @@ Ext.define('Ext.mixin.Sortable', {
         }
         return currentSorters;
     },
-
     /**
      * This method removes a sorter.
      * @param {Ext.util.Sorter/String/Function/Object} sorter Can be an instance of Ext.util.Sorter,
@@ -224,7 +209,6 @@ Ext.define('Ext.mixin.Sortable', {
     removeSorter: function(sorter) {
         return this.removeSorters([sorter]);
     },
-
     /**
      * This method removes all the sorters in a passed array.
      * @param {Array} sorters Each value in the array can be a string (property name),
@@ -237,8 +221,8 @@ Ext.define('Ext.mixin.Sortable', {
         }
 
         var ln = sorters.length,
-            currentSorters = this.getSorters(),
-            i, sorter;
+                currentSorters = this.getSorters(),
+                i, sorter;
 
         for (i = 0; i < ln; i++) {
             sorter = sorters[i];
@@ -262,7 +246,6 @@ Ext.define('Ext.mixin.Sortable', {
             this.sorted = false;
         }
     },
-
     /**
      * This updates the cached sortFn based on the current sorters.
      * @return {Function} The generated sort function.
@@ -273,7 +256,7 @@ Ext.define('Ext.mixin.Sortable', {
 
         this.sortFn = function(r1, r2) {
             var ln = sorters.length,
-                result, i;
+                    result, i;
 
             // We loop over each sorter and check if r1 should be before or after r2
             for (i = 0; i < ln; i++) {
@@ -293,7 +276,6 @@ Ext.define('Ext.mixin.Sortable', {
         this.dirtySortFn = false;
         return this.sortFn;
     },
-
     /**
      * Returns an up to date sort function.
      * @return {Function} The sort function.
@@ -304,7 +286,6 @@ Ext.define('Ext.mixin.Sortable', {
         }
         return this.sortFn;
     },
-
     /**
      * This method will sort an array based on the currently configured {@link #sorters}.
      * @param {Array} data The array you want to have sorted.
@@ -314,7 +295,6 @@ Ext.define('Ext.mixin.Sortable', {
         Ext.Array.sort(data, this.getSortFn());
         return data;
     },
-
     /**
      * This method returns the index that a given item would be inserted into a
      * given array based on the current sorters.
@@ -325,10 +305,10 @@ Ext.define('Ext.mixin.Sortable', {
      */
     findInsertionIndex: function(items, item, sortFn) {
         var start = 0,
-            end   = items.length - 1,
-            sorterFn = sortFn || this.getSortFn(),
-            middle,
-            comparison;
+                end = items.length - 1,
+                sorterFn = sortFn || this.getSortFn(),
+                middle,
+                comparison;
 
         while (start <= end) {
             middle = (start + end) >> 1;

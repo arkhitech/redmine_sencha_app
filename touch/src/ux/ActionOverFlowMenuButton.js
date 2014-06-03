@@ -34,18 +34,15 @@
  */
 Ext.define('Ext.ux.ActionOverFlowMenuButton', {
     extend: 'Ext.ux.MenuButton',
-
     config: {
         /**
          * @hide
          */
         cls: 'overflow',
-
         /**
          * @hide
          */
         ui: 'normal',
-
         /**
          * The items to be used within the {@link Ext.Menu} which is shown when this button is tapped.
          *
@@ -82,12 +79,10 @@ Ext.define('Ext.ux.ActionOverFlowMenuButton', {
          * @type {}
          */
         menuItems: [],
-
         /**
          * @hide
          */
         menuCover: true,
-
         /**
          * @hide
          */

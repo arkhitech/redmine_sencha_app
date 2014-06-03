@@ -7,7 +7,6 @@ Ext.define('Ext.util.SizeMonitor', {
         'Ext.util.sizemonitor.Scroll',
         'Ext.util.sizemonitor.OverflowChange'
     ],
-
     constructor: function(config) {
         var namespace = Ext.util.sizemonitor;
 

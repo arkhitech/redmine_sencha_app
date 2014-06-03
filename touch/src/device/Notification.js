@@ -37,14 +37,12 @@
  */
 Ext.define('Ext.device.Notification', {
     singleton: true,
-
     requires: [
         'Ext.device.Communicator',
         'Ext.device.notification.Cordova',
         'Ext.device.notification.Sencha',
         'Ext.device.notification.Simulator'
     ],
-
     constructor: function() {
         var browserEnv = Ext.browser.is;
 

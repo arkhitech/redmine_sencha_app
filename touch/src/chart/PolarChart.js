@@ -5,15 +5,12 @@
  * Creates a chart that uses polar coordinates.
  */
 Ext.define('Ext.chart.PolarChart', {
-
     requires: [
         'Ext.chart.grid.CircularGrid',
         'Ext.chart.grid.RadialGrid'
     ],
-
     extend: 'Ext.chart.AbstractChart',
     xtype: 'polar',
-
     config: {
         /**
          * @cfg {Array} center Determines the center of the polar chart.
@@ -26,27 +23,24 @@ Ext.define('Ext.chart.PolarChart', {
          */
         radius: 0
     },
-
-    getDirectionForAxis: function (position) {
+    getDirectionForAxis: function(position) {
         if (position === 'radial') {
             return 'Y';
         } else {
             return 'X';
         }
     },
-
-    applyCenter: function (center, oldCenter) {
+    applyCenter: function(center, oldCenter) {
         if (oldCenter && center[0] === oldCenter[0] && center[1] === oldCenter[1]) {
             return;
         }
         return [+center[0], +center[1]];
     },
-
-    updateCenter: function (center) {
+    updateCenter: function(center) {
         var me = this,
-            axes = me.getAxes(), axis,
-            series = me.getSeries(), seriesItem,
-            i, ln;
+                axes = me.getAxes(), axis,
+                series = me.getSeries(), seriesItem,
+                i, ln;
         for (i = 0, ln = axes.length; i < ln; i++) {
             axis = axes[i];
             axis.setCenter(center);
@@ -57,12 +51,11 @@ Ext.define('Ext.chart.PolarChart', {
             seriesItem.setCenter(center);
         }
     },
-
-    updateRadius: function (radius) {
+    updateRadius: function(radius) {
         var me = this,
-            axes = me.getAxes(), axis,
-            series = me.getSeries(), seriesItem,
-            i, ln;
+                axes = me.getAxes(), axis,
+                series = me.getSeries(), seriesItem,
+                i, ln;
         for (i = 0, ln = axes.length; i < ln; i++) {
             axis = axes[i];
             axis.setMinimum(0);
@@ -75,39 +68,33 @@ Ext.define('Ext.chart.PolarChart', {
             seriesItem.setRadius(radius);
         }
     },
-
-    doSetSurfaceRegion: function (surface, region) {
+    doSetSurfaceRegion: function(surface, region) {
         var mainRegion = this.getMainRegion();
         surface.setRegion(region);
         surface.matrix.set(1, 0, 0, 1, mainRegion[0] - region[0], mainRegion[1] - region[1]);
         surface.inverseMatrix.set(1, 0, 0, 1, region[0] - mainRegion[0], region[1] - mainRegion[1]);
     },
-
-    performLayout: function () {
+    performLayout: function() {
         try {
             this.resizing++;
             this.callSuper();
             var me = this,
-                size = me.element.getSize(),
-                fullRegion = [0, 0, size.width, size.height],
-
-                inset = me.getInsetPadding(),
-                inner = me.getInnerPadding(),
-
-                left = inset.left,
-                top = inset.top,
-                width = size.width - left - inset.right,
-                height = size.height - top - inset.bottom,
-                region = [inset.left, inset.top, width, height],
-
-                innerWidth = width - inner.left - inner.right,
-                innerHeight = height - inner.top - inner.bottom,
-
-                center = [innerWidth * 0.5 + inner.left, innerHeight * 0.5 + inner.top],
-                radius = Math.min(innerWidth, innerHeight) * 0.5,
-                axes = me.getAxes(), axis,
-                series = me.getSeries(), seriesItem,
-                i, ln;
+                    size = me.element.getSize(),
+                    fullRegion = [0, 0, size.width, size.height],
+                    inset = me.getInsetPadding(),
+                    inner = me.getInnerPadding(),
+                    left = inset.left,
+                    top = inset.top,
+                    width = size.width - left - inset.right,
+                    height = size.height - top - inset.bottom,
+                    region = [inset.left, inset.top, width, height],
+                    innerWidth = width - inner.left - inner.right,
+                    innerHeight = height - inner.top - inner.bottom,
+                    center = [innerWidth * 0.5 + inner.left, innerHeight * 0.5 + inner.top],
+                    radius = Math.min(innerWidth, innerHeight) * 0.5,
+                    axes = me.getAxes(), axis,
+                    series = me.getSeries(), seriesItem,
+                    i, ln;
 
             me.setMainRegion(region);
 
@@ -133,20 +120,18 @@ Ext.define('Ext.chart.PolarChart', {
             this.resizing--;
         }
     },
-
-    getEventXY: function (e) {
+    getEventXY: function(e) {
         e = (e.changedTouches && e.changedTouches[0]) || e.event || e.browserEvent || e;
         var me = this,
-            xy = me.element.getXY(),
-            padding = me.getInsetPadding();
+                xy = me.element.getXY(),
+                padding = me.getInsetPadding();
         return [e.pageX - xy[0] - padding.left, e.pageY - xy[1] - padding.top];
     },
-
-    redraw: function () {
+    redraw: function() {
         var me = this,
-            axes = me.getAxes(), axis,
-            series = me.getSeries(), seriesItem,
-            i, ln;
+                axes = me.getAxes(), axis,
+                series = me.getSeries(), seriesItem,
+                i, ln;
 
         for (i = 0, ln = axes.length; i < ln; i++) {
             axis = axes[i];

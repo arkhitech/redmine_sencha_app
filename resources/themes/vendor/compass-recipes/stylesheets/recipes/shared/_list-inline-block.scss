@@ -4,7 +4,7 @@
 @mixin list-inline-block
 {
     @include block-inline-block;
-    
+
     li
     {
         @include block-inline-block;

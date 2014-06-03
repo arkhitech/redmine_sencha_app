@@ -57,13 +57,11 @@
  */
 Ext.define('Ext.util.Sorter', {
     isSorter: true,
-
     config: {
         /**
          * @cfg {String} property The property to sort by. Required unless `sorterFn` is provided
          */
         property: null,
-
         /**
          * @cfg {Function} sorterFn A specific sorter function to execute. Can be passed instead of {@link #property}.
          * This function should compare the two passed arguments, returning -1, 0 or 1 depending on if item 1 should be
@@ -74,25 +72,21 @@ Ext.define('Ext.util.Sorter', {
          *     }
          */
         sorterFn: null,
-
         /**
          * @cfg {String} root Optional root property. This is mostly useful when sorting a Store, in which case we set the
          * root to 'data' to make the filter pull the {@link #property} out of the data object of each item
          */
         root: null,
-
         /**
          * @cfg {Function} transform A function that will be run on each value before
          * it is compared in the sorter. The function will receive a single argument,
          * the value.
          */
         transform: null,
-
         /**
          * @cfg {String} direction The direction to sort by. Valid values are "ASC", and "DESC".
          */
         direction: "ASC",
-
         /**
          * @cfg {Mixed} id An optional id this sorter can be keyed by in Collections. If
          * no id is specified it will use the property name used in this Sorter. If no
@@ -101,11 +95,9 @@ Ext.define('Ext.util.Sorter', {
          */
         id: undefined
     },
-
     constructor: function(config) {
         this.initConfig(config);
     },
-
     // <debug>
     applySorterFn: function(sorterFn) {
         if (!sorterFn && !this.getProperty()) {
@@ -113,7 +105,6 @@ Ext.define('Ext.util.Sorter', {
         }
         return sorterFn;
     },
-
     applyProperty: function(property) {
         if (!property && !this.getSorterFn()) {
             Ext.Logger.error("A Sorter requires either a property or a sorterFn.");
@@ -132,15 +123,14 @@ Ext.define('Ext.util.Sorter', {
 
         return id;
     },
-
     /**
      * @private
      * Creates and returns a function which sorts an array by the given property and direction
      * @return {Function} A function which sorts by the property/direction combination provided
      */
     createSortFunction: function(sorterFn) {
-        var me        = this,
-            modifier  = me.getDirection().toUpperCase() == "DESC" ? -1 : 1;
+        var me = this,
+                modifier = me.getDirection().toUpperCase() == "DESC" ? -1 : 1;
 
         //create a comparison function. Takes 2 objects, returns 1 if object 1 is greater,
         //-1 if object 2 is greater or 0 if they are equal
@@ -148,17 +138,16 @@ Ext.define('Ext.util.Sorter', {
             return modifier * sorterFn.call(me, o1, o2);
         };
     },
-
     /**
      * @private
      * Basic default sorter function that just compares the defined property of each object
      */
     defaultSortFn: function(item1, item2) {
         var me = this,
-            transform = me._transform,
-            root = me._root,
-            value1, value2,
-            property = me._property;
+                transform = me._transform,
+                root = me._root,
+                value1, value2,
+                property = me._property;
 
         if (root !== null && root !== undefined) {
             item1 = item1[root];
@@ -175,15 +164,12 @@ Ext.define('Ext.util.Sorter', {
 
         return value1 > value2 ? 1 : (value1 < value2 ? -1 : 0);
     },
-
     updateDirection: function() {
         this.updateSortFn();
     },
-
     updateSortFn: function() {
         this.sort = this.createSortFunction(this.getSorterFn() || this.defaultSortFn);
     },
-
     /**
      * Toggles the direction of this Sorter. Note that when you call this function,
      * the Collection this Sorter is part of does not get refreshed automatically.

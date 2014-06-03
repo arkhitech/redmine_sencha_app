@@ -7,7 +7,6 @@
 Ext.define("Ext.chart.grid.HorizontalGrid", {
     extend: 'Ext.draw.sprite.Sprite',
     alias: 'grid.horizontal',
-
     inheritableStatics: {
         def: {
             processors: {
@@ -16,7 +15,6 @@ Ext.define("Ext.chart.grid.HorizontalGrid", {
                 width: 'number',
                 height: 'number'
             },
-
             defaults: {
                 x: 0,
                 y: 0,
@@ -26,11 +24,10 @@ Ext.define("Ext.chart.grid.HorizontalGrid", {
             }
         }
     },
-
-    render: function (surface, ctx, clipRegion) {
+    render: function(surface, ctx, clipRegion) {
         var attr = this.attr,
-            y = surface.roundPixel(attr.y),
-            halfLineWidth = ctx.lineWidth * 0.5;
+                y = surface.roundPixel(attr.y),
+                halfLineWidth = ctx.lineWidth * 0.5;
         ctx.beginPath();
         ctx.rect(clipRegion[0] - surface.matrix.getDX(), y + halfLineWidth, +clipRegion[2], attr.height);
         ctx.fill();

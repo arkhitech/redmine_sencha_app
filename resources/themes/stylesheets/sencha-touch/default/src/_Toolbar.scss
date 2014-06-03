@@ -68,7 +68,7 @@
 
         .x-button,
         .x-field-select .x-component-outer {
-        // .x-field-select .x-component-outer:before {
+            // .x-field-select .x-component-outer:before {
             @include toolbar-button($toolbar-button-color, $gradient);
         }
 
@@ -196,7 +196,7 @@ $toolbar-search-left-padding: 1.67em;
             }
 
             @if $include-highlights {
-              @include box-shadow($toolbar-input-border-color 0 .1em 0 inset, $toolbar-input-border-color 0 -.1em 0 inset, $toolbar-input-border-color .1em 0 0 inset, $toolbar-input-border-color -.1em 0 0 inset, rgba(#000, .5) 0 .15em .4em inset);
+                @include box-shadow($toolbar-input-border-color 0 .1em 0 inset, $toolbar-input-border-color 0 -.1em 0 inset, $toolbar-input-border-color .1em 0 0 inset, $toolbar-input-border-color -.1em 0 0 inset, rgba(#000, .5) 0 .15em .4em inset);
             }
         }
     }

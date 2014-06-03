@@ -48,14 +48,14 @@
             @include color-by-background($list-active-color);
         }
 
-				&.x-item-pressed {
-					&.x-list-item-tpl,
-					.x-dock-horizontal {
-						background: $list-pressed-color none;
-					}
-				}
+        &.x-item-pressed {
+            &.x-list-item-tpl,
+            .x-dock-horizontal {
+                background: $list-pressed-color none;
+            }
+        }
 
-			.x-list-item-body,
+        .x-list-item-body,
         &.x-list-item-tpl .x-innerhtml {
             padding: 12px 15px;
         }
@@ -203,12 +203,12 @@
                 }
             }
 
-					&.x-item-pressed {
-						> .x-innerhtml,
-						> .x-dock-body {
-							background: $list-pressed-color none;
-						}
-					}
+            &.x-item-pressed {
+                > .x-innerhtml,
+                > .x-dock-body {
+                    background: $list-pressed-color none;
+                }
+            }
 
             &.x-item-selected {
                 > .x-innerhtml,

@@ -11,15 +11,15 @@
 {
     // For modern browsers
     &:before,
-    &:after
-    {
+        &:after
+        {
         content:"";
         display:block;
         overflow:hidden;
     }
 
     &:after
-    {
+        {
         clear:both;
     }
 

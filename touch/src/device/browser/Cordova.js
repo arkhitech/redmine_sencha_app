@@ -3,7 +3,6 @@
  */
 Ext.define('Ext.device.browser.Cordova', {
     extend: 'Ext.device.browser.Abstract',
-    
     open: function(config) {
         if (!this._window) {
             this._window = Ext.create('Ext.device.browser.Window');
@@ -13,7 +12,6 @@ Ext.define('Ext.device.browser.Cordova', {
 
         return this._window;
     },
-    
     close: function() {
         if (!this._window) {
             return;

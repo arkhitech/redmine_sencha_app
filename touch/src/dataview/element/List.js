@@ -1,9 +1,8 @@
 /**
  * @private
-*/
+ */
 Ext.define('Ext.dataview.element.List', {
     extend: 'Ext.dataview.element.Container',
-
     updateBaseCls: function(newBaseCls) {
         var me = this;
 
@@ -28,15 +27,13 @@ Ext.define('Ext.dataview.element.List', {
 
         this.callParent(arguments);
     },
-
     hiddenDisplayCache: Ext.baseCSSPrefix + 'hidden-display',
-
     getItemElementConfig: function(index, data) {
         var me = this,
-            dataview = me.dataview,
-            itemCls = dataview.getItemCls(),
-            cls = me.itemClsShortCache,
-            config, iconSrc;
+                dataview = me.dataview,
+                itemCls = dataview.getItemCls(),
+                cls = me.itemClsShortCache,
+                config, iconSrc;
 
         if (itemCls) {
             cls += ' ' + itemCls;
@@ -45,9 +42,9 @@ Ext.define('Ext.dataview.element.List', {
         config = {
             cls: cls,
             children: [{
-                cls: me.labelClsShortCache,
-                html: dataview.getItemTpl().apply(data)
-            }]
+                    cls: me.labelClsShortCache,
+                    html: dataview.getItemTpl().apply(data)
+                }]
         };
 
         if (dataview.getIcon()) {
@@ -65,17 +62,16 @@ Ext.define('Ext.dataview.element.List', {
         }
         return config;
     },
-
     updateListItem: function(record, item) {
         var me = this,
-            dataview = me.dataview,
-            extItem = Ext.fly(item),
-            innerItem = extItem.down(me.labelClsCache, true),
-            data = dataview.prepareData(record.getData(true), dataview.getStore().indexOf(record), record),
-            disclosureProperty = dataview.getDisclosureProperty(),
-            hasDisclosureProperty = data && data.hasOwnProperty(disclosureProperty),
-            iconSrc = data && data.hasOwnProperty('iconSrc'),
-            disclosureEl, iconEl;
+                dataview = me.dataview,
+                extItem = Ext.fly(item),
+                innerItem = extItem.down(me.labelClsCache, true),
+                data = dataview.prepareData(record.getData(true), dataview.getStore().indexOf(record), record),
+                disclosureProperty = dataview.getDisclosureProperty(),
+                hasDisclosureProperty = data && data.hasOwnProperty(disclosureProperty),
+                iconSrc = data && data.hasOwnProperty('iconSrc'),
+                disclosureEl, iconEl;
 
         innerItem.innerHTML = dataview.getItemTpl().apply(data);
 
@@ -89,14 +85,13 @@ Ext.define('Ext.dataview.element.List', {
             iconEl.style.backgroundImage = iconSrc ? 'url("' + iconSrc + '")' : '';
         }
     },
-
     doRemoveHeaders: function() {
         var me = this,
-            headerClsShortCache = me.headerItemClsShortCache,
-            existingHeaders = me.element.query(me.headerClsCache),
-            existingHeadersLn = existingHeaders.length,
-            i = 0,
-            item;
+                headerClsShortCache = me.headerItemClsShortCache,
+                existingHeaders = me.element.query(me.headerClsCache),
+                existingHeadersLn = existingHeaders.length,
+                i = 0,
+                item;
 
         for (; i < existingHeadersLn; i++) {
             item = existingHeaders[i];
@@ -104,19 +99,17 @@ Ext.define('Ext.dataview.element.List', {
             Ext.get(item).destroy();
         }
     },
-
     doRemoveFooterCls: function() {
         var me = this,
-            footerClsShortCache = me.footerClsShortCache,
-            existingFooters = me.element.query(me.footerClsCache),
-            existingFootersLn = existingFooters.length,
-            i = 0;
+                footerClsShortCache = me.footerClsShortCache,
+                existingFooters = me.element.query(me.footerClsCache),
+                existingFootersLn = existingFooters.length,
+                i = 0;
 
         for (; i < existingFootersLn; i++) {
             Ext.fly(existingFooters[i]).removeCls(footerClsShortCache);
         }
     },
-
     doAddHeader: function(item, html) {
         item = Ext.fly(item);
         if (html) {
@@ -127,7 +120,6 @@ Ext.define('Ext.dataview.element.List', {
         }
         item.addCls(this.headerItemClsShortCache);
     },
-
     destroy: function() {
         this.doRemoveHeaders();
         this.callParent();

@@ -72,14 +72,12 @@
  */
 Ext.define('Ext.device.Device', {
     singleton: true,
-
     requires: [
         'Ext.device.Communicator',
         'Ext.device.device.Cordova',
         'Ext.device.device.Sencha',
         'Ext.device.device.Simulator'
     ],
-
     constructor: function() {
         var browserEnv = Ext.browser.is;
         if (browserEnv.WebView) {

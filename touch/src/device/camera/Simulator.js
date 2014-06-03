@@ -3,7 +3,6 @@
  */
 Ext.define('Ext.device.camera.Simulator', {
     extend: 'Ext.device.camera.Abstract',
-
     config: {
         samples: [
             {
@@ -11,23 +10,20 @@ Ext.define('Ext.device.camera.Simulator', {
             }
         ]
     },
-
     constructor: function(config) {
         this.initConfig(config);
     },
-
     updateSamples: function(samples) {
         this.sampleIndex = 0;
     },
-
     capture: function(options) {
         var index = this.sampleIndex,
-            samples = this.getSamples(),
-            samplesCount = samples.length,
-            sample = samples[index],
-            scope = options.scope,
-            success = options.success,
-            failure = options.failure;
+                samples = this.getSamples(),
+                samplesCount = samples.length,
+                sample = samples[index],
+                scope = options.scope,
+                success = options.success,
+                failure = options.failure;
 
         if ('success' in sample) {
             if (success) {

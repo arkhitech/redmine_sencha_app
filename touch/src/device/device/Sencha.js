@@ -3,7 +3,6 @@
  */
 Ext.define('Ext.device.device.Sencha', {
     extend: 'Ext.device.device.Abstract',
-
     constructor: function() {
         this.name = device.name;
         this.uuid = device.uuid;
@@ -24,7 +23,6 @@ Ext.define('Ext.device.device.Sencha', {
             scope: this
         });
     },
-
     openURL: function(url) {
         Ext.device.Communicator.send({
             command: 'OpenURL#open',

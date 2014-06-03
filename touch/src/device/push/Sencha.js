@@ -3,7 +3,6 @@
  */
 Ext.define('Ext.device.push.Sencha', {
     extend: 'Ext.device.push.Abstract',
-
     register: function() {
         var config = this.callParent(arguments);
 

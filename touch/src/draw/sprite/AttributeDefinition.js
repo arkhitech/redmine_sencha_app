@@ -7,77 +7,60 @@ Ext.define("Ext.draw.sprite.AttributeDefinition", {
         'Ext.draw.sprite.AttributeParser',
         'Ext.draw.sprite.AnimationParser'
     ],
-
     config: {
         /**
          * @cfg {Object} defaults Defines the default values of attributes.
          */
         defaults: {
-
         },
-
         /**
          * @cfg {Object} aliases Defines the aletrnative names for attributes.
          */
         aliases: {
-
         },
-
         /**
          * @cfg {Object} animationProcessors Defines the process used to animate between attributes.
          */
         animationProcessors: {
-
         },
-
         /**
          * @cfg {Object} processors Defines the preprocessing used on the attribute.
          */
         processors: {
-
         },
-
         /**
          * @cfg {Object} dirty Defines what other attributes need to be updated when an attribute is changed.
          */
         dirtyTriggers: {
-
         },
-
         /**
          * @cfg {Object} updaters Defines the postprocessing used by the attribute.
          */
         updaters: {
-
         }
     },
-
     inheritableStatics: {
         processorRe: /^(\w+)\(([\w\-,]*)\)$/
     },
-
-    constructor: function (config) {
+    constructor: function(config) {
         var me = this;
         me.initConfig(config);
     },
-
-    applyDefaults: function (defaults, oldDefaults) {
+    applyDefaults: function(defaults, oldDefaults) {
         oldDefaults = Ext.apply(oldDefaults || {}, this.normalize(defaults));
         return oldDefaults;
     },
-
-    applyAliases: function (aliases, oldAliases) {
+    applyAliases: function(aliases, oldAliases) {
         return Ext.apply(oldAliases || {}, aliases);
     },
-
-    applyProcessors: function (processors, oldProcessors) {
+    applyProcessors: function(processors, oldProcessors) {
         this.getAnimationProcessors();
         var name,
-            result = oldProcessors || {},
-            defaultProcessor = Ext.draw.sprite.AttributeParser,
-            processorRe = this.self.processorRe,
-            animationProcessors = {}, anyAnimationProcessors,
-            match, fn;
+                result = oldProcessors || {},
+                defaultProcessor = Ext.draw.sprite.AttributeParser,
+                processorRe = this.self.processorRe,
+                animationProcessors = {}, anyAnimationProcessors,
+                match, fn;
 
         for (name in processors) {
             fn = processors[name];
@@ -104,10 +87,9 @@ Ext.define("Ext.draw.sprite.AttributeDefinition", {
 
         return result;
     },
-
-    applyAnimationProcessors: function (animationProcessors, oldAnimationProcessors) {
+    applyAnimationProcessors: function(animationProcessors, oldAnimationProcessors) {
         var parser = Ext.draw.sprite.AnimationParser,
-            item;
+                item;
 
         if (!oldAnimationProcessors) {
             oldAnimationProcessors = {};
@@ -130,8 +112,7 @@ Ext.define("Ext.draw.sprite.AttributeDefinition", {
         }
         return oldAnimationProcessors;
     },
-
-    applyDirtyTriggers: function (dirtyTriggers, oldDirtyTrigger) {
+    applyDirtyTriggers: function(dirtyTriggers, oldDirtyTrigger) {
         if (!oldDirtyTrigger) {
             oldDirtyTrigger = {};
         }
@@ -140,22 +121,20 @@ Ext.define("Ext.draw.sprite.AttributeDefinition", {
         }
         return oldDirtyTrigger;
     },
-
-    applyUpdaters: function (updaters, oldUpdaters) {
+    applyUpdaters: function(updaters, oldUpdaters) {
         return Ext.apply(oldUpdaters || {}, updaters);
     },
-
-    batchedNormalize: function (batchedChanges, reserveUnrecognized) {
+    batchedNormalize: function(batchedChanges, reserveUnrecognized) {
         if (!batchedChanges) {
             return {};
         }
         var definition = this,
-            processors = definition.getProcessors(),
-            aliases = definition.getAliases(),
-            normalized = {}, i, ln,
-            undef, name, val,
-            translation, rotation, scaling,
-            matrix, subVal, split;
+                processors = definition.getProcessors(),
+                aliases = definition.getAliases(),
+                normalized = {}, i, ln,
+                undef, name, val,
+                translation, rotation, scaling,
+                matrix, subVal, split;
         if ('rotation' in batchedChanges) {
             rotation = batchedChanges.rotation;
         }
@@ -205,7 +184,7 @@ Ext.define("Ext.draw.sprite.AttributeDefinition", {
                     normalized.rotationRads = rotation.rads;
                 } else if ('degrees' in rotation) {
                     if (Ext.isArray(rotation.degrees)) {
-                        normalized.rotationRads = rotation.degrees.map(function (deg) {
+                        normalized.rotationRads = rotation.degrees.map(function(deg) {
                             return Ext.draw.Draw.rad(deg);
                         });
                     } else {
@@ -261,7 +240,7 @@ Ext.define("Ext.draw.sprite.AttributeDefinition", {
                             normalized[name][i] = subVal;
                         }
                     }
-                } else if (reserveUnrecognized){
+                } else if (reserveUnrecognized) {
                     normalized[name] = val;
                 }
             } else {
@@ -273,30 +252,29 @@ Ext.define("Ext.draw.sprite.AttributeDefinition", {
                     if (typeof val !== 'undefined') {
                         normalized[name] = val;
                     }
-                } else if (reserveUnrecognized){
+                } else if (reserveUnrecognized) {
                     normalized[name] = val;
                 }
             }
         }
         return normalized;
     },
-
     /**
      * Normalizes the changes given via their processors before they are applied as attributes.
      *
      * @param {Object} changes The changes given.
      * @return {Object} The normalized values.
      */
-    normalize: function (changes, reserveUnrecognized) {
+    normalize: function(changes, reserveUnrecognized) {
         if (!changes) {
             return {};
         }
         var definition = this,
-            processors = definition.getProcessors(),
-            aliases = definition.getAliases(),
-            translation = changes.translation || changes.translate,
-            normalized = {},
-            name, val, rotation, scaling, matrix, split;
+                processors = definition.getProcessors(),
+                aliases = definition.getAliases(),
+                translation = changes.translation || changes.translate,
+                normalized = {},
+                name, val, rotation, scaling, matrix, split;
 
         if ('rotation' in changes) {
             rotation = changes.rotation;
@@ -389,18 +367,16 @@ Ext.define("Ext.draw.sprite.AttributeDefinition", {
                 if (typeof val !== 'undefined') {
                     normalized[name] = val;
                 }
-            } else if (reserveUnrecognized){
+            } else if (reserveUnrecognized) {
                 normalized[name] = val;
             }
         }
         return normalized;
     },
-
-    setBypassingNormalization: function (attr, modifierStack, changes) {
+    setBypassingNormalization: function(attr, modifierStack, changes) {
         return modifierStack.pushDown(attr, changes);
     },
-
-    set: function (attr, modifierStack, changes) {
+    set: function(attr, modifierStack, changes) {
         changes = this.normalize(changes);
         return this.setBypassingNormalization(attr, modifierStack, changes);
     }

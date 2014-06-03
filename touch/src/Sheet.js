@@ -6,24 +6,19 @@
  */
 Ext.define('Ext.Sheet', {
     extend: 'Ext.Panel',
-
     xtype: 'sheet',
-
     requires: ['Ext.Button', 'Ext.fx.Animation'],
-
     config: {
         /**
          * @cfg
          * @inheritdoc
          */
         baseCls: Ext.baseCSSPrefix + 'sheet',
-
         /**
          * @cfg
          * @inheritdoc
          */
         modal: true,
-
         /**
          * @cfg {Boolean} centered
          * Whether or not this component is absolutely centered inside its container.
@@ -31,31 +26,26 @@ Ext.define('Ext.Sheet', {
          * @evented
          */
         centered: true,
-
         /**
          * @cfg {Boolean} stretchX `true` to stretch this sheet horizontally.
          */
         stretchX: null,
-
         /**
          * @cfg {Boolean} stretchY `true` to stretch this sheet vertically.
          */
         stretchY: null,
-
         /**
          * @cfg {String} enter
          * The viewport side used as the enter point when shown. Valid values are 'top', 'bottom', 'left', and 'right'.
          * Applies to sliding animation effects only.
          */
         enter: 'bottom',
-
         /**
          * @cfg {String} exit
          * The viewport side used as the exit point when hidden. Valid values are 'top', 'bottom', 'left', and 'right'.
          * Applies to sliding animation effects only.
          */
         exit: 'bottom',
-
         /**
          * @cfg
          * @inheritdoc
@@ -65,7 +55,6 @@ Ext.define('Ext.Sheet', {
             duration: 250,
             easing: 'ease-out'
         } : null,
-
         /**
          * @cfg
          * @inheritdoc
@@ -76,9 +65,7 @@ Ext.define('Ext.Sheet', {
             easing: 'ease-in'
         } : null
     },
-
     isInputRegex: /^(input|textarea|select|a)$/i,
-
     beforeInitialize: function() {
         var me = this;
         // Temporary fix for a mysterious bug on iOS where double tapping on a sheet
@@ -89,16 +76,14 @@ Ext.define('Ext.Sheet', {
             }
         }, true);
     },
-
     platformConfig: [{
-        theme: ['Windows'],
-        enter: 'top',
-        exit: 'top'
-    }],
-
+            theme: ['Windows'],
+            enter: 'top',
+            exit: 'top'
+        }],
     applyHideAnimation: function(config) {
         var exit = this.getExit(),
-            direction = exit;
+                direction = exit;
 
         if (exit === null) {
             return null;
@@ -127,10 +112,9 @@ Ext.define('Ext.Sheet', {
         }
         return anim;
     },
-
     applyShowAnimation: function(config) {
         var enter = this.getEnter(),
-            direction = enter;
+                direction = enter;
 
         if (enter === null) {
             return null;
@@ -163,7 +147,6 @@ Ext.define('Ext.Sheet', {
         }
         return anim;
     },
-
     updateStretchX: function(newStretchX) {
         this.getLeft();
         this.getRight();
@@ -173,7 +156,6 @@ Ext.define('Ext.Sheet', {
             this.setRight(0);
         }
     },
-
     updateStretchY: function(newStretchY) {
         this.getTop();
         this.getBottom();

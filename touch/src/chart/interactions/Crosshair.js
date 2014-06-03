@@ -82,7 +82,6 @@
  */
 
 Ext.define('Ext.chart.interactions.Crosshair', {
-
     extend: 'Ext.chart.interactions.Abstract',
     requires: [
         'Ext.chart.grid.HorizontalGrid',
@@ -90,10 +89,8 @@ Ext.define('Ext.chart.interactions.Crosshair', {
         'Ext.chart.CartesianChart',
         'Ext.chart.axis.layout.Discrete'
     ],
-
     type: 'crosshair',
     alias: 'interaction.crosshair',
-
     config: {
         /**
          * @cfg {Object} axes
@@ -139,7 +136,6 @@ Ext.define('Ext.chart.interactions.Crosshair', {
             bottom: {label: {}, rect: {}},
             left: {label: {}, rect: {}}
         },
-
         /**
          * @cfg {Object} lines
          * Specifies attributes of horizontal and vertical lines that make up the crosshair.
@@ -168,48 +164,43 @@ Ext.define('Ext.chart.interactions.Crosshair', {
         },
         gesture: 'drag'
     },
-
-    applyAxes: function (axesConfig, oldAxesConfig) {
+    applyAxes: function(axesConfig, oldAxesConfig) {
         return Ext.merge(oldAxesConfig || {}, axesConfig);
     },
-
-    applyLines: function (linesConfig, oldLinesConfig) {
+    applyLines: function(linesConfig, oldLinesConfig) {
         return Ext.merge(oldLinesConfig || {}, linesConfig);
     },
-
-    updateChart: function (chart) {
+    updateChart: function(chart) {
         if (!(chart instanceof Ext.chart.CartesianChart)) {
             throw 'Crosshair interaction can only be used on cartesian charts.';
         }
         this.callParent(arguments);
     },
-
-    getGestures: function () {
+    getGestures: function() {
         var me = this,
-            gestures = {};
+                gestures = {};
         gestures[me.getGesture()] = 'onGesture';
         gestures[me.getGesture() + 'start'] = 'onGestureStart';
         gestures[me.getGesture() + 'end'] = 'onGestureEnd';
         return gestures;
     },
-
-    onGestureStart: function (e) {
+    onGestureStart: function(e) {
         var me = this,
-            chart = me.getChart(),
-            surface = chart.getSurface('overlay-surface'),
-            region = chart.getInnerRegion(),
-            chartWidth = region[2],
-            chartHeight = region[3],
-            xy = chart.element.getXY(),
-            x = e.pageX - xy[0] - region[0],
-            y = e.pageY - xy[1] - region[1],
-            axes = chart.getAxes(),
-            axesConfig = me.getAxes(),
-            linesConfig = me.getLines(),
-            axis, axisSurface, axisRegion, axisWidth, axisHeight, axisPosition,
-            axisLabel, labelPadding,
-            axisSprite, attr, axisThickness, lineWidth, halfLineWidth,
-            i;
+                chart = me.getChart(),
+                surface = chart.getSurface('overlay-surface'),
+                region = chart.getInnerRegion(),
+                chartWidth = region[2],
+                chartHeight = region[3],
+                xy = chart.element.getXY(),
+                x = e.pageX - xy[0] - region[0],
+                y = e.pageY - xy[1] - region[1],
+                axes = chart.getAxes(),
+                axesConfig = me.getAxes(),
+                linesConfig = me.getLines(),
+                axis, axisSurface, axisRegion, axisWidth, axisHeight, axisPosition,
+                axisLabel, labelPadding,
+                axisSprite, attr, axisThickness, lineWidth, halfLineWidth,
+                i;
 
         if (x > 0 && x < chartWidth && y > 0 && y < chartHeight) {
             me.lockEvents(me.getGesture());
@@ -251,7 +242,7 @@ Ext.define('Ext.chart.interactions.Crosshair', {
                 }, axesConfig.rect || axesConfig[axisPosition].rect));
                 axisLabel.labelText = axisLabel.add(Ext.apply(Ext.Object.chain(axis.config.label), axesConfig.label || axesConfig[axisPosition].label, {
                     type: 'text',
-                    x: (function () {
+                    x: (function() {
                         switch (axisPosition) {
                             case 'left':
                                 return axisWidth - labelPadding - halfLineWidth - axisThickness / 2;
@@ -261,7 +252,7 @@ Ext.define('Ext.chart.interactions.Crosshair', {
                                 return 0;
                         }
                     })(),
-                    y: (function () {
+                    y: (function() {
                         switch (axisPosition) {
                             case 'top':
                                 return axisHeight - labelPadding - halfLineWidth - axisThickness / 2;
@@ -277,31 +268,30 @@ Ext.define('Ext.chart.interactions.Crosshair', {
         }
 
     },
-
-    onGesture: function (e) {
+    onGesture: function(e) {
         var me = this;
         if (me.getLocks()[me.getGesture()] !== me) {
             return;
         }
         var chart = me.getChart(),
-            surface = chart.getSurface('overlay-surface'),
-            region = Ext.Array.slice(chart.getInnerRegion()),
-            padding = chart.getInnerPadding(),
-            px = padding.left,
-            py = padding.top,
-            chartWidth = region[2],
-            chartHeight = region[3],
-            xy = chart.element.getXY(),
-            x = e.pageX - xy[0] - region[0],
-            y = e.pageY - xy[1] - region[1],
-            axes = chart.getAxes(),
-            axis, axisPosition, axisAlignment, axisSurface, axisSprite, axisMatrix,
-            axisLayoutContext, axisSegmenter,
-            axisLabel, labelBBox, textPadding,
-            xx, yy, dx, dy,
-            xValue, yValue,
-            text,
-            i;
+                surface = chart.getSurface('overlay-surface'),
+                region = Ext.Array.slice(chart.getInnerRegion()),
+                padding = chart.getInnerPadding(),
+                px = padding.left,
+                py = padding.top,
+                chartWidth = region[2],
+                chartHeight = region[3],
+                xy = chart.element.getXY(),
+                x = e.pageX - xy[0] - region[0],
+                y = e.pageY - xy[1] - region[1],
+                axes = chart.getAxes(),
+                axis, axisPosition, axisAlignment, axisSurface, axisSprite, axisMatrix,
+                axisLayoutContext, axisSegmenter,
+                axisLabel, labelBBox, textPadding,
+                xx, yy, dx, dy,
+                xValue, yValue,
+                text,
+                i;
 
         if (x < 0) {
             x = 0;
@@ -379,14 +369,13 @@ Ext.define('Ext.chart.interactions.Crosshair', {
         surface.renderFrame();
         return false;
     },
-
-    onGestureEnd: function (e) {
+    onGestureEnd: function(e) {
         var me = this,
-            chart = me.getChart(),
-            surface =  chart.getSurface('overlay-surface'),
-            axes = chart.getAxes(),
-            axis, axisPosition, axisSurface, axisLabel,
-            i;
+                chart = me.getChart(),
+                surface = chart.getSurface('overlay-surface'),
+                axes = chart.getAxes(),
+                axis, axisPosition, axisSurface, axisLabel,
+                i;
 
         surface.remove(me.verticalLine);
         surface.remove(me.horizontalLine);

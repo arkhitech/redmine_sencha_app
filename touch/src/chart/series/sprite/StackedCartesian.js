@@ -14,13 +14,11 @@ Ext.define("Ext.chart.series.sprite.StackedCartesian", {
                  * @cfg {Number} [groupCount=1] The number of groups in the series.
                  */
                 groupCount: 'number',
-
                 /**
                  * @private
                  * @cfg {Number} [groupOffset=0] The group index of the series sprite.
                  */
                 groupOffset: 'number',
-
                 /**
                  * @private
                  * @cfg {Object} [dataStartY=null] The starting point of the data used in the series.
@@ -38,23 +36,22 @@ Ext.define("Ext.chart.series.sprite.StackedCartesian", {
             }
         }
     },
-
     //@inheritdoc
-    getIndexNearPoint: function (x, y) {
+    getIndexNearPoint: function(x, y) {
         var sprite = this,
-            mat = sprite.attr.matrix,
-            dataX = sprite.attr.dataX,
-            dataY = sprite.attr.dataY,
-            dataStartY = sprite.attr.dataStartY,
-            selectionTolerance = sprite.attr.selectionTolerance,
-            minX = 0.5, minY = Infinity, index = -1,
-            imat = mat.clone().prependMatrix(this.surfaceMatrix).inverse(),
-            center = imat.transformPoint([x, y]),
-            positionLB = imat.transformPoint([x - selectionTolerance, y - selectionTolerance]),
-            positionTR = imat.transformPoint([x + selectionTolerance, y + selectionTolerance]),
-            dx, dy,
-            top = Math.min(positionLB[1], positionTR[1]),
-            bottom = Math.max(positionLB[1], positionTR[1]);
+                mat = sprite.attr.matrix,
+                dataX = sprite.attr.dataX,
+                dataY = sprite.attr.dataY,
+                dataStartY = sprite.attr.dataStartY,
+                selectionTolerance = sprite.attr.selectionTolerance,
+                minX = 0.5, minY = Infinity, index = -1,
+                imat = mat.clone().prependMatrix(this.surfaceMatrix).inverse(),
+                center = imat.transformPoint([x, y]),
+                positionLB = imat.transformPoint([x - selectionTolerance, y - selectionTolerance]),
+                positionTR = imat.transformPoint([x + selectionTolerance, y + selectionTolerance]),
+                dx, dy,
+                top = Math.min(positionLB[1], positionTR[1]),
+                bottom = Math.max(positionLB[1], positionTR[1]);
 
         for (var i = 0; i < dataX.length; i++) {
             if (Math.min(dataStartY[i], dataY[i]) <= bottom && top <= Math.max(dataStartY[i], dataY[i])) {

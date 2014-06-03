@@ -4,15 +4,13 @@
 Ext.define('Ext.device.camera.Cordova', {
     alternateClassName: 'Ext.device.camera.PhoneGap',
     extend: 'Ext.device.camera.Abstract',
-
-    getPicture: function (onSuccess, onError, options){
+    getPicture: function(onSuccess, onError, options) {
         try {
             navigator.camera.getPicture(onSuccess, onError, options);
         } catch (e) {
             alert(e);
         }
     },
-
     cleanup: function(onSuccess, onError) {
         try {
             navigator.camera.cleanup(onSuccess, onError);
@@ -20,18 +18,17 @@ Ext.define('Ext.device.camera.Cordova', {
             alert(e);
         }
     },
-
     capture: function(args) {
         var onSuccess = args.success,
-            onError = args.failure,
-            scope = args.scope,
-            sources = this.source,
-            destinations = this.destination,
-            encodings = this.encoding,
-            source = args.source,
-            destination = args.destination,
-            encoding = args.encoding,
-            options = {};
+                onError = args.failure,
+                scope = args.scope,
+                sources = this.source,
+                destinations = this.destination,
+                encodings = this.encoding,
+                source = args.source,
+                destination = args.destination,
+                encoding = args.encoding,
+                options = {};
 
         if (scope) {
             onSuccess = Ext.Function.bind(onSuccess, scope);

@@ -5,9 +5,7 @@
  */
 Ext.define('Ext.event.recognizer.Tap', {
     extend: 'Ext.event.recognizer.SingleTouch',
-
     handledEvents: ['tap', 'tapcancel'],
-
     config: {
         /**
          * @cfg {Number} moveDistance
@@ -16,7 +14,6 @@ Ext.define('Ext.event.recognizer.Tap', {
 
         moveDistance: 8
     },
-
     onTouchStart: function(e) {
         if (this.callSuper(arguments) === false) {
             return false;
@@ -24,10 +21,9 @@ Ext.define('Ext.event.recognizer.Tap', {
 
         this.startPoint = e.changedTouches[0].point;
     },
-
     onTouchMove: function(e) {
         var touch = e.changedTouches[0],
-            point = touch.point;
+                point = touch.point;
 
         if (Math.abs(point.getDistanceTo(this.startPoint)) >= this.getMoveDistance()) {
             this.fire('tapcancel', e, [touch], {
@@ -36,7 +32,6 @@ Ext.define('Ext.event.recognizer.Tap', {
             return this.fail(this.self.TOUCH_MOVED);
         }
     },
-
     onTouchEnd: function(e) {
         var touch = e.changedTouches[0];
 

@@ -17,14 +17,14 @@
 
     &,
     &:before,
-    &:after
-    {
+        &:after
+        {
         @include border-radius(100%);
     }
 
     &:before,
-    &:after
-    {
+        &:after
+        {
         content: "";
         position: absolute;
         top: 50%;
@@ -34,14 +34,14 @@
     }
 
     &:before
-    {
+        {
         left: 0;
         background: $color-alt;
         border-color: $color;
     }
 
     &:after
-    {
+        {
         left: 50%;
         background: $color;
         border-color: $color-alt;

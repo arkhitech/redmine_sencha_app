@@ -2,23 +2,17 @@
  * @private
  */
 Ext.define('Ext.event.publisher.ComponentSize', {
-
     extend: 'Ext.event.publisher.Publisher',
-
     requires: [
         'Ext.ComponentManager'
     ],
-
     targetType: 'component',
-
     handledEvents: ['resize', 'innerresize'],
-
     constructor: function() {
         this.callParent(arguments);
 
         this.sizeMonitors = {};
     },
-
     getSubscribers: function(target, createIfNotExist) {
         var subscribers = this.subscribers;
 
@@ -34,13 +28,12 @@ Ext.define('Ext.event.publisher.ComponentSize', {
 
         return subscribers[target];
     },
-
     subscribe: function(target, eventName) {
         var match = target.match(this.idSelectorRegex),
-            sizeMonitors = this.sizeMonitors,
-            dispatcher = this.dispatcher,
-            targetType = this.targetType,
-            subscribers, component, id;
+                sizeMonitors = this.sizeMonitors,
+                dispatcher = this.dispatcher,
+                targetType = this.targetType,
+                subscribers, component, id;
 
         if (!match) {
             return false;
@@ -81,14 +74,13 @@ Ext.define('Ext.event.publisher.ComponentSize', {
         subscribers[eventName] = 1;
         return true;
     },
-
     unsubscribe: function(target, eventName, all) {
         var match = target.match(this.idSelectorRegex),
-            dispatcher = this.dispatcher,
-            targetType = this.targetType,
-            sizeMonitors = this.sizeMonitors,
-            subscribers,
-            id;
+                dispatcher = this.dispatcher,
+                targetType = this.targetType,
+                sizeMonitors = this.sizeMonitors,
+                subscribers,
+                id;
 
         if (!match || !(subscribers = this.getSubscribers(target))) {
             return false;
@@ -113,10 +105,9 @@ Ext.define('Ext.event.publisher.ComponentSize', {
 
         return true;
     },
-
     onComponentPainted: function(component) {
         var target = component.getObservableId(),
-            sizeMonitors = this.sizeMonitors[target];
+                sizeMonitors = this.sizeMonitors[target];
 
         if (sizeMonitors.resize) {
             sizeMonitors.resize.refresh();
@@ -126,7 +117,6 @@ Ext.define('Ext.event.publisher.ComponentSize', {
             sizeMonitors.innerresize.refresh();
         }
     },
-
     onComponentSizeChange: function(component, observableId, eventName) {
         this.dispatcher.doDispatchEvent(this.targetType, observableId, eventName, [component]);
     }

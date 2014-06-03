@@ -89,42 +89,34 @@
  */
 Ext.define('Ext.dataview.component.ListItem', {
     extend: 'Ext.dataview.component.DataItem',
-    xtype : 'listitem',
-
+    xtype: 'listitem',
     config: {
         baseCls: Ext.baseCSSPrefix + 'list-item',
-
         dataMap: null,
-
         body: {
             xtype: 'component',
             cls: 'x-list-item-body'
         },
-
         disclosure: {
             xtype: 'component',
             cls: 'x-list-disclosure',
             hidden: true,
             docked: 'right'
         },
-
         header: {
             xtype: 'component',
             cls: 'x-list-header',
             html: ' '
         },
-
         tpl: null,
         items: null
     },
-
     applyBody: function(body) {
         if (body && !body.isComponent) {
             body = Ext.factory(body, Ext.Component, this.getBody());
         }
         return body;
     },
-
     updateBody: function(body, oldBody) {
         if (body) {
             this.add(body);
@@ -132,27 +124,23 @@ Ext.define('Ext.dataview.component.ListItem', {
             oldBody.destroy();
         }
     },
-
     applyHeader: function(header) {
         if (header && !header.isComponent) {
             header = Ext.factory(header, Ext.Component, this.getHeader());
         }
         return header;
     },
-
     updateHeader: function(header, oldHeader) {
         if (oldHeader) {
             oldHeader.destroy();
         }
     },
-
     applyDisclosure: function(disclosure) {
         if (disclosure && !disclosure.isComponent) {
             disclosure = Ext.factory(disclosure, Ext.Component, this.getDisclosure());
         }
         return disclosure;
     },
-
     updateDisclosure: function(disclosure, oldDisclosure) {
         if (disclosure) {
             this.add(disclosure);
@@ -160,18 +148,16 @@ Ext.define('Ext.dataview.component.ListItem', {
             oldDisclosure.destroy();
         }
     },
-
     updateTpl: function(tpl) {
         this.getBody().setTpl(tpl);
     },
-
     updateRecord: function(record) {
         var me = this,
-            dataview = me.dataview || this.getDataview(),
-            data = record && dataview.prepareData(record.getData(true), dataview.getStore().indexOf(record), record),
-            dataMap = me.getDataMap(),
-            body = this.getBody(),
-            disclosure = this.getDisclosure();
+                dataview = me.dataview || this.getDataview(),
+                data = record && dataview.prepareData(record.getData(true), dataview.getStore().indexOf(record), record),
+                dataMap = me.getDataMap(),
+                body = this.getBody(),
+                disclosure = this.getDisclosure();
 
         me._record = record;
 
@@ -194,7 +180,6 @@ Ext.define('Ext.dataview.component.ListItem', {
          */
         me.fireEvent('updatedata', me, data);
     },
-
     destroy: function() {
         Ext.destroy(this.getHeader());
         this.callParent(arguments);

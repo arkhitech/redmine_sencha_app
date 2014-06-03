@@ -10,7 +10,6 @@ Ext.define('Ext.device.geolocation.Cordova', {
         navigator.geolocation.getCurrentPosition(config.success, config.failure, config);
         return config;
     },
-
     watchPosition: function(config) {
         config = this.callParent(arguments);
         if (this.activeWatchID) {
@@ -19,7 +18,6 @@ Ext.define('Ext.device.geolocation.Cordova', {
         this.activeWatchID = navigator.geolocation.watchPosition(config.callback, config.failure, config);
         return config;
     },
-
     clearWatch: function() {
         if (this.activeWatchID) {
             navigator.geolocation.clearWatch(this.activeWatchID);

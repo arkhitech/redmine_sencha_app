@@ -75,10 +75,10 @@ $support-for-original-webkit-gradients: false;
 
 @function bevel-gradient($bg-color: $base-color, $direction: top, $contrast: 1) {
     @return linear-gradient($direction, color_stops(
-        lighten($bg-color, 15%),
-        lighten($bg-color, 8%) 30%,
-        $bg-color 65%,
-        darken($bg-color, 6%)
+    lighten($bg-color, 15%),
+    lighten($bg-color, 8%) 30%,
+    $bg-color 65%,
+    darken($bg-color, 6%)
     ));
 }
 
@@ -91,16 +91,16 @@ $support-for-original-webkit-gradients: false;
 }
 
 @function matte-gradient (
-    $bg-color: $base-color,
-    $direction: top,
-    $contrast: 1
+$bg-color: $base-color,
+$direction: top,
+$contrast: 1
 ) {
     @return linear-gradient(
-        $direction,
-        color_stops(
-            lighten($bg-color, 15% * $contrast),
-            lighten($bg-color, 5% * $contrast) 3%,
-            darken($bg-color, 5% * $contrast)
-        )
+    $direction,
+    color_stops(
+    lighten($bg-color, 15% * $contrast),
+    lighten($bg-color, 5% * $contrast) 3%,
+    darken($bg-color, 5% * $contrast)
+    )
     );
 }

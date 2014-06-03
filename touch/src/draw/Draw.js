@@ -1,7 +1,7 @@
-(function () {
+(function() {
     if (!Ext.global.Float32Array) {
         // Typed Array polyfill
-        var Float32Array = function (array) {
+        var Float32Array = function(array) {
             if (typeof array === 'number') {
                 this.length = array;
             } else if ('length' in array) {
@@ -22,37 +22,32 @@
  */
 Ext.define('Ext.draw.Draw', {
     singleton: true,
-
     radian: Math.PI / 180,
     pi2: Math.PI * 2,
-
     /**
      * Function that returns its first element.
      * @param {Mixed} a
      * @return {Mixed}
      */
-    reflectFn: function (a) {
+    reflectFn: function(a) {
         return a;
     },
-
     /**
      * Converting degrees to radians.
      * @param {Number} degrees
      * @return {Number}
      */
-    rad: function (degrees) {
+    rad: function(degrees) {
         return degrees % 360 * Math.PI / 180;
     },
-
     /**
      * Converting radians to degrees.
      * @param {Number} radian
      * @return {Number}
      */
-    degrees: function (radian) {
+    degrees: function(radian) {
         return radian * 180 / Math.PI % 360;
     },
-
     /**
      *
      * @param {Object} bbox1
@@ -60,24 +55,23 @@ Ext.define('Ext.draw.Draw', {
      * @param {Number} [padding]
      * @return {Boolean}
      */
-    isBBoxIntersect: function (bbox1, bbox2, padding) {
+    isBBoxIntersect: function(bbox1, bbox2, padding) {
         padding = padding || 0;
         return (Math.max(bbox1.x, bbox2.x) - padding > Math.min(bbox1.x + bbox1.width, bbox2.x + bbox2.width)) ||
-            (Math.max(bbox1.y, bbox2.y) - padding > Math.min(bbox1.y + bbox1.height, bbox2.y + bbox2.height));
+                (Math.max(bbox1.y, bbox2.y) - padding > Math.min(bbox1.y + bbox1.height, bbox2.y + bbox2.height));
     },
-
     /**
      * Natural cubic spline interpolation.
      * This algorithm runs in linear time.
      *
      * @param {Array} points Array of numbers.
      */
-    spline: function (points) {
+    spline: function(points) {
         var i, j, ln = points.length,
-            nd, d, y, ny,
-            r = 0,
-            zs = new Float32Array(points.length),
-            result = new Float32Array(points.length * 3 - 2);
+                nd, d, y, ny,
+                r = 0,
+                zs = new Float32Array(points.length),
+                result = new Float32Array(points.length * 3 - 2);
 
         zs[0] = 0;
         zs[ln - 1] = 0;
@@ -108,7 +102,6 @@ Ext.define('Ext.draw.Draw', {
         result[j] = ny;
         return result;
     },
-
     /**
      * @private
      *
@@ -131,16 +124,16 @@ Ext.define('Ext.draw.Draw', {
      *                  are the control point for the curve toward the previous path point, and
      *                  x2 and y2 are the control point for the curve toward the next path point.
      */
-    getAnchors: function (prevX, prevY, curX, curY, nextX, nextY, value) {
+    getAnchors: function(prevX, prevY, curX, curY, nextX, nextY, value) {
         value = value || 4;
         var PI = Math.PI,
-            halfPI = PI / 2,
-            abs = Math.abs,
-            sin = Math.sin,
-            cos = Math.cos,
-            atan = Math.atan,
-            control1Length, control2Length, control1Angle, control2Angle,
-            control1X, control1Y, control2X, control2Y, alpha;
+                halfPI = PI / 2,
+                abs = Math.abs,
+                sin = Math.sin,
+                cos = Math.cos,
+                atan = Math.atan,
+                control1Length, control2Length, control1Angle, control2Angle,
+                control1X, control1Y, control2X, control2Y, alpha;
 
         // Find the length of each control anchor line, by dividing the horizontal distance
         // between points by the value parameter.
@@ -198,7 +191,6 @@ Ext.define('Ext.draw.Draw', {
             y2: control2Y
         };
     },
-
     /**
      * Given coordinates of the points, calculates coordinates of a Bezier curve that goes through them.
      * @param dataX x-coordinates of the points.
@@ -206,14 +198,14 @@ Ext.define('Ext.draw.Draw', {
      * @param value A value to control the smoothness of the curve.
      * @return {Object} Object holding two arrays, for x and y coordinates of the curve.
      */
-    smooth: function (dataX, dataY, value) {
+    smooth: function(dataX, dataY, value) {
         var ln = dataX.length,
-            prevX, prevY,
-            curX, curY,
-            nextX, nextY,
-            x, y,
-            smoothX = [], smoothY = [],
-            i, anchors;
+                prevX, prevY,
+                curX, curY,
+                nextX, nextY,
+                x, y,
+                smoothX = [], smoothY = [],
+                i, anchors;
 
         for (i = 0; i < ln - 1; i++) {
             prevX = dataX[i];
@@ -227,10 +219,10 @@ Ext.define('Ext.draw.Draw', {
                     break;
                 }
             }
-            curX = dataX[i+1];
-            curY = dataY[i+1];
-            nextX = dataX[i+2];
-            nextY = dataY[i+2];
+            curX = dataX[i + 1];
+            curY = dataY[i + 1];
+            nextX = dataX[i + 2];
+            nextY = dataY[i + 2];
             if (isNaN(nextX) || isNaN(nextY)) {
                 smoothX.push(x, curX, curX);
                 smoothY.push(y, curY, curY);
@@ -247,15 +239,16 @@ Ext.define('Ext.draw.Draw', {
             smoothY: smoothY
         }
     },
-
     /**
      * @method
      * @private
      * Work around for iOS.
      * Nested 3d-transforms seems to prevent the redraw inside it until some event is fired.
      */
-    updateIOS: Ext.os.is.iOS ? function () {
+    updateIOS: Ext.os.is.iOS ? function() {
         Ext.getBody().createChild({id: 'frame-workaround', style: 'position: absolute; top: 0px; bottom: 0px; left: 0px; right: 0px; background: rgba(0,0,0,0.001); z-index: 100000'});
-        Ext.draw.Animator.schedule(function () {Ext.get('frame-workaround').destroy();});
+        Ext.draw.Animator.schedule(function() {
+            Ext.get('frame-workaround').destroy();
+        });
     } : Ext.emptyFn
 });

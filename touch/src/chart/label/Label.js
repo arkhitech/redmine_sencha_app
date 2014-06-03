@@ -7,7 +7,6 @@
 Ext.define('Ext.chart.label.Label', {
     extend: 'Ext.draw.sprite.Text',
     requires: ['Ext.chart.label.Callout'],
-
     inheritableStatics: {
         def: {
             processors: {
@@ -40,7 +39,6 @@ Ext.define('Ext.chart.label.Label', {
                 orientation: '',
                 renderer: null
             },
-
             dirtyTriggers: {
                 callout: 'transform',
                 calloutPlaceX: 'transform',
@@ -49,15 +47,13 @@ Ext.define('Ext.chart.label.Label', {
                 calloutRotation: 'transform',
                 display: 'hidden'
             },
-
             updaters: {
-                hidden: function (attrs) {
+                hidden: function(attrs) {
                     attrs.hidden = attrs.display === 'none';
                 }
             }
         }
     },
-
     config: {
         /**
          * @cfg {Object} fx Animation configuration.
@@ -69,17 +65,15 @@ Ext.define('Ext.chart.label.Label', {
         },
         field: null
     },
-
-    prepareModifiers: function () {
+    prepareModifiers: function() {
         this.callSuper(arguments);
         this.calloutModifier = new Ext.chart.label.Callout({sprite: this});
         this.fx.setNext(this.calloutModifier);
         this.calloutModifier.setNext(this.topModifier);
     },
-
-    render: function (surface, ctx, clipRegion) {
+    render: function(surface, ctx, clipRegion) {
         var me = this,
-            attr = me.attr;
+                attr = me.attr;
         ctx.save();
         ctx.globalAlpha *= Math.max(0, attr.callout - 0.5) * 2;
         if (ctx.globalAlpha > 0) {

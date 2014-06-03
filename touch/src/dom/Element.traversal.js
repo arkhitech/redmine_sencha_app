@@ -10,11 +10,9 @@ Ext.dom.Element.addMembers({
     getParent: function() {
         return Ext.get(this.dom.parentNode);
     },
-
     getFirstChild: function() {
         return Ext.get(this.dom.firstElementChild);
     },
-
     /**
      * Returns `true` if this element is an ancestor of the passed element.
      * @param {HTMLElement/String} element The element to check.
@@ -30,7 +28,6 @@ Ext.dom.Element.addMembers({
         // we need el-contains-itself logic here because isAncestor does not do that:
         return (dom === this.dom) || this.self.isAncestor(this.dom, dom);
     },
-
     /**
      * Looks at this node and then at parent nodes for a match of the passed simple selector (e.g. 'div.some-class' or 'span:first-child')
      * @param {String} simpleSelector The simple selector to test.
@@ -41,9 +38,9 @@ Ext.dom.Element.addMembers({
      */
     findParent: function(simpleSelector, maxDepth, returnEl) {
         var p = this.dom,
-            b = document.body,
-            depth = 0,
-            stopEl;
+                b = document.body,
+                depth = 0,
+                stopEl;
 
         maxDepth = maxDepth || 50;
         if (isNaN(maxDepth)) {
@@ -59,7 +56,6 @@ Ext.dom.Element.addMembers({
         }
         return null;
     },
-
     /**
      * Looks at parent nodes for a match of the passed simple selector (e.g. 'div.some-class' or 'span:first-child').
      * @param {String} simpleSelector The simple selector to test.
@@ -72,7 +68,6 @@ Ext.dom.Element.addMembers({
         var p = Ext.fly(this.dom.parentNode, '_internal');
         return p ? p.findParent(simpleSelector, maxDepth, returnEl) : null;
     },
-
     /**
      * Walks up the dom looking for a parent node that matches the passed simple selector (e.g. 'div.some-class' or 'span:first-child').
      * This is a shortcut for `findParentNode()` that always returns an Ext.dom.Element.
@@ -84,7 +79,6 @@ Ext.dom.Element.addMembers({
     up: function(simpleSelector, maxDepth) {
         return this.findParentNode(simpleSelector, maxDepth, true);
     },
-
     /**
      * Selects elements based on the passed CSS selector to enable {@link Ext.Element Element} methods
      * to be applied to many related elements in one statement through the returned. The element is the root of the search.
@@ -96,7 +90,6 @@ Ext.dom.Element.addMembers({
     select: function(selector, composite) {
         return Ext.dom.Element.select(selector, composite, this.dom);
     },
-
     /**
      * Selects child nodes based on the passed CSS selector (the selector should not contain an id).
      * @param {String} selector The CSS selector.
@@ -105,7 +98,6 @@ Ext.dom.Element.addMembers({
     query: function(selector) {
         return Ext.DomQuery.select(selector, this.dom);
     },
-
     /**
      * Selects a single child at any depth below this element based on the passed CSS selector (the selector should not contain an id).
      * @param {String} selector The CSS selector.
@@ -116,7 +108,6 @@ Ext.dom.Element.addMembers({
         var n = Ext.DomQuery.selectNode(selector, this.dom);
         return returnDom ? n : Ext.get(n);
     },
-
     /**
      * Selects a single *direct* child based on the passed CSS selector (the selector should not contain an id).
      * @param {String} selector The CSS selector.
@@ -125,16 +116,15 @@ Ext.dom.Element.addMembers({
      */
     child: function(selector, returnDom) {
         var node,
-            me = this,
-            id;
+                me = this,
+                id;
         id = Ext.get(me).id;
         // Escape . or :
         id = id.replace(/[\.:]/g, "\\$0");
         node = Ext.DomQuery.selectNode('#' + id + " > " + selector, me.dom);
         return returnDom ? node : Ext.get(node);
     },
-
-     /**
+    /**
      * Gets the parent node for this element, optionally chaining up trying to match a selector.
      * @param {String} selector (optional) Find a parent node that matches the passed simple selector.
      * @param {Boolean} returnDom (optional) `true` to return a raw DOM node instead of an Ext.dom.Element.
@@ -143,8 +133,7 @@ Ext.dom.Element.addMembers({
     parent: function(selector, returnDom) {
         return this.matchNode('parentNode', 'parentNode', selector, returnDom);
     },
-
-     /**
+    /**
      * Gets the next sibling, skipping text nodes.
      * @param {String} selector (optional) Find the next sibling that matches the passed simple selector.
      * @param {Boolean} returnDom (optional) `true` to return a raw dom node instead of an Ext.dom.Element.
@@ -153,7 +142,6 @@ Ext.dom.Element.addMembers({
     next: function(selector, returnDom) {
         return this.matchNode('nextSibling', 'nextSibling', selector, returnDom);
     },
-
     /**
      * Gets the previous sibling, skipping text nodes.
      * @param {String} selector (optional) Find the previous sibling that matches the passed simple selector.
@@ -163,8 +151,6 @@ Ext.dom.Element.addMembers({
     prev: function(selector, returnDom) {
         return this.matchNode('previousSibling', 'previousSibling', selector, returnDom);
     },
-
-
     /**
      * Gets the first child, skipping text nodes.
      * @param {String} selector (optional) Find the next sibling that matches the passed simple selector.
@@ -174,7 +160,6 @@ Ext.dom.Element.addMembers({
     first: function(selector, returnDom) {
         return this.matchNode('nextSibling', 'firstChild', selector, returnDom);
     },
-
     /**
      * Gets the last child, skipping text nodes.
      * @param {String} selector (optional) Find the previous sibling that matches the passed simple selector.
@@ -184,7 +169,6 @@ Ext.dom.Element.addMembers({
     last: function(selector, returnDom) {
         return this.matchNode('previousSibling', 'lastChild', selector, returnDom);
     },
-
     matchNode: function(dir, start, selector, returnDom) {
         if (!this.dom) {
             return null;
@@ -199,7 +183,6 @@ Ext.dom.Element.addMembers({
         }
         return null;
     },
-
     isAncestor: function(element) {
         return this.self.isAncestor.call(this.self, this.dom, element);
     }

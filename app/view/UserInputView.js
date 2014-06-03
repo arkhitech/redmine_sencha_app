@@ -52,7 +52,7 @@ Ext.define('RedmineApp.view.UserInputView', {
                         id: 'redmine_url_from_user',
                         name: 'redmine_url',
                         clearIcon: true,
-                        placeHolder: 'http://redmine.example.com/'
+                        placeHolder: 'For Example: http://redmine.example.com/'
 
                     },
                     {
@@ -71,7 +71,7 @@ Ext.define('RedmineApp.view.UserInputView', {
                         id: 'access_key_from_user',
                         name: 'redmine_access_key',
                         clearIcon: true,
-                        placeHolder: '917454393ig4629beac1e7431a6987bcc28b17aa'
+                        placeHolder: 'For Example: 917454393ig4629beac1e7431a6987bcc28b17aa'
                     },
                     {
                         xtype: 'container',

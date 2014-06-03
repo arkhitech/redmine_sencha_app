@@ -33,10 +33,8 @@
  */
 Ext.define('Ext.layout.Box', {
     extend: 'Ext.layout.Default',
-
     config: {
         orient: 'horizontal',
-
         /**
          * @cfg {String} align
          * Controls how the child items of the container are aligned. Acceptable configuration values for this property are:
@@ -51,7 +49,6 @@ Ext.define('Ext.layout.Box', {
          * @accessor
          */
         align: 'start',
-
         /**
          * @cfg {String} pack
          * Controls how the child items of the container are packed together. Acceptable configuration values
@@ -68,13 +65,9 @@ Ext.define('Ext.layout.Box', {
          */
         pack: 'start'
     },
-
     alias: 'layout.tablebox',
-
     layoutBaseClass: 'x-layout-tablebox',
-
     itemClass: 'x-layout-tablebox-item',
-
     setContainer: function(container) {
         this.callSuper(arguments);
 
@@ -84,13 +77,11 @@ Ext.define('Ext.layout.Box', {
             delegate: '> component'
         });
     },
-
     onItemInnerStateChange: function(item, isInner) {
         this.callSuper(arguments);
 
         item.toggleCls(this.itemClass, isInner);
     },
-
     onItemFlexChange: function() {
 
     }

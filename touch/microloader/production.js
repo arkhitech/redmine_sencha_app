@@ -3,25 +3,27 @@
  * @author Jacky Nguyen <jacky@sencha.com>
  */
 (function(global) {
-    var emptyFn = function(){},
-        callbacks = [],
-        doc = global.document,
-        head = doc.head,
-        addWindowListener = global.addEventListener,
-        removeWindowListener = global.removeEventListener,
-        jsonParse = JSON.parse,
-        a = doc.createElement('a'),
-        documentLocation = doc.location,
-        documentUri = documentLocation.protocol + '//' + documentLocation.hostname + documentLocation.pathname + documentLocation.search,
-        manifestFile = 'app.json',
-        isRefreshing = false,
-        activeManifest, appCache, storage;
+    var emptyFn = function() {
+    },
+            callbacks = [],
+            doc = global.document,
+            head = doc.head,
+            addWindowListener = global.addEventListener,
+            removeWindowListener = global.removeEventListener,
+            jsonParse = JSON.parse,
+            a = doc.createElement('a'),
+            documentLocation = doc.location,
+            documentUri = documentLocation.protocol + '//' + documentLocation.hostname + documentLocation.pathname + documentLocation.search,
+            manifestFile = 'app.json',
+            isRefreshing = false,
+            activeManifest, appCache, storage;
 
     try {
         storage = global.localStorage;
         appCache = global.applicationCache;
     }
-    catch(e) {}
+    catch (e) {
+    }
 
     function getManifestStorageKey(id) {
         return id + '-' + documentUri + manifestFile;
@@ -39,8 +41,8 @@
         }
 
         var applicationId = manifest.id,
-            key = getManifestStorageKey(applicationId),
-            assetMap = {};
+                key = getManifestStorageKey(applicationId),
+                assetMap = {};
 
         function processAsset(asset) {
             var uri;
@@ -68,7 +70,7 @@
 
         function processAssets(assets, type) {
             var ln = assets.length,
-                i, asset;
+                    i, asset;
 
             for (i = 0; i < ln; i++) {
                 asset = assets[i];
@@ -93,8 +95,8 @@
 
         var filterPlatform = window.Ext.filterPlatform = function(platform) {
             var profileMatch = false,
-                ua = navigator.userAgent,
-                j, jln;
+                    ua = navigator.userAgent,
+                    j, jln;
 
             platform = [].concat(platform);
 
@@ -107,21 +109,21 @@
                 // - Android with "Mobile" in the UA
 
                 return /(iPhone|iPod)/.test(ua) ||
-                          (!/(Silk)/.test(ua) && (/(Android)/.test(ua) && (/(Android 2)/.test(ua) || isMobile))) ||
-                          (/(BlackBerry|BB)/.test(ua) && isMobile) ||
-                          /(Windows Phone)/.test(ua);
+                        (!/(Silk)/.test(ua) && (/(Android)/.test(ua) && (/(Android 2)/.test(ua) || isMobile))) ||
+                        (/(BlackBerry|BB)/.test(ua) && isMobile) ||
+                        /(Windows Phone)/.test(ua);
             }
 
             function isTablet(ua) {
                 return !isPhone(ua) && (/iPad/.test(ua) || /Android|Silk/.test(ua) || /(RIM Tablet OS)/.test(ua) ||
-                    (/MSIE 10/.test(ua) && /; Touch/.test(ua)));
+                        (/MSIE 10/.test(ua) && /; Touch/.test(ua)));
             }
 
             // Check if the ?platform parameter is set in the URL
             var paramsString = window.location.search.substr(1),
-                paramsArray = paramsString.split("&"),
-                params = {},
-                testPlatform, i;
+                    paramsArray = paramsString.split("&"),
+                    params = {},
+                    testPlatform, i;
 
             for (i = 0; i < paramsArray.length; i++) {
                 var tmpArray = paramsArray[i].split("=");
@@ -180,7 +182,7 @@
 
         this.css = this.css.filter(function(css) {
             var platform = css.platform,
-                exclude = css.exclude;
+                    exclude = css.exclude;
 
             if (platform) {
                 if (filterPlatform(platform) && !filterPlatform(exclude)) {
@@ -197,7 +199,7 @@
 
         this.js = this.js.filter(function(js) {
             var platform = js.platform,
-                exclude = js.exclude;
+                    exclude = js.exclude;
 
             if (platform) {
                 if (filterPlatform(platform) && !filterPlatform(exclude)) {
@@ -253,7 +255,7 @@
             xhr.onreadystatechange = function() {
                 if (xhr.readyState == 4) {
                     var status = xhr.status,
-                        content = xhr.responseText;
+                            content = xhr.responseText;
 
                     if ((status >= 200 && status < 300) || status == 304 || (status == 0 && content.length > 0)) {
                         onSuccess(content);
@@ -284,7 +286,7 @@
 
     function requestAsset(asset, onSuccess, onFailure) {
         var isRemote = !!asset.remote,
-            isShared = !!asset.shared;
+                isShared = !!asset.shared;
 
         if (isRemote) {
             onSuccess('');
@@ -293,9 +295,9 @@
 
         if (!isShared) {
             var onRequestSuccess = onSuccess,
-                version = asset.version,
-                versionLn = version.length,
-                checksumFail, checksumType;
+                    version = asset.version,
+                    versionLn = version.length,
+                    checksumFail, checksumType;
 
             onSuccess = function(content) {
                 checksumType = content.substring(0, 1);
@@ -329,8 +331,8 @@
 
     function onMessage(e) {
         var data = e.data,
-            sourceWindow = e.source.window,
-            i, ln, callback, iframe;
+                sourceWindow = e.source.window,
+                i, ln, callback, iframe;
 
         for (i = 0, ln = callbacks.length; i < ln; i++) {
             callback = callbacks[i];
@@ -347,13 +349,13 @@
 
     function patch(content, delta) {
         var output = [],
-            chunk, i, ln;
+                chunk, i, ln;
 
         if (delta.length === 0) {
             return content;
         }
 
-        for (i = 0,ln = delta.length; i < ln; i++) {
+        for (i = 0, ln = delta.length; i < ln; i++) {
             chunk = delta[i];
 
             if (typeof chunk === 'number') {
@@ -444,8 +446,8 @@
 
     function blink(currentManifest) {
         var currentAssets = currentManifest.assets,
-            assetsCount = currentAssets.length,
-            newManifest;
+                assetsCount = currentAssets.length,
+                newManifest;
 
         activeManifest = currentManifest;
 
@@ -453,9 +455,9 @@
 
         function onAssetReady(asset, content) {
             var assets = asset.collection,
-                index = asset.index,
-                ln = assets.length,
-                i;
+                    index = asset.index,
+                    ln = assets.length,
+                    i;
 
             asset.ready = true;
             asset.content = content;
@@ -493,7 +495,7 @@
             }
             else {
                 var style = doc.createElement('style'),
-                    base;
+                        base;
 
                 style.type = 'text/css';
                 style.textContent = asset.content;
@@ -522,14 +524,15 @@
 
         function onReady() {
             var updatingAssets = [],
-                appCacheReady = false,
-                onAppCacheIdle = function() {},
-                onAppCacheReady = function() {
-                    appCache.swapCache();
-                    appCacheReady = true;
-                    onAppCacheIdle();
-                },
-                updatingCount;
+                    appCacheReady = false,
+                    onAppCacheIdle = function() {
+                    },
+                    onAppCacheReady = function() {
+                        appCache.swapCache();
+                        appCacheReady = true;
+                        onAppCacheIdle();
+                    },
+                    updatingCount;
 
             removeWindowListener('message', onMessage, false);
 
@@ -589,7 +592,7 @@
                     activeManifest = newManifest = new Manifest(manifestContent);
 
                     var assets = newManifest.assets,
-                        currentAsset;
+                            currentAsset;
 
                     assets.forEach(function(asset) {
                         currentAsset = currentManifest.getAsset(asset.uri);
@@ -613,8 +616,8 @@
 
                     updatingAssets.forEach(function(asset) {
                         var currentAsset = currentManifest.getAsset(asset.uri),
-                            path = asset.path,
-                            update = asset.update;
+                                path = asset.path,
+                                update = asset.update;
 
                         function updateFull() {
                             requestAsset(asset, function(content) {
@@ -631,16 +634,16 @@
                         }
                         else {
                             requestXhr('deltas/' + path + '/' + currentAsset.version + '.json',
-                                function(content) {
-                                    try {
-                                        onAssetUpdated(asset, patch(retrieveAsset(asset), jsonParse(content)));
-                                    }
-                                    catch (e) {
-                                        log("Malformed delta content received for " + asset.uri);
-                                    }
-                                },
-                                updateFull
-                            );
+                                    function(content) {
+                                        try {
+                                            onAssetUpdated(asset, patch(retrieveAsset(asset), jsonParse(content)));
+                                        }
+                                        catch (e) {
+                                            log("Malformed delta content received for " + asset.uri);
+                                        }
+                                    },
+                                    updateFull
+                                    );
                         }
                     })
                 });
@@ -682,19 +685,19 @@
         if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
             var msViewportStyle = document.createElement("style");
             msViewportStyle.appendChild(
-                document.createTextNode(
-                    "@media screen and (orientation: portrait) {" +
-                        "@-ms-viewport {width: 320px !important;}" +
-                    "}" +
-                    "@media screen and (orientation: landscape) {" +
-                        "@-ms-viewport {width: 560px !important;}" +
-                    "}"
-                )
-            );
+                    document.createTextNode(
+                            "@media screen and (orientation: portrait) {" +
+                            "@-ms-viewport {width: 320px !important;}" +
+                            "}" +
+                            "@media screen and (orientation: landscape) {" +
+                            "@-ms-viewport {width: 560px !important;}" +
+                            "}"
+                            )
+                    );
             document.getElementsByTagName("head")[0].appendChild(msViewportStyle);
         }
 
-        var readyStateRe =  (/MSIE 10/.test(navigator.userAgent)) ? /complete|loaded/ : /interactive|complete|loaded/;
+        var readyStateRe = (/MSIE 10/.test(navigator.userAgent)) ? /complete|loaded/ : /interactive|complete|loaded/;
         if (doc.readyState.match(readyStateRe) !== null) {
             blink(manifest);
         }
@@ -712,9 +715,9 @@
                     }, 1);
                 }
                 else {
-                  setTimeout(function() {
-                    blink(manifest);
-                  }, 1);
+                    setTimeout(function() {
+                        blink(manifest);
+                    }, 1);
                 }
             }, false);
         }

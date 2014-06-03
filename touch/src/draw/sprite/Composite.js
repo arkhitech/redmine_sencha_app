@@ -8,25 +8,24 @@ Ext.define("Ext.draw.sprite.Composite", {
     extend: "Ext.draw.sprite.Sprite",
     alias: 'sprite.composite',
     type: 'composite',
-    constructor: function () {
+    constructor: function() {
         this.callSuper(arguments);
         this.sprites = [];
         this.sprites.map = {};
     },
-
     /**
      * Adds a sprite to the composite.
      */
-    add: function (sprite) {
+    add: function(sprite) {
         if (!(sprite instanceof Ext.draw.sprite.Sprite)) {
             sprite = Ext.create('sprite.' + sprite.type, sprite);
             sprite.setParent(this);
         }
         var oldTransformations = sprite.applyTransformations,
-            me = this,
-            attr = me.attr;
+                me = this,
+                attr = me.attr;
 
-        sprite.applyTransformations = function () {
+        sprite.applyTransformations = function() {
             if (sprite.attr.dirtyTransform) {
                 attr.dirtyTransform = true;
                 attr.bbox.plain.dirty = true;
@@ -40,17 +39,16 @@ Ext.define("Ext.draw.sprite.Composite", {
         attr.bbox.transform.dirty = true;
         return sprite;
     },
-
     /**
      * Updates the bounding box of the composite, which contains the bounding box of all sprites in the composite.
      */
-    updatePlainBBox: function (plain) {
+    updatePlainBBox: function(plain) {
         var me = this,
-            left = Infinity,
-            right = -Infinity,
-            top = Infinity,
-            bottom = -Infinity,
-            sprite, bbox, i, ln;
+                left = Infinity,
+                right = -Infinity,
+                top = Infinity,
+                bottom = -Infinity,
+                sprite, bbox, i, ln;
 
         for (i = 0, ln = me.sprites.length; i < ln; i++) {
             sprite = me.sprites[i];
@@ -74,13 +72,12 @@ Ext.define("Ext.draw.sprite.Composite", {
         plain.width = right - left;
         plain.height = bottom - top;
     },
-
     /**
      * Renders all sprites contained in the composite to the surface.
      */
-    render: function (surface, ctx, region) {
+    render: function(surface, ctx, region) {
         var mat = this.attr.matrix,
-            i, ln;
+                i, ln;
 
         mat.toContext(ctx);
         for (i = 0, ln = this.sprites.length; i < ln; i++) {

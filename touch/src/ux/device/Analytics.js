@@ -9,12 +9,10 @@
  */
 Ext.define('Ext.ux.device.Analytics', {
     singleton: true,
-
     requires: [
         'Ext.device.Communicator',
         'Ext.ux.device.analytics.Cordova'
     ],
-
     constructor: function() {
         var browserEnv = Ext.browser.is;
         if (browserEnv.WebView && browserEnv.Cordova) {

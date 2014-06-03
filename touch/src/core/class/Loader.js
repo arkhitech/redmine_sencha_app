@@ -147,22 +147,21 @@
 (function(Manager, Class, flexSetter, alias, pass, arrayFrom, arrayErase, arrayInclude) {
 
     var
-        //<if nonBrowser>
-        isNonBrowser = typeof window == 'undefined',
-        isNodeJS = isNonBrowser && (typeof require == 'function'),
-        isJsdb = isNonBrowser && typeof system != 'undefined' && system.program.search(/jsdb/) !== -1,
-        //</if>
-        dependencyProperties = ['extend', 'mixins', 'requires'],
-        Loader,
-        setPathCount = 0;;
+            //<if nonBrowser>
+            isNonBrowser = typeof window == 'undefined',
+            isNodeJS = isNonBrowser && (typeof require == 'function'),
+            isJsdb = isNonBrowser && typeof system != 'undefined' && system.program.search(/jsdb/) !== -1,
+            //</if>
+            dependencyProperties = ['extend', 'mixins', 'requires'],
+            Loader,
+            setPathCount = 0;
+    ;
 
     Loader = Ext.Loader = {
-
         /**
          * @private
          */
         isInHistory: {},
-
         /**
          * An array of class names to keep track of the dependency loading order.
          * This is not guaranteed to be the same every time due to the asynchronous
@@ -172,7 +171,6 @@
          * @type Array
          */
         history: [],
-
         /**
          * Configuration
          * @private
@@ -183,19 +181,16 @@
              * @cfg {Boolean} enabled
              */
             enabled: true,
-
             /**
              * @cfg {Boolean} disableCaching
              * Appends current timestamp to script files to prevent caching.
              */
             disableCaching: true,
-
             /**
              * @cfg {String} disableCachingParam
              * The get parameter name for the cache buster's timestamp.
              */
             disableCachingParam: '_dc',
-
             /**
              * @cfg {Object} paths
              * The mapping from namespaces to file paths.
@@ -216,7 +211,6 @@
                 'Ext': '.'
             }
         },
-
         /**
          * Set the configuration for the loader. This should be called right after ext-(debug).js
          * is included in the page, and before Ext.onReady. i.e:
@@ -255,7 +249,6 @@
             setPathCount += 1;
             return this;
         },
-
         /**
          * Get the config value corresponding to the specified name. If no name is given, will return the config object.
          * @param {String} name The config property name.
@@ -268,7 +261,6 @@
 
             return this.config;
         },
-
         /**
          * Sets the path of a namespace.
          * For example:
@@ -285,7 +277,6 @@
             setPathCount += 1;
             return this;
         }),
-
         /**
          * Sets a batch of path entries
          *
@@ -295,17 +286,16 @@
         addClassPathMappings: function(paths) {
             var name;
 
-            if(setPathCount == 0){
+            if (setPathCount == 0) {
                 Loader.config.paths = paths;
             } else {
-                for(name in paths){
+                for (name in paths) {
                     Loader.config.paths[name] = paths[name];
                 }
             }
             setPathCount++;
             return Loader;
         },
-
         /**
          * Translates a className to a file path by adding the
          * the proper prefix and converting the .'s to /'s. For example:
@@ -335,8 +325,8 @@
          */
         getPath: function(className) {
             var path = '',
-                paths = this.config.paths,
-                prefix = this.getPrefix(className);
+                    paths = this.config.paths,
+                    prefix = this.getPrefix(className);
 
             if (prefix.length > 0) {
                 if (prefix === className) {
@@ -353,14 +343,13 @@
 
             return path.replace(/\/\.\//g, '/') + className.replace(/\./g, "/") + '.js';
         },
-
         /**
          * @private
          * @param {String} className
          */
         getPrefix: function(className) {
             var paths = this.config.paths,
-                prefix, deepestPrefix = '';
+                    prefix, deepestPrefix = '';
 
             if (paths.hasOwnProperty(className)) {
                 return className;
@@ -376,7 +365,6 @@
 
             return deepestPrefix;
         },
-
         /**
          * Loads all classes by the given names and all their direct dependencies; optionally executes the given callback function when
          * finishes, within the optional scope. This method is aliased by {@link Ext#require Ext.require} for convenience.
@@ -390,7 +378,6 @@
                 fn.call(scope);
             }
         },
-
         /**
          * Synchronously loads all classes by the given names and all their direct dependencies; optionally executes the given callback function when finishes, within the optional scope. This method is aliased by {@link Ext#syncRequire} for convenience
          * @param {String/Array} expressions Can either be a string or an array of string
@@ -398,8 +385,8 @@
          * @param {Object} scope (optional) The execution scope (`this`) of the callback function
          * @param {String/Array} excludes (optional) Classes to be excluded, useful when being used with expressions
          */
-        syncRequire: function() {},
-
+        syncRequire: function() {
+        },
         /**
          * Explicitly exclude files from being loaded. Useful when used in conjunction with a broad include expression.
          * Can be chained with more `require` and `exclude` methods, eg:
@@ -418,13 +405,11 @@
                 require: function(expressions, fn, scope) {
                     return me.require(expressions, fn, scope, excludes);
                 },
-
                 syncRequire: function(expressions, fn, scope) {
                     return me.syncRequire(expressions, fn, scope, excludes);
                 }
             };
         },
-
         /**
          * Add a new listener to be executed when all required scripts are fully loaded.
          *
@@ -453,13 +438,11 @@
          * @private
          */
         documentHead: typeof document != 'undefined' && (document.head || document.getElementsByTagName('head')[0]),
-
         /**
          * Flag indicating whether there are still files being loaded
          * @private
          */
         isLoading: false,
-
         /**
          * Maintain the queue for all dependencies. Each item in the array is an object of the format:
          *
@@ -470,61 +453,49 @@
          * @private
          */
         queue: [],
-
         /**
          * Maintain the list of files that have already been handled so that they never get double-loaded
          * @private
          */
         isClassFileLoaded: {},
-
         /**
          * @private
          */
         isFileLoaded: {},
-
         /**
          * Maintain the list of listeners to execute when all required scripts are fully loaded
          * @private
          */
         readyListeners: [],
-
         /**
          * Contains optional dependencies to be loaded last
          * @private
          */
         optionalRequires: [],
-
         /**
          * Map of fully qualified class names to an array of dependent classes.
          * @private
          */
         requiresMap: {},
-
         /**
          * @private
          */
         numPendingFiles: 0,
-
         /**
          * @private
          */
         numLoadedFiles: 0,
-
         /** @private */
         hasFileLoadError: false,
-
         /**
          * @private
          */
         classNameToFilePathMap: {},
-
         /**
          * @private
          */
         syncModeEnabled: false,
-
         scriptElements: {},
-
         /**
          * Refresh all items in the queue. If all dependencies for an item exist during looping,
          * it will execute the callback and call refreshQueue again. Triggers onReady when the queue is
@@ -533,8 +504,8 @@
          */
         refreshQueue: function() {
             var queue = this.queue,
-                ln = queue.length,
-                i, item, j, requires, references;
+                    ln = queue.length,
+                    i, item, j, requires, references;
 
             if (ln === 0) {
                 this.triggerReady();
@@ -577,22 +548,21 @@
 
             return this;
         },
-
         /**
          * Inject a script element to document's head, call onLoad and onError accordingly
          * @private
          */
         injectScriptElement: function(url, onLoad, onError, scope, charset) {
             var script = document.createElement('script'),
-                me = this,
-                onLoadFn = function() {
-                    me.cleanupScriptElement(script);
-                    onLoad.call(scope);
-                },
-                onErrorFn = function() {
-                    me.cleanupScriptElement(script);
-                    onError.call(scope);
-                };
+                    me = this,
+                    onLoadFn = function() {
+                        me.cleanupScriptElement(script);
+                        onLoad.call(scope);
+                    },
+                    onErrorFn = function() {
+                        me.cleanupScriptElement(script);
+                        onError.call(scope);
+                    };
 
             script.type = 'text/javascript';
             script.src = url;
@@ -607,12 +577,11 @@
             if (charset) {
                 script.charset = charset;
             }
-            
+
             this.documentHead.appendChild(script);
 
             return script;
         },
-
         removeScriptElement: function(url) {
             var scriptElements = this.scriptElements;
 
@@ -623,7 +592,6 @@
 
             return this;
         },
-
         /**
          * @private
          */
@@ -638,17 +606,16 @@
 
             return this;
         },
-
         /**
          * Load a script file, supports both asynchronous and synchronous approaches
          * @private
          */
         loadScriptFile: function(url, onLoad, onError, scope, synchronous) {
             var me = this,
-                isFileLoaded = this.isFileLoaded,
-                scriptElements = this.scriptElements,
-                noCacheUrl = url + (this.getConfig('disableCaching') ? ('?' + this.getConfig('disableCachingParam') + '=' + Ext.Date.now()) : ''),
-                xhr, status, content, onScriptError;
+                    isFileLoaded = this.isFileLoaded,
+                    scriptElements = this.scriptElements,
+                    noCacheUrl = url + (this.getConfig('disableCaching') ? ('?' + this.getConfig('disableCachingParam') + '=' + Ext.Date.now()) : ''),
+                    xhr, status, content, onScriptError;
 
             if (isFileLoaded[url]) {
                 return this;
@@ -690,9 +657,9 @@
                 catch (e) {
                     //<debug error>
                     onError.call(this, "Failed loading synchronously via XHR: '" + url + "'; It's likely that the file is either " +
-                                       "being loaded from a different domain or from the local file system whereby cross origin " +
-                                       "requests are not allowed due to security reasons. Use asynchronous loading with " +
-                                       "Ext.require instead.", synchronous);
+                            "being loaded from a different domain or from the local file system whereby cross origin " +
+                            "requests are not allowed due to security reasons. Use asynchronous loading with " +
+                            "Ext.require instead.", synchronous);
                     //</debug>
                 }
 
@@ -708,8 +675,8 @@
                 else {
                     //<debug>
                     onError.call(this, "Failed loading synchronously via XHR: '" + url + "'; please " +
-                                       "verify that the file exists. " +
-                                       "XHR status code: " + status, synchronous);
+                            "verify that the file exists. " +
+                            "XHR status code: " + status, synchronous);
                     //</debug>
                 }
 
@@ -717,7 +684,6 @@
                 xhr = null;
             }
         },
-
         // documented above
         syncRequire: function() {
             var syncModeEnabled = this.syncModeEnabled;
@@ -734,33 +700,32 @@
 
             this.refreshQueue();
         },
-
         // documented above
         require: function(expressions, fn, scope, excludes) {
             var excluded = {},
-                included = {},
-                queue = this.queue,
-                classNameToFilePathMap = this.classNameToFilePathMap,
-                isClassFileLoaded = this.isClassFileLoaded,
-                excludedClassNames = [],
-                possibleClassNames = [],
-                classNames = [],
-                references = [],
-                callback,
-                syncModeEnabled,
-                filePath, expression, exclude, className,
-                possibleClassName, i, j, ln, subLn;
+                    included = {},
+                    queue = this.queue,
+                    classNameToFilePathMap = this.classNameToFilePathMap,
+                    isClassFileLoaded = this.isClassFileLoaded,
+                    excludedClassNames = [],
+                    possibleClassNames = [],
+                    classNames = [],
+                    references = [],
+                    callback,
+                    syncModeEnabled,
+                    filePath, expression, exclude, className,
+                    possibleClassName, i, j, ln, subLn;
 
             if (excludes) {
                 excludes = arrayFrom(excludes);
 
-                for (i = 0,ln = excludes.length; i < ln; i++) {
+                for (i = 0, ln = excludes.length; i < ln; i++) {
                     exclude = excludes[i];
 
                     if (typeof exclude == 'string' && exclude.length > 0) {
                         excludedClassNames = Manager.getNamesByExpression(exclude);
 
-                        for (j = 0,subLn = excludedClassNames.length; j < subLn; j++) {
+                        for (j = 0, subLn = excludedClassNames.length; j < subLn; j++) {
                             excluded[excludedClassNames[j]] = true;
                         }
                     }
@@ -773,9 +738,9 @@
                 if (fn.length > 0) {
                     callback = function() {
                         var classes = [],
-                            i, ln, name;
+                                i, ln, name;
 
-                        for (i = 0,ln = references.length; i < ln; i++) {
+                        for (i = 0, ln = references.length; i < ln; i++) {
                             name = references[i];
                             classes.push(Manager.get(name));
                         }
@@ -793,7 +758,7 @@
 
             scope = scope || Ext.global;
 
-            for (i = 0,ln = expressions.length; i < ln; i++) {
+            for (i = 0, ln = expressions.length; i < ln; i++) {
                 expression = expressions[i];
 
                 if (typeof expression == 'string' && expression.length > 0) {
@@ -820,7 +785,7 @@
             if (classNames.length > 0) {
                 if (!this.config.enabled) {
                     throw new Error("Ext.Loader is not enabled, so dependencies cannot be resolved dynamically. " +
-                             "Missing required class" + ((classNames.length > 1) ? "es" : "") + ": " + classNames.join(', '));
+                            "Missing required class" + ((classNames.length > 1) ? "es" : "") + ": " + classNames.join(', '));
                 }
             }
             else {
@@ -833,7 +798,7 @@
             if (!syncModeEnabled) {
                 queue.push({
                     requires: classNames.slice(), // this array will be modified as the queue is processed,
-                                                  // so we need a copy of it
+                    // so we need a copy of it
                     callback: callback,
                     scope: scope
                 });
@@ -863,12 +828,12 @@
                     this.numPendingFiles++;
 
                     this.loadScriptFile(
-                        filePath,
-                        pass(this.onFileLoaded, [className, filePath], this),
-                        pass(this.onFileLoadError, [className, filePath]),
-                        this,
-                        syncModeEnabled
-                    );
+                            filePath,
+                            pass(this.onFileLoaded, [className, filePath], this),
+                            pass(this.onFileLoadError, [className, filePath]),
+                            this,
+                            syncModeEnabled
+                            );
                 }
             }
 
@@ -882,7 +847,6 @@
 
             return this;
         },
-
         /**
          * @private
          * @param {String} className
@@ -903,15 +867,15 @@
             //<debug>
             if (!this.syncModeEnabled && this.numPendingFiles === 0 && this.isLoading && !this.hasFileLoadError) {
                 var queue = this.queue,
-                    missingClasses = [],
-                    missingPaths = [],
-                    requires,
-                    i, ln, j, subLn;
+                        missingClasses = [],
+                        missingPaths = [],
+                        requires,
+                        i, ln, j, subLn;
 
-                for (i = 0,ln = queue.length; i < ln; i++) {
+                for (i = 0, ln = queue.length; i < ln; i++) {
                     requires = queue[i].requires;
 
-                    for (j = 0,subLn = requires.length; j < subLn; j++) {
+                    for (j = 0, subLn = requires.length; j < subLn; j++) {
                         if (this.isClassFileLoaded[requires[j]]) {
                             missingClasses.push(requires[j]);
                         }
@@ -926,17 +890,16 @@
                     return !this.requiresMap.hasOwnProperty(item);
                 }, this);
 
-                for (i = 0,ln = missingClasses.length; i < ln; i++) {
+                for (i = 0, ln = missingClasses.length; i < ln; i++) {
                     missingPaths.push(this.classNameToFilePathMap[missingClasses[i]]);
                 }
 
                 throw new Error("The following classes are not declared even if their files have been " +
-                            "loaded: '" + missingClasses.join("', '") + "'. Please check the source code of their " +
-                            "corresponding files for possible typos: '" + missingPaths.join("', '"));
+                        "loaded: '" + missingClasses.join("', '") + "'. Please check the source code of their " +
+                        "corresponding files for possible typos: '" + missingPaths.join("', '"));
             }
             //</debug>
         },
-
         /**
          * @private
          */
@@ -948,13 +911,12 @@
             throw new Error("[Ext.Loader] " + errorMessage);
             //</debug>
         },
-
         /**
          * @private
          */
         addOptionalRequires: function(requires) {
             var optionalRequires = this.optionalRequires,
-                i, ln, require;
+                    i, ln, require;
 
             requires = arrayFrom(requires);
 
@@ -966,14 +928,13 @@
 
             return this;
         },
-
         /**
          * @private
          */
         triggerReady: function(force) {
             var readyListeners = this.readyListeners,
-                optionalRequires = this.optionalRequires,
-                listener;
+                    optionalRequires = this.optionalRequires,
+                    listener;
 
             if (this.isLoading || force) {
                 this.isLoading = false;
@@ -1001,7 +962,6 @@
 
             return this;
         },
-
         // duplicate definition (documented above)
         onReady: function(fn, scope, withDomReady, options) {
             var oldFn;
@@ -1024,7 +984,6 @@
                 });
             }
         },
-
         /**
          * @private
          * @param {String} className
@@ -1052,7 +1011,6 @@
 
                     return this;
                 }),
-
                 loadScriptFile: function(filePath, onLoad, onError, scope, synchronous) {
                     require(filePath);
                     onLoad.call(scope);
@@ -1113,31 +1071,31 @@
 
     Class.registerPreprocessor('loader', function(cls, data, hooks, continueFn) {
         var me = this,
-            dependencies = [],
-            className = Manager.getName(cls),
-            i, j, ln, subLn, value, propertyName, propertyValue;
+                dependencies = [],
+                className = Manager.getName(cls),
+                i, j, ln, subLn, value, propertyName, propertyValue;
 
         /*
-        Loop through the dependencyProperties, look for string class names and push
-        them into a stack, regardless of whether the property's value is a string, array or object. For example:
-        {
-              extend: 'Ext.MyClass',
-              requires: ['Ext.some.OtherClass'],
-              mixins: {
-                  observable: 'Ext.mixin.Observable';
-              }
-        }
-        which will later be transformed into:
-        {
-              extend: Ext.MyClass,
-              requires: [Ext.some.OtherClass],
-              mixins: {
-                  observable: Ext.mixin.Observable;
-              }
-        }
-        */
+         Loop through the dependencyProperties, look for string class names and push
+         them into a stack, regardless of whether the property's value is a string, array or object. For example:
+         {
+         extend: 'Ext.MyClass',
+         requires: ['Ext.some.OtherClass'],
+         mixins: {
+         observable: 'Ext.mixin.Observable';
+         }
+         }
+         which will later be transformed into:
+         {
+         extend: Ext.MyClass,
+         requires: [Ext.some.OtherClass],
+         mixins: {
+         observable: Ext.mixin.Observable;
+         }
+         }
+         */
 
-        for (i = 0,ln = dependencyProperties.length; i < ln; i++) {
+        for (i = 0, ln = dependencyProperties.length; i < ln; i++) {
             propertyName = dependencyProperties[i];
 
             if (data.hasOwnProperty(propertyName)) {
@@ -1176,26 +1134,28 @@
         //<feature classSystem.loader>
         //<debug error>
         var deadlockPath = [],
-            requiresMap = Loader.requiresMap,
-            detectDeadlock;
+                requiresMap = Loader.requiresMap,
+                detectDeadlock;
 
         /*
-        Automatically detect deadlocks before-hand,
-        will throw an error with detailed path for ease of debugging. Examples of deadlock cases:
-
-        - A extends B, then B extends A
-        - A requires B, B requires C, then C requires A
-
-        The detectDeadlock function will recursively transverse till the leaf, hence it can detect deadlocks
-        no matter how deep the path is.
-        */
+         Automatically detect deadlocks before-hand,
+         will throw an error with detailed path for ease of debugging. Examples of deadlock cases:
+         
+         - A extends B, then B extends A
+         - A requires B, B requires C, then C requires A
+         
+         The detectDeadlock function will recursively transverse till the leaf, hence it can detect deadlocks
+         no matter how deep the path is.
+         */
 
         if (className) {
             requiresMap[className] = dependencies;
             //<debug>
-            if (!Loader.requiredByMap) Loader.requiredByMap = {};
-            Ext.Array.each(dependencies, function(dependency){
-                if (!Loader.requiredByMap[dependency]) Loader.requiredByMap[dependency] = [];
+            if (!Loader.requiredByMap)
+                Loader.requiredByMap = {};
+            Ext.Array.each(dependencies, function(dependency) {
+                if (!Loader.requiredByMap[dependency])
+                    Loader.requiredByMap[dependency] = [];
                 Loader.requiredByMap[dependency].push(className);
             });
             //</debug>
@@ -1209,7 +1169,7 @@
                                 deadlockPath.join(' -> ') + " -> " + deadlockPath[0]);
                     }
 
-                    for (i = 0,ln = requiresMap[cls].length; i < ln; i++) {
+                    for (i = 0, ln = requiresMap[cls].length; i < ln; i++) {
                         detectDeadlock(requiresMap[cls][i]);
                     }
                 }
@@ -1222,7 +1182,7 @@
         //</feature>
 
         Loader.require(dependencies, function() {
-            for (i = 0,ln = dependencyProperties.length; i < ln; i++) {
+            for (i = 0, ln = dependencyProperties.length; i < ln; i++) {
                 propertyName = dependencyProperties[i];
 
                 if (data.hasOwnProperty(propertyName)) {
@@ -1270,10 +1230,10 @@
      */
     Manager.registerPostprocessor('uses', function(name, cls, data) {
         var uses = arrayFrom(data.uses),
-            items = [],
-            i, ln, item;
+                items = [],
+                i, ln, item;
 
-        for (i = 0,ln = uses.length; i < ln; i++) {
+        for (i = 0, ln = uses.length; i < ln; i++) {
             item = uses[i];
 
             if (typeof item == 'string') {
@@ -1290,7 +1250,7 @@
     //</feature>
 
 })(Ext.ClassManager, Ext.Class, Ext.Function.flexSetter, Ext.Function.alias,
-   Ext.Function.pass, Ext.Array.from, Ext.Array.erase, Ext.Array.include);
+        Ext.Function.pass, Ext.Array.from, Ext.Array.erase, Ext.Array.include);
 
 // initalize the default path of the framework
 // trimmed down version of sench-touch-debug-suffix.js
@@ -1298,16 +1258,16 @@
 // compiler-generated metadata
 (function() {
     var scripts = document.getElementsByTagName('script'),
-        currentScript = scripts[scripts.length - 1],
-        src = currentScript.src,
-        path = src.substring(0, src.lastIndexOf('/') + 1),
-        Loader = Ext.Loader;
+            currentScript = scripts[scripts.length - 1],
+            src = currentScript.src,
+            path = src.substring(0, src.lastIndexOf('/') + 1),
+            Loader = Ext.Loader;
 
     //<debug>
     // if we're running in dev mode out of the repo src tree, then this
     // file will potentially be loaded from the touch/src/core/class folder
     // so we'll need to adjust for that
-    if(src.indexOf("src/core/class/") != -1) {
+    if (src.indexOf("src/core/class/") != -1) {
         path = path + "../../../";
     }
     //</debug>
@@ -1317,7 +1277,7 @@
         enabled: true,
         disableCaching: !/[?&](cache|breakpoint)/i.test(location.search),
         paths: {
-            'Ext' : path + 'src'
+            'Ext': path + 'src'
         }
     });
 

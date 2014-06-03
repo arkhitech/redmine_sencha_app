@@ -9,9 +9,9 @@
 @mixin drop-shadow-transform-requirement($background: #fff)
 {
     position: relative;
-    
+
     & > :last-child::before
-    {
+        {
         content: "";
         position: absolute;
         z-index: -1;

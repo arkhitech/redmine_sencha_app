@@ -28,40 +28,35 @@
 Ext.define('Ext.plugin.ListPaging', {
     extend: 'Ext.Component',
     alias: 'plugin.listpaging',
-
     config: {
         /**
          * @cfg {Boolean} autoPaging
          * True to automatically load the next page when you scroll to the bottom of the list.
          */
         autoPaging: false,
-
         /**
          * @cfg {String} loadMoreText The text used as the label of the Load More button.
          */
         loadMoreText: 'Load More...',
-
         /**
          * @cfg {String} noMoreRecordsText The text used as the label of the Load More button when the Store's
          * {@link Ext.data.Store#totalCount totalCount} indicates that all of the records available on the server are
          * already loaded
          */
         noMoreRecordsText: 'No More Records',
-
         /**
          * @private
          * @cfg {String} loadTpl The template used to render the load more text
          */
         loadTpl: [
             '<div class="{cssPrefix}loading-spinner" style="font-size: 180%; margin: 10px auto;">',
-                 '<span class="{cssPrefix}loading-top"></span>',
-                 '<span class="{cssPrefix}loading-right"></span>',
-                 '<span class="{cssPrefix}loading-bottom"></span>',
-                 '<span class="{cssPrefix}loading-left"></span>',
+            '<span class="{cssPrefix}loading-top"></span>',
+            '<span class="{cssPrefix}loading-right"></span>',
+            '<span class="{cssPrefix}loading-bottom"></span>',
+            '<span class="{cssPrefix}loading-left"></span>',
             '</div>',
             '<div class="{cssPrefix}list-paging-msg">{message}</div>'
         ].join(''),
-
         /**
          * @cfg {Object} loadMoreCmp
          * @private
@@ -72,46 +67,40 @@ Ext.define('Ext.plugin.ListPaging', {
             scrollDock: 'bottom',
             hidden: true
         },
-
         /**
          * @private
          * @cfg {Boolean} loadMoreCmpAdded Indicates whether or not the load more component has been added to the List
          * yet.
          */
         loadMoreCmpAdded: false,
-
         /**
          * @private
          * @cfg {String} loadingCls The CSS class that is added to the {@link #loadMoreCmp} while the Store is loading
          */
         loadingCls: Ext.baseCSSPrefix + 'loading',
-
         /**
          * @private
          * @cfg {Ext.List} list Local reference to the List this plugin is bound to
          */
         list: null,
-
         /**
          * @private
          * @cfg {Ext.scroll.Scroller} scroller Local reference to the List's Scroller
          */
         scroller: null,
-
         /**
          * @private
          * @cfg {Boolean} loading True if the plugin has initiated a Store load that has not yet completed
          */
         loading: false
     },
-
     /**
      * @private
      * Sets up all of the references the plugin needs
      */
     init: function(list) {
         var scroller = list.getScrollable().getScroller(),
-            store    = list.getStore();
+                store = list.getStore();
 
         this.setList(list);
         this.setScroller(scroller);
@@ -129,7 +118,6 @@ Ext.define('Ext.plugin.ListPaging', {
             });
         }
     },
-
     /**
      * @private
      */
@@ -152,7 +140,6 @@ Ext.define('Ext.plugin.ListPaging', {
             });
         }
     },
-
     /**
      * @private
      * Removes the List/DataView's loading mask because we show our own in the plugin. The logic here disables the
@@ -162,26 +149,23 @@ Ext.define('Ext.plugin.ListPaging', {
      */
     disableDataViewMask: function() {
         var list = this.getList();
-            this._listMask = list.getLoadingText();
+        this._listMask = list.getLoadingText();
 
         list.setLoadingText(null);
     },
-
     enableDataViewMask: function() {
-        if(this._listMask) {
+        if (this._listMask) {
             var list = this.getList();
             list.setLoadingText(this._listMask);
             delete this._listMask;
         }
     },
-
     /**
      * @private
      */
     applyLoadTpl: function(config) {
         return (Ext.isObject(config) && config.isTemplate) ? config : new Ext.XTemplate(config);
     },
-
     /**
      * @private
      */
@@ -203,7 +187,6 @@ Ext.define('Ext.plugin.ListPaging', {
 
         return Ext.factory(config, Ext.Component, this.getLoadMoreCmp());
     },
-
     /**
      * @private
      * If we're using autoPaging and detect that the user has scrolled to the bottom, kick off loading of the next page
@@ -218,14 +201,13 @@ Ext.define('Ext.plugin.ListPaging', {
             this.loadNextPage();
         }
     },
-
     /**
      * @private
      * Makes sure we add/remove the loading CSS class while the Store is loading
      */
     updateLoading: function(isLoading) {
         var loadMoreCmp = this.getLoadMoreCmp(),
-            loadMoreCls = this.getLoadingCls();
+                loadMoreCls = this.getLoadingCls();
 
         if (isLoading) {
             loadMoreCmp.addCls(loadMoreCls);
@@ -233,7 +215,6 @@ Ext.define('Ext.plugin.ListPaging', {
             loadMoreCmp.removeCls(loadMoreCls);
         }
     },
-
     /**
      * @private
      * If the Store is just about to load but it's currently empty, we hide the load more button because this is
@@ -245,14 +226,13 @@ Ext.define('Ext.plugin.ListPaging', {
             this.getLoadMoreCmp().hide();
         }
     },
-
     /**
      * @private
      */
     onStoreLoad: function(store) {
-        var loadCmp  = this.getLoadMoreCmp(),
-            template = this.getLoadTpl(),
-            message  = this.storeFullyLoaded() ? this.getNoMoreRecordsText() : this.getLoadMoreText();
+        var loadCmp = this.getLoadMoreCmp(),
+                template = this.getLoadTpl(),
+                message = this.storeFullyLoaded() ? this.getNoMoreRecordsText() : this.getLoadMoreText();
 
         if (store.getCount()) {
             loadCmp.show();
@@ -272,15 +252,13 @@ Ext.define('Ext.plugin.ListPaging', {
 
         this.enableDataViewMask();
     },
-
     onFilter: function(store) {
         if (store.getCount() === 0) {
             this.getLoadMoreCmp().hide();
-        }else {
+        } else {
             this.getLoadMoreCmp().show();
         }
     },
-
     /**
      * @private
      * Because the attached List's inner list element is rendered after our init function is called,
@@ -288,7 +266,7 @@ Ext.define('Ext.plugin.ListPaging', {
      */
     addLoadMoreCmp: function() {
         var list = this.getList(),
-            cmp  = this.getLoadMoreCmp();
+                cmp = this.getLoadMoreCmp();
 
         if (!this.getLoadMoreCmpAdded()) {
             list.add(cmp);
@@ -304,7 +282,6 @@ Ext.define('Ext.plugin.ListPaging', {
 
         return cmp;
     },
-
     /**
      * @private
      * Returns true if the Store is detected as being fully loaded, or the server did not return a total count, which
@@ -313,11 +290,10 @@ Ext.define('Ext.plugin.ListPaging', {
      */
     storeFullyLoaded: function() {
         var store = this.getList().getStore(),
-            total = store.getTotalCount();
+                total = store.getTotalCount();
 
         return total !== null ? store.getTotalCount() <= (store.currentPage * store.getPageSize()) : false;
     },
-
     /**
      * @private
      */
@@ -326,7 +302,7 @@ Ext.define('Ext.plugin.ListPaging', {
         if (!me.storeFullyLoaded()) {
             me.disableDataViewMask();
             me.setLoading(true);
-            me.getList().getStore().nextPage({ addRecords: true });
+            me.getList().getStore().nextPage({addRecords: true});
         }
     }
 });

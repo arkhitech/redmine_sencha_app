@@ -11,15 +11,15 @@
     $half-width: $width/2;
     border-style: solid;
     border-color: transparent transparent $color transparent;
-    
+
     border-width: 0 $half-width $half-width $half-width;
     height: 0;
     width: $width;
     position: relative;
     margin: $half-width/5*2 0 $width 0;
-    
+
     &:after
-    {
+        {
         content: "";
         position: absolute;
         top: $half-width;

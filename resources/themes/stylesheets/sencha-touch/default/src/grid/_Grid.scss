@@ -13,7 +13,7 @@
     }
 
     .x-grid-column {
-    	border-color: #fff #d7d7d7 #d7d7d7 #fff;
+        border-color: #fff #d7d7d7 #d7d7d7 #fff;
 
         &.x-column-sorted-asc,
         &.x-column-sorted-desc {
@@ -26,7 +26,7 @@
     }
 
     .x-grid-row {
-    	border-color: #d7d7d7;
+        border-color: #d7d7d7;
         color: #000;
 
         &.x-grid-item-odd {
@@ -56,7 +56,7 @@
         .x-column-options-visibleindicator,
         .x-column-options-folder,
         .x-column-options-leaf {
-        	color: #C0C0C0;
+            color: #C0C0C0;
         }
 
         .x-column-options-sortablehandle {
@@ -83,7 +83,7 @@
             }
 
             .x-column-options-folder:after,
-            .x-column-options-leaf:after {
+                .x-column-options-leaf:after {
                 color: #91E698;
             }
         }
@@ -94,7 +94,7 @@
     }
 
     .x-grid-multiselection-column {
-    	color: #C0C0C0;
+        color: #C0C0C0;
 
         &.x-grid-multiselection-allselected:after {
             color: #1464AE !important;
@@ -102,7 +102,7 @@
     }
 
     .x-grid-multiselection-cell {
-    	color: #C0C0C0;
+        color: #C0C0C0;
     }
 
     .x-item-selected .x-grid-multiselection-cell:after {

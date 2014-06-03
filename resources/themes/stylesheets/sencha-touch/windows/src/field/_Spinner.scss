@@ -5,7 +5,7 @@
 .x-spinner {
     &.x-item-disabled {
         .x-field-input:before,
-        .x-spinner-button {
+            .x-spinner-button {
             color: $field-disabled-color !important;
             border-color: $field-disabled-border-color !important;
             background-color: $field-disabled-background-color !important;

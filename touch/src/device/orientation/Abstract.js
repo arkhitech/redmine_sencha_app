@@ -3,7 +3,6 @@
  */
 Ext.define('Ext.device.orientation.Abstract', {
     mixins: ['Ext.mixin.Observable'],
-
     /**
      * @event orientationchange
      * Fires when the orientation has been changed on this device.

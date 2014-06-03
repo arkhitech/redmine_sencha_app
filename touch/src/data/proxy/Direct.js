@@ -39,7 +39,6 @@ Ext.define('Ext.data.proxy.Direct', {
     alternateClassName: 'Ext.data.DirectProxy',
     alias: 'proxy.direct',
     requires: ['Ext.direct.Manager'],
-
     config: {
         /**
          * @cfg url
@@ -59,14 +58,12 @@ Ext.define('Ext.data.proxy.Direct', {
          *     paramOrder: 'param1|param2|param'
          */
         paramOrder: undefined,
-
         /**
          * @cfg {Boolean} paramsAsHash
          * Send parameters as a collection of named arguments.
          * Providing a {@link #paramOrder} nullifies this configuration.
          */
         paramsAsHash: true,
-
         /**
          * @cfg {Function/String} directFn
          * Function to call when executing a request. directFn is a simple alternative to defining the api configuration-parameter
@@ -74,15 +71,13 @@ Ext.define('Ext.data.proxy.Direct', {
          * name of the function, for example: 'MyApp.company.GetProfile'. This can be useful when using dynamic loading. The string
          * will be looked up when the proxy is created.
          */
-        directFn : undefined,
-
+        directFn: undefined,
         /**
          * @cfg {Object} api
          * The same as {@link Ext.data.proxy.Server#api}, however instead of providing urls, you should provide a direct
          * function call. See {@link #directFn}.
          */
         api: null,
-
         /**
          * @cfg {Object} extraParams
          * Extra parameters that will be included on every read request. Individual requests with params
@@ -90,23 +85,20 @@ Ext.define('Ext.data.proxy.Direct', {
          */
         extraParams: null
     },
-
     // @private
     paramOrderRe: /[\s,|]/,
-
     applyParamOrder: function(paramOrder) {
         if (Ext.isString(paramOrder)) {
             paramOrder = paramOrder.split(this.paramOrderRe);
         }
         return paramOrder;
     },
-
-    resolveMethods : function() {
+    resolveMethods: function() {
         var me = this,
-            fn = me.getDirectFn(),
-            api = me.getApi(),
-            Manager = Ext.direct.Manager,
-            method;
+                fn = me.getDirectFn(),
+                api = me.getApi(),
+                Manager = Ext.direct.Manager,
+                method;
 
         if (fn) {
             me.setDirectFn(method = Manager.parseMethod(fn));
@@ -130,15 +122,14 @@ Ext.define('Ext.data.proxy.Direct', {
 
         me.methodsResolved = true;
     },
-
     doRequest: function(operation, callback, scope) {
         var me = this,
-            writer = me.getWriter(),
-            request = me.buildRequest(operation, callback, scope),
-            api = me.getApi() || {},
-            params = request.getParams(),
-            args = [],
-            fn, method;
+                writer = me.getWriter(),
+                request = me.buildRequest(operation, callback, scope),
+                api = me.getApi() || {},
+                params = request.getParams(),
+                args = [],
+                fn, method;
 
         if (!me.methodsResolved) {
             me.resolveMethods();
@@ -171,7 +162,6 @@ Ext.define('Ext.data.proxy.Direct', {
 
         fn.apply(window, args);
     },
-
     /*
      * Inherit docs. We don't apply any encoding here because
      * all of the direct requests go out as jsonData
@@ -179,7 +169,6 @@ Ext.define('Ext.data.proxy.Direct', {
     applyEncoding: function(value) {
         return value;
     },
-
     createRequestCallback: function(request, operation, callback, scope) {
         var me = this;
 
@@ -187,22 +176,18 @@ Ext.define('Ext.data.proxy.Direct', {
             me.processResponse(event.getStatus(), operation, request, event, callback, scope);
         };
     },
-
     getResponseResult: function(response) {
         return response.getResult();
     },
-
     // @inheritdoc
     extractResponseData: function(response) {
         var result = response.getResult();
         return Ext.isDefined(result) ? result : response.getData();
     },
-
     // @inheritdoc
     setException: function(operation, response) {
         operation.setException(response.getMessage());
     },
-
     // @inheritdoc
     buildUrl: function() {
         return '';

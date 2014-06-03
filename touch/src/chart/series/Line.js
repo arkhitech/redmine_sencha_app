@@ -92,18 +92,15 @@ Ext.define('Ext.chart.series.Line', {
     alias: 'series.line',
     type: 'line',
     seriesType: 'lineSeries',
-
     requires: [
         'Ext.chart.series.sprite.Line'
     ],
-
     config: {
         /**
          * @cfg {Number} selectionTolerance
          * The offset distance from the cursor position to the line series to trigger events (then used for highlighting series, etc).
          */
         selectionTolerance: 20,
-
         /**
          * @cfg {Object} style
          * An object containing styles for the visualization lines. These styles will override the theme styles.
@@ -121,14 +118,12 @@ Ext.define('Ext.chart.series.Line', {
          * If set to `true` then a default numeric value of 3 will be used.
          */
         smooth: false,
-
         /**
          * @cfg {Boolean} step
          * If set to `true`, the line uses steps instead of straight lines to connect the dots.
          * It is ignored if `smooth` is true.
          */
         step: false,
-
         /**
          * @cfg {Boolean} fill
          * If set to `true`, the area underneath the line is filled with the color defined as follows, listed by priority:
@@ -142,31 +137,27 @@ Ext.define('Ext.chart.series.Line', {
          * if `config.fill` is undefined but a `style.fill' color is provided, `config.fill` is considered true.
          * So the default value below must be undefined, not false.
          */
-         fill: undefined,
-
-        aggregator: { strategy: 'double' }
+        fill: undefined,
+        aggregator: {strategy: 'double'}
     },
-
     /**
      * @private Default numeric smoothing value to be used when `{@link #smooth} = true`.
      */
     defaultSmoothness: 3,
-
     /**
      * @private Size of the buffer area on either side of the viewport to provide seamless zoom/pan
      * transforms. Expressed as a multiple of the viewport length, e.g. 1 will make the buffer on
      * each side equal to the length of the visible axis viewport.
      */
     overflowBuffer: 1,
-
     /**
      * @private Override {@link Ext.chart.series.Series#getDefaultSpriteConfig}
      */
-    getDefaultSpriteConfig: function () {
+    getDefaultSpriteConfig: function() {
         var me = this,
-            parentConfig = me.callSuper(arguments),
-            style = me.getStyle(),
-            fillArea = false;
+                parentConfig = me.callSuper(arguments),
+                style = me.getStyle(),
+                fillArea = false;
 
         if (typeof me.config.fill != 'undefined') {
             // If config.fill is present but there is no fillStyle, then use the

@@ -4,15 +4,12 @@
  */
 Ext.define('Ext.viewport.Ios', {
     extend: 'Ext.viewport.Default',
-
     isFullscreen: function() {
         return this.isHomeScreen();
     },
-
     isHomeScreen: function() {
         return window.navigator.standalone === true;
     },
-
     constructor: function() {
         this.callParent(arguments);
 
@@ -20,16 +17,15 @@ Ext.define('Ext.viewport.Ios', {
             this.addWindowListener('touchstart', Ext.Function.bind(this.onTouchStart, this));
         }
     },
-
     maximize: function() {
         if (this.isFullscreen()) {
             return this.callParent();
         }
 
         var stretchHeights = this.stretchHeights,
-            orientation = this.orientation,
-            currentHeight = this.getWindowHeight(),
-            height = stretchHeights[orientation];
+                orientation = this.orientation,
+                currentHeight = this.getWindowHeight(),
+                height = stretchHeights[orientation];
 
         if (window.scrollY > 0) {
             this.scrollToTop();
@@ -68,11 +64,9 @@ Ext.define('Ext.viewport.Ios', {
             }, 50, 1000);
         }
     },
-
     getScreenHeight: function() {
         return window.screen[this.orientation === this.PORTRAIT ? 'height' : 'width'];
     },
-
     onElementFocus: function() {
         if (this.getAutoMaximize() && !this.isFullscreen()) {
             clearTimeout(this.scrollToTopTimer);
@@ -80,7 +74,6 @@ Ext.define('Ext.viewport.Ios', {
 
         this.callParent(arguments);
     },
-
     onElementBlur: function() {
         if (this.getAutoMaximize() && !this.isFullscreen()) {
             this.scrollToTopTimer = setTimeout(this.scrollToTop, 500);
@@ -88,13 +81,11 @@ Ext.define('Ext.viewport.Ios', {
 
         this.callParent(arguments);
     },
-
     onTouchStart: function() {
         if (this.focusedElement === null) {
             this.scrollToTop();
         }
     },
-
     scrollToTop: function() {
         window.scrollTo(0, 0);
     }
@@ -120,12 +111,11 @@ Ext.define('Ext.viewport.Ios', {
     if (Ext.os.version.lt('5')) {
         this.override({
             fieldMaskClsTest: '-field-mask',
-
             doPreventZooming: function(e) {
                 var target = e.target;
 
                 if (target && target.nodeType === 1 && !this.isInputRegex.test(target.tagName) &&
-                    target.className.indexOf(this.fieldMaskClsTest) == -1) {
+                        target.className.indexOf(this.fieldMaskClsTest) == -1) {
                     e.preventDefault();
                 }
             }
@@ -146,11 +136,11 @@ Ext.define('Ext.viewport.Ios', {
             this.override({
                 constructor: function() {
                     var stretchHeights = {},
-                        stretchWidths = {},
-                        orientation = this.determineOrientation(),
-                        screenHeight = window.screen.height,
-                        screenWidth = window.screen.width,
-                        menuHeight = orientation === this.PORTRAIT
+                            stretchWidths = {},
+                            orientation = this.determineOrientation(),
+                            screenHeight = window.screen.height,
+                            screenWidth = window.screen.width,
+                            menuHeight = orientation === this.PORTRAIT
                             ? screenHeight - window.innerHeight
                             : screenWidth - window.innerHeight;
 
@@ -168,15 +158,12 @@ Ext.define('Ext.viewport.Ios', {
                     this.on('ready', this.setViewportSizeToAbsolute, this);
                     this.on('orientationchange', this.setViewportSizeToAbsolute, this);
                 },
-
                 getWindowHeight: function() {
                     return this.stretchHeights[this.orientation];
                 },
-
                 getWindowWidth: function() {
                     return this.stretchWidths[this.orientation];
                 },
-
                 setViewportSizeToAbsolute: function() {
                     this.setWidth(this.getWindowWidth());
                     this.setHeight(this.getWindowHeight());
@@ -196,13 +183,11 @@ Ext.define('Ext.viewport.Ios', {
                         }
                     }, false);
                 },
-
                 setViewportSizeToAbsolute: function() {
                     window.scrollTo(0, 0);
 
                     this.callOverridden(arguments);
                 },
-
                 onElementBlur: function() {
                     this.callOverridden(arguments);
                     if (window.scrollY !== 0) {

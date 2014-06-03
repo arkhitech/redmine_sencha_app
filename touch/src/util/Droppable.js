@@ -5,7 +5,6 @@ Ext.define('Ext.util.Droppable', {
     mixins: {
         observable: 'Ext.mixin.Observable'
     },
-
     config: {
         /**
          * The base CSS class to apply to this component's element.
@@ -13,27 +12,23 @@ Ext.define('Ext.util.Droppable', {
          */
         baseCls: Ext.baseCSSPrefix + 'droppable'
     },
-
     /**
      * @cfg {String} activeCls
      * The CSS added to a Droppable when a Draggable in the same group is being
      * dragged.
      */
     activeCls: Ext.baseCSSPrefix + 'drop-active',
-
     /**
      * @cfg {String} invalidCls
      * The CSS class to add to the droppable when dragging a draggable that is
      * not in the same group.
      */
     invalidCls: Ext.baseCSSPrefix + 'drop-invalid',
-
     /**
      * @cfg {String} hoverCls
      * The CSS class to add to the droppable when hovering over a valid drop.
      */
     hoverCls: Ext.baseCSSPrefix + 'drop-hover',
-
     /**
      * @cfg {String} validDropMode
      * Determines when a drop is considered 'valid' whether it simply need to
@@ -41,25 +36,20 @@ Ext.define('Ext.util.Droppable', {
      * Valid values are: 'intersects' or 'contains'
      */
     validDropMode: 'intersect',
-
     /**
      * @cfg {Boolean} disabled
      */
     disabled: false,
-
     /**
      * @cfg {String} group
      * Draggable and Droppable objects can participate in a group which are
      * capable of interacting.
      */
     group: 'base',
-
     // not yet implemented
     tolerance: null,
-
     // @private
     monitoring: false,
-
     /**
      * Creates new Droppable.
      * @param {Mixed} el String, HtmlElement or Ext.Element representing an
@@ -118,7 +108,6 @@ Ext.define('Ext.util.Droppable', {
 
         me.el.addCls(me.baseCls);
     },
-
     // @private
     onDragStart: function(draggable, e) {
         if (draggable.group === this.group) {
@@ -150,17 +139,14 @@ Ext.define('Ext.util.Droppable', {
             this.el.addCls(this.invalidCls);
         }
     },
-
     // @private
     isDragOver: function(draggable, region) {
         return this.region[this.validDropMode](draggable.region);
     },
-
     // @private
     onDrag: function(draggable, e) {
         this.setCanDrop(this.isDragOver(draggable), draggable, e);
     },
-
     // @private
     setCanDrop: function(canDrop, draggable, e) {
         if (canDrop && !this.canDrop) {
@@ -174,12 +160,10 @@ Ext.define('Ext.util.Droppable', {
             this.fireEvent('dropleave', this, draggable, e);
         }
     },
-
     // @private
     onBeforeDragEnd: function(draggable, e) {
         draggable.cancelRevert = this.canDrop;
     },
-
     // @private
     onDragEnd: function(draggable, e) {
         this.monitoring = false;
@@ -201,7 +185,6 @@ Ext.define('Ext.util.Droppable', {
 
         this.fireEvent('dropdeactivate', this, draggable, e);
     },
-
     /**
      * Enable the Droppable target.
      * This is invoked immediately after constructing a Droppable if the
@@ -217,7 +200,6 @@ Ext.define('Ext.util.Droppable', {
         });
         this.disabled = false;
     },
-
     /**
      * Disable the Droppable target.
      */
@@ -228,7 +210,6 @@ Ext.define('Ext.util.Droppable', {
         });
         this.disabled = true;
     },
-
     /**
      * Method to determine whether this Component is currently disabled.
      * @return {Boolean} the disabled state of this Component.
@@ -236,7 +217,6 @@ Ext.define('Ext.util.Droppable', {
     isDisabled: function() {
         return this.disabled;
     },
-
     /**
      * Method to determine whether this Droppable is currently monitoring drag operations of Draggables.
      * @return {Boolean} the monitoring state of this Droppable

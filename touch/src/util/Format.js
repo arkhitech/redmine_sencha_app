@@ -5,14 +5,11 @@ Ext.define('Ext.util.Format', {
     requires: [
         'Ext.DateExtras'
     ],
-
     singleton: true,
-
     /**
      * The global default date format.
      */
     defaultDateFormat: 'm/d/Y',
-
     escapeRe: /('|\\)/g,
     trimRe: /^[\x09\x0a\x0b\x0c\x0d\x20\xa0\u1680\u180e\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000]+|[\x09\x0a\x0b\x0c\x0d\x20\xa0\u1680\u180e\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000]+$/g,
     formatRe: /\{(\d+)\}/g,
@@ -20,7 +17,6 @@ Ext.define('Ext.util.Format', {
     dashesRe: /-/g,
     iso8601TestRe: /\d\dT\d\d/,
     iso8601SplitRe: /[- :T\.Z\+]/,
-
     /**
      * Truncate a string and add an ellipsis ('...') to the end if it exceeds the specified length.
      * @param {String} value The string to truncate.
@@ -32,7 +28,7 @@ Ext.define('Ext.util.Format', {
         if (value && value.length > len) {
             if (word) {
                 var vs = value.substr(0, len - 2),
-                index = Math.max(vs.lastIndexOf(' '), vs.lastIndexOf('.'), vs.lastIndexOf('!'), vs.lastIndexOf('?'));
+                        index = Math.max(vs.lastIndexOf(' '), vs.lastIndexOf('.'), vs.lastIndexOf('!'), vs.lastIndexOf('?'));
                 if (index != -1 && index >= (len - 15)) {
                     return vs.substr(0, index) + "...";
                 }
@@ -41,7 +37,6 @@ Ext.define('Ext.util.Format', {
         }
         return value;
     },
-
     /**
      * Escapes the passed string for use in a regular expression.
      * @param {String} str
@@ -50,7 +45,6 @@ Ext.define('Ext.util.Format', {
     escapeRegex: function(s) {
         return s.replace(Ext.util.Format.escapeRegexRe, "\\$1");
     },
-
     /**
      * Escapes the passed string for ' and \.
      * @param {String} string The string to escape.
@@ -59,7 +53,6 @@ Ext.define('Ext.util.Format', {
     escape: function(string) {
         return string.replace(Ext.util.Format.escapeRe, "\\$1");
     },
-
     /**
      * Utility function that allows you to easily switch a string between two alternating values.  The passed value
      * is compared to the current string, and if they are equal, the other value that was passed in is returned.  If
@@ -81,7 +74,6 @@ Ext.define('Ext.util.Format', {
     toggle: function(string, value, other) {
         return string == value ? other : value;
     },
-
     /**
      * Trims whitespace from either end of a string, leaving spaces within the string intact.  Example:
      *
@@ -95,7 +87,6 @@ Ext.define('Ext.util.Format', {
     trim: function(string) {
         return string.replace(Ext.util.Format.trimRe, "");
     },
-
     /**
      * Pads the left side of a string with a specified character.  This is especially useful
      * for normalizing number and date strings.  Example usage:
@@ -108,7 +99,7 @@ Ext.define('Ext.util.Format', {
      * @param {String} [char=' '] (optional) The character with which to pad the original string.
      * @return {String} The padded string.
      */
-    leftPad: function (val, size, ch) {
+    leftPad: function(val, size, ch) {
         var result = String(val);
         ch = ch || " ";
         while (result.length < size) {
@@ -116,7 +107,6 @@ Ext.define('Ext.util.Format', {
         }
         return result;
     },
-
     /**
      * Allows you to define a tokenized string and pass an arbitrary number of arguments to replace the tokens.  Each
      * token must be unique, and must increment in the format {0}, {1}, etc.  Example usage:
@@ -129,31 +119,28 @@ Ext.define('Ext.util.Format', {
      * @param {String...} values The values to replace token {0}, {1}, etc.
      * @return {String} The formatted string.
      */
-    format: function (format) {
+    format: function(format) {
         var args = Ext.toArray(arguments, 1);
         return format.replace(Ext.util.Format.formatRe, function(m, i) {
             return args[i];
         });
     },
-
     /**
      * Convert certain characters (&, <, >, and ') to their HTML character equivalents for literal display in web pages.
      * @param {String} value The string to encode.
      * @return {String} The encoded text.
      */
     htmlEncode: function(value) {
-        return ! value ? value: String(value).replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+        return !value ? value : String(value).replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
     },
-
     /**
      * Convert certain characters (&, <, >, and ') from their HTML character equivalents.
      * @param {String} value The string to decode.
      * @return {String} The decoded text.
      */
     htmlDecode: function(value) {
-        return ! value ? value: String(value).replace(/&gt;/g, ">").replace(/&lt;/g, "<").replace(/&quot;/g, '"').replace(/&amp;/g, "&");
+        return !value ? value : String(value).replace(/&gt;/g, ">").replace(/&lt;/g, "<").replace(/&quot;/g, '"').replace(/&amp;/g, "&");
     },
-
     /**
      * Parse a value into a formatted date using the specified format pattern.
      * Note that this uses the native Javascript Date.parse() method and is therefore subject to its idiosyncrasies.
@@ -181,7 +168,7 @@ Ext.define('Ext.util.Format', {
                          * © 2011 Colin Snover <http://zetafleet.com>
                          * Released under MIT license.
                          */
-                        var potentialUndefinedKeys = [ 1, 4, 5, 6, 7, 10, 11 ];
+                        var potentialUndefinedKeys = [1, 4, 5, 6, 7, 10, 11];
                         var dateParsed, minutesOffset = 0;
 
                         // Capture Groups

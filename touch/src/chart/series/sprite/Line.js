@@ -7,7 +7,6 @@
 Ext.define('Ext.chart.series.sprite.Line', {
     alias: 'sprite.lineSeries',
     extend: 'Ext.chart.series.sprite.Aggregative',
-
     inheritableStatics: {
         def: {
             processors: {
@@ -16,41 +15,35 @@ Ext.define('Ext.chart.series.sprite.Line', {
                 step: 'bool',
                 preciseStroke: 'bool'
             },
-
             defaults: {
                 /**
                  * @cfg {Boolean} smooth 'true' if the sprite uses line smoothing.
                  */
                 smooth: false,
-
                 /**
                  * @cfg {Boolean} fillArea 'true' if the sprite paints the area underneath the line.
                  */
                 fillArea: false,
-
                 /**
                  * @cfg {Boolean} step 'true' if the line uses steps instead of straight lines to connect the dots.
                  * It is ignored if `smooth` is true.
                  */
                 step: false,
-
                 /**
                  * @cfg {Boolean} preciseStroke 'true' if the line uses precise stroke.
                  */
                 preciseStroke: true
             },
-
             dirtyTriggers: {
                 dataX: 'dataX,bbox,smooth',
                 dataY: 'dataY,bbox,smooth',
                 smooth: 'smooth'
             },
-
             updaters: {
-                smooth: function (attr) {
+                smooth: function(attr) {
                     var dataX = attr.dataX,
-                        dataY = attr.dataY,
-                        path;
+                            dataY = attr.dataY,
+                            path;
                     if (attr.smooth && dataX && dataY && dataX.length > 2 && dataY.length > 2) {
                         path = Ext.draw.Draw.smooth(dataX, dataY, 3);
                         this.smoothX = path.smoothX;
@@ -63,37 +56,34 @@ Ext.define('Ext.chart.series.sprite.Line', {
             }
         }
     },
-
     list: null,
-
-    updatePlainBBox: function (plain) {
+    updatePlainBBox: function(plain) {
         var attr = this.attr,
-            ymin = Math.min(0, attr.dataMinY),
-            ymax = Math.max(0, attr.dataMaxY);
+                ymin = Math.min(0, attr.dataMinY),
+                ymax = Math.max(0, attr.dataMaxY);
         plain.x = attr.dataMinX;
         plain.y = ymin;
         plain.width = attr.dataMaxX - attr.dataMinX;
         plain.height = ymax - ymin;
     },
-
-    drawStroke: function (surface, ctx, start, end, list, xAxis) {
+    drawStroke: function(surface, ctx, start, end, list, xAxis) {
         var attr = this.attr,
-            matrix = attr.matrix,
-            xx = matrix.getXX(),
-            yy = matrix.getYY(),
-            dx = matrix.getDX(),
-            dy = matrix.getDY(),
-            smooth = attr.smooth,
-            step = attr.step,
-            scale = Math.pow(2, power(attr.dataX.length, end)),
-            smoothX = this.smoothX,
-            smoothY = this.smoothY,
-            i, j, lineConfig, changes,
-            cx1, cy1, cx2, cy2, x, y, x0, y0, saveOpacity;
+                matrix = attr.matrix,
+                xx = matrix.getXX(),
+                yy = matrix.getYY(),
+                dx = matrix.getDX(),
+                dy = matrix.getDY(),
+                smooth = attr.smooth,
+                step = attr.step,
+                scale = Math.pow(2, power(attr.dataX.length, end)),
+                smoothX = this.smoothX,
+                smoothY = this.smoothY,
+                i, j, lineConfig, changes,
+                cx1, cy1, cx2, cy2, x, y, x0, y0, saveOpacity;
 
         function power(count, end) {
             var power = 0,
-                n = count;
+                    n = count;
             while (n < end) {
                 power++;
                 n += count >> power;
@@ -127,31 +117,31 @@ Ext.define('Ext.chart.series.sprite.Line', {
                         x0: x0,
                         y0: y0
                     };
-                    changes = attr.renderer.call(this, this, lineConfig, {store:this.getStore()}, (i/3 + 1));
+                    changes = attr.renderer.call(this, this, lineConfig, {store: this.getStore()}, (i / 3 + 1));
                     ctx.save();
-                        Ext.apply(ctx, changes);
-                        // Fill the area if we need to, using the fill color and transparent strokes.
-                        if (attr.fillArea) {
-                            saveOpacity = ctx.strokeOpacity;
-                            ctx.save();
-                                ctx.strokeOpacity = 0;
-                                ctx.moveTo(x0, y0);
-                                ctx.bezierCurveTo(cx1, cy1, cx2, cy2, x, y);
-                                ctx.lineTo(x, xAxis);
-                                ctx.lineTo(x0, xAxis);
-                                ctx.lineTo(x0, y0);
-                                ctx.closePath();
-                                ctx.fillStroke(attr, true);
-                            ctx.restore();
-                            ctx.strokeOpacity = saveOpacity;
-                            ctx.beginPath();
-                        }
-                        // Draw the line on top of the filled area.
+                    Ext.apply(ctx, changes);
+                    // Fill the area if we need to, using the fill color and transparent strokes.
+                    if (attr.fillArea) {
+                        saveOpacity = ctx.strokeOpacity;
+                        ctx.save();
+                        ctx.strokeOpacity = 0;
                         ctx.moveTo(x0, y0);
                         ctx.bezierCurveTo(cx1, cy1, cx2, cy2, x, y);
-                        ctx.moveTo(x0, y0);
+                        ctx.lineTo(x, xAxis);
+                        ctx.lineTo(x0, xAxis);
+                        ctx.lineTo(x0, y0);
                         ctx.closePath();
-                        ctx.stroke();
+                        ctx.fillStroke(attr, true);
+                        ctx.restore();
+                        ctx.strokeOpacity = saveOpacity;
+                        ctx.beginPath();
+                    }
+                    // Draw the line on top of the filled area.
+                    ctx.moveTo(x0, y0);
+                    ctx.bezierCurveTo(cx1, cy1, cx2, cy2, x, y);
+                    ctx.moveTo(x0, y0);
+                    ctx.closePath();
+                    ctx.stroke();
                     ctx.restore();
                     ctx.beginPath();
                     ctx.moveTo(x, y);
@@ -176,40 +166,40 @@ Ext.define('Ext.chart.series.sprite.Line', {
                         x0: x0,
                         y0: y0
                     };
-                    changes = attr.renderer.call(this, this, lineConfig, {store:this.getStore()}, i/3);
+                    changes = attr.renderer.call(this, this, lineConfig, {store: this.getStore()}, i / 3);
                     ctx.save();
-                        Ext.apply(ctx, changes);
-                        // Fill the area if we need to, using the fill color and transparent strokes.
-                        if (attr.fillArea) {
-                            saveOpacity = ctx.strokeOpacity;
-                            ctx.save();
-                                ctx.strokeOpacity = 0;
-                                if (step) {
-                                    ctx.lineTo(x, y0);
-                                } else {
-                                    ctx.lineTo(x, y);
-                                }
-                                ctx.lineTo(x, xAxis);
-                                ctx.lineTo(x0, xAxis);
-                                ctx.lineTo(x0, y0);
-                                ctx.closePath();
-                                ctx.fillStroke(attr, true);
-                            ctx.restore();
-                            ctx.strokeOpacity = saveOpacity;
-                            ctx.beginPath();
-                        }
-                        // Draw the line (or the 2 lines if 'step') on top of the filled area.
-                        ctx.moveTo(x0, y0);
+                    Ext.apply(ctx, changes);
+                    // Fill the area if we need to, using the fill color and transparent strokes.
+                    if (attr.fillArea) {
+                        saveOpacity = ctx.strokeOpacity;
+                        ctx.save();
+                        ctx.strokeOpacity = 0;
                         if (step) {
                             ctx.lineTo(x, y0);
-                            ctx.closePath();
-                            ctx.stroke();
-                            ctx.beginPath();
-                            ctx.moveTo(x, y0);
+                        } else {
+                            ctx.lineTo(x, y);
                         }
-                        ctx.lineTo(x, y);
+                        ctx.lineTo(x, xAxis);
+                        ctx.lineTo(x0, xAxis);
+                        ctx.lineTo(x0, y0);
+                        ctx.closePath();
+                        ctx.fillStroke(attr, true);
+                        ctx.restore();
+                        ctx.strokeOpacity = saveOpacity;
+                        ctx.beginPath();
+                    }
+                    // Draw the line (or the 2 lines if 'step') on top of the filled area.
+                    ctx.moveTo(x0, y0);
+                    if (step) {
+                        ctx.lineTo(x, y0);
                         ctx.closePath();
                         ctx.stroke();
+                        ctx.beginPath();
+                        ctx.moveTo(x, y0);
+                    }
+                    ctx.lineTo(x, y);
+                    ctx.closePath();
+                    ctx.stroke();
                     ctx.restore();
                     ctx.beginPath();
                     ctx.moveTo(x, y);
@@ -222,19 +212,18 @@ Ext.define('Ext.chart.series.sprite.Line', {
             }
         }
     },
-
-    drawLabel: function (text, dataX, dataY, labelId, region) {
+    drawLabel: function(text, dataX, dataY, labelId, region) {
         var me = this,
-            attr = me.attr,
-            label = me.getBoundMarker('labels')[0],
-            labelTpl = label.getTemplate(),
-            labelCfg = me.labelCfg || (me.labelCfg = {}),
-            surfaceMatrix = me.surfaceMatrix,
-            labelX, labelY,
-            labelOverflowPadding = attr.labelOverflowPadding,
-            halfWidth, halfHeight,
-            labelBox,
-            changes;
+                attr = me.attr,
+                label = me.getBoundMarker('labels')[0],
+                labelTpl = label.getTemplate(),
+                labelCfg = me.labelCfg || (me.labelCfg = {}),
+                surfaceMatrix = me.surfaceMatrix,
+                labelX, labelY,
+                labelOverflowPadding = attr.labelOverflowPadding,
+                halfWidth, halfHeight,
+                labelBox,
+                changes;
 
         labelCfg.text = text;
 
@@ -264,7 +253,7 @@ Ext.define('Ext.chart.series.sprite.Line', {
             labelX = region[0] + halfWidth;
         } else if (labelX >= region[2] - halfWidth) {
             labelX = region[2] - halfWidth;
-        } 
+        }
 
         if (labelY <= region[1] + halfHeight) {
             labelY = region[1] + halfHeight;
@@ -286,36 +275,35 @@ Ext.define('Ext.chart.series.sprite.Line', {
 
         me.putMarker('labels', labelCfg, labelId);
     },
-
-    renderAggregates: function (aggregates, start, end, surface, ctx, clip, region) {
+    renderAggregates: function(aggregates, start, end, surface, ctx, clip, region) {
         var me = this,
-            attr = me.attr,
-            dataX = attr.dataX,
-            dataY = attr.dataY,
-            labels = attr.labels,
-            drawLabels = labels && !!me.getBoundMarker('labels'),
-            matrix = attr.matrix,
-            surfaceMatrix = surface.matrix,
-            pixel = surface.devicePixelRatio,
-            xx = matrix.getXX(),
-            yy = matrix.getYY(),
-            dx = matrix.getDX(),
-            dy = matrix.getDY(),
-            markerCfg = {},
-            list = this.list || (this.list = []),
-            x, y, i, index,
-            minXs = aggregates.minX,
-            maxXs = aggregates.maxX,
-            minYs = aggregates.minY,
-            maxYs = aggregates.maxY,
-            idx = aggregates.startIdx;
+                attr = me.attr,
+                dataX = attr.dataX,
+                dataY = attr.dataY,
+                labels = attr.labels,
+                drawLabels = labels && !!me.getBoundMarker('labels'),
+                matrix = attr.matrix,
+                surfaceMatrix = surface.matrix,
+                pixel = surface.devicePixelRatio,
+                xx = matrix.getXX(),
+                yy = matrix.getYY(),
+                dx = matrix.getDX(),
+                dy = matrix.getDY(),
+                markerCfg = {},
+                list = this.list || (this.list = []),
+                x, y, i, index,
+                minXs = aggregates.minX,
+                maxXs = aggregates.maxX,
+                minYs = aggregates.minY,
+                maxYs = aggregates.maxY,
+                idx = aggregates.startIdx;
 
         list.length = 0;
         for (i = start; i < end; i++) {
             var minX = minXs[i],
-                maxX = maxXs[i],
-                minY = minYs[i],
-                maxY = maxYs[i];
+                    maxX = maxXs[i],
+                    minY = minYs[i],
+                    maxY = maxYs[i];
 
             if (minX < maxX) {
                 list.push(minX * xx + dx, minY * yy + dy, idx[i]);
@@ -339,7 +327,7 @@ Ext.define('Ext.chart.series.sprite.Line', {
                         x: x,
                         y: y
                     };
-                    markerCfg = attr.renderer.call(this, this, markerCfg, {store:this.getStore()}, i/3) || {};
+                    markerCfg = attr.renderer.call(this, this, markerCfg, {store: this.getStore()}, i / 3) || {};
                 }
                 markerCfg.translationX = surfaceMatrix.x(x, y);
                 markerCfg.translationY = surfaceMatrix.y(x, y);
@@ -352,10 +340,10 @@ Ext.define('Ext.chart.series.sprite.Line', {
             me.drawStroke(surface, ctx, start, end, list, region[1] - pixel);
             if (!attr.renderer) {
                 var lastPointX = dataX[dataX.length - 1] * xx + dx + pixel,
-                    lastPointY = dataY[dataY.length - 1] * yy + dy,
-                    bottomY = region[1] - pixel,
-                    firstPointX = dataX[0] * xx + dx - pixel,
-                    firstPointY = dataY[0] * yy + dy;
+                        lastPointY = dataY[dataY.length - 1] * yy + dy,
+                        bottomY = region[1] - pixel,
+                        firstPointX = dataX[0] * xx + dx - pixel,
+                        firstPointY = dataY[0] * yy + dy;
                 ctx.lineTo(lastPointX, lastPointY);
                 ctx.lineTo(lastPointX, bottomY);
                 ctx.lineTo(firstPointX, bottomY);

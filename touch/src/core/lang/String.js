@@ -14,7 +14,6 @@ Ext.String = {
     escapeRe: /('|\\)/g,
     formatRe: /\{(\d+)\}/g,
     escapeRegexRe: /([-.*+?^${}()|[\]\/\\])/g,
-
     /**
      * Convert certain characters (&, <, >, and ") to their HTML character equivalents for literal display in web pages.
      * @param {String} value The string to encode.
@@ -41,7 +40,6 @@ Ext.String = {
             });
         };
     })(),
-
     /**
      * Convert certain characters (&, <, >, and ") from their HTML character equivalents.
      * @param {String} value The string to decode.
@@ -72,7 +70,6 @@ Ext.String = {
             });
         };
     })(),
-
     /**
      * Appends content to the query string of a URL, handling logic for whether to place
      * a question mark or ampersand.
@@ -80,14 +77,13 @@ Ext.String = {
      * @param {String} string The content to append to the URL.
      * @return {String} The resulting URL.
      */
-    urlAppend : function(url, string) {
+    urlAppend: function(url, string) {
         if (!Ext.isEmpty(string)) {
             return url + (url.indexOf('?') === -1 ? '?' : '&') + string;
         }
 
         return url;
     },
-
     /**
      * Trims whitespace from either end of a string, leaving spaces within the string intact.  Example:
      *
@@ -102,7 +98,6 @@ Ext.String = {
     trim: function(string) {
         return string.replace(Ext.String.trimRegex, "");
     },
-
     /**
      * Capitalize the given string.
      * @param {String} string
@@ -111,7 +106,6 @@ Ext.String = {
     capitalize: function(string) {
         return string.charAt(0).toUpperCase() + string.substr(1);
     },
-
     /**
      * Truncate a string and add an ellipsis ('...') to the end if it exceeds the specified length.
      * @param {String} value The string to truncate.
@@ -123,7 +117,7 @@ Ext.String = {
         if (value && value.length > len) {
             if (word) {
                 var vs = value.substr(0, len - 2),
-                index = Math.max(vs.lastIndexOf(' '), vs.lastIndexOf('.'), vs.lastIndexOf('!'), vs.lastIndexOf('?'));
+                        index = Math.max(vs.lastIndexOf(' '), vs.lastIndexOf('.'), vs.lastIndexOf('!'), vs.lastIndexOf('?'));
                 if (index !== -1 && index >= (len - 15)) {
                     return vs.substr(0, index) + "...";
                 }
@@ -132,7 +126,6 @@ Ext.String = {
         }
         return value;
     },
-
     /**
      * Escapes the passed string for use in a regular expression.
      * @param {String} string
@@ -141,7 +134,6 @@ Ext.String = {
     escapeRegex: function(string) {
         return string.replace(Ext.String.escapeRegexRe, "\\$1");
     },
-
     /**
      * Escapes the passed string for ' and \.
      * @param {String} string The string to escape.
@@ -150,7 +142,6 @@ Ext.String = {
     escape: function(string) {
         return string.replace(Ext.String.escapeRe, "\\$1");
     },
-
     /**
      * Utility function that allows you to easily switch a string between two alternating values.  The passed value
      * is compared to the current string, and if they are equal, the other value that was passed in is returned.  If
@@ -171,7 +162,6 @@ Ext.String = {
     toggle: function(string, value, other) {
         return string === value ? other : value;
     },
-
     /**
      * Pads the left side of a string with a specified character.  This is especially useful
      * for normalizing number and date strings.  Example usage:
@@ -192,7 +182,6 @@ Ext.String = {
         }
         return result;
     },
-
     /**
      * Allows you to define a tokenized string and pass an arbitrary number of arguments to replace the tokens.  Each
      * token must be unique, and must increment in the format {0}, {1}, etc.  Example usage:
@@ -213,7 +202,6 @@ Ext.String = {
             return args[i];
         });
     },
-
     /**
      * Returns a string with a specified number of repetitions a given string pattern.
      * The pattern be separated by a different string.

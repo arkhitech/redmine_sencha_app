@@ -32,18 +32,14 @@
  */
 Ext.define('Ext.data.proxy.Proxy', {
     extend: 'Ext.Evented',
-
     alias: 'proxy.proxy',
-
     alternateClassName: ['Ext.data.DataProxy', 'Ext.data.Proxy'],
-
     requires: [
         'Ext.data.reader.Json',
         'Ext.data.writer.Json',
         'Ext.data.Batch',
         'Ext.data.Operation'
     ],
-
     config: {
         /**
          * @cfg {String} batchOrder
@@ -52,14 +48,12 @@ Ext.define('Ext.data.proxy.Proxy', {
          * @accessor
          */
         batchOrder: 'create,update,destroy',
-
         /**
          * @cfg {Boolean} batchActions
          * True to batch actions of a particular type when synchronizing the store.
          * @accessor
          */
         batchActions: true,
-
         /**
          * @cfg {String/Ext.data.Model} model (required)
          * The name of the Model to tie to this Proxy. Can be either the string name of the Model, or a reference to the
@@ -67,7 +61,6 @@ Ext.define('Ext.data.proxy.Proxy', {
          * @accessor
          */
         model: null,
-
         /**
          * @cfg {Object/String/Ext.data.reader.Reader} reader
          * The Ext.data.reader.Reader to use to decode the server's response or data read from client. This can either be a
@@ -77,7 +70,6 @@ Ext.define('Ext.data.proxy.Proxy', {
         reader: {
             type: 'json'
         },
-
         /**
          * @cfg {Object/String/Ext.data.writer.Writer} writer
          * The Ext.data.writer.Writer to use to encode any request sent to the server or saved to client. This can either be
@@ -88,9 +80,7 @@ Ext.define('Ext.data.proxy.Proxy', {
             type: 'json'
         }
     },
-
     isProxy: true,
-
     applyModel: function(model) {
         if (typeof model == 'string') {
             model = Ext.data.ModelManager.getModel(model);
@@ -106,7 +96,6 @@ Ext.define('Ext.data.proxy.Proxy', {
 
         return model;
     },
-
     updateModel: function(model) {
         if (model) {
             var reader = this.getReader();
@@ -115,11 +104,9 @@ Ext.define('Ext.data.proxy.Proxy', {
             }
         }
     },
-
     applyReader: function(reader, currentReader) {
         return Ext.factory(reader, Ext.data.Reader, currentReader, 'reader');
     },
-
     updateReader: function(reader) {
         if (reader) {
             var model = this.getModel();
@@ -133,11 +120,10 @@ Ext.define('Ext.data.proxy.Proxy', {
             }
 
             if (reader.onMetaChange) {
-                 reader.onMetaChange = Ext.Function.createSequence(reader.onMetaChange, this.onMetaChange, this);
+                reader.onMetaChange = Ext.Function.createSequence(reader.onMetaChange, this.onMetaChange, this);
             }
         }
     },
-
     onMetaChange: function(data) {
         var model = this.getReader().getModel();
         if (!this.getModel() && model) {
@@ -152,11 +138,9 @@ Ext.define('Ext.data.proxy.Proxy', {
          */
         this.fireEvent('metachange', this, data);
     },
-
     applyWriter: function(writer, currentWriter) {
         return Ext.factory(writer, Ext.data.Writer, currentWriter, 'writer');
     },
-
     /**
      * Performs the given create operation. If you override this method in a custom Proxy, remember to always call the provided
      * callback method when you are done with your operation.
@@ -166,7 +150,6 @@ Ext.define('Ext.data.proxy.Proxy', {
      * @method
      */
     create: Ext.emptyFn,
-
     /**
      * Performs the given read operation. If you override this method in a custom Proxy, remember to always call the provided
      * callback method when you are done with your operation.
@@ -176,7 +159,6 @@ Ext.define('Ext.data.proxy.Proxy', {
      * @method
      */
     read: Ext.emptyFn,
-
     /**
      * Performs the given update operation. If you override this method in a custom Proxy, remember to always call the provided
      * callback method when you are done with your operation.
@@ -186,7 +168,6 @@ Ext.define('Ext.data.proxy.Proxy', {
      * @method
      */
     update: Ext.emptyFn,
-
     /**
      * Performs the given destroy operation. If you override this method in a custom Proxy, remember to always call the provided
      * callback method when you are done with your operation.
@@ -196,12 +177,10 @@ Ext.define('Ext.data.proxy.Proxy', {
      * @method
      */
     destroy: Ext.emptyFn,
-
     onDestroy: function() {
         Ext.destroy(this.getReader(), this.getWriter());
         Ext.Evented.prototype.destroy.apply(this, arguments);
     },
-
     /**
      * Performs a batch of {@link Ext.data.Operation Operations}, in the order specified by {@link #batchOrder}. Used
      * internally by {@link Ext.data.Store}'s {@link Ext.data.Store#sync sync} method. Example usage:
@@ -254,10 +233,10 @@ Ext.define('Ext.data.proxy.Proxy', {
      */
     batch: function(options, /* deprecated */listeners) {
         var me = this,
-            useBatch = me.getBatchActions(),
-            model = me.getModel(),
-            batch,
-            records;
+                useBatch = me.getBatchActions(),
+                model = me.getModel(),
+                batch,
+                records;
 
         if (options.operations === undefined) {
             // the old-style (operations, listeners) signature was called
@@ -286,58 +265,57 @@ Ext.define('Ext.data.proxy.Proxy', {
         }
 
         Ext.each(me.getBatchOrder().split(','), function(action) {
-             records = options.operations[action];
-             if (records) {
-                 if (useBatch) {
-                     batch.add(new Ext.data.Operation({
-                         action: action,
-                         records: records,
-                         model: model
-                     }));
-                 } else {
-                     Ext.each(records, function(record) {
-                         batch.add(new Ext.data.Operation({
-                             action : action,
-                             records: [record],
-                             model: model
-                         }));
-                     });
-                 }
-             }
+            records = options.operations[action];
+            if (records) {
+                if (useBatch) {
+                    batch.add(new Ext.data.Operation({
+                        action: action,
+                        records: records,
+                        model: model
+                    }));
+                } else {
+                    Ext.each(records, function(record) {
+                        batch.add(new Ext.data.Operation({
+                            action: action,
+                            records: [record],
+                            model: model
+                        }));
+                    });
+                }
+            }
         }, me);
 
         batch.start();
         return batch;
     },
-
     /**
-      * @private
-      * The internal callback that the proxy uses to call any specified user callbacks after completion of a batch
-      */
+     * @private
+     * The internal callback that the proxy uses to call any specified user callbacks after completion of a batch
+     */
     onBatchComplete: function(batchOptions, batch) {
-         var scope = batchOptions.scope || this;
+        var scope = batchOptions.scope || this;
 
-         if (batch.hasException) {
-             if (Ext.isFunction(batchOptions.failure)) {
-                 Ext.callback(batchOptions.failure, scope, [batch, batchOptions]);
-             }
-         } else if (Ext.isFunction(batchOptions.success)) {
-             Ext.callback(batchOptions.success, scope, [batch, batchOptions]);
-         }
+        if (batch.hasException) {
+            if (Ext.isFunction(batchOptions.failure)) {
+                Ext.callback(batchOptions.failure, scope, [batch, batchOptions]);
+            }
+        } else if (Ext.isFunction(batchOptions.success)) {
+            Ext.callback(batchOptions.success, scope, [batch, batchOptions]);
+        }
 
-         if (Ext.isFunction(batchOptions.callback)) {
-             Ext.callback(batchOptions.callback, scope, [batch, batchOptions]);
-         }
+        if (Ext.isFunction(batchOptions.callback)) {
+            Ext.callback(batchOptions.callback, scope, [batch, batchOptions]);
+        }
 
-         Ext.destroy(batch);
+        Ext.destroy(batch);
     }
 
     // <deprecated product=touch since=2.0>
-    ,onClassExtended: function(cls, data) {
+    , onClassExtended: function(cls, data) {
         var prototype = this.prototype,
-            defaultConfig = prototype.config,
-            config = data.config || {},
-            key;
+                defaultConfig = prototype.config,
+                config = data.config || {},
+                key;
 
         // Convert deprecated properties in application into a config object
         for (key in defaultConfig) {

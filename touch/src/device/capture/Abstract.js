@@ -3,7 +3,6 @@
  */
 Ext.define('Ext.device.capture.Abstract', {
     alternateClassName: 'Ext.device.capture.Simulator',
-
     /**
      * Start the audio recorder application and return information about captured audio clip file(s).
      *
@@ -35,7 +34,6 @@ Ext.define('Ext.device.capture.Abstract', {
      * @param {Function} config.failure Called if the capture is unsuccessful.
      */
     captureAudio: Ext.emptyFn,
-
     /**
      * Start the video recorder application and return information about captured video clip file(s).
      *

@@ -9,7 +9,7 @@
 {
     width: $width;
     height: $height;
-    
+
     @if ($width == $height) {
         @include border-radius($width/2);
     }

@@ -3,15 +3,12 @@
  */
 Ext.define('Ext.mixin.Filterable', {
     extend: 'Ext.mixin.Mixin',
-
     requires: [
         'Ext.util.Filter'
     ],
-
     mixinConfig: {
         id: 'filterable'
     },
-
     config: {
         /**
          * @cfg {Array} filters
@@ -19,7 +16,6 @@ Ext.define('Ext.mixin.Filterable', {
          * an object representing an Ext.util.Filter configuration, or a filter function.
          */
         filters: null,
-
         /**
          * @cfg {String} filterRoot
          * The root inside each item in which the properties exist that we want to filter on.
@@ -27,14 +23,12 @@ Ext.define('Ext.mixin.Filterable', {
          */
         filterRoot: null
     },
-
     /**
      * @property {Boolean} dirtyFilterFn
      * A flag indicating whether the currently cashed filter function is still valid.
      * @readonly
      */
     dirtyFilterFn: false,
-
     /**
      * @property currentSortFn
      * This is the cached sorting function which is a generated function that calls all the
@@ -42,14 +36,12 @@ Ext.define('Ext.mixin.Filterable', {
      * @readonly
      */
     filterFn: null,
-
     /**
      * @property {Boolean} filtered
      * A read-only flag indicating if this object is filtered.
      * @readonly
      */
     filtered: false,
-
     applyFilters: function(filters, collection) {
         if (!collection) {
             collection = this.createFiltersCollection();
@@ -66,14 +58,12 @@ Ext.define('Ext.mixin.Filterable', {
 
         return collection;
     },
-
     createFiltersCollection: function() {
         this._filters = Ext.create('Ext.util.Collection', function(filter) {
             return filter.getId();
         });
         return this._filters;
     },
-
     /**
      * This method adds a filter.
      * @param {Ext.util.Sorter/Function/Object} filter Can be an instance of Ext.util.Filter,
@@ -82,7 +72,6 @@ Ext.define('Ext.mixin.Filterable', {
     addFilter: function(filter) {
         this.addFilters([filter]);
     },
-
     /**
      * This method adds all the filters in a passed array.
      * @param {Array} filters An array with filters. A filter can be an instance of {@link Ext.util.Filter},
@@ -93,7 +82,6 @@ Ext.define('Ext.mixin.Filterable', {
         var currentFilters = this.getFilters();
         return this.insertFilters(currentFilters ? currentFilters.length : 0, filters);
     },
-
     /**
      * This method adds a filter at a given index.
      * @param {Number} index The index at which to insert the filter.
@@ -104,7 +92,6 @@ Ext.define('Ext.mixin.Filterable', {
     insertFilter: function(index, filter) {
         return this.insertFilters(index, [filter]);
     },
-
     /**
      * This method inserts all the filters in the passed array at the given index.
      * @param {Number} index The index at which to insert the filters.
@@ -119,10 +106,10 @@ Ext.define('Ext.mixin.Filterable', {
         }
 
         var ln = filters.length,
-            filterRoot = this.getFilterRoot(),
-            currentFilters = this.getFilters(),
-            newFilters = [],
-            filterConfig, i, filter;
+                filterRoot = this.getFilterRoot(),
+                currentFilters = this.getFilters(),
+                newFilters = [],
+                filterConfig, i, filter;
 
         if (!currentFilters) {
             currentFilters = this.createFiltersCollection();
@@ -182,7 +169,6 @@ Ext.define('Ext.mixin.Filterable', {
 
         return currentFilters;
     },
-
     /**
      * This method removes all the filters in a passed array.
      * @param {Array} filters Each value in the array can be a string (property name),
@@ -196,8 +182,8 @@ Ext.define('Ext.mixin.Filterable', {
         }
 
         var ln = filters.length,
-            currentFilters = this.getFilters(),
-            i, filter;
+                currentFilters = this.getFilters(),
+                i, filter;
 
         for (i = 0; i < ln; i++) {
             filter = filters[i];
@@ -234,7 +220,6 @@ Ext.define('Ext.mixin.Filterable', {
             this.filtered = false;
         }
     },
-
     /**
      * This updates the cached sortFn based on the current sorters.
      * @return {Function} sortFn The generated sort function.
@@ -245,13 +230,13 @@ Ext.define('Ext.mixin.Filterable', {
 
         this.filterFn = function(item) {
             var isMatch = true,
-                length = filters.length,
-                i;
+                    length = filters.length,
+                    i;
 
             for (i = 0; i < length; i++) {
                 var filter = filters[i],
-                    fn     = filter.getFilterFn(),
-                    scope  = filter.getScope() || this;
+                        fn = filter.getFilterFn(),
+                        scope = filter.getScope() || this;
 
                 isMatch = isMatch && fn.call(scope, item);
             }
@@ -262,7 +247,6 @@ Ext.define('Ext.mixin.Filterable', {
         this.dirtyFilterFn = false;
         return this.filterFn;
     },
-
     /**
      * This method will sort an array based on the currently configured {@link Ext.data.Store#sorters sorters}.
      * @param {Array} data The array you want to have sorted.
@@ -271,11 +255,9 @@ Ext.define('Ext.mixin.Filterable', {
     filter: function(data) {
         return this.getFilters().length ? Ext.Array.filter(data, this.getFilterFn()) : data;
     },
-
     isFiltered: function(item) {
         return this.getFilters().length ? !this.getFilterFn()(item) : false;
     },
-
     /**
      * Returns an up to date sort function.
      * @return {Function} sortFn The sort function.

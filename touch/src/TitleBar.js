@@ -79,64 +79,54 @@
 Ext.define('Ext.TitleBar', {
     extend: 'Ext.Container',
     xtype: 'titlebar',
-
     requires: [
         'Ext.Button',
         'Ext.Title',
         'Ext.Spacer'
     ],
-
     // @private
     isToolbar: true,
-
     config: {
         /**
          * @cfg
          * @inheritdoc
          */
         baseCls: Ext.baseCSSPrefix + 'toolbar',
-
         /**
          * @cfg
          * @inheritdoc
          */
         cls: Ext.baseCSSPrefix + 'navigation-bar',
-
         /**
          * @cfg {String} ui
          * Style options for Toolbar. Either 'light' or 'dark'.
          * @accessor
          */
         ui: 'dark',
-
         /**
          * @cfg {String} title
          * The title of the toolbar.
          * @accessor
          */
         title: null,
-
         /**
          * @cfg {String} titleAlign
          * The alignment for the title of the toolbar.
          * @accessor
          */
         titleAlign: 'center',
-
         /**
          * @cfg {String} defaultType
          * The default xtype to create.
          * @accessor
          */
         defaultType: 'button',
-
         /**
          * @cfg {String} minHeight
          * The minimum height height of the Toolbar.
          * @accessor
          */
         minHeight: null,
-
         /**
          * @cfg
          * @hide
@@ -144,7 +134,6 @@ Ext.define('Ext.TitleBar', {
         layout: {
             type: 'hbox'
         },
-
         /**
          * @cfg {Array/Object} items The child items to add to this TitleBar. The {@link #defaultType} of
          * a TitleBar is {@link Ext.Button}, so you do not need to specify an `xtype` if you are adding
@@ -155,28 +144,23 @@ Ext.define('Ext.TitleBar', {
          * @accessor
          */
         items: [],
-
         /**
          * @cfg {String} maxButtonWidth The maximum width of the button by percentage
          * @accessor
          */
         maxButtonWidth: '40%'
     },
-
     platformConfig: [{
-        theme: ['Blackberry', 'Tizen'],
-        titleAlign: 'left'
-    }, {
-        theme: ['Cupertino'],
-        maxButtonWidth: '80%'
-    }],
-
+            theme: ['Blackberry', 'Tizen'],
+            titleAlign: 'left'
+        }, {
+            theme: ['Cupertino'],
+            maxButtonWidth: '80%'
+        }],
     hasCSSMinHeight: true,
-
     beforeInitialize: function() {
         this.applyItems = this.applyInitialItems;
     },
-
     initialize: function() {
         delete this.applyItems;
 
@@ -188,11 +172,10 @@ Ext.define('Ext.TitleBar', {
             single: true
         });
     },
-
     applyInitialItems: function(items) {
         var me = this,
-            titleAlign = me.getTitleAlign(),
-            defaults = me.getDefaults() || {};
+                titleAlign = me.getTitleAlign(),
+                defaults = me.getDefaults() || {};
 
         me.initialItems = items;
 
@@ -233,7 +216,7 @@ Ext.define('Ext.TitleBar', {
         });
 
 
-        switch(titleAlign) {
+        switch (titleAlign) {
             case 'left':
                 me.titleComponent = me.leftBox.add({
                     xtype: 'title',
@@ -241,7 +224,7 @@ Ext.define('Ext.TitleBar', {
                     hidden: defaults.hidden
                 });
                 me.refreshTitlePosition = Ext.emptyFn;
-            break;
+                break;
             case 'right':
                 me.titleComponent = me.rightBox.add({
                     xtype: 'title',
@@ -249,21 +232,20 @@ Ext.define('Ext.TitleBar', {
                     hidden: defaults.hidden
                 });
                 me.refreshTitlePosition = Ext.emptyFn;
-            break;
+                break;
             default:
                 me.titleComponent = me.add({
                     xtype: 'title',
                     hidden: defaults.hidden,
                     centered: true
                 });
-            break;
+                break;
         }
 
         me.doAdd = me.doBoxAdd;
         me.remove = me.doBoxRemove;
         me.doInsert = me.doBoxInsert;
     },
-
     doBoxAdd: function(item) {
         if (item.config.align == 'right') {
             this.rightBox.add(item);
@@ -272,7 +254,6 @@ Ext.define('Ext.TitleBar', {
             this.leftBox.add(item);
         }
     },
-
     doBoxRemove: function(item, destroy) {
         if (item.config.align == 'right') {
             this.rightBox.remove(item, destroy);
@@ -281,7 +262,6 @@ Ext.define('Ext.TitleBar', {
             this.leftBox.remove(item, destroy);
         }
     },
-
     doBoxInsert: function(index, item) {
         if (item.config.align == 'right') {
             this.rightBox.insert(index, item);
@@ -290,7 +270,6 @@ Ext.define('Ext.TitleBar', {
             this.leftBox.insert(index, item);
         }
     },
-
     calculateMaxButtonWidth: function() {
         var maxButtonWidth = this.getMaxButtonWidth();
 
@@ -302,7 +281,6 @@ Ext.define('Ext.TitleBar', {
 
         return maxButtonWidth;
     },
-
     refreshTitlePosition: function() {
         if (this.isDestroyed) {
             return;
@@ -315,9 +293,9 @@ Ext.define('Ext.TitleBar', {
 
         //set the min/max width of the left button
         var leftBox = this.leftBox,
-            leftButton = leftBox.down('button'),
-            singleButton = leftBox.getItems().getCount() == 1,
-            leftBoxWidth, maxButtonWidth;
+                leftButton = leftBox.down('button'),
+                singleButton = leftBox.getItems().getCount() == 1,
+                leftBoxWidth, maxButtonWidth;
 
         if (leftButton && singleButton) {
             if (leftButton.getWidth() == null) {
@@ -339,10 +317,10 @@ Ext.define('Ext.TitleBar', {
         }
 
         var titleBox = titleElement.getPageBox(),
-            widthDiff = titleBox.width - spacerBox.width,
-            titleLeft = titleBox.left,
-            titleRight = titleBox.right,
-            halfWidthDiff, leftDiff, rightDiff;
+                widthDiff = titleBox.width - spacerBox.width,
+                titleLeft = titleBox.left,
+                titleRight = titleBox.right,
+                halfWidthDiff, leftDiff, rightDiff;
 
 
         if (widthDiff > 0) {
@@ -364,7 +342,6 @@ Ext.define('Ext.TitleBar', {
 
         titleElement.repaint();
     },
-
     // @private
     updateTitle: function(newTitle) {
         this.titleComponent.setTitle(newTitle);

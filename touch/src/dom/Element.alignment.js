@@ -24,7 +24,7 @@ Ext.dom.Element.addMembers({
     getAnchorXY: function(anchor, local, size) {
         //<debug warn>
         Ext.Logger.deprecate("getAnchorXY() is no longer available for Ext.Element. Please see Ext.Component#showBy() " +
-            "to do anchoring at Component level instead", this);
+                "to do anchoring at Component level instead", this);
         //</debug>
 
         //Passing a different size is useful for pre-calculating anchors,
@@ -33,32 +33,30 @@ Ext.dom.Element.addMembers({
         size = size || {};
 
         var me = this,
-            vp = me.dom == document.body || me.dom == document,
-            width = size.width || vp ? window.innerWidth: me.getWidth(),
-            height = size.height || vp ? window.innerHeight: me.getHeight(),
-            xy,
-            rnd = Math.round,
-            myXY = me.getXY(),
-            extraX = vp ? 0: !local ? myXY[0] : 0,
-            extraY = vp ? 0: !local ? myXY[1] : 0,
-            hash = {
-                c: [rnd(width * 0.5), rnd(height * 0.5)],
-                t: [rnd(width * 0.5), 0],
-                l: [0, rnd(height * 0.5)],
-                r: [width, rnd(height * 0.5)],
-                b: [rnd(width * 0.5), height],
-                tl: [0, 0],
-                bl: [0, height],
-                br: [width, height],
-                tr: [width, 0]
-            };
+                vp = me.dom == document.body || me.dom == document,
+                width = size.width || vp ? window.innerWidth : me.getWidth(),
+                height = size.height || vp ? window.innerHeight : me.getHeight(),
+                xy,
+                rnd = Math.round,
+                myXY = me.getXY(),
+                extraX = vp ? 0 : !local ? myXY[0] : 0,
+                extraY = vp ? 0 : !local ? myXY[1] : 0,
+                hash = {
+                    c: [rnd(width * 0.5), rnd(height * 0.5)],
+                    t: [rnd(width * 0.5), 0],
+                    l: [0, rnd(height * 0.5)],
+                    r: [width, rnd(height * 0.5)],
+                    b: [rnd(width * 0.5), height],
+                    tl: [0, 0],
+                    bl: [0, height],
+                    br: [width, height],
+                    tr: [width, 0]
+                };
 
         xy = hash[anchor];
         return [xy[0] + extraX, xy[1] + extraY];
     },
-
     alignToRe: /^([a-z]+)-([a-z]+)(\?)?$/,
-
     /**
      * Gets the x,y coordinates to align this element with another element.
      * @param {Mixed} element The element to align to.
@@ -69,7 +67,7 @@ Ext.dom.Element.addMembers({
     getAlignToXY: function(el, position, offsets, local) {
         //<debug warn>
         Ext.Logger.deprecate("getAlignToXY() is no longer available for Ext.Element. Please see Ext.Component#showBy() " +
-            "to do anchoring at Component level instead", this);
+                "to do anchoring at Component level instead", this);
         //</debug>
 
         local = !!local;
@@ -85,31 +83,31 @@ Ext.dom.Element.addMembers({
         if (!position || position == '?') {
             position = 'tl-bl?';
         }
-        else if (! (/-/).test(position) && position !== "") {
+        else if (!(/-/).test(position) && position !== "") {
             position = 'tl-' + position;
         }
         position = position.toLowerCase();
 
         var me = this,
-            matches = position.match(this.alignToRe),
-            dw = window.innerWidth,
-            dh = window.innerHeight,
-            p1 = "",
-            p2 = "",
-            a1,
-            a2,
-            x,
-            y,
-            swapX,
-            swapY,
-            p1x,
-            p1y,
-            p2x,
-            p2y,
-            width,
-            height,
-            region,
-            constrain;
+                matches = position.match(this.alignToRe),
+                dw = window.innerWidth,
+                dh = window.innerHeight,
+                p1 = "",
+                p2 = "",
+                a1,
+                a2,
+                x,
+                y,
+                swapX,
+                swapY,
+                p1x,
+                p1y,
+                p2x,
+                p2y,
+                width,
+                height,
+                region,
+                constrain;
 
         if (!matches) {
             throw "Element.alignTo with an invalid alignment " + position;
@@ -145,36 +143,34 @@ Ext.dom.Element.addMembers({
             swapX = ((p1x == "r" && p2x == "l") || (p1x == "l" && p2x == "r"));
 
             if (x + width > dw) {
-                x = swapX ? region.left - width: dw - width;
+                x = swapX ? region.left - width : dw - width;
             }
             if (x < 0) {
-                x = swapX ? region.right: 0;
+                x = swapX ? region.right : 0;
             }
             if (y + height > dh) {
-                y = swapY ? region.top - height: dh - height;
+                y = swapY ? region.top - height : dh - height;
             }
             if (y < 0) {
-                y = swapY ? region.bottom: 0;
+                y = swapY ? region.bottom : 0;
             }
         }
 
         return [x, y];
     },
-
     // @private
-    getAnchor: function(){
+    getAnchor: function() {
         var dom = this.dom;
-            if (!dom) {
-                return;
-            }
-            var anchor = this.self.data.call(this.self, dom, '_anchor');
+        if (!dom) {
+            return;
+        }
+        var anchor = this.self.data.call(this.self, dom, '_anchor');
 
-        if(!anchor){
+        if (!anchor) {
             anchor = this.self.data.call(this.self, dom, '_anchor', {});
         }
         return anchor;
     },
-
     // @private
     // used outside of core
     adjustForConstraints: function(xy, parent) {

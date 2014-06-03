@@ -73,7 +73,6 @@ Ext.define('Ext.field.Number', {
     extend: 'Ext.field.Text',
     xtype: 'numberfield',
     alternateClassName: 'Ext.form.Number',
-
     config: {
         /**
          * @cfg
@@ -82,27 +81,23 @@ Ext.define('Ext.field.Number', {
         component: {
             type: 'number'
         },
-
         /**
          * @cfg
          * @inheritdoc
          */
         ui: 'number'
     },
-
     proxyConfig: {
         /**
          * @cfg {Number} minValue The minimum value that this Number field can accept
          * @accessor
          */
         minValue: null,
-
         /**
          * @cfg {Number} maxValue The maximum value that this Number field can accept
          * @accessor
          */
         maxValue: null,
-
         /**
          * @cfg {Number} stepValue The amount by which the field is incremented or decremented each time the spinner is tapped.
          * Defaults to undefined, which means that the field goes up or down by 1 each time the spinner is tapped
@@ -110,29 +105,25 @@ Ext.define('Ext.field.Number', {
          */
         stepValue: null
     },
-
     applyPlaceHolder: function(value) {
         // Android 4.1 & lower require a hack for placeholder text in number fields when using the Stock Browser
         // details here https://code.google.com/p/android/issues/detail?id=24626
         this._enableNumericPlaceHolderHack = ((!Ext.feature.has.NumericInputPlaceHolder) && (!Ext.isEmpty(value)));
         return value;
     },
-
     onFocus: function(e) {
         if (this._enableNumericPlaceHolderHack) {
             this.getComponent().input.dom.setAttribute("type", "number");
         }
         this.callParent(arguments);
     },
-
     onBlur: function(e) {
         if (this._enableNumericPlaceHolderHack) {
             this.getComponent().input.dom.setAttribute("type", "text");
         }
         this.callParent(arguments);
     },
-
-    doInitValue : function() {
+    doInitValue: function() {
         var value = this.getInitialConfig().value;
 
         if (value) {
@@ -141,10 +132,9 @@ Ext.define('Ext.field.Number', {
 
         this.originalValue = value;
     },
-
     applyValue: function(value) {
         var minValue = this.getMinValue(),
-            maxValue = this.getMaxValue();
+                maxValue = this.getMaxValue();
 
         if (Ext.isNumber(minValue) && Ext.isNumber(value)) {
             value = Math.max(value, minValue);
@@ -157,12 +147,10 @@ Ext.define('Ext.field.Number', {
         value = parseFloat(value);
         return (isNaN(value)) ? '' : value;
     },
-
     getValue: function() {
         var value = parseFloat(this.callParent(), 10);
         return (isNaN(value)) ? null : value;
     },
-
     doClearIconTap: function(me, e) {
         me.getComponent().setValue('');
         me.getValue();

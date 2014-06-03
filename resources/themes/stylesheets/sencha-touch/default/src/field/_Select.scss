@@ -28,7 +28,7 @@
         }
 
         &:before,
-        &:after {
+            &:after {
             pointer-events: none;
             position: absolute;
             display: block;

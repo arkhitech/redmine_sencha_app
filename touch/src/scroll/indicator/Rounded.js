@@ -3,16 +3,13 @@
  */
 Ext.define('Ext.scroll.indicator.Rounded', {
     extend: 'Ext.scroll.indicator.Abstract',
-
     config: {
         cls: 'rounded'
     },
-
     constructor: function() {
         this.callParent(arguments);
         this.transformPropertyName = Ext.browser.getVendorProperyName('transform');
     },
-
     getElementConfig: function() {
         var config = this.callParent();
 
@@ -30,13 +27,12 @@ Ext.define('Ext.scroll.indicator.Rounded', {
 
         return config;
     },
-
     refresh: function() {
         var axis = this.getAxis(),
-            startElementDom = this.startElement.dom,
-            endElementDom = this.endElement.dom,
-            middleElement = this.middleElement,
-            startElementLength, endElementLength;
+                startElementDom = this.startElement.dom,
+                endElementDom = this.endElement.dom,
+                middleElement = this.middleElement,
+                startElementLength, endElementLength;
 
         if (axis === 'x') {
             startElementLength = startElementDom.offsetWidth;
@@ -54,16 +50,15 @@ Ext.define('Ext.scroll.indicator.Rounded', {
 
         this.callParent();
     },
-
     doUpdateLength: function(length) {
         if (!this.isDestroyed) {
             var axis = this.getAxis(),
-                endElement = this.endElement,
-                middleElementStyle = this.middleElement.dom.style,
-                endElementLength = this.endElementLength,
-                endElementOffset = length - endElementLength,
-                middleElementLength = endElementOffset - this.startElementLength,
-                transformPropertyName = this.transformPropertyName;
+                    endElement = this.endElement,
+                    middleElementStyle = this.middleElement.dom.style,
+                    endElementLength = this.endElementLength,
+                    endElementOffset = length - endElementLength,
+                    middleElementLength = endElementOffset - this.startElementLength,
+                    transformPropertyName = this.transformPropertyName;
 
             if (axis === 'x') {
                 endElement.translate(endElementOffset, 0);

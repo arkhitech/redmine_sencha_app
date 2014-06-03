@@ -11,12 +11,10 @@ Ext.define('Ext.chart.series.sprite.Aggregative', {
                  * @cfg {Object} [dataHigh=null] Data items representing the high values of the aggregated data.
                  */
                 dataHigh: 'data',
-
                 /**
                  * @cfg {Object} [dataLow=null] Data items representing the low values of the aggregated data.
                  */
                 dataLow: 'data',
-
                 /**
                  * @cfg {Object} [dataClose=null] Data items representing the closing values of the aggregated data.
                  */
@@ -35,26 +33,22 @@ Ext.define('Ext.chart.series.sprite.Aggregative', {
             }
         }
     },
-
     config: {
         aggregator: {}
     },
-
-    applyAggregator: function (aggregator, oldAggr) {
+    applyAggregator: function(aggregator, oldAggr) {
         return Ext.factory(aggregator, Ext.draw.SegmentTree, oldAggr);
     },
-
-    constructor: function () {
+    constructor: function() {
         this.callSuper(arguments);
     },
-
-    processDataY: function () {
+    processDataY: function() {
         var me = this,
-            attr = me.attr,
-            high = attr.dataHigh,
-            low = attr.dataLow,
-            close = attr.dataClose,
-            open = attr.dataY;
+                attr = me.attr,
+                high = attr.dataHigh,
+                low = attr.dataLow,
+                close = attr.dataClose,
+                open = attr.dataY;
         me.callSuper(arguments);
         if (attr.dataX && open && open.length > 0) {
             if (high) {
@@ -64,22 +58,20 @@ Ext.define('Ext.chart.series.sprite.Aggregative', {
             }
         }
     },
-
-    getGapWidth: function () {
+    getGapWidth: function() {
         return 1;
     },
-
-    renderClipped: function (surface, ctx, clip, region) {
+    renderClipped: function(surface, ctx, clip, region) {
         var me = this,
-            aggregates = me.getAggregator() && me.getAggregator().getAggregation(
+                aggregates = me.getAggregator() && me.getAggregator().getAggregation(
                 clip[0],
                 clip[2],
                 (clip[2] - clip[0]) / region[2] * me.getGapWidth()
-            );
+                );
         if (aggregates) {
             me.dataStart = aggregates.data.startIdx[aggregates.start];
             me.dataEnd = aggregates.data.endIdx[aggregates.end - 1];
-            
+
             me.renderAggregates(aggregates.data, aggregates.start, aggregates.end, surface, ctx, clip, region);
         }
     }

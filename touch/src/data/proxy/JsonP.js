@@ -133,24 +133,20 @@ Ext.define('Ext.data.proxy.JsonP', {
     alternateClassName: 'Ext.data.ScriptTagProxy',
     alias: ['proxy.jsonp', 'proxy.scripttag'],
     requires: ['Ext.data.JsonP'],
-
     config: {
         defaultWriterType: 'base',
-
         /**
          * @cfg {String} callbackKey
          * See {@link Ext.data.JsonP#callbackKey}.
          * @accessor
          */
-        callbackKey : 'callback',
-
+        callbackKey: 'callback',
         /**
          * @cfg {String} recordParam
          * The param name to use when passing records to the server (e.g. 'records=someEncodedRecordString').
          * @accessor
          */
         recordParam: 'records',
-
         /**
          * @cfg {Boolean} autoAppendParams
          * `true` to automatically append the request's params to the generated url.
@@ -158,7 +154,6 @@ Ext.define('Ext.data.proxy.JsonP', {
          */
         autoAppendParams: true
     },
-
     /**
      * Performs the read request to the remote domain. JsonP proxy does not actually create an Ajax request,
      * instead we write out a `<script>` tag based on the configuration of the internal Ext.data.Request object
@@ -177,9 +172,9 @@ Ext.define('Ext.data.proxy.JsonP', {
         // </debug>
 
         //generate the unique IDs for this request
-        var me      = this,
-            request = me.buildRequest(operation),
-            params  = request.getParams();
+        var me = this,
+                request = me.buildRequest(operation),
+                params = request.getParams();
 
         // apply JsonP proxy-specific attributes to the Request
         request.setConfig({
@@ -205,7 +200,6 @@ Ext.define('Ext.data.proxy.JsonP', {
 
         return request;
     },
-
     /**
      * @private
      * Creates and returns the function that is called when the request has completed. The returned function
@@ -229,24 +223,21 @@ Ext.define('Ext.data.proxy.JsonP', {
             me.processResponse(success, operation, request, response, callback, scope);
         };
     },
-
     // @inheritdoc
     setException: function(operation, response) {
         operation.setException(operation.getRequest().getJsonP().errorType);
     },
-
-
     /**
      * Generates a url based on a given Ext.data.Request object. Adds the params and callback function name to the url
      * @param {Ext.data.Request} request The request object.
      * @return {String} The url.
      */
     buildUrl: function(request) {
-        var me      = this,
-            url     = me.callParent(arguments),
-            params  = Ext.apply({}, request.getParams()),
-            filters = params.filters,
-            filter, i, value;
+        var me = this,
+                url = me.callParent(arguments),
+                params = Ext.apply({}, request.getParams()),
+                filters = params.filters,
+                filter, i, value;
 
         delete params.filters;
 
@@ -266,7 +257,6 @@ Ext.define('Ext.data.proxy.JsonP', {
 
         return url;
     },
-
     /**
      * @inheritdoc
      */
@@ -274,7 +264,6 @@ Ext.define('Ext.data.proxy.JsonP', {
         this.abort();
         this.callParent(arguments);
     },
-
     /**
      * Aborts the current server request if one is currently running.
      */

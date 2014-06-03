@@ -4,7 +4,7 @@
  */
 (function(global) {
     var head = global.document.head,
-        Ext = global.Ext;
+            Ext = global.Ext;
 
     if (typeof Ext == 'undefined') {
         global.Ext = Ext = {};
@@ -24,21 +24,21 @@
 
     Ext.blink = function(options) {
         var scripts = options.js || [],
-            styleSheets = options.css || [],
-            i, ln, path, platform, theme;
+                styleSheets = options.css || [],
+                i, ln, path, platform, theme;
 
         if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
             var msViewportStyle = document.createElement("style");
             msViewportStyle.appendChild(
-                document.createTextNode(
-                    "@media screen and (orientation: portrait) {" +
-                        "@-ms-viewport {width: 320px !important;}" +
-                    "}" +
-                    "@media screen and (orientation: landscape) {" +
-                        "@-ms-viewport {width: 560px !important;}" +
-                    "}"
-                )
-            );
+                    document.createTextNode(
+                            "@media screen and (orientation: portrait) {" +
+                            "@-ms-viewport {width: 320px !important;}" +
+                            "}" +
+                            "@media screen and (orientation: landscape) {" +
+                            "@-ms-viewport {width: 560px !important;}" +
+                            "}"
+                            )
+                    );
             document.getElementsByTagName("head")[0].appendChild(msViewportStyle);
         }
         addMeta('viewport', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no');
@@ -49,8 +49,8 @@
 
         var filterPlatform = window.Ext.filterPlatform = function(platform) {
             var profileMatch = false,
-                ua = navigator.userAgent,
-                j, jln, exclude;
+                    ua = navigator.userAgent,
+                    j, jln, exclude;
 
             platform = [].concat(platform);
 
@@ -63,21 +63,21 @@
                 // - Android with "Mobile" in the UA
 
                 return /(iPhone|iPod)/.test(ua) ||
-                          (!/(Silk)/.test(ua) && (/(Android)/.test(ua) && (/(Android 2)/.test(ua) || isMobile))) ||
-                          (/(BlackBerry|BB)/.test(ua) && isMobile) ||
-                          /(Windows Phone)/.test(ua);
+                        (!/(Silk)/.test(ua) && (/(Android)/.test(ua) && (/(Android 2)/.test(ua) || isMobile))) ||
+                        (/(BlackBerry|BB)/.test(ua) && isMobile) ||
+                        /(Windows Phone)/.test(ua);
             }
 
             function isTablet(ua) {
                 return !isPhone(ua) && (/iPad/.test(ua) || /Android|Silk/.test(ua) || /(RIM Tablet OS)/.test(ua) ||
-                    (/MSIE 10/.test(ua) && /; Touch/.test(ua)));
+                        (/MSIE 10/.test(ua) && /; Touch/.test(ua)));
             }
 
             // Check if the ?platform parameter is set in the URL
             var paramsString = window.location.search.substr(1),
-                paramsArray = paramsString.split("&"),
-                params = {},
-                testPlatform, i;
+                    paramsArray = paramsString.split("&"),
+                    params = {},
+                    testPlatform, i;
 
             for (i = 0; i < paramsArray.length; i++) {
                 var tmpArray = paramsArray[i].split("=");
@@ -134,7 +134,7 @@
             return false;
         };
 
-        for (i = 0,ln = styleSheets.length; i < ln; i++) {
+        for (i = 0, ln = styleSheets.length; i < ln; i++) {
             path = styleSheets[i];
 
             if (typeof path != 'string') {
@@ -152,10 +152,10 @@
                     name: theme || 'Default'
                 };
             }
-            write('<link rel="stylesheet" href="'+path+'">');
+            write('<link rel="stylesheet" href="' + path + '">');
         }
 
-        for (i = 0,ln = scripts.length; i < ln; i++) {
+        for (i = 0, ln = scripts.length; i < ln; i++) {
             path = scripts[i];
 
             if (typeof path != 'string') {
@@ -170,7 +170,7 @@
                 }
             }
 
-            write('<script src="'+path+'"></'+'script>');
+            write('<script src="' + path + '"></' + 'script>');
         }
     }
 

@@ -32,53 +32,45 @@
  */
 Ext.define('Ext.ActionSheet', {
     extend: 'Ext.Sheet',
-    alias : 'widget.actionsheet',
+    alias: 'widget.actionsheet',
     requires: ['Ext.Button'],
-
     config: {
         /**
          * @cfg
          * @inheritdoc
          */
         baseCls: Ext.baseCSSPrefix + 'sheet-action',
-
         /**
          * @cfg
          * @inheritdoc
          */
         left: 0,
-
         /**
          * @cfg
          * @inheritdoc
          */
         right: 0,
-
         /**
          * @cfg
          * @inheritdoc
          */
         bottom: 0,
-
         // @hide
         centered: false,
-
         /**
          * @cfg
          * @inheritdoc
          */
         height: 'auto',
-
         /**
          * @cfg
          * @inheritdoc
          */
         defaultType: 'button'
     },
-
     platformConfig: [{
-        theme: ['Windows'],
-        top: 0,
-        bottom: null
-    }]
+            theme: ['Windows'],
+            top: 0,
+            bottom: null
+        }]
 });

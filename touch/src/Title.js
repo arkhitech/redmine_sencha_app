@@ -5,20 +5,17 @@
 Ext.define('Ext.Title', {
     extend: 'Ext.Component',
     xtype: 'title',
-
     config: {
         /**
          * @cfg
          * @inheritdoc
          */
         baseCls: 'x-title',
-
         /**
          * @cfg {String} title The title text
          */
         title: ''
     },
-
     // @private
     updateTitle: function(newTitle) {
         this.setHtml(newTitle);

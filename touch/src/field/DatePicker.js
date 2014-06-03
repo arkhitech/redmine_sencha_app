@@ -112,7 +112,6 @@ Ext.define('Ext.field.DatePicker', {
         'Ext.picker.Date',
         'Ext.DateExtras'
     ],
-
     /**
      * @event change
      * Fires when a date is selected
@@ -123,21 +122,18 @@ Ext.define('Ext.field.DatePicker', {
 
     config: {
         ui: 'select',
-
         /**
          * @cfg {Object/Ext.picker.Date} picker
          * An object that is used when creating the internal {@link Ext.picker.Date} component or a direct instance of {@link Ext.picker.Date}.
          * @accessor
          */
         picker: true,
-
         /**
          * @cfg {Boolean}
          * @hide
          * @accessor
          */
         clearIcon: false,
-
         /**
          * @cfg {Object/Date} value
          * Default value for the field and the internal {@link Ext.picker.Date} component. Accepts an object of 'year',
@@ -154,13 +150,11 @@ Ext.define('Ext.field.DatePicker', {
          * @accessor
          */
         destroyPickerOnHide: false,
-
         /**
          * @cfg {String} [dateFormat=Ext.util.Format.defaultDateFormat] The format to be used when displaying the date in this field.
          * Accepts any valid date format. You can view formats over in the {@link Ext.Date} documentation.
          */
         dateFormat: null,
-
         /**
          * @cfg {Object}
          * @hide
@@ -169,10 +163,9 @@ Ext.define('Ext.field.DatePicker', {
             useMask: true
         }
     },
-
     initialize: function() {
         var me = this,
-            component = me.getComponent();
+                component = me.getComponent();
 
         me.callParent();
 
@@ -188,9 +181,7 @@ Ext.define('Ext.field.DatePicker', {
             component.input.dom.disabled = true;
         }
     },
-
     syncEmptyCls: Ext.emptyFn,
-
     applyValue: function(value) {
         if (!Ext.isDate(value) && !Ext.isObject(value)) {
             return null;
@@ -202,10 +193,9 @@ Ext.define('Ext.field.DatePicker', {
 
         return value;
     },
-
     updateValue: function(newValue, oldValue) {
-        var me     = this,
-            picker = me._picker;
+        var me = this,
+                picker = me._picker;
 
         if (picker && picker.isPicker) {
             picker.setValue(newValue);
@@ -222,7 +212,6 @@ Ext.define('Ext.field.DatePicker', {
             me.fireEvent('change', me, newValue, oldValue);
         }
     },
-
     /**
      * Updates the date format in the field.
      * @private
@@ -233,7 +222,6 @@ Ext.define('Ext.field.DatePicker', {
             this.getComponent().setValue(Ext.Date.format(value, newDateFormat || Ext.util.Format.defaultDateFormat));
         }
     },
-
     /**
      * Returns the {@link Date} value of this field.
      * If you wanted a formatted date use the {@link #getFormattedValue} method.
@@ -246,7 +234,6 @@ Ext.define('Ext.field.DatePicker', {
 
         return this._value;
     },
-
     /**
      * Returns the value of the field formatted using the specified format. If it is not specified, it will default to
      * {@link #dateFormat} and then {@link Ext.util.Format#defaultDateFormat}.
@@ -257,7 +244,6 @@ Ext.define('Ext.field.DatePicker', {
         var value = this.getValue();
         return (Ext.isDate(value)) ? Ext.Date.format(value, format || this.getDateFormat() || Ext.util.Format.defaultDateFormat) : value;
     },
-
     applyPicker: function(picker, pickerInstance) {
         if (pickerInstance && pickerInstance.isPicker) {
             picker = pickerInstance.setConfig(picker);
@@ -265,10 +251,9 @@ Ext.define('Ext.field.DatePicker', {
 
         return picker;
     },
-
     getPicker: function() {
         var picker = this._picker,
-            value = this.getValue();
+                value = this.getValue();
 
         if (picker && !picker.isPicker) {
             picker = Ext.factory(picker, Ext.picker.Date);
@@ -280,14 +265,13 @@ Ext.define('Ext.field.DatePicker', {
         picker.on({
             scope: this,
             change: 'onPickerChange',
-            hide  : 'onPickerHide'
+            hide: 'onPickerHide'
         });
 
         this._picker = picker;
 
         return picker;
     },
-
     /**
      * @private
      * Listener to the tap event of the mask element. Shows the internal DatePicker component when the button has been tapped.
@@ -301,7 +285,6 @@ Ext.define('Ext.field.DatePicker', {
 
         return false;
     },
-
     /**
      * Called when the picker changes its value.
      * @param {Ext.picker.Date} picker The date picker.
@@ -310,38 +293,34 @@ Ext.define('Ext.field.DatePicker', {
      */
     onPickerChange: function(picker, value) {
         var me = this,
-            oldValue = me.getValue();
+                oldValue = me.getValue();
 
         me.setValue(value);
         me.fireEvent('select', me, value);
         me.onChange(me, value, oldValue);
     },
-
     /**
      * Override this or change event will be fired twice. change event is fired in updateValue
      * for this field. TOUCH-2861
      */
     onChange: Ext.emptyFn,
-
     /**
      * Destroys the picker when it is hidden, if
      * {@link Ext.field.DatePicker#destroyPickerOnHide destroyPickerOnHide} is set to `true`.
      * @private
      */
     onPickerHide: function() {
-        var me     = this,
-            picker = me.getPicker();
+        var me = this,
+                picker = me.getPicker();
 
         if (me.getDestroyPickerOnHide() && picker) {
             picker.destroy();
             me._picker = me.getInitialConfig().picker || true;
         }
     },
-
     reset: function() {
         this.setValue(this.originalValue);
     },
-
     onFocus: function(e) {
         var component = this.getComponent();
         this.fireEvent('focus', this, e);
@@ -359,7 +338,6 @@ Ext.define('Ext.field.DatePicker', {
 
         this.getPicker().show();
     },
-
     // @private
     destroy: function() {
         var picker = this._picker;

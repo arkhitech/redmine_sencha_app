@@ -5,17 +5,17 @@
  * @link http://www.creativejuiz.fr/trytotry/css3-box-shadow-after-before/
  */
 @mixin drop-shadow-flying(
-    $box-shadow-radius: 30px,
-    $color: #000,
-    $distance: 1em,
-    $height: 2px
+$box-shadow-radius: 30px,
+$color: #000,
+$distance: 1em,
+$height: 2px
 )
 {
     position: relative;
 
     &:before,
-    &:after
-    {
+        &:after
+        {
         content: " ";
         position: absolute;
         z-index: -2;
@@ -23,7 +23,7 @@
     }
 
     &:after
-    {
+        {
         left: 8%;
         width: 84%;
         height: $height;

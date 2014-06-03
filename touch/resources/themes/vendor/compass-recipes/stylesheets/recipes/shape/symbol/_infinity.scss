@@ -20,8 +20,8 @@
     height: $height;
 
     &:before,
-    &:after
-    {
+        &:after
+        {
         content: "";
         position: absolute;
         top: 0;
@@ -33,14 +33,14 @@
 
     $radius: $height/2;
     &:before
-    {
+        {
         left: 0;
         @include border-radius($radius $radius 0 $radius);
         @include transform(rotate(-45deg));
     }
 
     &:after
-    {
+        {
         right: 0;
         @include border-radius($radius $radius $radius 0);
         @include transform(rotate(45deg));

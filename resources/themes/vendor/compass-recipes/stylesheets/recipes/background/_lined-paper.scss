@@ -13,18 +13,18 @@
     $transparent: rgba(black, 0);
     background-color: $bg-color;
     @include background-image(
-        linear-gradient(
-            left,
-            $transparent $margin,
-            $guide-color $margin,
-            $guide-color $margin + 3,
-            $transparent $margin + 3
-        ),
-        linear-gradient(
-            top,
-            $rule-color 0.05em,
-            $transparent 0.05em
-        )
+    linear-gradient(
+    left,
+    $transparent $margin,
+    $guide-color $margin,
+    $guide-color $margin + 3,
+    $transparent $margin + 3
+    ),
+    linear-gradient(
+    top,
+    $rule-color 0.05em,
+    $transparent 0.05em
+    )
     );
     background-size: 100% $baseline;
 }

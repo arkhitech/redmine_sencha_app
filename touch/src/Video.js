@@ -39,7 +39,6 @@
 Ext.define('Ext.Video', {
     extend: 'Ext.Media',
     xtype: 'video',
-
     config: {
         /**
          * @cfg {String/Array} url
@@ -53,27 +52,24 @@ Ext.define('Ext.Video', {
          * @accessor
          */
         posterUrl: null,
-
         /**
          * @cfg
          * @inheritdoc
          */
         baseCls: Ext.baseCSSPrefix + 'video'
     },
-
     template: [{
-        /**
-         * @property {Ext.dom.Element} ghost
-         * @private
-         */
-        reference: 'ghost',
-        classList: [Ext.baseCSSPrefix + 'video-ghost']
-    }, {
-        tag: 'video',
-        reference: 'media',
-        classList: [Ext.baseCSSPrefix + 'media']
-    }],
-
+            /**
+             * @property {Ext.dom.Element} ghost
+             * @private
+             */
+            reference: 'ghost',
+            classList: [Ext.baseCSSPrefix + 'video-ghost']
+        }, {
+            tag: 'video',
+            reference: 'media',
+            classList: [Ext.baseCSSPrefix + 'media']
+        }],
     initialize: function() {
         var me = this;
 
@@ -100,18 +96,16 @@ Ext.define('Ext.Video', {
             this.isInlineVideo = true;
         }
     },
-
     applyUrl: function(url) {
         return [].concat(url);
     },
-
     updateUrl: function(newUrl) {
         var me = this,
-            media = me.media,
-            newLn = newUrl.length,
-            existingSources = media.query('source'),
-            oldLn = existingSources.length,
-            i;
+                media = me.media,
+                newLn = newUrl.length,
+                existingSources = media.query('source'),
+                oldLn = existingSources.length,
+                i;
 
 
         for (i = 0; i < oldLn; i++) {
@@ -129,21 +123,19 @@ Ext.define('Ext.Video', {
             me.play();
         }
     },
-
     onErased: function() {
         this.pause();
         this.media.setTop(-2000);
         this.ghost.show();
     },
-
     /**
      * @private
      * Called when the {@link #ghost} element is tapped.
      */
     onGhostTap: function() {
         var me = this,
-            media = this.media,
-            ghost = this.ghost;
+                media = this.media,
+                ghost = this.ghost;
 
         media.show();
         if (Ext.browser.is.AndroidStock2) {
@@ -160,7 +152,6 @@ Ext.define('Ext.Video', {
             me.play();
         }
     },
-
     /**
      * @private
      * native video tag display only, move the media down so we can control the Viewport
@@ -172,7 +163,6 @@ Ext.define('Ext.Video', {
             this.ghost.show();
         }
     },
-
     /**
      * @private
      * native video tag display only, move the media down so we can control the Viewport
@@ -181,7 +171,6 @@ Ext.define('Ext.Video', {
         this.callParent(arguments);
         this.media.setTop(0);
     },
-
     /**
      * Updates the URL to the poster, even if it is rendered.
      * @param {Object} newUrl

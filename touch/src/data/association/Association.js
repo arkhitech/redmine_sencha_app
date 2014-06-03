@@ -119,9 +119,7 @@
  */
 Ext.define('Ext.data.association.Association', {
     alternateClassName: 'Ext.data.Association',
-
     requires: ['Ext.data.ModelManager'],
-
     config: {
         /**
          * @cfg {Ext.data.Model/String} ownerModel (required) The full class name or reference to the class that owns this
@@ -129,45 +127,37 @@ Ext.define('Ext.data.association.Association', {
          * @accessor
          */
         ownerModel: null,
-
         /*
          * @cfg {String} ownerName The name for the owner model. This defaults to the last part
          * of the class name of the {@link #ownerModel}.
          */
         ownerName: undefined,
-
         /**
          * @cfg {String} associatedModel (required) The full class name or reference to the class that the {@link #ownerModel}
          * is being associated with. This is a required configuration on every association.
          * @accessor
          */
         associatedModel: null,
-
         /**
          * @cfg {String} associatedName The name for the associated model. This defaults to the last part
          * of the class name of the {@link #associatedModel}.
          * @accessor
          */
         associatedName: undefined,
-
-
         /**
          * @cfg {String} associationKey The name of the property in the data to read the association from.
          * Defaults to the {@link #associatedName} plus '_id'.
          */
         associationKey: undefined,
-
         /**
          * @cfg {String} primaryKey The name of the primary key on the associated model.
          * In general this will be the {@link Ext.data.Model#idProperty} of the Model.
          */
         primaryKey: 'id',
-
         /**
          * @cfg {Ext.data.reader.Reader} reader A special reader to read associated data.
          */
         reader: null,
-
         /**
          * @cfg {String} type The type configuration can be used when creating associations using a configuration object.
          * Use `hasMany` to create a HasMany association.
@@ -178,10 +168,8 @@ Ext.define('Ext.data.association.Association', {
          *     }]
          */
         type: null,
-
         name: undefined
     },
-
     statics: {
         create: function(association) {
             if (!association.isAssociation) {
@@ -197,7 +185,6 @@ Ext.define('Ext.data.association.Association', {
             return association;
         }
     },
-
     /**
      * Creates the Association object.
      * @param {Object} config (optional) Config object.
@@ -205,14 +192,12 @@ Ext.define('Ext.data.association.Association', {
     constructor: function(config) {
         this.initConfig(config);
     },
-
     applyName: function(name) {
         if (!name) {
             name = this.getAssociatedName();
         }
         return name;
     },
-
     applyOwnerModel: function(ownerName) {
         var ownerModel = Ext.data.ModelManager.getModel(ownerName);
         if (ownerModel === undefined) {
@@ -220,21 +205,18 @@ Ext.define('Ext.data.association.Association', {
         }
         return ownerModel;
     },
-
     applyOwnerName: function(ownerName) {
         if (!ownerName) {
             ownerName = this.getOwnerModel().modelName;
         }
-        ownerName = ownerName.slice(ownerName.lastIndexOf('.')+1);
+        ownerName = ownerName.slice(ownerName.lastIndexOf('.') + 1);
         return ownerName;
     },
-
     updateOwnerModel: function(ownerModel, oldOwnerModel) {
         if (oldOwnerModel) {
             this.setOwnerName(ownerModel.modelName);
         }
     },
-
     applyAssociatedModel: function(associatedName) {
         var associatedModel = Ext.data.ModelManager.types[associatedName];
         if (associatedModel === undefined) {
@@ -242,21 +224,18 @@ Ext.define('Ext.data.association.Association', {
         }
         return associatedModel;
     },
-
     applyAssociatedName: function(associatedName) {
         if (!associatedName) {
             associatedName = this.getAssociatedModel().modelName;
         }
-        associatedName = associatedName.slice(associatedName.lastIndexOf('.')+1);
+        associatedName = associatedName.slice(associatedName.lastIndexOf('.') + 1);
         return associatedName;
     },
-
     updateAssociatedModel: function(associatedModel, oldAssociatedModel) {
         if (oldAssociatedModel) {
             this.setAssociatedName(associatedModel.modelName);
         }
     },
-
     applyReader: function(reader) {
         if (reader) {
             if (Ext.isString(reader)) {
@@ -274,18 +253,17 @@ Ext.define('Ext.data.association.Association', {
 
         return Ext.factory(reader, Ext.data.Reader, this.getReader(), 'reader');
     },
-
     updateReader: function(reader) {
         reader.setModel(this.getAssociatedModel());
     }
 
     // Convert old properties in data into a config object
     // <deprecated product=touch since=2.0>
-    ,onClassExtended: function(cls, data, hooks) {
+    , onClassExtended: function(cls, data, hooks) {
         var Component = this,
-            defaultConfig = Component.prototype.config,
-            config = data.config || {},
-            key;
+                defaultConfig = Component.prototype.config,
+                config = data.config || {},
+                key;
 
 
         for (key in defaultConfig) {
@@ -294,7 +272,7 @@ Ext.define('Ext.data.association.Association', {
                 delete data[key];
                 // <debug warn>
                 Ext.Logger.deprecate(key + ' is deprecated as a property directly on the Association prototype. ' +
-                    'Please put it inside the config object.');
+                        'Please put it inside the config object.');
                 // </debug>
             }
         }

@@ -3,7 +3,6 @@
  */
 Ext.define('Ext.util.Wrapper', {
     mixins: ['Ext.mixin.Bindable'],
-
     constructor: function(elementConfig, wrappedElement) {
         var element = this.link('element', Ext.Element.create(elementConfig));
 
@@ -12,10 +11,9 @@ Ext.define('Ext.util.Wrapper', {
             this.wrap(wrappedElement);
         }
     },
-
     bindSize: function(sizeName) {
         var wrappedElement = this.wrappedElement,
-            boundMethodName;
+                boundMethodName;
 
         this.boundSizeName = sizeName;
         this.boundMethodName = boundMethodName = sizeName === 'width' ? 'setWidth' : 'setHeight';
@@ -23,7 +21,6 @@ Ext.define('Ext.util.Wrapper', {
         this.bind(wrappedElement, boundMethodName, 'onBoundSizeChange');
         wrappedElement[boundMethodName].call(wrappedElement, wrappedElement.getStyleValue(sizeName));
     },
-
     onBoundSizeChange: function(size, args) {
         var element = this.element;
 
@@ -36,10 +33,9 @@ Ext.define('Ext.util.Wrapper', {
 
         element[this.boundMethodName].call(element, size);
     },
-
     wrap: function(wrappedElement) {
         var element = this.element,
-            innerDom;
+                innerDom;
 
         this.wrappedElement = wrappedElement;
 
@@ -51,14 +47,13 @@ Ext.define('Ext.util.Wrapper', {
 
         innerDom.appendChild(wrappedElement.dom);
     },
-
     destroy: function() {
         var element = this.element,
-            dom = element.dom,
-            wrappedElement = this.wrappedElement,
-            boundMethodName = this.boundMethodName,
-            parentNode = dom.parentNode,
-            size;
+                dom = element.dom,
+                wrappedElement = this.wrappedElement,
+                boundMethodName = this.boundMethodName,
+                parentNode = dom.parentNode,
+                size;
 
         if (boundMethodName) {
             this.unbind(wrappedElement, boundMethodName, 'onBoundSizeChange');

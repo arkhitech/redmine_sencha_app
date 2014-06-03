@@ -3,16 +3,16 @@
 }
 
 .x-field-input {
-	.x-clear-icon {
-		&:before {
-			color: $dark-form-clear-icon-color;
-			border-color: $dark-form-clear-icon-border-color;
-		}
+    .x-clear-icon {
+        &:before {
+            color: $dark-form-clear-icon-color;
+            border-color: $dark-form-clear-icon-border-color;
+        }
 
-		&.x-pressing {
-			&:before {
-				color: $dark-form-clear-icon-pressing-color;;
-			}
-		}
-	}
+        &.x-pressing {
+            &:before {
+                color: $dark-form-clear-icon-pressing-color;;
+            }
+        }
+    }
 }

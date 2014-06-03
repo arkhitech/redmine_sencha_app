@@ -13,29 +13,29 @@
     position: relative;
 
     &:before,
-    &:after
-    {
+        &:after
+        {
         content: "";
         position: absolute;
         left: 0;
 
         width: $width*0.42;
         height: 0;
-        
+
         border-left: $width*0.29 solid transparent;
         border-right: $width*0.29 solid transparent;
-        
+
     }
 
-        &:before
+    &:before
         {
-            top: -$height*0.29;
-            border-bottom: $height*0.29 solid $background-color;
-        }
+        top: -$height*0.29;
+        border-bottom: $height*0.29 solid $background-color;
+    }
 
-        &:after
+    &:after
         {
-            bottom: -$height*0.29;
-            border-top: $height*0.29 solid $background-color;
-        }
+        bottom: -$height*0.29;
+        border-top: $height*0.29 solid $background-color;
+    }
 }

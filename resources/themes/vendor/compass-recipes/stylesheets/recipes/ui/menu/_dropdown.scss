@@ -32,21 +32,21 @@
         }
     }
 
-        // sub menu
-        ul ul
+    // sub menu
+    ul ul
+    {
+        position: absolute;
+        z-index: $z-index + 2;
+
+        // default behavior
+        display: none;
+    }
+
+    // we use a selector with a parent class like this to do not override
+    // eventual js added behavior (see comment a the top of this file)
+    .no-js & li:hover > ul
         {
-            position: absolute;
-            z-index: $z-index + 2;
-
-            // default behavior
-            display: none;
-        }
-
-            // we use a selector with a parent class like this to do not override
-            // eventual js added behavior (see comment a the top of this file)
-            .no-js & li:hover > ul
-            {
-                    display: block;
-            }
+        display: block;
+    }
 }
 

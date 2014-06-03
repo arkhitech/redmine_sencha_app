@@ -10,23 +10,20 @@ Ext.define('Ext.chart.series.sprite.CandleStick', {
     inheritableStatics: {
         def: {
             processors: {
-                raiseStyle: function (n, o) {
+                raiseStyle: function(n, o) {
                     return Ext.merge({}, o || {}, n);
                 },
-                dropStyle: function (n, o) {
+                dropStyle: function(n, o) {
                     return Ext.merge({}, o || {}, n);
                 },
-
                 /**
                  * @cfg {Number} [barWidth=15] The bar width of the candles.
                  */
                 barWidth: 'number',
-
                 /**
                  * @cfg {Number} [padding=3] The amount of padding between candles.
                  */
                 padding: 'number',
-
                 /**
                  * @cfg {String} [ohlcType='candlestick'] Determines whether candlestick or ohlc is used.
                  */
@@ -48,26 +45,23 @@ Ext.define('Ext.chart.series.sprite.CandleStick', {
                 miterLimit: 5,
                 ohlcType: 'candlestick'
             },
-
             dirtyTriggers: {
                 raiseStyle: 'raiseStyle',
                 dropStyle: 'dropStyle'
             },
-
             updaters: {
-                raiseStyle: function () {
+                raiseStyle: function() {
                     this.raiseTemplate && this.raiseTemplate.setAttributes(this.attr.raiseStyle);
                 },
-                dropStyle: function () {
+                dropStyle: function() {
                     this.dropTemplate && this.dropTemplate.setAttributes(this.attr.dropStyle);
                 }
             }
         }
     },
-
-    candlestick: function (ctx, open, high, low, close, mid, halfWidth) {
+    candlestick: function(ctx, open, high, low, close, mid, halfWidth) {
         var minOC = Math.min(open, close),
-            maxOC = Math.max(open, close);
+                maxOC = Math.max(open, close);
         ctx.moveTo(mid, low);
         ctx.lineTo(mid, maxOC);
 
@@ -80,8 +74,7 @@ Ext.define('Ext.chart.series.sprite.CandleStick', {
         ctx.moveTo(mid, high);
         ctx.lineTo(mid, minOC);
     },
-
-    ohlc: function (ctx, open, high, low, close, mid, halfWidth) {
+    ohlc: function(ctx, open, high, low, close, mid, halfWidth) {
         ctx.moveTo(mid, high);
         ctx.lineTo(mid, low);
         ctx.moveTo(mid, open);
@@ -89,43 +82,40 @@ Ext.define('Ext.chart.series.sprite.CandleStick', {
         ctx.moveTo(mid, close);
         ctx.lineTo(mid + halfWidth, close);
     },
-
-    constructor: function () {
+    constructor: function() {
         this.callSuper(arguments);
         this.raiseTemplate = new Ext.draw.sprite.Rect({parent: this});
         this.dropTemplate = new Ext.draw.sprite.Rect({parent: this});
     },
-
-    getGapWidth: function () {
+    getGapWidth: function() {
         var attr = this.attr,
-            barWidth = attr.barWidth,
-            padding = attr.padding;
+                barWidth = attr.barWidth,
+                padding = attr.padding;
         return barWidth + padding;
     },
-
-    renderAggregates: function (aggregates, start, end, surface, ctx, clip, region) {
+    renderAggregates: function(aggregates, start, end, surface, ctx, clip, region) {
         var me = this,
-            attr = this.attr,
-            dataX = attr.dataX,
-            matrix = attr.matrix,
-            xx = matrix.getXX(),
-            yy = matrix.getYY(),
-            dx = matrix.getDX(),
-            dy = matrix.getDY(),
-            barWidth = attr.barWidth / xx,
-            template,
-            ohlcType = attr.ohlcType,
-            halfWidth = Math.round(barWidth * 0.5 * xx),
-            opens = aggregates.open,
-            highs = aggregates.high,
-            lows = aggregates.low,
-            closes = aggregates.close,
-            maxYs = aggregates.maxY,
-            minYs = aggregates.minY,
-            startIdxs = aggregates.startIdx,
-            open, high, low, close, mid,
-            i,
-            pixelAdjust = attr.lineWidth * surface.devicePixelRatio / 2;
+                attr = this.attr,
+                dataX = attr.dataX,
+                matrix = attr.matrix,
+                xx = matrix.getXX(),
+                yy = matrix.getYY(),
+                dx = matrix.getDX(),
+                dy = matrix.getDY(),
+                barWidth = attr.barWidth / xx,
+                template,
+                ohlcType = attr.ohlcType,
+                halfWidth = Math.round(barWidth * 0.5 * xx),
+                opens = aggregates.open,
+                highs = aggregates.high,
+                lows = aggregates.low,
+                closes = aggregates.close,
+                maxYs = aggregates.maxY,
+                minYs = aggregates.minY,
+                startIdxs = aggregates.startIdx,
+                open, high, low, close, mid,
+                i,
+                pixelAdjust = attr.lineWidth * surface.devicePixelRatio / 2;
 
         pixelAdjust -= Math.floor(pixelAdjust);
         ctx.save();

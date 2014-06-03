@@ -1,38 +1,33 @@
-(function () {
+(function() {
     var pow = Math.pow,
-        sin = Math.sin,
-        cos = Math.cos,
-        sqrt = Math.sqrt,
-        pi = Math.PI,
-        easings, addEasing, poly, createPoly, easing, i, l;
+            sin = Math.sin,
+            cos = Math.cos,
+            sqrt = Math.sqrt,
+            pi = Math.PI,
+            easings, addEasing, poly, createPoly, easing, i, l;
 
     //create polynomial easing equations
     poly = ['quad', 'cubic', 'quart', 'quint'];
 
     //create other easing equations
     easings = {
-        pow: function (p, x) {
+        pow: function(p, x) {
             return pow(p, x[0] || 6);
         },
-
-        expo: function (p) {
+        expo: function(p) {
             return pow(2, 8 * (p - 1));
         },
-
-        circ: function (p) {
+        circ: function(p) {
             return 1 - sqrt(1 - p * p);
         },
-
-        sine: function (p) {
+        sine: function(p) {
             return 1 - sin((1 - p) * pi / 2);
         },
-
-        back: function (p, n) {
+        back: function(p, n) {
             n = n || 1.616;
             return p * p * ((n + 1) * p - n);
         },
-
-        bounce: function (p) {
+        bounce: function(p) {
             var value;
             for (var a = 0, b = 1; 1; a += b, b /= 2) {
                 if (p >= (7 - 4 * a) / 11) {
@@ -42,35 +37,31 @@
             }
             return value;
         },
-
-        elastic: function (p, x) {
+        elastic: function(p, x) {
             return pow(2, 10 * --p) * cos(20 * p * pi * (x || 1) / 3);
         }
     };
 
     //Add easeIn, easeOut, easeInOut options to all easing equations.
-    addEasing = function (easing, params) {
-        params = params && params.length ? params : [ params ];
+    addEasing = function(easing, params) {
+        params = params && params.length ? params : [params];
         return Ext.apply(easing, {
-
-            easeIn: function (pos) {
+            easeIn: function(pos) {
                 return easing(pos, params);
             },
-
-            easeOut: function (pos) {
+            easeOut: function(pos) {
                 return 1 - easing(1 - pos, params);
             },
-
-            easeInOut: function (pos) {
+            easeInOut: function(pos) {
                 return (pos <= 0.5) ? easing(2 * pos, params) / 2
-                    : (2 - easing(2 * (1 - pos), params)) / 2;
+                        : (2 - easing(2 * (1 - pos), params)) / 2;
             }
         });
     };
 
     //Append the polynomial equations with easing support to the EasingPrototype.
-    createPoly = function (times) {
-        return function (p) {
+    createPoly = function(times) {
+        return function(p) {
             return pow(p, times);
         };
     };
@@ -80,7 +71,7 @@
     }
 
     //Add linear interpolator
-    easings.linear = function (x) {
+    easings.linear = function(x) {
         return x;
     };
 
@@ -112,26 +103,26 @@
             easeOut: easings.quad.easeOut,
             easeInOut: easings.quad.easeInOut,
             backIn: easings.back,
-            backOut: function (x, n) {
+            backOut: function(x, n) {
                 return 1 - easings.back(1 - x, n);
             },
-            backInOut: function (x, n) {
+            backInOut: function(x, n) {
                 if (x < 0.5) {
                     return easings.back(x * 2, n) * 0.5;
                 } else {
                     return 1 - easings.back((1 - x) * 2, n) * 0.5;
                 }
             },
-            elasticIn: function (x, n) {
+            elasticIn: function(x, n) {
                 return 1 - easings.elastic(1 - x, n);
             },
             elasticOut: easings.elastic,
             bounceIn: easings.bounce,
-            bounceOut: function (x) {
+            bounceOut: function(x) {
                 return 1 - easings.bounce(1 - x);
             }
         }
-    }, function () {
+    }, function() {
         Ext.apply(this, easings);
     });
 

@@ -26,28 +26,24 @@
 
 Ext.define('Ext.field.File', {
     extend: 'Ext.field.Field',
-    xtype : 'filefield',
+    xtype: 'filefield',
     requires: ["Ext.field.FileInput"],
-
-    config : {
+    config: {
         component: {
-            xtype : 'fileinput',
+            xtype: 'fileinput',
             fastFocus: false
         }
     },
-
     proxyConfig: {
         name: null,
         value: null,
-        files:null,
-
+        files: null,
         /**
          * @cfg {Boolean} multiple Allow selection of multiple files
          *
          * @accessor
          */
         multiple: false,
-
         /**
          * @cfg {String} accept File input accept attribute documented here (http://www.w3schools.com/tags/att_input_accept.asp)
          * Also can be simple strings -- e.g. audio, video, image
@@ -62,10 +58,8 @@ Ext.define('Ext.field.File', {
          */
         capture: null
     },
-
     // @private
     isFile: true,
-
     // @private
     initialize: function() {
         var me = this;
@@ -74,10 +68,9 @@ Ext.define('Ext.field.File', {
 
         me.getComponent().on({
             scope: this,
-            change      : 'onChange'
+            change: 'onChange'
         });
     },
-
     onChange: function(me, value, startValue) {
         me.fireEvent('change', this, value, startValue);
     }

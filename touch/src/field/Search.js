@@ -42,27 +42,24 @@ Ext.define('Ext.field.Search', {
     extend: 'Ext.field.Text',
     xtype: 'searchfield',
     alternateClassName: 'Ext.form.Search',
-
     config: {
         /**
          * @cfg
          * @inheritdoc
          */
         component: {
-	        type: 'search'
-	    },
-
+            type: 'search'
+        },
         /**
          * @cfg
          * @inheritdoc
          */
-	    ui: 'search'
+        ui: 'search'
     },
-
     platformConfig: [{
-        platform: 'blackberry',
-        component: {
-            type: 'text'
-        }
-    }]
+            platform: 'blackberry',
+            component: {
+                type: 'text'
+            }
+        }]
 });

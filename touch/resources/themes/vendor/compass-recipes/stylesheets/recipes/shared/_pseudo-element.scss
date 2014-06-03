@@ -19,7 +19,7 @@
     @if ($width != auto) {
         width: $width; // Default 0 is for FF3 positioning
     }
-    
+
     @if ($height != auto)
     {
         height: $height;

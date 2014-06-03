@@ -7,6 +7,5 @@ Ext.define('Ext.behavior.Behavior', {
 
         component.on('destroy', 'onComponentDestroy', this);
     },
-
     onComponentDestroy: Ext.emptyFn
 });

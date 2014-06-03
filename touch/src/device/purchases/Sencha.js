@@ -5,7 +5,6 @@ Ext.define('Ext.device.purchases.Sencha', {
     requires: [
         'Ext.data.Store'
     ],
-
     /**
      * Checks if the current user is able to make payments.
      * 
@@ -38,7 +37,6 @@ Ext.define('Ext.device.purchases.Sencha', {
             scope: config.scope || this
         });
     },
-
     /**
      * Returns a {@link Ext.data.Store} instance of all products available to purchase.
      * 
@@ -88,7 +86,6 @@ Ext.define('Ext.device.purchases.Sencha', {
             scope: config.scope || this
         });
     },
-
     /**
      * Returns a {@link Ext.data.Store} instance of all purchases delivered to the current user.
      * 
@@ -108,7 +105,7 @@ Ext.define('Ext.device.purchases.Sencha', {
             callbacks: {
                 callback: function(purchases) {
                     var ln = purchases.length,
-                        i;
+                            i;
 
                     for (i = 0; i < ln; i++) {
                         purchases[i].state = 'completed';
@@ -125,7 +122,6 @@ Ext.define('Ext.device.purchases.Sencha', {
             scope: config.scope || this
         });
     },
-
     /**
      * Returns a {@link Ext.data.Store} instance of all purchases the current user has been charged.
      * 
@@ -145,7 +141,7 @@ Ext.define('Ext.device.purchases.Sencha', {
             callbacks: {
                 callback: function(purchases) {
                     var ln = purchases.length,
-                        i;
+                            i;
 
                     for (i = 0; i < ln; i++) {
                         purchases[i].state = 'charged';
@@ -168,7 +164,6 @@ Ext.define('Ext.device.purchases.Sencha', {
      */
     Ext.define('Ext.device.Purchases.Product', {
         extend: 'Ext.data.Model',
-
         config: {
             fields: [
                 'productIdentifier',
@@ -177,7 +172,6 @@ Ext.define('Ext.device.purchases.Sencha', {
                 'localizedDescription'
             ]
         },
-
         /**
          * Will attempt to purchase this product.
          * 
@@ -225,7 +219,6 @@ Ext.define('Ext.device.purchases.Sencha', {
      */
     Ext.define('Ext.device.purchases.Purchase', {
         extend: 'Ext.data.Model',
-
         config: {
             fields: [
                 'productIdentifier',
@@ -233,7 +226,6 @@ Ext.define('Ext.device.purchases.Sencha', {
                 'state'
             ]
         },
-
         /**
          * Attempts to mark this purchase as complete
          * @param {Object} config

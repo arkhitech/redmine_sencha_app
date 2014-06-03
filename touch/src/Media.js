@@ -7,7 +7,6 @@
 Ext.define('Ext.Media', {
     extend: 'Ext.Component',
     xtype: 'media',
-
     /**
      * @event play
      * Fires whenever the media is played.
@@ -65,7 +64,6 @@ Ext.define('Ext.Media', {
          * @accessor
          */
         url: '',
-
         /**
          * @cfg {Boolean} enableControls
          * Set this to `false` to turn off the native media controls.
@@ -73,49 +71,42 @@ Ext.define('Ext.Media', {
          * @accessor
          */
         enableControls: Ext.os.is.Android ? false : true,
-
         /**
          * @cfg {Boolean} autoResume
          * Will automatically start playing the media when the container is activated.
          * @accessor
          */
         autoResume: false,
-
         /**
          * @cfg {Boolean} autoPause
          * Will automatically pause the media when the container is deactivated.
          * @accessor
          */
         autoPause: true,
-
         /**
          * @cfg {Boolean} preload
          * Will begin preloading the media immediately.
          * @accessor
          */
         preload: true,
-
         /**
          * @cfg {Boolean} loop
          * Will loop the media forever.
          * @accessor
          */
         loop: false,
-
         /**
          * @cfg {Ext.Element} media
          * A reference to the underlying audio/video element.
          * @accessor
          */
         media: null,
-
         /**
          * @cfg {Number} volume
          * The volume of the media from 0.0 to 1.0.
          * @accessor
          */
         volume: 1,
-
         /**
          * @cfg {Boolean} muted
          * Whether or not the media is muted. This will also set the volume to zero.
@@ -123,20 +114,17 @@ Ext.define('Ext.Media', {
          */
         muted: false
     },
-
     constructor: function() {
         this.mediaEvents = {};
         this.callSuper(arguments);
     },
-
     initialize: function() {
         var me = this;
         me.callParent();
 
         me.on({
             scope: me,
-
-            activate  : me.onActivate,
+            activate: me.onActivate,
             deactivate: me.onDeactivate
         });
 
@@ -149,11 +137,10 @@ Ext.define('Ext.Media', {
             timeupdate: 'onTimeUpdate'
         });
     },
-
     addMediaListener: function(event, fn) {
         var me = this,
-            dom = me.media.dom,
-            bind = Ext.Function.bind;
+                dom = me.media.dom,
+                bind = Ext.Function.bind;
 
         Ext.Object.each(event, function(e, fn) {
             fn = bind(me[fn], me);
@@ -161,31 +148,24 @@ Ext.define('Ext.Media', {
             dom.addEventListener(e, fn);
         });
     },
-
     onPlay: function() {
         this.fireEvent('play', this);
     },
-
     onCanPlay: function() {
         this.fireEvent('canplay', this);
     },
-
     onPause: function() {
         this.fireEvent('pause', this, this.getCurrentTime());
     },
-
     onEnd: function() {
         this.fireEvent('ended', this, this.getCurrentTime());
     },
-
     onVolumeChange: function() {
         this.fireEvent('volumechange', this, this.media.dom.volume);
     },
-
     onTimeUpdate: function() {
         this.fireEvent('timeupdate', this, this.getCurrentTime());
     },
-
     /**
      * Returns if the media is currently playing.
      * @return {Boolean} playing `true` if the media is playing.
@@ -193,7 +173,6 @@ Ext.define('Ext.Media', {
     isPlaying: function() {
         return !Boolean(this.media.dom.paused);
     },
-
     // @private
     onActivate: function() {
         var me = this;
@@ -202,7 +181,6 @@ Ext.define('Ext.Media', {
             me.play();
         }
     },
-
     // @private
     onDeactivate: function() {
         var me = this;
@@ -211,7 +189,6 @@ Ext.define('Ext.Media', {
             me.pause();
         }
     },
-
     /**
      * Sets the URL of the media element. If the media element already exists, it is update the src attribute of the
      * element. If it is currently playing, it will start the new video.
@@ -232,21 +209,18 @@ Ext.define('Ext.Media', {
             this.play();
         }
     },
-
     /**
      * Updates the controls of the video element.
      */
     updateEnableControls: function(enableControls) {
         this.media.dom.controls = enableControls ? 'controls' : false;
     },
-
     /**
      * Updates the loop setting of the media element.
      */
     updateLoop: function(loop) {
         this.media.dom.loop = loop ? 'loop' : false;
     },
-
     /**
      * Starts or resumes media playback.
      */
@@ -260,7 +234,6 @@ Ext.define('Ext.Media', {
             }, 10);
         }
     },
-
     /**
      * Pauses media playback.
      */
@@ -271,7 +244,6 @@ Ext.define('Ext.Media', {
             dom.pause();
         }
     },
-
     /**
      * Toggles the media playback state.
      */
@@ -282,7 +254,6 @@ Ext.define('Ext.Media', {
             this.play();
         }
     },
-
     /**
      * Stops media playback and returns to the beginning.
      */
@@ -293,19 +264,16 @@ Ext.define('Ext.Media', {
         me.fireEvent('stop', me);
         me.pause();
     },
-
     //@private
     updateVolume: function(volume) {
         this.media.dom.volume = volume;
     },
-
     //@private
     updateMuted: function(muted) {
         this.fireEvent('mutedchange', this, muted);
 
         this.media.dom.muted = muted;
     },
-
     /**
      * Returns the current time of the media, in seconds.
      * @return {Number}
@@ -313,7 +281,6 @@ Ext.define('Ext.Media', {
     getCurrentTime: function() {
         return this.media.dom.currentTime;
     },
-
     /*
      * Set the current time of the media.
      * @param {Number} time The time, in seconds.
@@ -324,7 +291,6 @@ Ext.define('Ext.Media', {
 
         return time;
     },
-
     /**
      * Returns the duration of the media, in seconds.
      * @return {Number}
@@ -332,11 +298,10 @@ Ext.define('Ext.Media', {
     getDuration: function() {
         return this.media.dom.duration;
     },
-
     destroy: function() {
         var me = this,
-            dom  = me.media.dom,
-            mediaEvents = me.mediaEvents;
+                dom = me.media.dom,
+                mediaEvents = me.mediaEvents;
 
         Ext.Object.each(mediaEvents, function(event, fn) {
             dom.removeEventListener(event, fn);

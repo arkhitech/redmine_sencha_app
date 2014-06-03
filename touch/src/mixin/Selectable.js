@@ -5,14 +5,12 @@
  */
 Ext.define('Ext.mixin.Selectable', {
     extend: 'Ext.mixin.Mixin',
-
     mixinConfig: {
         id: 'selectable',
         hooks: {
             updateStore: 'updateStore'
         }
     },
-
     /**
      * @event beforeselectionchange
      * Fires before an item is selected.
@@ -35,7 +33,6 @@ Ext.define('Ext.mixin.Selectable', {
          * @accessor
          */
         disableSelection: null,
-
         /**
          * @cfg {String} mode
          * Modes of selection.
@@ -43,7 +40,6 @@ Ext.define('Ext.mixin.Selectable', {
          * @accessor
          */
         mode: 'SINGLE',
-
         /**
          * @cfg {Boolean} allowDeselect
          * Allow users to deselect a record in a DataView, List or Grid. Only applicable when the Selectable's `mode` is
@@ -51,21 +47,18 @@ Ext.define('Ext.mixin.Selectable', {
          * @accessor
          */
         allowDeselect: false,
-
         /**
          * @cfg {Ext.data.Model} lastSelected
          * @private
          * @accessor
          */
         lastSelected: null,
-
         /**
          * @cfg {Ext.data.Model} lastFocused
          * @private
          * @accessor
          */
         lastFocused: null,
-
         /**
          * @cfg {Boolean} deselectOnContainerClick `true` to deselect current selection when the container body is
          * clicked.
@@ -73,13 +66,11 @@ Ext.define('Ext.mixin.Selectable', {
          */
         deselectOnContainerClick: true
     },
-
     modes: {
         SINGLE: true,
         SIMPLE: true,
         MULTI: true
     },
-
     selectableEventHooks: {
         addrecords: 'onSelectionStoreAdd',
         removerecords: 'onSelectionStoreRemove',
@@ -87,12 +78,10 @@ Ext.define('Ext.mixin.Selectable', {
         load: 'refreshSelection',
         refresh: 'refreshSelection'
     },
-
     constructor: function() {
         this.selected = new Ext.util.MixedCollection();
         this.callParent(arguments);
     },
-
     /**
      * @private
      */
@@ -102,13 +91,12 @@ Ext.define('Ext.mixin.Selectable', {
         // use single.
         return this.modes[mode] ? mode : 'SINGLE';
     },
-
     /**
      * @private
      */
     updateStore: function(newStore, oldStore) {
         var me = this,
-            bindEvents = Ext.apply({}, me.selectableEventHooks, { scope: me });
+                bindEvents = Ext.apply({}, me.selectableEventHooks, {scope: me});
 
         if (oldStore && Ext.isObject(oldStore) && oldStore.isStore) {
             if (oldStore.autoDestroy) {
@@ -116,7 +104,7 @@ Ext.define('Ext.mixin.Selectable', {
             }
             else {
                 oldStore.un(bindEvents);
-                if(newStore) {
+                if (newStore) {
                     newStore.un('clear', 'onSelectionStoreClear', this);
                 }
             }
@@ -128,24 +116,22 @@ Ext.define('Ext.mixin.Selectable', {
             me.refreshSelection();
         }
     },
-
     /**
      * Selects all records.
      * @param {Boolean} silent `true` to suppress all select events.
      */
     selectAll: function(silent) {
         var me = this,
-            selections = me.getStore().getRange();
+                selections = me.getStore().getRange();
 
         me.select(selections, true, silent);
     },
-
     /**
      * Deselects all records.
      */
     deselectAll: function(supress) {
         var me = this,
-            selections = me.getStore().getRange();
+                selections = me.getStore().getRange();
 
         me.deselect(selections, supress);
 
@@ -153,12 +139,11 @@ Ext.define('Ext.mixin.Selectable', {
         me.setLastSelected(null);
         me.setLastFocused(null);
     },
-
     // Provides differentiation of logic between MULTI, SIMPLE and SINGLE
     // selection modes.
     selectWithEvent: function(record) {
         var me = this,
-            isSelected = me.isSelected(record);
+                isSelected = me.isSelected(record);
         switch (me.getMode()) {
             case 'MULTI':
             case 'SIMPLE':
@@ -180,7 +165,6 @@ Ext.define('Ext.mixin.Selectable', {
                 break;
         }
     },
-
     /**
      * Selects a range of rows if the selection model {@link Ext.mixin.Selectable#getDisableSelection} is not locked.
      * All rows in between `startRecord` and `endRecord` are also selected.
@@ -190,9 +174,9 @@ Ext.define('Ext.mixin.Selectable', {
      */
     selectRange: function(startRecord, endRecord, keepExisting) {
         var me = this,
-            store = me.getStore(),
-            records = [],
-            tmp, i;
+                store = me.getStore(),
+                records = [],
+                tmp, i;
 
         if (me.getDisableSelection()) {
             return;
@@ -210,7 +194,6 @@ Ext.define('Ext.mixin.Selectable', {
         }
         this.doMultiSelect(records, keepExisting);
     },
-
     /**
      * Adds the given records to the currently selected set.
      * @param {Ext.data.Model/Array/Number} records The records to select.
@@ -219,7 +202,7 @@ Ext.define('Ext.mixin.Selectable', {
      */
     select: function(records, keepExisting, suppressEvent) {
         var me = this,
-            record;
+                record;
 
         if (me.getDisableSelection()) {
             return;
@@ -240,14 +223,13 @@ Ext.define('Ext.mixin.Selectable', {
             me.doMultiSelect(records, keepExisting, suppressEvent);
         }
     },
-
     /**
      * Selects a single record.
      * @private
      */
     doSingleSelect: function(record, suppressEvent) {
         var me = this,
-            selected = me.selected;
+                selected = me.selected;
 
         if (me.getDisableSelection()) {
             return;
@@ -272,7 +254,6 @@ Ext.define('Ext.mixin.Selectable', {
             me.fireSelectionChange([record]);
         }
     },
-
     /**
      * Selects a set of multiple records.
      * @private
@@ -284,11 +265,11 @@ Ext.define('Ext.mixin.Selectable', {
         records = !Ext.isArray(records) ? [records] : records;
 
         var me = this,
-            selected = me.selected,
-            ln = records.length,
-            change = false,
-            i = 0,
-            record;
+                selected = me.selected,
+                ln = records.length,
+                change = false,
+                i = 0,
+                record;
 
         if (!keepExisting && selected.getCount() > 0) {
             change = true;
@@ -312,7 +293,6 @@ Ext.define('Ext.mixin.Selectable', {
             this.fireSelectionChange(records);
         }
     },
-
     /**
      * Deselects the given record(s). If many records are currently selected, it will only deselect those you pass in.
      * @param {Number/Array/Ext.data.Model} records The record(s) to deselect. Can also be a number to reference by index.
@@ -328,11 +308,11 @@ Ext.define('Ext.mixin.Selectable', {
         records = Ext.isArray(records) ? records : [records];
 
         var selected = me.selected,
-            change   = false,
-            i        = 0,
-            store    = me.getStore(),
-            ln       = records.length,
-            record;
+                change = false,
+                i = 0,
+                store = me.getStore(),
+                ln = records.length,
+                record;
 
         for (; i < ln; i++) {
             record = records[i];
@@ -356,7 +336,6 @@ Ext.define('Ext.mixin.Selectable', {
             me.fireSelectionChange(records);
         }
     },
-
     /**
      * Sets a record as the last focused record. This does NOT mean
      * that the record has been selected.
@@ -366,18 +345,16 @@ Ext.define('Ext.mixin.Selectable', {
     updateLastFocused: function(newRecord, oldRecord) {
         this.onLastFocusChanged(oldRecord, newRecord);
     },
-
     fireSelectionChange: function(records) {
         var me = this;
         //<deprecated product=touch since=2.0>
         me.fireAction('beforeselectionchange', [me], function() {
-        //</deprecated>
+            //</deprecated>
             me.fireAction('selectionchange', [me, records], 'getSelection');
-        //<deprecated product=touch since=2.0>
+            //<deprecated product=touch since=2.0>
         });
         //</deprecated>
     },
-
     /**
      * Returns an array of the currently selected records.
      * @return {Array} An array of selected records.
@@ -385,7 +362,6 @@ Ext.define('Ext.mixin.Selectable', {
     getSelection: function() {
         return this.selected.getRange();
     },
-
     /**
      * Returns `true` if the specified row is selected.
      * @param {Ext.data.Model/Number} record The record or index of the record to check.
@@ -395,7 +371,6 @@ Ext.define('Ext.mixin.Selectable', {
         record = Ext.isNumber(record) ? this.getStore().getAt(record) : record;
         return this.selected.indexOf(record) !== -1;
     },
-
     /**
      * Returns `true` if there is a selected record.
      * @return {Boolean}
@@ -403,28 +378,26 @@ Ext.define('Ext.mixin.Selectable', {
     hasSelection: function() {
         return this.selected.getCount() > 0;
     },
-
     /**
      * @private
      */
     refreshSelection: function() {
         var me = this,
-            selections = me.getSelection();
+                selections = me.getSelection();
 
         me.deselectAll(true);
         if (selections.length) {
             me.select(selections, false, true);
         }
     },
-
     // prune records from the SelectionModel if
     // they were selected at the time they were
     // removed.
     onSelectionStoreRemove: function(store, records) {
         var me = this,
-            selected = me.selected,
-            ln = records.length,
-            record, i;
+                selected = me.selected,
+                ln = records.length,
+                record, i;
 
         if (me.getDisableSelection()) {
             return;
@@ -443,12 +416,10 @@ Ext.define('Ext.mixin.Selectable', {
             }
         }
     },
-
     onSelectionStoreClear: function(store) {
         var records = store.getData().items;
         this.onSelectionStoreRemove(store, records);
     },
-
     /**
      * Returns the number of selections.
      * @return {Number}
@@ -456,7 +427,6 @@ Ext.define('Ext.mixin.Selectable', {
     getSelectionCount: function() {
         return this.selected.getCount();
     },
-
     onSelectionStoreAdd: Ext.emptyFn,
     onSelectionStoreUpdate: Ext.emptyFn,
     onItemSelect: Ext.emptyFn,

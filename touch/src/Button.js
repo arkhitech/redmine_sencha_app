@@ -183,9 +183,7 @@
  */
 Ext.define('Ext.Button', {
     extend: 'Ext.Component',
-
     xtype: 'button',
-
     /**
      * @event tap
      * @preventable doTap
@@ -209,14 +207,12 @@ Ext.define('Ext.Button', {
          * @accessor
          */
         pressedCls: Ext.baseCSSPrefix + 'button-pressing',
-
         /**
          * @cfg {String} badgeCls
          * The CSS class to add to the Button's badge, if it has one.  Badges appear as small numbers, letters, or icons that sit on top of your button.  For instance, a small red number indicating how many updates are available.
          * @accessor
          */
         badgeCls: Ext.baseCSSPrefix + 'badge',
-
         /**
          * @cfg {String} hasBadgeCls
          * The CSS class to add to the Button if it has a badge (note that this goes on the
@@ -225,14 +221,12 @@ Ext.define('Ext.Button', {
          * @accessor
          */
         hasBadgeCls: Ext.baseCSSPrefix + 'hasbadge',
-
         /**
          * @cfg {String} labelCls
          * The CSS class to add to the field's label element.
          * @accessor
          */
         labelCls: Ext.baseCSSPrefix + 'button-label',
-
         /**
          * @cfg {String} iconCls
          * Optional CSS class to add to the icon element. This is useful if you want to use a CSS
@@ -241,7 +235,6 @@ Ext.define('Ext.Button', {
          */
         iconCls: null
     },
-
     config: {
         /**
          * @cfg {String} badgeText
@@ -249,21 +242,18 @@ Ext.define('Ext.Button', {
          * @accessor
          */
         badgeText: null,
-
         /**
          * @cfg {String} text
          * The Button text.
          * @accessor
          */
         text: null,
-
         /**
          * @cfg {String} icon
          * Url to the icon image to use if you want an icon to appear on your button.
          * @accessor
          */
         icon: false,
-
         /**
          * @cfg {String} iconAlign
          * The position within the Button to render the icon Options are: `top`, `right`, `bottom`, `left` and `center` (when you have
@@ -271,35 +261,30 @@ Ext.define('Ext.Button', {
          * @accessor
          */
         iconAlign: 'left',
-
         /**
          * @cfg {Number/Boolean} pressedDelay
          * The amount of delay between the `tapstart` and the moment we add the `pressedCls` (in milliseconds).
          * Settings this to `true` defaults to 100ms.
          */
         pressedDelay: 0,
-
         /**
          * @cfg {Function} handler
          * The handler function to run when the Button is tapped on.
          * @accessor
          */
         handler: null,
-
         /**
          * @cfg {Object} scope
          * The scope to fire the configured {@link #handler} in.
          * @accessor
          */
         scope: null,
-
         /**
          * @cfg {String} autoEvent
          * Optional event name that will be fired instead of `tap` when the Button is tapped on.
          * @accessor
          */
         autoEvent: null,
-
         /**
          * @cfg {String} ui
          * The ui style to render this button with. The valid default options are:
@@ -322,7 +307,6 @@ Ext.define('Ext.Button', {
          * @accessor
          */
         ui: 'normal',
-
         /**
          * @cfg {String} html The HTML to put in this button.
          *
@@ -335,7 +319,6 @@ Ext.define('Ext.Button', {
          */
         baseCls: Ext.baseCSSPrefix + 'button'
     },
-
     template: [
         {
             tag: 'span',
@@ -353,24 +336,22 @@ Ext.define('Ext.Button', {
             hidden: true
         }
     ],
-
     initialize: function() {
         this.callParent();
 
         this.element.on({
-            scope      : this,
-            tap        : 'onTap',
-            touchstart : 'onPress',
-            touchend   : 'onRelease'
+            scope: this,
+            tap: 'onTap',
+            touchstart: 'onPress',
+            touchend: 'onRelease'
         });
     },
-
     /**
      * @private
      */
     updateBadgeText: function(badgeText) {
         var element = this.element,
-            badgeElement = this.badgeElement;
+                badgeElement = this.badgeElement;
 
         if (badgeText) {
             badgeElement.show();
@@ -382,13 +363,12 @@ Ext.define('Ext.Button', {
 
         element[(badgeText) ? 'addCls' : 'removeCls'](this.getHasBadgeCls());
     },
-
     /**
      * @private
      */
     updateText: function(text) {
         var textElement = this.textElement;
-        
+
         if (textElement) {
             if (text) {
                 textElement.show();
@@ -400,7 +380,6 @@ Ext.define('Ext.Button', {
             this.refreshIconAlign();
         }
     },
-
     /**
      * @private
      */
@@ -415,14 +394,12 @@ Ext.define('Ext.Button', {
             textElement.hide();
         }
     },
-
     /**
      * @private
      */
     updateBadgeCls: function(badgeCls, oldBadgeCls) {
         this.badgeElement.replaceCls(oldBadgeCls, badgeCls);
     },
-
     /**
      * @private
      */
@@ -433,14 +410,12 @@ Ext.define('Ext.Button', {
             element.replaceCls(oldHasBadgeCls, hasBadgeCls);
         }
     },
-
     /**
      * @private
      */
     updateLabelCls: function(labelCls, oldLabelCls) {
         this.textElement.replaceCls(oldLabelCls, labelCls);
     },
-
     /**
      * @private
      */
@@ -451,47 +426,44 @@ Ext.define('Ext.Button', {
             element.replaceCls(oldPressedCls, pressedCls);
         }
     },
-
     /**
      * @private
      */
     updateIcon: function(icon) {
         var me = this,
-            element = me.iconElement;
+                element = me.iconElement;
 
         if (icon) {
             me.showIconElement();
             element.setStyle('background-image', 'url(' + icon + ')');
             me.refreshIconAlign();
         } else {
-        	element.setStyle('background-image', '');
+            element.setStyle('background-image', '');
             me.hideIconElement();
         }
     },
-
     /**
      * @private
      */
     updateIconCls: function(iconCls, oldIconCls) {
         var me = this,
-            element = me.iconElement;
+                element = me.iconElement;
 
         if (iconCls) {
             me.showIconElement();
             element.replaceCls(oldIconCls, iconCls);
             me.refreshIconAlign();
         } else {
-			element.removeCls(oldIconCls);
+            element.removeCls(oldIconCls);
             me.hideIconElement();
         }
     },
-
     /**
      * @private
      */
     updateIconAlign: function(alignment, oldAlignment) {
         var element = this.element,
-            baseCls = Ext.baseCSSPrefix + 'iconalign-';
+                baseCls = Ext.baseCSSPrefix + 'iconalign-';
 
         if (!this.getText()) {
             alignment = "center";
@@ -503,30 +475,27 @@ Ext.define('Ext.Button', {
             element.addCls(baseCls + alignment);
         }
     },
-
     refreshIconAlign: function() {
         this.updateIconAlign(this.getIconAlign());
     },
-
     applyAutoEvent: function(autoEvent) {
         var me = this;
 
         if (typeof autoEvent == 'string') {
             autoEvent = {
-                name : autoEvent,
+                name: autoEvent,
                 scope: me.scope || me
             };
         }
 
         return autoEvent;
     },
-
     /**
      * @private
      */
     updateAutoEvent: function(autoEvent) {
-        var name  = autoEvent.name,
-            scope = autoEvent.scope;
+        var name = autoEvent.name,
+                scope = autoEvent.scope;
 
         this.setHandler(function() {
             scope.fireEvent(name, scope, this);
@@ -534,7 +503,6 @@ Ext.define('Ext.Button', {
 
         this.setScope(scope);
     },
-
     /**
      * Used by `icon` and `iconCls` configurations to hide the icon element.
      * @private
@@ -543,7 +511,6 @@ Ext.define('Ext.Button', {
         this.iconElement.removeCls(Ext.baseCSSPrefix + 'shown');
         this.iconElement.addCls(Ext.baseCSSPrefix + 'hidden');
     },
-
     /**
      * Used by `icon` and `iconCls` configurations to show the icon element.
      * @private
@@ -552,7 +519,6 @@ Ext.define('Ext.Button', {
         this.iconElement.removeCls(Ext.baseCSSPrefix + 'hidden');
         this.iconElement.addCls(Ext.baseCSSPrefix + 'shown');
     },
-
     /**
      * We override this to check for '{ui}-back'. This is because if you have a UI of back, you need to actually add two class names.
      * The ui class, and the back class:
@@ -570,7 +536,7 @@ Ext.define('Ext.Button', {
      */
     applyUi: function(config) {
         if (config && Ext.isString(config)) {
-            var array  = config.split('-');
+            var array = config.split('-');
             if (array && (array[1] == "back" || array[1] == "forward")) {
                 return array;
             }
@@ -578,7 +544,6 @@ Ext.define('Ext.Button', {
 
         return config;
     },
-
     getUi: function() {
         //Now that the UI can sometimes be an array, we need to check if it an array and return the proper value.
         var ui = this._ui;
@@ -587,20 +552,18 @@ Ext.define('Ext.Button', {
         }
         return ui;
     },
-
     applyPressedDelay: function(delay) {
         if (Ext.isNumber(delay)) {
             return delay;
         }
         return (delay) ? 100 : 0;
     },
-
     // @private
     onPress: function() {
         var me = this,
-            element = me.element,
-            pressedDelay = me.getPressedDelay(),
-            pressedCls = me.getPressedCls();
+                element = me.element,
+                pressedDelay = me.getPressedDelay(),
+                pressedCls = me.getPressedCls();
 
         if (!me.getDisabled()) {
             if (pressedDelay > 0) {
@@ -616,12 +579,10 @@ Ext.define('Ext.Button', {
             }
         }
     },
-
     // @private
     onRelease: function(e) {
         this.fireAction('release', [this, e], 'doRelease');
     },
-
     // @private
     doRelease: function(me, e) {
         if (!me.getDisabled()) {
@@ -634,7 +595,6 @@ Ext.define('Ext.Button', {
             }
         }
     },
-
     // @private
     onTap: function(e) {
         if (this.getDisabled()) {
@@ -643,13 +603,12 @@ Ext.define('Ext.Button', {
 
         this.fireAction('tap', [this, e], 'doTap');
     },
-
     /**
      * @private
      */
     doTap: function(me, e) {
         var handler = me.getHandler(),
-            scope = me.getScope() || me;
+                scope = me.getScope() || me;
 
         if (!handler) {
             return;

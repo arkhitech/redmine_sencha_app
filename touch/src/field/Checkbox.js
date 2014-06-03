@@ -60,13 +60,10 @@
 Ext.define('Ext.field.Checkbox', {
     extend: 'Ext.field.Field',
     alternateClassName: 'Ext.form.Checkbox',
-
     xtype: 'checkboxfield',
     qsaLeftRe: /[\[]/g,
     qsaRightRe: /[\]]/g,
-
     isCheckbox: true,
-
     /**
      * @event change
      * Fires just before the field blurs if the field value has changed.
@@ -95,25 +92,21 @@ Ext.define('Ext.field.Checkbox', {
          * @inheritdoc
          */
         ui: 'checkbox',
-
         /**
          * @cfg {String} value The string value to submit if the item is in a checked state.
          * @accessor
          */
         value: '',
-
         /**
          * @cfg {Boolean} checked `true` if the checkbox should render initially checked.
          * @accessor
          */
         checked: false,
-
         /**
          * @cfg {Number} tabIndex
          * @hide
          */
         tabIndex: -1,
-
         /**
          * @cfg
          * @inheritdoc
@@ -130,16 +123,14 @@ Ext.define('Ext.field.Checkbox', {
          * @private
          */
     },
-
     platformConfig: [{
-        theme: ['Windows', 'Blackberry', 'Tizen'],
-        labelAlign: 'left'
-    }],
-
+            theme: ['Windows', 'Blackberry', 'Tizen'],
+            labelAlign: 'left'
+        }],
     // @private
     initialize: function() {
         var me = this,
-            component = me.getComponent();
+                component = me.getComponent();
 
         me.callParent();
 
@@ -156,11 +147,10 @@ Ext.define('Ext.field.Checkbox', {
             tap: 'onMaskTap'
         });
     },
-
     // @private
     doInitValue: function() {
         var me = this,
-            initialConfig = me.getInitialConfig();
+                initialConfig = me.getInitialConfig();
 
         // you can have a value or checked config, but checked get priority
         if (initialConfig.hasOwnProperty('value')) {
@@ -173,7 +163,6 @@ Ext.define('Ext.field.Checkbox', {
 
         me.callParent(arguments);
     },
-
     // @private
     updateInputType: function(newInputType) {
         var component = this.getComponent();
@@ -181,7 +170,6 @@ Ext.define('Ext.field.Checkbox', {
             component.setType(newInputType);
         }
     },
-
     // @private
     updateName: function(newName) {
         var component = this.getComponent();
@@ -189,7 +177,6 @@ Ext.define('Ext.field.Checkbox', {
             component.setName(newName);
         }
     },
-
     /**
      * Returns the field checked value.
      * @return {Mixed} The field value.
@@ -199,7 +186,6 @@ Ext.define('Ext.field.Checkbox', {
         this._checked = this.getComponent().getChecked();
         return this._checked;
     },
-
     /**
      * Returns the submit value for the checkbox which can be used when submitting forms.
      * @return {Boolean/String} value The value of {@link #value} or `true`, if {@link #checked}.
@@ -207,12 +193,10 @@ Ext.define('Ext.field.Checkbox', {
     getSubmitValue: function() {
         return (this.getChecked()) ? Ext.isEmpty(this._value) ? true : this._value : null;
     },
-
     setChecked: function(newChecked) {
         this.updateChecked(newChecked);
         this._checked = newChecked;
     },
-
     updateChecked: function(newChecked) {
         this.getComponent().setChecked(newChecked);
 
@@ -221,11 +205,10 @@ Ext.define('Ext.field.Checkbox', {
             this.onChange();
         }
     },
-
     // @private
     onMaskTap: function(component, e) {
         var me = this,
-            dom = me.getComponent().input.dom;
+                dom = me.getComponent().input.dom;
 
         if (me.getDisabled()) {
             return false;
@@ -239,15 +222,14 @@ Ext.define('Ext.field.Checkbox', {
         //return false so the mask does not disappear
         return false;
     },
-
     /**
      * Fires the `check` or `uncheck` event when the checked value of this component changes.
      * @private
      */
     onChange: function(e) {
         var me = this,
-            oldChecked = me._checked,
-            newChecked = me.getChecked();
+                oldChecked = me._checked,
+                newChecked = me.getChecked();
 
         // only fire the event when the value changes
         if (oldChecked != newChecked) {
@@ -260,19 +242,16 @@ Ext.define('Ext.field.Checkbox', {
             me.fireEvent('change', me, newChecked, oldChecked);
         }
     },
-
     /**
      * @method
      * Method called when this {@link Ext.field.Checkbox} has been checked.
      */
     doChecked: Ext.emptyFn,
-
     /**
      * @method
      * Method called when this {@link Ext.field.Checkbox} has been unchecked.
      */
     doUnChecked: Ext.emptyFn,
-
     /**
      * Returns the checked state of the checkbox.
      * @return {Boolean} `true` if checked, `false` otherwise.
@@ -280,7 +259,6 @@ Ext.define('Ext.field.Checkbox', {
     isChecked: function() {
         return this.getChecked();
     },
-
     /**
      * Set the checked state of the checkbox to `true`.
      * @return {Ext.field.Checkbox} This checkbox.
@@ -288,7 +266,6 @@ Ext.define('Ext.field.Checkbox', {
     check: function() {
         return this.setChecked(true);
     },
-
     /**
      * Set the checked state of the checkbox to `false`.
      * @return {Ext.field.Checkbox} This checkbox.
@@ -296,17 +273,16 @@ Ext.define('Ext.field.Checkbox', {
     uncheck: function() {
         return this.setChecked(false);
     },
-
     getSameGroupFields: function() {
         var me = this,
-            component = me.up('formpanel') || me.up('fieldset'),
-            name = me.getName(),
-            replaceLeft = me.qsaLeftRe,
-            replaceRight = me.qsaRightRe,
-            //handle baseCls with multiple class values
-            baseCls = me.getBaseCls().split(' ').join('.'),
-            components = [],
-            elements, element, i, ln;
+                component = me.up('formpanel') || me.up('fieldset'),
+                name = me.getName(),
+                replaceLeft = me.qsaLeftRe,
+                replaceRight = me.qsaRightRe,
+                //handle baseCls with multiple class values
+                baseCls = me.getBaseCls().split(' ').join('.'),
+                components = [],
+                elements, element, i, ln;
 
         if (!component) {
             // <debug>
@@ -330,7 +306,6 @@ Ext.define('Ext.field.Checkbox', {
         }
         return components;
     },
-
     /**
      * Returns an array of values from the checkboxes in the group that are checked.
      * @return {Array}
@@ -346,7 +321,6 @@ Ext.define('Ext.field.Checkbox', {
 
         return values;
     },
-
     /**
      * Set the status of all matched checkboxes in the same group to checked.
      * @param {Array} values An array of values.
@@ -359,7 +333,6 @@ Ext.define('Ext.field.Checkbox', {
 
         return this;
     },
-
     /**
      * Resets the status of all matched checkboxes in the same group to checked.
      * @return {Ext.field.Checkbox} This checkbox.
@@ -371,7 +344,6 @@ Ext.define('Ext.field.Checkbox', {
 
         return this;
     },
-
     reset: function() {
         this.setChecked(this.originalState);
         return this;

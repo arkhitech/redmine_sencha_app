@@ -31,10 +31,10 @@ $background-noise-size-default:       200 !default;
 $background-noise-monochrome-default: false !default;
 
 @mixin background-noise(
-    $intensity:   $background-noise-intensity-default,
-    $opacity:     $background-noise-opacity-default,
-    $size:        $background-noise-size-default,
-    $monochrome:  $background-noise-monochrome-default
+$intensity:   $background-noise-intensity-default,
+$opacity:     $background-noise-opacity-default,
+$size:        $background-noise-size-default,
+$monochrome:  $background-noise-monochrome-default
 )
 {
     background-image: background_noise(
@@ -42,6 +42,6 @@ $background-noise-monochrome-default: false !default;
         $opacity: $opacity,
         $size: $size,
         $monochrome: $monochrome
-    );
+        );
     background-repeat: repeat;
 }

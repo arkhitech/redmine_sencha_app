@@ -3,11 +3,9 @@
  */
 Ext.define('Ext.scroll.indicator.ScrollPosition', {
     extend: 'Ext.scroll.indicator.Abstract',
-
     config: {
         cls: 'scrollposition'
     },
-
     getElementConfig: function() {
         var config = this.callParent(arguments);
 
@@ -17,7 +15,6 @@ Ext.define('Ext.scroll.indicator.ScrollPosition', {
 
         return config;
     },
-
     updateValue: function(value) {
         if (this.gapLength === 0) {
             if (value >= 1) {
@@ -30,11 +27,10 @@ Ext.define('Ext.scroll.indicator.ScrollPosition', {
             this.setOffset(this.gapLength * value);
         }
     },
-
     doUpdateLength: function() {
         if (!this.isDestroyed) {
             var scrollOffset = this.barLength,
-                element = this.element;
+                    element = this.element;
 
             this.callParent(arguments);
 
@@ -46,12 +42,11 @@ Ext.define('Ext.scroll.indicator.ScrollPosition', {
             }
         }
     },
-
     doSetOffset: function(offset) {
         if (!this.isDestroyed) {
             var barLength = this.barLength,
-                minLength = this.getMinLength(),
-                barDom = this.barElement.dom;
+                    minLength = this.getMinLength(),
+                    barDom = this.barElement.dom;
 
             if (offset !== -10000) {
                 offset = Math.min(barLength - minLength, Math.max(offset, minLength - this.getLength()));

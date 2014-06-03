@@ -33,41 +33,38 @@ Ext.define('Ext.data.StoreManager', {
     alternateClassName: ['Ext.StoreMgr', 'Ext.data.StoreMgr', 'Ext.StoreManager'],
     singleton: true,
     uses: ['Ext.data.ArrayStore', 'Ext.data.Store'],
-
     /**
      * Registers one or more Stores with the StoreManager. You do not normally need to register stores manually. Any
      * store initialized with a {@link Ext.data.Store#storeId} will be auto-registered.
      * @param {Ext.data.Store...} stores Any number of Store instances.
      */
-    register : function() {
+    register: function() {
         for (var i = 0, s; (s = arguments[i]); i++) {
             this.add(s);
         }
     },
-
     /**
      * Unregisters one or more Stores with the StoreManager.
      * @param {String/Object...} stores Any number of Store instances or ID-s.
      */
-    unregister : function() {
+    unregister: function() {
         for (var i = 0, s; (s = arguments[i]); i++) {
             this.remove(this.lookup(s));
         }
     },
-
     /**
      * Gets a registered Store by its id, returns a passed store instance, or returns a new instance of a store created with the supplied configuration.
      * @param {String/Object} store The `id` of the Store, or a Store instance, or a store configuration.
      * @return {Ext.data.Store}
      */
-    lookup : function(store) {
+    lookup: function(store) {
         // handle the case when we are given an array or an array of arrays.
         if (Ext.isArray(store)) {
             var fields = ['field1'],
-                expand = !Ext.isArray(store[0]),
-                data = store,
-                i,
-                len;
+                    expand = !Ext.isArray(store[0]),
+                    data = store,
+                    i,
+                    len;
 
             if (expand) {
                 data = [];
@@ -75,12 +72,12 @@ Ext.define('Ext.data.StoreManager', {
                     data.push([store[i]]);
                 }
             } else {
-                for(i = 2, len = store[0].length; i <= len; ++i){
+                for (i = 2, len = store[0].length; i <= len; ++i) {
                     fields.push('field' + i);
                 }
             }
             return Ext.create('Ext.data.ArrayStore', {
-                data  : data,
+                data: data,
                 fields: fields,
                 // See https://sencha.jira.com/browse/TOUCH-1541
                 autoDestroy: true,
@@ -101,10 +98,9 @@ Ext.define('Ext.data.StoreManager', {
             }
         }
     },
-
     // getKey implementation for MixedCollection
-    getKey : function(o) {
-         return o.getStoreId();
+    getKey: function(o) {
+        return o.getStoreId();
     }
 }, function() {
     /**

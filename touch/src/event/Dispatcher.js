@@ -4,12 +4,10 @@
  * @private
  */
 Ext.define('Ext.event.Dispatcher', {
-
     requires: [
         'Ext.event.ListenerStack',
         'Ext.event.Controller'
     ],
-
     statics: {
         getInstance: function() {
             if (!this.instance) {
@@ -18,20 +16,16 @@ Ext.define('Ext.event.Dispatcher', {
 
             return this.instance;
         },
-
         setInstance: function(instance) {
             this.instance = instance;
 
             return this;
         }
     },
-
     config: {
         publishers: {}
     },
-
     wildcard: '*',
-
     constructor: function(config) {
         this.listenerStacks = {};
 
@@ -47,11 +41,10 @@ Ext.define('Ext.event.Dispatcher', {
 
         return this;
     },
-
     getListenerStack: function(targetType, target, eventName, createIfNotExist) {
         var listenerStacks = this.listenerStacks,
-            map = listenerStacks[targetType],
-            listenerStack;
+                map = listenerStacks[targetType],
+                listenerStack;
 
         createIfNotExist = Boolean(createIfNotExist);
 
@@ -88,14 +81,13 @@ Ext.define('Ext.event.Dispatcher', {
 
         return listenerStack;
     },
-
     getController: function(targetType, target, eventName, connectedController) {
         var controller = this.controller,
-            info = {
-                targetType: targetType,
-                target: target,
-                eventName: eventName
-            };
+                info = {
+                    targetType: targetType,
+                    target: target,
+                    eventName: eventName
+                };
 
         if (!controller) {
             this.controller = controller = new Ext.event.Controller();
@@ -113,7 +105,6 @@ Ext.define('Ext.event.Dispatcher', {
 
         return controller;
     },
-
     applyPublishers: function(publishers) {
         var i, publisher;
 
@@ -129,11 +120,10 @@ Ext.define('Ext.event.Dispatcher', {
 
         return publishers;
     },
-
     registerPublisher: function(publisher) {
         var activePublishers = this.activePublishers,
-            targetType = publisher.getTargetType(),
-            publishers = activePublishers[targetType];
+                targetType = publisher.getTargetType(),
+                publishers = activePublishers[targetType];
 
         if (!publishers) {
             activePublishers[targetType] = publishers = [];
@@ -145,10 +135,9 @@ Ext.define('Ext.event.Dispatcher', {
 
         return this;
     },
-
     getCachedActivePublishers: function(targetType, eventName) {
         var cache = this.publishersCache,
-            publishers;
+                publishers;
 
         if ((publishers = cache[targetType]) && (publishers = publishers[eventName])) {
             return publishers;
@@ -156,7 +145,6 @@ Ext.define('Ext.event.Dispatcher', {
 
         return null;
     },
-
     cacheActivePublishers: function(targetType, eventName, publishers) {
         var cache = this.publishersCache;
 
@@ -168,10 +156,9 @@ Ext.define('Ext.event.Dispatcher', {
 
         return publishers;
     },
-
     getActivePublishers: function(targetType, eventName) {
         var publishers, activePublishers,
-            i, ln, publisher;
+                i, ln, publisher;
 
         if ((publishers = this.getCachedActivePublishers(targetType, eventName))) {
             return publishers;
@@ -182,7 +169,7 @@ Ext.define('Ext.event.Dispatcher', {
         if (activePublishers) {
             publishers = [];
 
-            for (i = 0,ln = activePublishers.length; i < ln; i++) {
+            for (i = 0, ln = activePublishers.length; i < ln; i++) {
                 publisher = activePublishers[i];
 
                 if (publisher.handles(eventName)) {
@@ -196,7 +183,6 @@ Ext.define('Ext.event.Dispatcher', {
 
         return this.cacheActivePublishers(targetType, eventName, publishers);
     },
-
     hasListener: function(targetType, target, eventName) {
         var listenerStack = this.getListenerStack(targetType, target, eventName);
 
@@ -206,11 +192,10 @@ Ext.define('Ext.event.Dispatcher', {
 
         return false;
     },
-
     addListener: function(targetType, target, eventName) {
         var publishers = this.getActivePublishers(targetType, eventName),
-            ln = publishers.length,
-            i, result;
+                ln = publishers.length,
+                i, result;
 
         result = this.doAddListener.apply(this, arguments);
 
@@ -222,17 +207,15 @@ Ext.define('Ext.event.Dispatcher', {
 
         return result;
     },
-
     doAddListener: function(targetType, target, eventName, fn, scope, options, order) {
         var listenerStack = this.getListenerStack(targetType, target, eventName, true);
 
         return listenerStack.add(fn, scope, options, order);
     },
-
     removeListener: function(targetType, target, eventName) {
         var publishers = this.getActivePublishers(targetType, eventName),
-            ln = publishers.length,
-            i, result;
+                ln = publishers.length,
+                i, result;
 
         result = this.doRemoveListener.apply(this, arguments);
 
@@ -244,7 +227,6 @@ Ext.define('Ext.event.Dispatcher', {
 
         return result;
     },
-
     doRemoveListener: function(targetType, target, eventName, fn, scope, order) {
         var listenerStack = this.getListenerStack(targetType, target, eventName);
 
@@ -254,11 +236,10 @@ Ext.define('Ext.event.Dispatcher', {
 
         return listenerStack.remove(fn, scope, order);
     },
-
     clearListeners: function(targetType, target, eventName) {
         var listenerStacks = this.listenerStacks,
-            ln = arguments.length,
-            stacks, publishers, i, publisherGroup;
+                ln = arguments.length,
+                stacks, publishers, i, publisherGroup;
 
         if (ln === 3) {
             if (listenerStacks[targetType] && listenerStacks[targetType][target]) {
@@ -275,7 +256,7 @@ Ext.define('Ext.event.Dispatcher', {
                         if (stacks.hasOwnProperty(eventName)) {
                             publishers = this.getActivePublishers(targetType, eventName);
 
-                            for (i = 0,ln = publishers.length; i < ln; i++) {
+                            for (i = 0, ln = publishers.length; i < ln; i++) {
                                 publishers[i].unsubscribe(target, eventName, true);
                             }
                         }
@@ -288,7 +269,7 @@ Ext.define('Ext.event.Dispatcher', {
         else if (ln === 1) {
             publishers = this.activePublishers[targetType];
 
-            for (i = 0,ln = publishers.length; i < ln; i++) {
+            for (i = 0, ln = publishers.length; i < ln; i++) {
                 publishers[i].unsubscribeAll();
             }
 
@@ -301,7 +282,7 @@ Ext.define('Ext.event.Dispatcher', {
                 if (publishers.hasOwnProperty(targetType)) {
                     publisherGroup = publishers[targetType];
 
-                    for (i = 0,ln = publisherGroup.length; i < ln; i++) {
+                    for (i = 0, ln = publisherGroup.length; i < ln; i++) {
                         publisherGroup[i].unsubscribeAll();
                     }
                 }
@@ -313,11 +294,10 @@ Ext.define('Ext.event.Dispatcher', {
 
         return this;
     },
-
     dispatchEvent: function(targetType, target, eventName) {
         var publishers = this.getActivePublishers(targetType, eventName),
-            ln = publishers.length,
-            i;
+                ln = publishers.length,
+                i;
 
         if (ln > 0) {
             for (i = 0; i < ln; i++) {
@@ -327,11 +307,10 @@ Ext.define('Ext.event.Dispatcher', {
 
         return this.doDispatchEvent.apply(this, arguments);
     },
-
     doDispatchEvent: function(targetType, target, eventName, args, action, connectedController) {
         var listenerStack = this.getListenerStack(targetType, target, eventName),
-            wildcardStacks = this.getWildcardListenerStacks(targetType, target, eventName),
-            controller;
+                wildcardStacks = this.getWildcardListenerStacks(targetType, target, eventName),
+                controller;
 
         if ((listenerStack === null || listenerStack.length == 0)) {
             if (wildcardStacks.length == 0 && !action) {
@@ -348,13 +327,12 @@ Ext.define('Ext.event.Dispatcher', {
 
         return !controller.isInterrupted();
     },
-
     getWildcardListenerStacks: function(targetType, target, eventName) {
         var stacks = [],
-            wildcard = this.wildcard,
-            isEventNameNotWildcard = eventName !== wildcard,
-            isTargetNotWildcard = target !== wildcard,
-            stack;
+                wildcard = this.wildcard,
+                isEventNameNotWildcard = eventName !== wildcard,
+                isTargetNotWildcard = target !== wildcard,
+                stack;
 
         if (isEventNameNotWildcard && (stack = this.getListenerStack(targetType, target, wildcard))) {
             stacks.push(stack);
@@ -366,8 +344,7 @@ Ext.define('Ext.event.Dispatcher', {
 
         return stacks;
     },
-
-    getPublisher: function (name) {
+    getPublisher: function(name) {
         return this.getPublishers()[name];
     }
 });

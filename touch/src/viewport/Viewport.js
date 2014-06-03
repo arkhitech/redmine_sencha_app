@@ -10,10 +10,9 @@ Ext.define('Ext.viewport.Viewport', {
         'Ext.viewport.Android',
         'Ext.viewport.WindowsPhone'
     ],
-
     constructor: function(config) {
         var osName = Ext.os.name,
-            viewportName, viewport;
+                viewportName, viewport;
 
         switch (osName) {
             case 'Android':

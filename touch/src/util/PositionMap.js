@@ -5,7 +5,6 @@ Ext.define('Ext.util.PositionMap', {
     config: {
         minimumHeight: 50
     },
-
     constructor: function(config) {
         this.map = [];
         this.adjustments = {};
@@ -13,11 +12,10 @@ Ext.define('Ext.util.PositionMap', {
 
         this.initConfig(config);
     },
-
     populate: function(count, offset) {
         var map = this.map = this.map || [],
-            minimumHeight = this.getMinimumHeight(),
-            i, previousIndex, ln;
+                minimumHeight = this.getMinimumHeight(),
+                i, previousIndex, ln;
 
         offset = offset || 0;
 
@@ -41,7 +39,6 @@ Ext.define('Ext.util.PositionMap', {
             this.offset += map[i] - map[previousIndex] - minimumHeight;
         }
     },
-
     setItemHeight: function(index, height) {
         height = Math.max(height, this.getMinimumHeight());
         if (height !== this.getItemHeight(index)) {
@@ -50,16 +47,15 @@ Ext.define('Ext.util.PositionMap', {
             adjustments.heights[index] = height;
         }
     },
-
     update: function() {
         var adjustments = this.adjustments,
-            indices = adjustments.indices,
-            heights = adjustments.heights,
-            map = this.map,
-            ln = indices.length,
-            minimumHeight = this.getMinimumHeight(),
-            difference = 0,
-            i, j, height, index, nextIndex, currentHeight;
+                indices = adjustments.indices,
+                heights = adjustments.heights,
+                map = this.map,
+                ln = indices.length,
+                minimumHeight = this.getMinimumHeight(),
+                difference = 0,
+                i, j, height, index, nextIndex, currentHeight;
 
         if (!adjustments.indices.length) {
             return false;
@@ -90,22 +86,18 @@ Ext.define('Ext.util.PositionMap', {
         };
         return true;
     },
-
     getItemHeight: function(index) {
         return this.map[index + 1] - this.map[index];
     },
-
     getTotalHeight: function() {
         return ((this.map.length - 1) * this.getMinimumHeight()) + this.offset;
     },
-
     findIndex: function(pos) {
         return this.map.length ? this.binarySearch(this.map, pos) : 0;
     },
-
     binarySearch: function(sorted, value) {
         var start = 0,
-            end = sorted.length;
+                end = sorted.length;
 
         if (value < sorted[0]) {
             return 0;
@@ -115,7 +107,7 @@ Ext.define('Ext.util.PositionMap', {
         }
         while (start + 1 < end) {
             var mid = (start + end) >> 1,
-                val = sorted[mid];
+                    val = sorted[mid];
             if (val == value) {
                 return mid;
             } else if (val < value) {

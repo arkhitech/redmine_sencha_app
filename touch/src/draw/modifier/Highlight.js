@@ -8,23 +8,18 @@
 Ext.define("Ext.draw.modifier.Highlight", {
     extend: 'Ext.draw.modifier.Modifier',
     alias: 'modifier.highlight',
-
     config: {
-
         /**
          * @cfg {Boolean} enabled 'true' if the highlight is applied.
          */
         enabled: false,
-
         /**
          * @cfg {Object} highlightStyle The style attributes of the highlight modifier.
          */
         highlightStyle: null
     },
-
     preFx: true,
-
-    applyHighlightStyle: function (style, oldStyle) {
+    applyHighlightStyle: function(style, oldStyle) {
         oldStyle = oldStyle || {};
         if (this.getSprite()) {
             Ext.apply(oldStyle, this.getSprite().self.def.normalize(style));
@@ -33,11 +28,10 @@ Ext.define("Ext.draw.modifier.Highlight", {
         }
         return oldStyle;
     },
-
     /**
      * @inheritdoc
      */
-    prepareAttributes: function (attr) {
+    prepareAttributes: function(attr) {
         if (!attr.hasOwnProperty('highlightOriginal')) {
             attr.highlighted = false;
             attr.highlightOriginal = Ext.Object.chain(attr);
@@ -46,8 +40,7 @@ Ext.define("Ext.draw.modifier.Highlight", {
             this._previous.prepareAttributes(attr.highlightOriginal);
         }
     },
-
-    updateSprite: function (sprite, oldSprite) {
+    updateSprite: function(sprite, oldSprite) {
         if (sprite) {
             if (this.getHighlightStyle()) {
                 this._highlightStyle = sprite.self.def.normalize(this.getHighlightStyle());
@@ -66,36 +59,30 @@ Ext.define("Ext.draw.modifier.Highlight", {
             defaults: {
                 highlighted: false
             },
-
             processors: {
                 highlighted: 'bool'
             },
-
             aliases: {
                 "highlight": "highlighted",
                 "highlighting": "highlighted"
             },
-
             dirtyFlags: {
             },
-
             updaters: {
-
             }
         });
     },
-
     /**
      * Filter modifier changes if overriding source attributes.
      * @param {Object} attr The source attributes.
      * @param {Object} changes The modifier changes.
      * @return {*} The filtered changes.
      */
-    filterChanges: function (attr, changes) {
+    filterChanges: function(attr, changes) {
         var me = this,
-            name,
-            original = attr.highlightOriginal,
-            style = me.getHighlightStyle();
+                name,
+                original = attr.highlightOriginal,
+                style = me.getHighlightStyle();
         if (attr.highlighted) {
             for (name in changes) {
                 if (style.hasOwnProperty(name)) {
@@ -117,14 +104,13 @@ Ext.define("Ext.draw.modifier.Highlight", {
 
         return changes;
     },
-
     /**
      * @inheritdoc
      */
-    pushDown: function (attr, changes) {
+    pushDown: function(attr, changes) {
         var style = this.getHighlightStyle(),
-            original = attr.highlightOriginal,
-            oldHighlighted, name;
+                original = attr.highlightOriginal,
+                oldHighlighted, name;
 
         if (changes.hasOwnProperty('highlighted')) {
             oldHighlighted = changes.highlighted;
@@ -171,11 +157,10 @@ Ext.define("Ext.draw.modifier.Highlight", {
 
         return changes;
     },
-
     /**
      * @inheritdoc
      */
-    popUp: function (attr, changes) {
+    popUp: function(attr, changes) {
         changes = this.filterChanges(attr, changes);
         Ext.draw.modifier.Modifier.prototype.popUp.call(this, attr, changes);
     }

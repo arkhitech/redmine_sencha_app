@@ -5,7 +5,6 @@ Ext.define('Ext.data.NodeStore', {
     extend: 'Ext.data.Store',
     alias: 'store.node',
     requires: ['Ext.data.NodeInterface'],
-
     config: {
         /**
          * @cfg {Ext.data.Model} node The Record you want to bind this Store to. Note that
@@ -14,7 +13,6 @@ Ext.define('Ext.data.NodeStore', {
          * @accessor
          */
         node: null,
-
         /**
          * @cfg {Boolean} recursive Set this to `true` if you want this NodeStore to represent
          * all the descendants of the node in its flat data collection. This is useful for
@@ -25,23 +23,19 @@ Ext.define('Ext.data.NodeStore', {
          * @accessor
          */
         recursive: false,
-
         /**
          * @cfg {Boolean} rootVisible `false` to not include the root node in this Stores collection.
          * @accessor
          */
         rootVisible: false,
-
         sorters: undefined,
         filters: undefined,
-
         /**
          * @cfg {Boolean} folderSort
          * Set to `true` to automatically prepend a leaf sorter.
          */
         folderSort: false
     },
-
     afterEdit: function(record, modifiedFields) {
         if (modifiedFields) {
             if (modifiedFields.indexOf('loaded') !== -1) {
@@ -56,23 +50,18 @@ Ext.define('Ext.data.NodeStore', {
         }
         this.callParent(arguments);
     },
-
     onNodeAppend: function(parent, node) {
         this.add([node].concat(this.retrieveChildNodes(node)));
     },
-
     onNodeInsert: function(parent, node) {
         this.add([node].concat(this.retrieveChildNodes(node)));
     },
-
     onNodeRemove: function(parent, node) {
         this.remove([node].concat(this.retrieveChildNodes(node)));
     },
-
     onNodeSort: function() {
         this.sort();
     },
-
     updateFolderSort: function(folderSort) {
         if (folderSort) {
             this.setGrouper(function(node) {
@@ -85,23 +74,19 @@ Ext.define('Ext.data.NodeStore', {
             this.setGrouper(null);
         }
     },
-
     createDataCollection: function() {
         var collection = this.callParent();
         collection.handleSort = Ext.Function.bind(this.handleTreeSort, this, [collection], true);
         collection.findInsertionIndex = Ext.Function.bind(this.handleTreeInsertionIndex, this, [collection, collection.findInsertionIndex], true);
         return collection;
     },
-
     handleTreeInsertionIndex: function(items, item, collection, originalFn) {
         return originalFn.call(collection, items, item, this.treeSortFn);
     },
-
     handleTreeSort: function(data) {
         Ext.Array.sort(data, this.treeSortFn);
         return data;
     },
-
     /**
      * This is a custom tree sorting algorithm. It uses the index property on each node to determine
      * how to sort siblings. It uses the depth property plus the index to create a weight for each node.
@@ -122,16 +107,16 @@ Ext.define('Ext.data.NodeStore', {
         // @NOTE: with the following algorithm we can only go 80 levels deep in the tree
         // and each node can contain 10000 direct children max
         var weight1 = 0,
-            weight2 = 0,
-            parent1 = node1,
-            parent2 = node2;
+                weight2 = 0,
+                parent1 = node1,
+                parent2 = node2;
 
         while (parent1) {
-            weight1 += (Math.pow(10, (parent1.data.depth+1) * -4) * (parent1.data.index+1));
+            weight1 += (Math.pow(10, (parent1.data.depth + 1) * -4) * (parent1.data.index + 1));
             parent1 = parent1.parentNode;
         }
         while (parent2) {
-            weight2 += (Math.pow(10, (parent2.data.depth+1) * -4) * (parent2.data.index+1));
+            weight2 += (Math.pow(10, (parent2.data.depth + 1) * -4) * (parent2.data.index + 1));
             parent2 = parent2.parentNode;
         }
 
@@ -142,37 +127,33 @@ Ext.define('Ext.data.NodeStore', {
         }
         return (node1.data.index > node2.data.index) ? 1 : -1;
     },
-
     applyFilters: function(filters) {
         var me = this;
         return function(item) {
             return me.isVisible(item);
         };
     },
-
     applyProxy: function(proxy) {
         //<debug>
         if (proxy) {
             Ext.Logger.warn("A NodeStore cannot be bound to a proxy. Instead bind it to a record " +
-                            "decorated with the NodeInterface by setting the node config.");
+                    "decorated with the NodeInterface by setting the node config.");
         }
         //</debug>
     },
-
     applyNode: function(node) {
         if (node) {
             node = Ext.data.NodeInterface.decorate(node);
         }
         return node;
     },
-
     updateNode: function(node, oldNode) {
         if (oldNode && !oldNode.isDestroyed) {
             oldNode.un({
-                append  : 'onNodeAppend',
-                insert  : 'onNodeInsert',
-                remove  : 'onNodeRemove',
-                load    : 'onNodeLoad',
+                append: 'onNodeAppend',
+                insert: 'onNodeInsert',
+                remove: 'onNodeRemove',
+                load: 'onNodeLoad',
                 scope: this
             });
             oldNode.unjoin(this);
@@ -180,11 +161,11 @@ Ext.define('Ext.data.NodeStore', {
 
         if (node) {
             node.on({
-                scope   : this,
-                append  : 'onNodeAppend',
-                insert  : 'onNodeInsert',
-                remove  : 'onNodeRemove',
-                load    : 'onNodeLoad'
+                scope: this,
+                append: 'onNodeAppend',
+                insert: 'onNodeInsert',
+                remove: 'onNodeRemove',
+                load: 'onNodeLoad'
             });
 
             node.join(this);
@@ -206,14 +187,13 @@ Ext.define('Ext.data.NodeStore', {
             this.add(data);
             this.resumeEvents();
 
-            if(data.length === 0) {
+            if (data.length === 0) {
                 this.loaded = node.loaded = true;
             }
 
             this.fireEvent('refresh', this, this.data);
         }
     },
-
     /**
      * Private method used to deeply retrieve the children of a record without recursion.
      * @private
@@ -222,9 +202,9 @@ Ext.define('Ext.data.NodeStore', {
      */
     retrieveChildNodes: function(root) {
         var node = this.getNode(),
-            recursive = this.getRecursive(),
-            added = [],
-            child = root;
+                recursive = this.getRecursive(),
+                added = [],
+                child = root;
 
         if (!root.childNodes.length || (!recursive && root !== node)) {
             return added;
@@ -257,7 +237,6 @@ Ext.define('Ext.data.NodeStore', {
 
         return added;
     },
-
     /**
      * @param {Object} node
      * @return {Boolean}

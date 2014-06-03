@@ -9,101 +9,100 @@ Ext.define('Ext.device.filesystem.Cordova', {
     extend: 'Ext.device.filesystem.HTML5',
     constructor: function() {
         Ext.override(Ext.device.filesystem.Entry,
-            {
-                /**
-                 *
-                 * @param {Object} config
-                 *
-                 * @param {Object} config.metadata
-                 * Metadata to add to the file or directory
-                 *
-                 * @param {Object} config.options
-                 * File creation options {create:true, exclusive:false}
-                 *
-                 * @param {Boolean} config.options.create
-                 * Indicates if the file should be created if it doesn't exist
-                 *
-                 * @param {Boolean} config.options.exclusive
-                 * Used with the create option only indicates whether a creation causes an error if the file already exists
-                 *
-                 * @param {Function} config.success
-                 * The function called when the File's Metadata is written successfully
-                 *
-                 * @param {Function} config.failure
-                 * The function called when the File request causes an error
-                 *
-                 * @param {FileError} config.failure.error
-                 *
-                 */
-                writeMetadata: function(config) {
-                    var me = this;
+                {
+                    /**
+                     *
+                     * @param {Object} config
+                     *
+                     * @param {Object} config.metadata
+                     * Metadata to add to the file or directory
+                     *
+                     * @param {Object} config.options
+                     * File creation options {create:true, exclusive:false}
+                     *
+                     * @param {Boolean} config.options.create
+                     * Indicates if the file should be created if it doesn't exist
+                     *
+                     * @param {Boolean} config.options.exclusive
+                     * Used with the create option only indicates whether a creation causes an error if the file already exists
+                     *
+                     * @param {Function} config.success
+                     * The function called when the File's Metadata is written successfully
+                     *
+                     * @param {Function} config.failure
+                     * The function called when the File request causes an error
+                     *
+                     * @param {FileError} config.failure.error
+                     *
+                     */
+                    writeMetadata: function(config) {
+                        var me = this;
 
-                    this.getEntry(
-                        {
-                            options: config.options,
-                            success: function(entry) {
-                                entry.setMetadata(
-                                    function() {
-                                        config.success.call(config.scope || me);
+                        this.getEntry(
+                                {
+                                    options: config.options,
+                                    success: function(entry) {
+                                        entry.setMetadata(
+                                                function() {
+                                                    config.success.call(config.scope || me);
+                                                },
+                                                function(error) {
+                                                    config.failure.call(config.scope || me, error);
+                                                },
+                                                config.metadata
+                                                );
                                     },
-                                    function(error) {
-                                        config.failure.call(config.scope || me, error);
-                                    },
-                                    config.metadata
-                                );
-                            },
-                            failure: function(error) {
-                                config.failure.call(config.scope || me, error)
-                            }
-                        }
-                    );
-                },
-
-                /**
-                 * 
-                 * @param {Object} config
-                 *
-                 * @param {Object} config.options
-                 * File creation options {create:true, exclusive:false}
-                 *
-                 * @param {Boolean} config.options.create
-                 * Indicates if the file should be created if it doesn't exist
-                 *
-                 * @param {Boolean} config.options.exclusive
-                 * Used with the create option only indicates whether a creation causes an error if the file already exists
-                 *
-                 * @param {Function} config.success
-                 * The function called when the File's Metadata is written successfully
-                 *
-                 * @param {Function} config.failure
-                 * The function called when the File request causes an error
-                 *
-                 * @param {FileError} config.failure.error
-                 *
-                 */
-                readMetadata: function(config) {
-                    var me = this;
-
-                    this.getEntry(
-                        {
-                            options: config.options,
-                            success: function(entry) {
-                                entry.getMetadata(
-                                    function(metadata) {
-                                        config.success.call(config.scope || me, metadata);
-                                    },
-                                    function(error) {
-                                        config.failure.call(config.scope || me, error);
+                                    failure: function(error) {
+                                        config.failure.call(config.scope || me, error)
                                     }
-                                );
-                            },
-                            failure: function(error) {
-                                config.failure.call(config.scope || me, error)
-                            }
-                        }
-                    );
+                                }
+                        );
+                    },
+                    /**
+                     * 
+                     * @param {Object} config
+                     *
+                     * @param {Object} config.options
+                     * File creation options {create:true, exclusive:false}
+                     *
+                     * @param {Boolean} config.options.create
+                     * Indicates if the file should be created if it doesn't exist
+                     *
+                     * @param {Boolean} config.options.exclusive
+                     * Used with the create option only indicates whether a creation causes an error if the file already exists
+                     *
+                     * @param {Function} config.success
+                     * The function called when the File's Metadata is written successfully
+                     *
+                     * @param {Function} config.failure
+                     * The function called when the File request causes an error
+                     *
+                     * @param {FileError} config.failure.error
+                     *
+                     */
+                    readMetadata: function(config) {
+                        var me = this;
+
+                        this.getEntry(
+                                {
+                                    options: config.options,
+                                    success: function(entry) {
+                                        entry.getMetadata(
+                                                function(metadata) {
+                                                    config.success.call(config.scope || me, metadata);
+                                                },
+                                                function(error) {
+                                                    config.failure.call(config.scope || me, error);
+                                                }
+                                        );
+                                    },
+                                    failure: function(error) {
+                                        config.failure.call(config.scope || me, error)
+                                    }
+                                }
+                        );
+                    }
                 }
-            }
         );
 
         Ext.override(Ext.device.filesystem.FileEntry, {
@@ -165,7 +164,6 @@ Ext.define('Ext.device.filesystem.Cordova', {
                 fileTransfer.upload(this.path, encodeURI(config.url), config.success, config.failure, options, config.trustAllHosts || false);
                 return fileTransfer;
             },
-
             /**
              * Downloads a file from the server saving it into the Local File System
              *
@@ -202,12 +200,12 @@ Ext.define('Ext.device.filesystem.Cordova', {
             download: function(config) {
                 var fileTransfer = new FileTransfer();
                 fileTransfer.download(
-                    encodeURI(config.source),
-                    this.path,
-                    config.success,
-                    config.failure,
-                    config.trustAllHosts || false,
-                    config.options || {}
+                        encodeURI(config.source),
+                        this.path,
+                        config.success,
+                        config.failure,
+                        config.trustAllHosts || false,
+                        config.options || {}
                 );
 
                 return fileTransfer;

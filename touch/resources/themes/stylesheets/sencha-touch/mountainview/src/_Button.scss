@@ -1,6 +1,6 @@
 .x-button {
-	height: 2.7em;
-	padding: 0 .5em;
+    height: 2.7em;
+    padding: 0 .5em;
     border-width: 0;
     @include border-radius(1px);
 }
@@ -10,7 +10,7 @@
     height: 1.5em;
 
     &:before {
-    	color: $primary-text-color;
+        color: $primary-text-color;
         font-size: 1.4em;
         line-height: 1.15em;
     }
@@ -26,15 +26,15 @@
 .x-button-round,
 .x-button-decline-round,
 .x-button-confirm-round {
-	@include border-radius(1.8em);
+    @include border-radius(1.8em);
 }
 
 .x-button-small,
 .x-button-decline-small,
 .x-button-confirm-small {
-	.x-button-label {
-		font-size: 10pt;
-	}
+    .x-button-label {
+        font-size: 10pt;
+    }
 }
 
 .x-button,
@@ -43,7 +43,7 @@
 .x-button-small,
 .x-button-back,
 .x-button-forward {
-	background: $foreground-color;
+    background: $foreground-color;
     @include box-shadow(0 1px 0 rgba(0,0,0,.3), inset 0 1px 0 rgba(#fff,.2));
 
     .x-button-label {
@@ -130,7 +130,7 @@
 //         text-align: center;
 //         display: block;
 //         overflow: hidden;
-        
+
 //         color: #fff !important;
 //         min-width: 18px;
 //         font-weight: bold;

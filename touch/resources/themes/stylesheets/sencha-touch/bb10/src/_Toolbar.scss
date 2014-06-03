@@ -25,9 +25,9 @@
 .x-toolbar-neutral,
 .x-tabbar-neutral {
     @include background(linear-gradient(color-stops(#FAFAFA, #D5D5D5)));
-		.x-title {
-			color: #333333;
-		}
+    .x-title {
+        color: #333333;
+    }
 }
 
 .x-toolbar-dark,
@@ -81,7 +81,7 @@
     color: #fafafa;
     font-size: 20px;
     font-weight: normal;
-		letter-spacing: 1px;
+    letter-spacing: 1px;
 }
 
 

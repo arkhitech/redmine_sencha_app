@@ -2,20 +2,17 @@
  * @private
  */
 Ext.define('Ext.device.camera.Sencha', {
-
     extend: 'Ext.device.camera.Abstract',
-
     requires: [
         'Ext.device.Communicator'
     ],
-
     capture: function(options) {
         var sources = this.source,
-            destinations = this.destination,
-            encodings = this.encoding,
-            source = options.source,
-            destination = options.destination,
-            encoding = options.encoding;
+                destinations = this.destination,
+                encodings = this.encoding,
+                source = options.source,
+                destination = options.destination,
+                encoding = options.encoding;
 
         if (sources.hasOwnProperty(source)) {
             source = sources[source];

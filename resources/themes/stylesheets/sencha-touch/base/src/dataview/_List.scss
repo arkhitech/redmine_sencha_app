@@ -40,12 +40,12 @@
             background-color: #ccc;
         }
 
-				&.x-item-pressed {
-					&.x-list-item-tpl,
-					.x-dock-horizontal {
-						background-color: #ddd;
-					}
-				}
+        &.x-item-pressed {
+            &.x-list-item-tpl,
+            .x-dock-horizontal {
+                background-color: #ddd;
+            }
+        }
 
         .x-list-item-body,
         &.x-list-item-tpl .x-innerhtml {
@@ -106,16 +106,16 @@
 
 // Provides ability to capture events on the list
 .x-ie .x-list-grouped .x-translatable-container {
-  .x-list-item, .x-list-header {
-    &:before {
-      content: ". .";
-      color: transparent;
-      position: absolute;
-      left: 0px;
-      word-spacing: 3000px;
-      opacity: 0;
+    .x-list-item, .x-list-header {
+        &:before {
+            content: ". .";
+            color: transparent;
+            position: absolute;
+            left: 0px;
+            word-spacing: 3000px;
+            opacity: 0;
+        }
     }
-  }
 }
 
 .x-list-header {

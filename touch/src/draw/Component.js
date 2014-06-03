@@ -39,11 +39,9 @@
  * refer to the {@link Ext.draw.sprite.Sprite} documentation.
  */
 Ext.define('Ext.draw.Component', {
-
     extend: 'Ext.Container',
     xtype: 'draw',
     defaultType: 'surface',
-
     requires: [
         'Ext.draw.Surface',
         'Ext.draw.engine.Svg',
@@ -56,7 +54,6 @@ Ext.define('Ext.draw.Component', {
     },
     config: {
         cls: 'x-draw-component',
-
         /**
          * @deprecated 2.2.0 Please implement custom resize event handler.
          * Resize the draw component by the content size of the main surface.
@@ -64,7 +61,6 @@ Ext.define('Ext.draw.Component', {
          * __Note:__ It is applied only when there is only one surface.
          */
         autoSize: false,
-
         /**
          * @deprecated 2.2.0 Please implement custom resize event handler.
          * Pan/Zoom the content in main surface to fit the component size.
@@ -72,7 +68,6 @@ Ext.define('Ext.draw.Component', {
          * __Note:__ It is applied only when there is only one surface.
          */
         viewBox: false,
-
         /**
          * @deprecated 2.2.0 Please implement custom resize event handler.
          * Fit the main surface to the size of component.
@@ -80,16 +75,12 @@ Ext.define('Ext.draw.Component', {
          * __Note:__ It is applied only when there is only one surface.
          */
         fitSurface: true,
-
         /**
          * @cfg {Function} [resizeHandler] The resize function that can be configured to have a behavior.
          */
         resizeHandler: null,
-
         background: null,
-
         sprites: null,
-
         /**
          * @cfg {Object[]} gradients
          * Defines a set of gradients that can be used as color properties
@@ -134,16 +125,14 @@ Ext.define('Ext.draw.Component', {
          */
         gradients: []
     },
-
-    constructor: function (config) {
+    constructor: function(config) {
         config = config || {};
         this.callSuper(arguments);
         this.frameCallbackId = Ext.draw.Animator.addFrameCallback('renderFrame', this);
     },
-
-    applyGradients: function (gradients) {
+    applyGradients: function(gradients) {
         var result = [],
-            i, n, gradient;
+                i, n, gradient;
         if (!Ext.isArray(gradients)) {
             return result;
         }
@@ -162,7 +151,7 @@ Ext.define('Ext.draw.Component', {
             }
             // Convert ExtJS stops object to Touch stops array
             if (Ext.isObject(gradient.stops)) {
-                gradient.stops = (function (stops) {
+                gradient.stops = (function(stops) {
                     var result = [], stop;
                     for (offset in stops) {
                         stop = stops[offset];
@@ -177,14 +166,12 @@ Ext.define('Ext.draw.Component', {
         Ext.draw.sprite.GradientDefinition.add(result);
         return result;
     },
-
-    initialize: function () {
+    initialize: function() {
         var me = this;
         me.callSuper();
         me.element.on('resize', 'onResize', this);
     },
-
-    applySprites: function (sprites) {
+    applySprites: function(sprites) {
         // Never update
         if (!sprites) {
             return;
@@ -193,7 +180,7 @@ Ext.define('Ext.draw.Component', {
         sprites = Ext.Array.from(sprites);
 
         var ln = sprites.length,
-            i, surface;
+                i, surface;
 
         for (i = 0; i < ln; i++) {
             if (sprites[i].surface instanceof Ext.draw.Surface) {
@@ -206,8 +193,7 @@ Ext.define('Ext.draw.Component', {
             surface.add(sprites[i]);
         }
     },
-
-    getElementConfig: function () {
+    getElementConfig: function() {
         return {
             reference: 'element',
             className: 'x-container',
@@ -220,31 +206,28 @@ Ext.define('Ext.draw.Component', {
                             reference: 'watermarkElement',
                             cls: 'x-chart-watermark',
                             html: Ext.draw.Component.WATERMARK,
-                            style: Ext.draw.Component.WATERMARK ? '': 'display: none'
+                            style: Ext.draw.Component.WATERMARK ? '' : 'display: none'
                         }
                     ]
                 }
             ]
         };
     },
-
-    updateBackground: function (background) {
+    updateBackground: function(background) {
         this.element.setStyle({
             background: background
         });
     },
-
     /**
      * @protected
      * Place water mark after resize.
      */
-    onPlaceWatermark: function () {
+    onPlaceWatermark: function() {
         // Do nothing
     },
-
-    onResize: function () {
+    onResize: function() {
         var me = this,
-            size = me.element.getSize();
+                size = me.element.getSize();
         me.fireEvent('resize', me, size);
         if (me.getResizeHandler()) {
             me.getResizeHandler().call(me, size);
@@ -254,13 +237,12 @@ Ext.define('Ext.draw.Component', {
         me.renderFrame();
         me.onPlaceWatermark();
     },
-
-    resizeHandler: function (size) {
+    resizeHandler: function(size) {
         var me = this;
 
         //<deprecated product=touch since=2.2>
         var surfaces = me.getItems(),
-            surface, bbox, mat, zoomX, zoomY, zoom;
+                surface, bbox, mat, zoomX, zoomY, zoom;
 
         if (surfaces.length === 1) {
             surface = surfaces.get(0);
@@ -278,9 +260,9 @@ Ext.define('Ext.draw.Component', {
                 zoom = Math.min(zoomX, zoomY);
                 mat = new Ext.draw.Matrix();
                 mat.prepend(
-                    zoom, 0, 0, zoom,
-                    size.width * 0.5 + (-bbox.x - bbox.width * 0.5) * zoom,
-                    size.height * 0.5 + (-bbox.y - bbox.height * 0.5) * zoom);
+                        zoom, 0, 0, zoom,
+                        size.width * 0.5 + (-bbox.x - bbox.width * 0.5) * zoom,
+                        size.height * 0.5 + (-bbox.y - bbox.height * 0.5) * zoom);
                 surface.matrix = mat;
                 surface.inverseMatrix = mat.inverse();
                 surface.setRegion([0, 0, size.width, size.height]);
@@ -292,22 +274,21 @@ Ext.define('Ext.draw.Component', {
         }
         //</deprecated>
 
-        me.getItems().each(function (surface) {
+        me.getItems().each(function(surface) {
             surface.setRegion([0, 0, size.width, size.height]);
         });
     },
-
     /**
      * Get a surface by the given id or create one if it doesn't exist.
      * @param {String} [id="main"]
      * @return {Ext.draw.Surface}
      */
-    getSurface: function (id) {
+    getSurface: function(id) {
         id = this.getId() + '-' + (id || 'main');
         var me = this,
-            surfaces = me.getItems(),
-            surface = surfaces.get(id),
-            size;
+                surfaces = me.getItems(),
+                surface = surfaces.get(id),
+                size;
 
         if (!surface) {
             surface = me.add({xclass: me.engine, id: id});
@@ -319,14 +300,13 @@ Ext.define('Ext.draw.Component', {
         }
         return surface;
     },
-
     /**
      * Render all the surfaces in the component.
      */
-    renderFrame: function () {
+    renderFrame: function() {
         var me = this,
-            i, ln, bbox,
-            surfaces = me.getItems();
+                i, ln, bbox,
+                surfaces = me.getItems();
 
         for (i = 0, ln = surfaces.length; i < ln; i++) {
             surfaces.items[i].renderFrame();
@@ -339,12 +319,11 @@ Ext.define('Ext.draw.Component', {
         }
         //</deprecated>
     },
-
-    destroy: function () {
+    destroy: function() {
         Ext.draw.Animator.removeFrameCallback(this.frameCallbackId);
         this.callSuper();
     }
-}, function () {
+}, function() {
     if (location.search.match('svg')) {
         Ext.draw.Component.prototype.engine = 'Ext.draw.engine.Svg';
     } else if ((Ext.os.is.BlackBerry && Ext.os.version.getMajor() === 10) || (Ext.browser.is.AndroidStock4 && (Ext.os.version.getMinor() === 1 || Ext.os.version.getMinor() === 2 || Ext.os.version.getMinor() === 3))) {

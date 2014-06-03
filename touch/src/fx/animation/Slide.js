@@ -2,54 +2,41 @@
  * @private
  */
 Ext.define('Ext.fx.animation.Slide', {
-
     extend: 'Ext.fx.animation.Abstract',
-
     alternateClassName: 'Ext.fx.animation.SlideIn',
-
     alias: ['animation.slide', 'animation.slideIn'],
-
     config: {
         /**
          * @cfg {String} direction The direction of which the slide animates
          * @accessor
          */
         direction: 'left',
-
         /**
          * @cfg {Boolean} out True if you want to make this animation slide out, instead of slide in.
          * @accessor
          */
         out: false,
-
         /**
          * @cfg {Number} offset The offset that the animation should go offscreen before entering (or when exiting)
          * @accessor
          */
         offset: 0,
-
         /**
          * @cfg
          * @inheritdoc
          */
         easing: 'auto',
-
         containerBox: 'auto',
-
         elementBox: 'auto',
-
         isElementBoxFit: true,
-
         useCssTransform: true
     },
-
     reverseDirectionMap: {
         up: 'down',
         down: 'up',
         left: 'right',
         right: 'left'
     },
-
     applyEasing: function(easing) {
         if (easing === 'auto') {
             return 'ease-' + ((this.getOut()) ? 'in' : 'out');
@@ -57,7 +44,6 @@ Ext.define('Ext.fx.animation.Slide', {
 
         return easing;
     },
-
     getContainerBox: function() {
         var box = this._containerBox;
 
@@ -67,7 +53,6 @@ Ext.define('Ext.fx.animation.Slide', {
 
         return box;
     },
-
     getElementBox: function() {
         var box = this._elementBox;
 
@@ -81,21 +66,20 @@ Ext.define('Ext.fx.animation.Slide', {
 
         return box;
     },
-
     getData: function() {
         var elementBox = this.getElementBox(),
-            containerBox = this.getContainerBox(),
-            box = elementBox ? elementBox : containerBox,
-            from = this.getFrom(),
-            to = this.getTo(),
-            out = this.getOut(),
-            offset = this.getOffset(),
-            direction = this.getDirection(),
-            useCssTransform = this.getUseCssTransform(),
-            reverse = this.getReverse(),
-            translateX = 0,
-            translateY = 0,
-            fromX, fromY, toX, toY;
+                containerBox = this.getContainerBox(),
+                box = elementBox ? elementBox : containerBox,
+                from = this.getFrom(),
+                to = this.getTo(),
+                out = this.getOut(),
+                offset = this.getOffset(),
+                direction = this.getDirection(),
+                useCssTransform = this.getUseCssTransform(),
+                reverse = this.getReverse(),
+                translateX = 0,
+                translateY = 0,
+                fromX, fromY, toX, toY;
 
         if (reverse) {
             direction = this.reverseDirectionMap[direction];

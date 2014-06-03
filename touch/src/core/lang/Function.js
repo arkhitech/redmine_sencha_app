@@ -10,7 +10,6 @@
  * @alternateClassName Ext.util.Functions
  */
 Ext.Function = {
-
     /**
      * A very commonly used method throughout the framework. It acts as a wrapper around another method
      * which originally accepts 2 arguments for `name` and `value`.
@@ -55,7 +54,7 @@ Ext.Function = {
                 }
 
                 if (Ext.enumerables) {
-                    for (i = Ext.enumerables.length; i--;) {
+                    for (i = Ext.enumerables.length; i--; ) {
                         k = Ext.enumerables[i];
                         if (a.hasOwnProperty(k)) {
                             fn.call(this, k, a[k]);
@@ -69,7 +68,6 @@ Ext.Function = {
             return this;
         };
     },
-
     /**
      * Create a new function from the provided `fn`, change `this` to the provided scope, optionally
      * overrides arguments for the call. Defaults to the arguments passed by the caller.
@@ -92,7 +90,7 @@ Ext.Function = {
         }
 
         var method = fn,
-            slice = Array.prototype.slice;
+                slice = Array.prototype.slice;
 
         return function() {
             var callArgs = args || arguments;
@@ -109,7 +107,6 @@ Ext.Function = {
             return method.apply(scope || window, callArgs);
         };
     },
-
     /**
      * Create a new function from the provided `fn`, the arguments of which are pre-set to `args`.
      * New arguments passed to the newly created callback when it's invoked are appended after the pre-set ones.
@@ -143,7 +140,6 @@ Ext.Function = {
             return fn.apply(scope || this, args);
         };
     },
-
     /**
      * Create an alias to the provided method property with name `methodName` of `object`.
      * Note that the execution scope will still be bound to the provided `object` itself.
@@ -157,7 +153,6 @@ Ext.Function = {
             return object[methodName].apply(object, arguments);
         };
     },
-
     /**
      * Create a "clone" of the provided method. The returned method will call the given
      * method passing along all arguments and the "this" pointer and return its result.
@@ -170,7 +165,6 @@ Ext.Function = {
             return method.apply(this, arguments);
         };
     },
-
     /**
      * Creates an interceptor function. The passed function is called before the original one. If it returns false,
      * the original one is not called. The resulting function returns the results of the original function.
@@ -206,14 +200,13 @@ Ext.Function = {
         else {
             return function() {
                 var me = this,
-                    args = arguments;
+                        args = arguments;
                 newFn.target = me;
                 newFn.method = origFn;
                 return (newFn.apply(scope || me || window, args) !== false) ? origFn.apply(me || window, args) : returnValue || null;
             };
         }
     },
-
     /**
      * Creates a delegate (callback) which, when called, executes after a specific delay.
      *
@@ -233,14 +226,13 @@ Ext.Function = {
 
         return function() {
             var me = this,
-                args = Array.prototype.slice.call(arguments);
+                    args = Array.prototype.slice.call(arguments);
 
             setTimeout(function() {
                 fn.apply(me, args);
             }, delay);
         }
     },
-
     /**
      * Calls this function after the number of milliseconds specified, optionally in a specific scope. Example usage:
      *
@@ -280,7 +272,6 @@ Ext.Function = {
         fn();
         return 0;
     },
-
     /**
      * Create a combined function call sequence of the original function + the passed function.
      * The resulting function returns the results of the original function.
@@ -316,7 +307,6 @@ Ext.Function = {
             };
         }
     },
-
     /**
      * Creates a delegate function, optionally with a bound scope which, when called, buffers
      * the execution of the passed function for the configured number of milliseconds.
@@ -338,18 +328,17 @@ Ext.Function = {
 
         return function() {
             var callArgs = args || Array.prototype.slice.call(arguments, 0),
-                me = scope || this;
+                    me = scope || this;
 
             if (timerId) {
                 clearTimeout(timerId);
             }
 
-            timerId = setTimeout(function(){
+            timerId = setTimeout(function() {
                 fn.apply(me, callArgs);
             }, buffer);
         };
     },
-
     /**
      * Creates a throttled version of the passed function which, when called repeatedly and
      * rapidly, invokes the passed function only after a certain interval has elapsed since the
@@ -382,8 +371,6 @@ Ext.Function = {
             }
         };
     },
-
-
     /**
      * Adds behavior to an existing method that is executed before the
      * original behavior of the function.  For example:
@@ -423,7 +410,6 @@ Ext.Function = {
             return ret;
         });
     },
-
     /**
      * Adds behavior to an existing method that is executed after the
      * original behavior of the function.  For example:

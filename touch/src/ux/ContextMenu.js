@@ -3,13 +3,11 @@
  */
 Ext.define('Ext.ux.ContextMenu', {
     extend: 'Ext.Menu',
-
     config: {
         /**
          * @hide
          */
         ui: 'context',
-
         /**
          * @hide
          */

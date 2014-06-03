@@ -39,20 +39,18 @@ Ext.define('Ext.field.Url', {
     extend: 'Ext.field.Text',
     xtype: 'urlfield',
     alternateClassName: 'Ext.form.Url',
-
     config: {
         /**
          * @cfg
          * @inheritdoc
          */
         autoCapitalize: false,
-
         /**
          * @cfg
          * @inheritdoc
          */
         component: {
-	        type: 'url'
-	    }
+            type: 'url'
+        }
     }
 });

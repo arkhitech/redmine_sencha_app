@@ -38,13 +38,11 @@
  */
 Ext.define('Ext.device.Push', {
     singleton: true,
-
     requires: [
         'Ext.device.Communicator',
         'Ext.device.push.Sencha',
         'Ext.device.push.Cordova'
     ],
-
     constructor: function() {
         var browserEnv = Ext.browser.is;
 

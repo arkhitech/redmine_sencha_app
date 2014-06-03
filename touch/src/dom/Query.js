@@ -83,7 +83,7 @@ Ext.define('Ext.dom.Query', {
      */
     select: function(q, root) {
         var results = [],
-            nodes, i, j, qlen, nlen;
+                nodes, i, j, qlen, nlen;
 
         root = root || document;
 
@@ -93,7 +93,7 @@ Ext.define('Ext.dom.Query', {
 
         q = q.split(",");
 
-        for (i = 0,qlen = q.length; i < qlen; i++) {
+        for (i = 0, qlen = q.length; i < qlen; i++) {
             if (typeof q[i] == 'string') {
 
                 //support for node attribute selection
@@ -104,7 +104,7 @@ Ext.define('Ext.dom.Query', {
                 else {
                     nodes = root.querySelectorAll(q[i]);
 
-                    for (j = 0,nlen = nodes.length; j < nlen; j++) {
+                    for (j = 0, nlen = nodes.length; j < nlen; j++) {
                         results.push(nodes[j]);
                     }
                 }
@@ -113,7 +113,6 @@ Ext.define('Ext.dom.Query', {
 
         return results;
     },
-
     /**
      * Selects a single element.
      * @param {String} selector The selector/xpath query
@@ -123,14 +122,13 @@ Ext.define('Ext.dom.Query', {
     selectNode: function(q, root) {
         return this.select(q, root)[0];
     },
-
     /**
      * Returns true if the passed element(s) match the passed simple selector (e.g. div.some-class or span:first-child)
      * @param {String/HTMLElement/Array} el An element id, element or array of elements
      * @param {String} selector The simple selector to test
      * @return {Boolean}
      */
-    is: function (el, q) {
+    is: function(el, q) {
         var root, is, i, ln;
 
         if (typeof el == "string") {
@@ -162,7 +160,6 @@ Ext.define('Ext.dom.Query', {
         }
         return is;
     },
-
     isXml: function(el) {
         var docEl = (el ? el.ownerDocument || el : 0).documentElement;
         return docEl ? docEl.nodeName !== "HTML" : false;

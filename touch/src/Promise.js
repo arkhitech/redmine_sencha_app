@@ -5,10 +5,10 @@ Ext.define('Ext.Promise', {
     statics: {
         when: function() {
             var ret = new this,
-                promises = Array.prototype.slice.call(arguments),
-                index = -1,
-                results = [],
-                promise;
+                    promises = Array.prototype.slice.call(arguments),
+                    index = -1,
+                    results = [],
+                    promise;
 
             function onRejected(e) {
                 ret.reject(e);
@@ -35,13 +35,12 @@ Ext.define('Ext.Promise', {
 
             return ret;
         },
-
         whenComplete: function(promises) {
             var ret = new this,
-                index = -1,
-                fulfilledResults = [],
-                rejectedReasons = [],
-                promise;
+                    index = -1,
+                    fulfilledResults = [],
+                    rejectedReasons = [],
+                    promise;
 
             function onRejected(reason) {
                 promise = promises.shift();
@@ -73,14 +72,12 @@ Ext.define('Ext.Promise', {
 
             return ret;
         },
-
         from: function() {
             var promise = new this;
             promise.completed = 1;
             promise.lastResults = arguments;
             return promise;
         },
-
         fail: function(reason) {
             var promise = new this;
             promise.completed = -1;
@@ -88,9 +85,7 @@ Ext.define('Ext.Promise', {
             return promise;
         }
     },
-
     completed: 0,
-
     getListeners: function(init) {
         var listeners = this.listeners;
 
@@ -100,7 +95,6 @@ Ext.define('Ext.Promise', {
 
         return listeners;
     },
-
     then: function(scope, success, error) {
         if (typeof scope == 'function') {
             error = success;
@@ -118,11 +112,10 @@ Ext.define('Ext.Promise', {
 
         return this.doThen(scope, success, error);
     },
-
     doThen: function(scope, success, error) {
         var Promise = Ext.Promise,
-            completed = this.completed,
-            promise, result;
+                completed = this.completed,
+                promise, result;
 
         if (completed === -1) {
             if (error) {
@@ -159,7 +152,6 @@ Ext.define('Ext.Promise', {
 
         return promise;
     },
-
     error: function(scope, error) {
         if (typeof scope == 'function') {
             error = scope;
@@ -172,10 +164,9 @@ Ext.define('Ext.Promise', {
 
         return this.doThen(scope, null, error);
     },
-
     fulfill: function() {
         var results = arguments,
-            listeners, listener, scope, success, promise, callbackResults;
+                listeners, listener, scope, success, promise, callbackResults;
 
         this.lastResults = results;
         this.completed = 1;
@@ -210,7 +201,6 @@ Ext.define('Ext.Promise', {
 
         return this;
     },
-
     connect: function(promise) {
         var me = this;
 
@@ -219,10 +209,9 @@ Ext.define('Ext.Promise', {
             return result;
         }, 'reject');
     },
-
     reject: function(reason) {
         var listeners = this.getListeners(),
-            listener, error, promise;
+                listener, error, promise;
 
         this.lastReason = reason;
         this.completed = -1;
@@ -244,11 +233,10 @@ Ext.define('Ext.Promise', {
 
         return this;
     },
-
     cancel: function() {
         var listeners = this.getListeners(),
-            owner = this.$owner,
-            i, ln, listener;
+                owner = this.$owner,
+                i, ln, listener;
 
         if (listeners) {
             for (i = 0, ln = listeners.length; i < ln; i++) {

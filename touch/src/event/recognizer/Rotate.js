@@ -5,11 +5,8 @@
  */
 Ext.define('Ext.event.recognizer.Rotate', {
     extend: 'Ext.event.recognizer.MultiTouch',
-
     requiredTouchesCount: 2,
-
     handledEvents: ['rotatestart', 'rotate', 'rotateend'],
-
     /**
      * @member Ext.dom.Element
      * @event rotatestart
@@ -56,19 +53,16 @@ Ext.define('Ext.event.recognizer.Rotate', {
      */
 
     startAngle: 0,
-
     lastTouches: null,
-
     lastAngle: null,
-
     onTouchMove: function(e) {
         if (!this.isTracking) {
             return;
         }
 
         var touches = Array.prototype.slice.call(e.touches),
-            lastAngle = this.lastAngle,
-            firstPoint, secondPoint, angle, nextAngle, previousAngle, diff;
+                lastAngle = this.lastAngle,
+                firstPoint, secondPoint, angle, nextAngle, previousAngle, diff;
 
         firstPoint = touches[0].point;
         secondPoint = touches[1].point;
@@ -111,7 +105,6 @@ Ext.define('Ext.event.recognizer.Rotate', {
 
         this.lastTouches = touches;
     },
-
     fireEnd: function(e) {
         this.lastAngle = null;
         this.fire('rotateend', e, this.lastTouches);

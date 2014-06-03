@@ -7,13 +7,11 @@
  */
 Ext.define('Ext.device.Capture', {
     singleton: true,
-
     requires: [
         'Ext.device.Communicator',
         'Ext.device.capture.Cordova',
         'Ext.device.capture.Simulator'
     ],
-
     constructor: function() {
         var browserEnv = Ext.browser.is;
 

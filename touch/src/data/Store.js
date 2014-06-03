@@ -324,9 +324,7 @@
  */
 Ext.define('Ext.data.Store', {
     alias: 'store.store',
-
     extend: 'Ext.Evented',
-
     requires: [
         'Ext.util.Collection',
         'Ext.data.Operation',
@@ -335,7 +333,6 @@ Ext.define('Ext.data.Store', {
         'Ext.data.StoreManager',
         'Ext.util.Grouper'
     ],
-
     /**
      * @event addrecords
      * Fired when one or more new Model instances have been added to this Store. You should listen
@@ -439,9 +436,7 @@ Ext.define('Ext.data.Store', {
             return store;
         }
     },
-
     isStore: true,
-
     config: {
         /**
          * @cfg {String} storeId
@@ -450,14 +445,12 @@ Ext.define('Ext.data.Store', {
          * @accessor
          */
         storeId: undefined,
-
         /**
          * @cfg {Object[]/Ext.data.Model[]} data
          * Array of Model instances or data objects to load locally. See "Inline data" above for details.
          * @accessor
          */
         data: null,
-
         /**
          * @cfg {Boolean/Object} [autoLoad=false]
          * If data is not specified, and if `autoLoad` is `true` or an Object, this store's load method is automatically called
@@ -465,14 +458,12 @@ Ext.define('Ext.data.Store', {
          * @accessor
          */
         autoLoad: null,
-
         /**
          * @cfg {Boolean} autoSync
          * `true` to automatically sync the Store with its Proxy after every edit to one of its Records.
          * @accessor
          */
         autoSync: false,
-
         /**
          * @cfg {String} model
          * Returns Ext.data.Model and not a String.
@@ -481,14 +472,12 @@ Ext.define('Ext.data.Store', {
          * @accessor
          */
         model: undefined,
-
         /**
          * @cfg {String/Ext.data.proxy.Proxy/Object} proxy The Proxy to use for this Store. This can be either a string, a config
          * object or a Proxy instance - see {@link #setProxy} for details.
          * @accessor
          */
         proxy: undefined,
-
         /**
          * @cfg {Object[]/Ext.util.Collection} fields
          * Returns Ext.util.Collection not just an Object.
@@ -502,7 +491,6 @@ Ext.define('Ext.data.Store', {
          * @accessor
          */
         fields: null,
-
         /**
          * @cfg {Boolean} remoteSort
          * `true` to defer any sorting operation to the server. If `false`, sorting is done locally on the client.
@@ -516,7 +504,6 @@ Ext.define('Ext.data.Store', {
          * @accessor
          */
         remoteSort: false,
-
         /**
          * @cfg {Boolean} remoteFilter
          * `true` to defer any filtering operation to the server. If `false`, filtering is done locally on the client.
@@ -530,7 +517,6 @@ Ext.define('Ext.data.Store', {
          * @accessor
          */
         remoteFilter: false,
-
         /**
          * @cfg {Boolean} remoteGroup
          * `true` to defer any grouping operation to the server. If `false`, grouping is done locally on the client.
@@ -541,7 +527,6 @@ Ext.define('Ext.data.Store', {
          * @accessor
          */
         remoteGroup: false,
-
         /**
          * @cfg {Object[]} filters
          * Array of {@link Ext.util.Filter Filters} for this store. This configuration is handled by the
@@ -549,7 +534,6 @@ Ext.define('Ext.data.Store', {
          * @accessor
          */
         filters: null,
-
         /**
          * @cfg {Object[]} sorters
          * Array of {@link Ext.util.Sorter Sorters} for this store. This configuration is handled by the
@@ -558,7 +542,6 @@ Ext.define('Ext.data.Store', {
          * @accessor
          */
         sorters: null,
-
         /**
          * @cfg {Object} grouper
          * A configuration object for this Store's {@link Ext.util.Grouper grouper}.
@@ -583,7 +566,6 @@ Ext.define('Ext.data.Store', {
          * @accessor
          */
         grouper: null,
-
         /**
          * @cfg {String} groupField
          * The (optional) field by which to group data in the store. Internally, grouping is very similar to sorting - the
@@ -592,7 +574,6 @@ Ext.define('Ext.data.Store', {
          * @accessor
          */
         groupField: null,
-
         /**
          * @cfg {String} groupDir
          * The direction in which sorting should be applied when grouping. If you specify a grouper by using the {@link #groupField}
@@ -600,7 +581,6 @@ Ext.define('Ext.data.Store', {
          * @accessor
          */
         groupDir: null,
-
         /**
          * @cfg {Function} getGroupString This function will be passed to the {@link #grouper} configuration as it's `groupFn`.
          * Note that this configuration is deprecated and grouper: `{groupFn: yourFunction}}` is preferred.
@@ -608,7 +588,6 @@ Ext.define('Ext.data.Store', {
          * @accessor
          */
         getGroupString: null,
-
         /**
          * @cfg {Number} pageSize
          * The number of records considered to form a 'page'. This is used to power the built-in
@@ -626,14 +605,12 @@ Ext.define('Ext.data.Store', {
          * {@link #leadingBufferZone} configurations based upon the conditions pertaining in your deployed application.
          */
         pageSize: 25,
-
         /**
          * @cfg {Number} totalCount The total number of records in the full dataset, as indicated by a server. If the
          * server-side dataset contains 5000 records but only returns pages of 50 at a time, `totalCount` will be set to
          * 5000 and {@link #getCount} will return 50
          */
         totalCount: null,
-
         /**
          * @cfg {Boolean} clearOnPageLoad `true` to empty the store when loading another page via {@link #loadPage},
          * {@link #nextPage} or {@link #previousPage}. Setting to `false` keeps existing records, allowing
@@ -641,23 +618,19 @@ Ext.define('Ext.data.Store', {
          * @accessor
          */
         clearOnPageLoad: true,
-
         /**
          * @cfg {Object} params Parameters to send into the proxy for any CRUD operations
          *
          * @accessor
          */
         params: {},
-
         modelDefaults: {},
-
         /**
          * @cfg {Boolean} autoDestroy This is a private configuration used in the framework whether this Store
          * can be destroyed.
          * @private
          */
         autoDestroy: false,
-
         /**
          * @cfg {Boolean} syncRemovedRecords This configuration allows you to disable the synchronization of
          * removed records on this Store. By default, when you call `removeAll()` or `remove()`, records will be added
@@ -665,13 +638,11 @@ Ext.define('Ext.data.Store', {
          * If you don't want this to happen, you can set this configuration to `false`.
          */
         syncRemovedRecords: true,
-
         /**
          * @cfg {Boolean} destroyRemovedRecords This configuration allows you to prevent destroying record
          * instances when they are removed from this store and are not in any other store.
          */
         destroyRemovedRecords: true,
-
         /**
          * @cfg {Boolean} buffered
          * Allows the Store to prefetch and cache in a **page cache**, pages of Records, and to then satisfy
@@ -710,7 +681,6 @@ Ext.define('Ext.data.Store', {
          *
          */
         buffered: false,
-
         /**
          * @cfg {Object/Array} plugins
          * @accessor
@@ -782,13 +752,11 @@ Ext.define('Ext.data.Store', {
          */
         plugins: null
     },
-
     /**
      * @property {Number} currentPage
      * The page that the Store has most recently loaded (see {@link #loadPage})
      */
     currentPage: 1,
-
     constructor: function(config) {
         config = config || {};
 
@@ -808,24 +776,24 @@ Ext.define('Ext.data.Store', {
         // <debug>
         if (config.hasOwnProperty('sortOnLoad')) {
             Ext.Logger.deprecate(
-                '[Ext.data.Store] sortOnLoad is always activated in Sencha Touch 2 so your Store is always fully ' +
-                'sorted after loading. The only exception is if you are using remoteSort and change sorting after ' +
-                'the Store as loaded, in which case you need to call store.load() to fetch the sorted data from the server.'
-            );
+                    '[Ext.data.Store] sortOnLoad is always activated in Sencha Touch 2 so your Store is always fully ' +
+                    'sorted after loading. The only exception is if you are using remoteSort and change sorting after ' +
+                    'the Store as loaded, in which case you need to call store.load() to fetch the sorted data from the server.'
+                    );
         }
 
         if (config.hasOwnProperty('filterOnLoad')) {
             Ext.Logger.deprecate(
-                '[Ext.data.Store] filterOnLoad is always activated in Sencha Touch 2 so your Store is always fully ' +
-                'sorted after loading. The only exception is if you are using remoteFilter and change filtering after ' +
-                'the Store as loaded, in which case you need to call store.load() to fetch the filtered data from the server.'
-            );
+                    '[Ext.data.Store] filterOnLoad is always activated in Sencha Touch 2 so your Store is always fully ' +
+                    'sorted after loading. The only exception is if you are using remoteFilter and change filtering after ' +
+                    'the Store as loaded, in which case you need to call store.load() to fetch the filtered data from the server.'
+                    );
         }
 
         if (config.hasOwnProperty('sortOnFilter')) {
             Ext.Logger.deprecate(
-                '[Ext.data.Store] sortOnFilter is deprecated and is always effectively true when sorting and filtering locally'
-            );
+                    '[Ext.data.Store] sortOnFilter is deprecated and is always effectively true when sorting and filtering locally'
+                    );
         }
         // </debug>
         // </deprecated>
@@ -834,7 +802,6 @@ Ext.define('Ext.data.Store', {
 
         this.callParent(arguments);
     },
-
     applyPlugins: function(config) {
         var ln, i, configObj;
 
@@ -851,7 +818,6 @@ Ext.define('Ext.data.Store', {
 
         return config;
     },
-
     updatePlugins: function(newPlugins, oldPlugins) {
         var ln, i;
 
@@ -867,7 +833,6 @@ Ext.define('Ext.data.Store', {
             }
         }
     },
-
     /**
      * @private
      * @return {Ext.util.Collection}
@@ -877,14 +842,12 @@ Ext.define('Ext.data.Store', {
             return record.getId();
         });
     },
-
     applyStoreId: function(storeId) {
         if (storeId === undefined || storeId === null) {
             storeId = this.getUniqueId();
         }
         return storeId;
     },
-
     updateStoreId: function(storeId, oldStoreId) {
         if (oldStoreId) {
             Ext.data.StoreManager.unregister(this);
@@ -893,7 +856,6 @@ Ext.define('Ext.data.Store', {
             Ext.data.StoreManager.register(this);
         }
     },
-
     applyModel: function(model) {
         if (typeof model == 'string') {
             var registeredModel = Ext.data.ModelManager.getModel(model);
@@ -909,7 +871,7 @@ Ext.define('Ext.data.Store', {
 
         if (!model) {
             var fields = this.getFields(),
-                data = this.config.data;
+                    data = this.config.data;
 
             if (!fields && data && data.length) {
                 fields = Ext.Object.getKeys(data[0]);
@@ -940,7 +902,6 @@ Ext.define('Ext.data.Store', {
 
         return model;
     },
-
     updateModel: function(model) {
         var proxy = this.getProxy();
 
@@ -948,7 +909,6 @@ Ext.define('Ext.data.Store', {
             proxy.setModel(model);
         }
     },
-
     applyProxy: function(proxy, currentProxy) {
         proxy = Ext.factory(proxy, Ext.data.Proxy, currentProxy, 'proxy');
 
@@ -968,7 +928,6 @@ Ext.define('Ext.data.Store', {
 
         return proxy;
     },
-
     updateProxy: function(proxy, oldProxy) {
         if (proxy) {
             if (!proxy.getModel()) {
@@ -980,7 +939,6 @@ Ext.define('Ext.data.Store', {
             proxy.un('metachange', 'onMetaChange', this);
         }
     },
-
     /**
      * We are using applyData so that we can return nothing and prevent the `this.data`
      * property to be overridden.
@@ -988,7 +946,7 @@ Ext.define('Ext.data.Store', {
      */
     applyData: function(data) {
         var me = this,
-            proxy;
+                proxy;
         if (data) {
             proxy = me.getProxy();
             if (proxy instanceof Ext.data.proxy.Memory) {
@@ -1021,11 +979,9 @@ Ext.define('Ext.data.Store', {
 
         me.fireEvent('refresh', me, me.data);
     },
-
     clearData: function() {
         this.setData(null);
     },
-
     /**
      * Uses the configured {@link Ext.data.reader.Reader reader} to convert the data into records
      * and adds it to the Store. Use this when you have raw data that needs to pass trough converters,
@@ -1037,19 +993,17 @@ Ext.define('Ext.data.Store', {
      */
     addData: function(data) {
         var reader = this.getProxy().getReader(),
-            resultSet = reader.read(data),
-            records = resultSet.getRecords();
+                resultSet = reader.read(data),
+                records = resultSet.getRecords();
 
         this.add(records);
     },
-
     updateAutoLoad: function(autoLoad) {
         var proxy = this.getProxy();
         if (autoLoad && (proxy && !proxy.isMemoryProxy)) {
             this.load(Ext.isObject(autoLoad) ? autoLoad : null);
         }
     },
-
     /**
      * Returns `true` if the Store is set to {@link #autoLoad} or is a type which loads upon instantiation.
      * @return {Boolean}
@@ -1058,7 +1012,6 @@ Ext.define('Ext.data.Store', {
         var proxy = this.getProxy();
         return (this.getAutoLoad() || (proxy && proxy.isMemoryProxy) || this.dataLoaded);
     },
-
     updateGroupField: function(groupField) {
         var grouper = this.getGrouper();
         if (groupField) {
@@ -1074,14 +1027,12 @@ Ext.define('Ext.data.Store', {
             this.setGrouper(null);
         }
     },
-
     updateGroupDir: function(groupDir) {
         var grouper = this.getGrouper();
         if (grouper) {
             grouper.setDirection(groupDir);
         }
     },
-
     applyGetGroupString: function(getGroupStringFn) {
         var grouper = this.getGrouper();
         if (getGroupStringFn) {
@@ -1100,7 +1051,6 @@ Ext.define('Ext.data.Store', {
             this.setGrouper(null);
         }
     },
-
     applyGrouper: function(grouper) {
         if (typeof grouper == 'string') {
             grouper = {
@@ -1116,7 +1066,6 @@ Ext.define('Ext.data.Store', {
         grouper = Ext.factory(grouper, Ext.util.Grouper);
         return grouper;
     },
-
     updateGrouper: function(grouper, oldGrouper) {
         var data = this.data;
         if (oldGrouper) {
@@ -1141,7 +1090,6 @@ Ext.define('Ext.data.Store', {
             this.fireEvent('refresh', this, data);
         }
     },
-
     /**
      * This method tells you if this store has a grouper defined on it.
      * @return {Boolean} `true` if this store has a grouper defined.
@@ -1149,11 +1097,10 @@ Ext.define('Ext.data.Store', {
     isGrouped: function() {
         return !!this.getGrouper();
     },
-
     updateSorters: function(sorters) {
         var grouper = this.getGrouper(),
-            data = this.data,
-            autoSort = data.getAutoSort();
+                data = this.data,
+                autoSort = data.getAutoSort();
 
         // While we remove/add sorters we don't want to automatically sort because we still need
         // to apply any field sortTypes as transforms on the Sorters after we have added them.
@@ -1170,17 +1117,16 @@ Ext.define('Ext.data.Store', {
         // auto sorted, setting this back will cause it to sort right away.
         data.setAutoSort(autoSort);
     },
-
     updateSortTypes: function() {
         var model = this.getModel(),
-            fields = model && model.getFields(),
-            data = this.data;
+                fields = model && model.getFields(),
+                data = this.data;
 
         // We loop over each sorter and set it's transform method to the every field's sortType.
         if (fields) {
             data.getSorters().each(function(sorter) {
                 var property = sorter.getProperty(),
-                    field;
+                        field;
 
                 if (!sorter.isGrouper && property && !sorter.getTransform()) {
                     field = fields.get(property);
@@ -1191,11 +1137,9 @@ Ext.define('Ext.data.Store', {
             });
         }
     },
-
     updateFilters: function(filters) {
         this.data.setFilters(filters);
     },
-
     /**
      * Adds Model instance to the Store. This method accepts either:
      *
@@ -1222,7 +1166,6 @@ Ext.define('Ext.data.Store', {
 
         return this.insert(this.data.length, records);
     },
-
     /**
      * Inserts Model instances into the Store at the given index and fires the {@link #add} event.
      * See also `{@link #add}`.
@@ -1236,13 +1179,13 @@ Ext.define('Ext.data.Store', {
         }
 
         var me = this,
-            sync = false,
-            data = this.data,
-            ln = records.length,
-            Model = this.getModel(),
-            modelDefaults = me.getModelDefaults(),
-            added = false,
-            i, record;
+                sync = false,
+                data = this.data,
+                ln = records.length,
+                Model = this.getModel(),
+                modelDefaults = me.getModelDefaults(),
+                added = false,
+                i, record;
 
         records = records.slice();
 
@@ -1287,28 +1230,27 @@ Ext.define('Ext.data.Store', {
 
         return records;
     },
-
     /**
      * Removes the given record from the Store, firing the `removerecords` event passing all the instances that are removed.
      * @param {Ext.data.Model/Ext.data.Model[]} records Model instance or array of instances to remove.
      */
-    remove: function (records) {
+    remove: function(records) {
         if (records.isModel) {
             records = [records];
         }
 
         var me = this,
-            sync = false,
-            i = 0,
-            autoSync = this.getAutoSync(),
-            syncRemovedRecords = me.getSyncRemovedRecords(),
-            destroyRemovedRecords = this.getDestroyRemovedRecords(),
-            ln = records.length,
-            indices = [],
-            removed = [],
-            isPhantom,
-            items = me.data.items,
-            record, index;
+                sync = false,
+                i = 0,
+                autoSync = this.getAutoSync(),
+                syncRemovedRecords = me.getSyncRemovedRecords(),
+                destroyRemovedRecords = this.getDestroyRemovedRecords(),
+                ln = records.length,
+                indices = [],
+                removed = [],
+                isPhantom,
+                items = me.data.items,
+                record, index;
 
         for (; i < ln; i++) {
             record = records[i];
@@ -1343,7 +1285,6 @@ Ext.define('Ext.data.Store', {
             me.sync();
         }
     },
-
     /**
      * Removes the model instance at the given index.
      * @param {Number} index The record index.
@@ -1355,7 +1296,6 @@ Ext.define('Ext.data.Store', {
             this.remove(record);
         }
     },
-
     /**
      * Remove all items from the store.
      * @param {Boolean} [silent] Prevent the `clear` event from being fired.
@@ -1367,14 +1307,13 @@ Ext.define('Ext.data.Store', {
             this.doRemoveAll.call(this, true);
         }
     },
-
-    doRemoveAll: function (silent) {
+    doRemoveAll: function(silent) {
         var me = this,
-            destroyRemovedRecords = this.getDestroyRemovedRecords(),
-            syncRemovedRecords = this.getSyncRemovedRecords(),
-            records = me.data.all.slice(),
-            ln = records.length,
-            i, record;
+                destroyRemovedRecords = this.getDestroyRemovedRecords(),
+                syncRemovedRecords = this.getSyncRemovedRecords(),
+                records = me.data.all.slice(),
+                ln = records.length,
+                i, record;
 
         for (i = 0; i < ln; i++) {
             record = records[i];
@@ -1398,7 +1337,6 @@ Ext.define('Ext.data.Store', {
             this.sync();
         }
     },
-
     /**
      * Calls the specified function for each of the {@link Ext.data.Model Records} in the cache.
      *
@@ -1437,7 +1375,6 @@ Ext.define('Ext.data.Store', {
     each: function(fn, scope) {
         this.data.each(fn, scope);
     },
-
     /**
      * Gets the number of cached records. Note that filtered records are not included in this count.
      * If using paging, this may not be the total size of the dataset.
@@ -1446,16 +1383,14 @@ Ext.define('Ext.data.Store', {
     getCount: function() {
         return this.data.items.length || 0;
     },
-
     /**
      * Gets the number of all cached records including the ones currently filtered.
      * If using paging, this may not be the total size of the dataset.
      * @return {Number} The number of all Records in the Store's cache.
      */
-    getAllCount: function () {
+    getAllCount: function() {
         return this.data.all.length || 0;
     },
-
     /**
      * Get the Record at the specified index.
      * @param {Number} index The index of the Record to find.
@@ -1464,7 +1399,6 @@ Ext.define('Ext.data.Store', {
     getAt: function(index) {
         return this.data.getAt(index);
     },
-
     /**
      * Returns a range of Records between specified indices. Note that if the store is filtered, only filtered results
      * are returned.
@@ -1475,7 +1409,6 @@ Ext.define('Ext.data.Store', {
     getRange: function(start, end) {
         return this.data.getRange(start, end);
     },
-
     /**
      * Get the Record with the specified id.
      * @param {String} id The id of the Record to find.
@@ -1486,7 +1419,6 @@ Ext.define('Ext.data.Store', {
             return record.getId() == id;
         });
     },
-
     /**
      * Get the index within the cache of the passed Record.
      * @param {Ext.data.Model} record The Ext.data.Model object to find.
@@ -1495,7 +1427,6 @@ Ext.define('Ext.data.Store', {
     indexOf: function(record) {
         return this.data.indexOf(record);
     },
-
     /**
      * Get the index within the cache of the Record with the passed id.
      * @param {String} id The id of the Record to find.
@@ -1504,7 +1435,6 @@ Ext.define('Ext.data.Store', {
     indexOfId: function(id) {
         return this.data.indexOfKey(id);
     },
-
     /**
      * @private
      * A model instance should call this method on the Store it has been {@link Ext.data.Model#join joined} to.
@@ -1514,10 +1444,10 @@ Ext.define('Ext.data.Store', {
      */
     afterEdit: function(record, modifiedFieldNames, modified) {
         var me = this,
-            data = me.data,
-            currentId = modified[record.getIdProperty()] || record.getId(),
-            currentIndex = data.keys.indexOf(currentId),
-            newIndex;
+                data = me.data,
+                currentId = modified[record.getIdProperty()] || record.getId(),
+                currentIndex = data.keys.indexOf(currentId),
+                newIndex;
 
         if (currentIndex === -1 && data.map[currentId] === undefined) {
             return;
@@ -1544,7 +1474,6 @@ Ext.define('Ext.data.Store', {
             me.fireEvent('updaterecord', me, record, newIndex, currentIndex, modifiedFieldNames, modified);
         }
     },
-
     /**
      * @private
      * A model instance should call this method on the Store it has been {@link Ext.data.Model#join joined} to.
@@ -1554,7 +1483,6 @@ Ext.define('Ext.data.Store', {
         var index = this.data.indexOf(record);
         this.fireEvent('updaterecord', this, record, index, index, [], {});
     },
-
     /**
      * @private
      * A model instance should call this method on the Store it has been {@link Ext.data.Model#join joined} to.
@@ -1564,10 +1492,10 @@ Ext.define('Ext.data.Store', {
      */
     afterCommit: function(record, modifiedFieldNames, modified) {
         var me = this,
-            data = me.data,
-            currentId = modified[record.getIdProperty()] || record.getId(),
-            currentIndex = data.keys.indexOf(currentId),
-            newIndex;
+                data = me.data,
+                currentId = modified[record.getIdProperty()] || record.getId(),
+                currentIndex = data.keys.indexOf(currentId),
+                newIndex;
 
         if (currentIndex === -1 && data.map[currentId] === undefined) {
             return;
@@ -1590,7 +1518,6 @@ Ext.define('Ext.data.Store', {
             me.fireEvent('updaterecord', me, record, newIndex, currentIndex, modifiedFieldNames, modified);
         }
     },
-
     /**
      * This gets called by a record after is gets erased from the server.
      * @param {Ext.data.Model} record
@@ -1598,38 +1525,32 @@ Ext.define('Ext.data.Store', {
      */
     afterErase: function(record) {
         var me = this,
-            data = me.data,
-            index = data.indexOf(record);
+                data = me.data,
+                index = data.indexOf(record);
 
         if (index !== -1) {
             data.remove(record);
             me.fireEvent('removerecords', me, [record], [index]);
         }
     },
-
     applyRemoteFilter: function(value) {
         var proxy = this.getProxy();
-        return value || (proxy && proxy.isSQLProxy  === true);
+        return value || (proxy && proxy.isSQLProxy === true);
     },
-
     applyRemoteSort: function(value) {
         var proxy = this.getProxy();
-        return value || (proxy && proxy.isSQLProxy  === true);
+        return value || (proxy && proxy.isSQLProxy === true);
     },
-
     applyRemoteGroup: function(value) {
         var proxy = this.getProxy();
-        return value || (proxy && proxy.isSQLProxy  === true);
+        return value || (proxy && proxy.isSQLProxy === true);
     },
-
     updateRemoteFilter: function(remoteFilter) {
         this.data.setAutoFilter(!remoteFilter);
     },
-
     updateRemoteSort: function(remoteSort) {
         this.data.setAutoSort(!remoteSort);
     },
-
     /**
      * Sorts the data in the Store by one or more of its properties. Example usage:
      *
@@ -1674,8 +1595,8 @@ Ext.define('Ext.data.Store', {
      */
     sort: function(sorters, defaultDirection, where) {
         var data = this.data,
-            grouper = this.getGrouper(),
-            autoSort = data.getAutoSort();
+                grouper = this.getGrouper(),
+                autoSort = data.getAutoSort();
 
         if (sorters) {
             // While we are adding sorters we don't want to sort right away
@@ -1712,7 +1633,6 @@ Ext.define('Ext.data.Store', {
             }
         }
     },
-
     /**
      * Filters the loaded set of records by a given set of filters.
      *
@@ -1749,7 +1669,7 @@ Ext.define('Ext.data.Store', {
      */
     filter: function(property, value, anyMatch, caseSensitive) {
         var data = this.data,
-            filter = null;
+                filter = null;
 
         if (property) {
             if (Ext.isFunction(property)) {
@@ -1760,11 +1680,11 @@ Ext.define('Ext.data.Store', {
             }
             else {
                 filter = {
-                    property     : property,
-                    value        : value,
-                    anyMatch     : anyMatch,
+                    property: property,
+                    value: value,
+                    anyMatch: anyMatch,
                     caseSensitive: caseSensitive,
-                    id           : property
+                    id: property
                 };
             }
         }
@@ -1777,7 +1697,6 @@ Ext.define('Ext.data.Store', {
             this.fireEvent('refresh', this, data);
         }
     },
-
     /**
      * Filter by a function. The specified function will be called for each
      * Record in this Store. If the function returns `true` the Record is included,
@@ -1790,8 +1709,8 @@ Ext.define('Ext.data.Store', {
      */
     filterBy: function(fn, scope) {
         var me = this,
-            data = me.data,
-            ln = data.length;
+                data = me.data,
+                ln = data.length;
 
         data.filter({
             filterFn: function(record) {
@@ -1805,7 +1724,6 @@ Ext.define('Ext.data.Store', {
             this.fireEvent('refresh', this, data);
         }
     },
-
     /**
      * Query the cached records in this Store using a filtering function. The specified function
      * will be called with each record in this Store. If the function returns `true` the record is
@@ -1820,7 +1738,6 @@ Ext.define('Ext.data.Store', {
     queryBy: function(fn, scope) {
         return this.data.filterBy(fn, scope || this);
     },
-
     /**
      * Reverts to a view of the Record cache with no filtering applied.
      * @param {Boolean} [suppressEvent=false] `true` to clear silently without firing the `refresh` event.
@@ -1837,33 +1754,28 @@ Ext.define('Ext.data.Store', {
             this.fireEvent('refresh', this, this.data);
         }
     },
-
     /**
      * Returns `true` if this store is currently filtered.
      * @return {Boolean}
      */
-    isFiltered : function () {
+    isFiltered: function() {
         return this.data.filtered;
     },
-
     /**
      * Returns `true` if this store is currently sorted.
      * @return {Boolean}
      */
-    isSorted : function () {
+    isSorted: function() {
         return this.data.sorted;
     },
-
     getSorters: function() {
         var sorters = this.data.getSorters();
         return (sorters) ? sorters.items : [];
     },
-
     getFilters: function() {
         var filters = this.data.getFilters();
         return (filters) ? filters.items : [];
     },
-
     /**
      * Returns an array containing the result of applying the grouper to the records in this store. See {@link #groupField},
      * {@link #groupDir} and {@link #grouper}. Example for a store containing records with a color field:
@@ -1894,14 +1806,14 @@ Ext.define('Ext.data.Store', {
      */
     getGroups: function(requestGroupString) {
         var records = this.data.items,
-            length = records.length,
-            grouper = this.getGrouper(),
-            groups = [],
-            pointers = {},
-            record,
-            groupStr,
-            group,
-            i;
+                length = records.length,
+                grouper = this.getGrouper(),
+                groups = [],
+                pointers = {},
+                record,
+                groupStr,
+                group,
+                i;
 
         // <debug>
         if (!grouper) {
@@ -1929,7 +1841,6 @@ Ext.define('Ext.data.Store', {
 
         return requestGroupString ? pointers[requestGroupString] : groups;
     },
-
     /**
      * @param {Ext.data.Model} record
      * @return {null}
@@ -1941,7 +1852,6 @@ Ext.define('Ext.data.Store', {
         }
         return null;
     },
-
     /**
      * Finds the index of the first matching Record in this store by a specific field value.
      * @param {String} fieldName The name of the Record field to test.
@@ -1964,7 +1874,6 @@ Ext.define('Ext.data.Store', {
         });
         return this.data.findIndexBy(filter.getFilterFn(), null, startIndex);
     },
-
     /**
      * Finds the first matching Record in this store by a specific field value.
      * @param {String} fieldName The name of the Record field to test.
@@ -1978,10 +1887,9 @@ Ext.define('Ext.data.Store', {
      */
     findRecord: function() {
         var me = this,
-            index = me.find.apply(me, arguments);
+                index = me.find.apply(me, arguments);
         return index !== -1 ? me.getAt(index) : null;
     },
-
     /**
      * Finds the index of the first matching Record in this store by a specific field value.
      * @param {String} fieldName The name of the Record field to test.
@@ -1994,7 +1902,6 @@ Ext.define('Ext.data.Store', {
             return record.get(fieldName) === value;
         }, this, startIndex);
     },
-
     /**
      * Find the index of the first matching Record in this Store by a function.
      * If the function returns `true` it is considered a match.
@@ -2009,7 +1916,6 @@ Ext.define('Ext.data.Store', {
     findBy: function(fn, scope, startIndex) {
         return this.data.findIndexBy(fn, scope, startIndex);
     },
-
     /**
      * Loads data into the Store via the configured {@link #proxy}. This uses the Proxy to make an
      * asynchronous call to whatever storage backend the Proxy uses, automatically adding the retrieved
@@ -2035,9 +1941,9 @@ Ext.define('Ext.data.Store', {
      */
     load: function(options, scope) {
         var me = this,
-            operation,
-            currentPage = me.currentPage,
-            pageSize = me.getPageSize();
+                operation,
+                currentPage = me.currentPage,
+                pageSize = me.getPageSize();
 
         options = options || {};
 
@@ -2079,7 +1985,6 @@ Ext.define('Ext.data.Store', {
 
         return me;
     },
-
     /**
      * Returns `true` if the Store is currently performing a load operation.
      * @return {Boolean} `true` if the Store is currently loading.
@@ -2087,7 +1992,6 @@ Ext.define('Ext.data.Store', {
     isLoading: function() {
         return Boolean(this.loading);
     },
-
     /**
      * Returns `true` if the Store has been loaded.
      * @return {Boolean} `true` if the Store has been loaded.
@@ -2095,7 +1999,6 @@ Ext.define('Ext.data.Store', {
     isLoaded: function() {
         return Boolean(this.loaded);
     },
-
     /**
      * Synchronizes the Store with its Proxy. This asks the Proxy to batch together any new, updated
      * and deleted records in the store, updating the Store's internal representation of the records
@@ -2107,11 +2010,11 @@ Ext.define('Ext.data.Store', {
      */
     sync: function(options) {
         var me = this,
-            operations = {},
-            toCreate = me.getNewRecords(),
-            toUpdate = me.getUpdatedRecords(),
-            toDestroy = me.getRemovedRecords(),
-            needsSync = false;
+                operations = {},
+                toCreate = me.getNewRecords(),
+                toUpdate = me.getUpdatedRecords(),
+                toDestroy = me.getRemovedRecords(),
+                needsSync = false;
 
         if (toCreate.length > 0) {
             operations.create = toCreate;
@@ -2141,7 +2044,6 @@ Ext.define('Ext.data.Store', {
             removed: toDestroy
         };
     },
-
     /**
      * Convenience function for getting the first model instance in the store.
      * @return {Ext.data.Model/undefined} The first model instance in the store, or `undefined`.
@@ -2149,7 +2051,6 @@ Ext.define('Ext.data.Store', {
     first: function() {
         return this.data.first();
     },
-
     /**
      * Convenience function for getting the last model instance in the store.
      * @return {Ext.data.Model/undefined} The last model instance in the store, or `undefined`.
@@ -2157,7 +2058,6 @@ Ext.define('Ext.data.Store', {
     last: function() {
         return this.data.last();
     },
-
     /**
      * Sums the value of `property` for each {@link Ext.data.Model record} between `start`
      * and `end` and returns the result.
@@ -2166,9 +2066,9 @@ Ext.define('Ext.data.Store', {
      */
     sum: function(field) {
         var total = 0,
-            i = 0,
-            records = this.data.items,
-            len = records.length;
+                i = 0,
+                records = this.data.items,
+                len = records.length;
 
         for (; i < len; ++i) {
             total += records[i].get(field);
@@ -2176,7 +2076,6 @@ Ext.define('Ext.data.Store', {
 
         return total;
     },
-
     /**
      * Gets the minimum value in the store.
      * @param {String} field The field in each record.
@@ -2184,9 +2083,9 @@ Ext.define('Ext.data.Store', {
      */
     min: function(field) {
         var i = 1,
-            records = this.data.items,
-            len = records.length,
-            value, min;
+                records = this.data.items,
+                len = records.length,
+                value, min;
 
         if (len > 0) {
             min = records[0].get(field);
@@ -2200,7 +2099,6 @@ Ext.define('Ext.data.Store', {
         }
         return min;
     },
-
     /**
      * Gets the maximum value in the store.
      * @param {String} field The field in each record.
@@ -2208,10 +2106,10 @@ Ext.define('Ext.data.Store', {
      */
     max: function(field) {
         var i = 1,
-            records = this.data.items,
-            len = records.length,
-            value,
-            max;
+                records = this.data.items,
+                len = records.length,
+                value,
+                max;
 
         if (len > 0) {
             max = records[0].get(field);
@@ -2225,7 +2123,6 @@ Ext.define('Ext.data.Store', {
         }
         return max;
     },
-
     /**
      * Gets the average value in the store.
      * @param {String} field The field in each record you want to get the average for.
@@ -2233,9 +2130,9 @@ Ext.define('Ext.data.Store', {
      */
     average: function(field) {
         var i = 0,
-            records = this.data.items,
-            len = records.length,
-            sum = 0;
+                records = this.data.items,
+                len = records.length,
+                sum = 0;
 
         if (records.length > 0) {
             for (; i < len; ++i) {
@@ -2245,7 +2142,6 @@ Ext.define('Ext.data.Store', {
         }
         return 0;
     },
-
     /**
      * @private
      * Returns an object which is passed in as the listeners argument to `proxy.batch` inside `this.sync`.
@@ -2262,7 +2158,6 @@ Ext.define('Ext.data.Store', {
             complete: this.onBatchComplete
         };
     },
-
     /**
      * @private
      * Attached as the `complete` event listener to a proxy's Batch object. Iterates over the batch operations
@@ -2270,15 +2165,14 @@ Ext.define('Ext.data.Store', {
      */
     onBatchComplete: function(batch) {
         var me = this,
-            operations = batch.operations,
-            length = operations.length,
-            i;
+                operations = batch.operations,
+                length = operations.length,
+                i;
 
         for (i = 0; i < length; i++) {
             me.onProxyWrite(operations[i]);
         }
     },
-
     onBatchException: function(batch, operation) {
         // //decide what to do... could continue with the next operation
         // batch.start();
@@ -2286,16 +2180,15 @@ Ext.define('Ext.data.Store', {
         // //or retry the last operation
         // batch.retry();
     },
-
     /**
      * @private
      * Called internally when a Proxy has completed a load request.
      */
     onProxyLoad: function(operation) {
         var me = this,
-            records = operation.getRecords(),
-            resultSet = operation.getResultSet(),
-            successful = operation.wasSuccessful();
+                records = operation.getRecords(),
+                resultSet = operation.getResultSet(),
+                successful = operation.wasSuccessful();
 
         if (resultSet) {
             me.setTotalCount(resultSet.getTotal());
@@ -2312,16 +2205,15 @@ Ext.define('Ext.data.Store', {
         //this is a callback that would have been passed to the 'read' function and is optional
         Ext.callback(operation.getCallback(), operation.getScope() || me, [records, operation, successful]);
     },
-
     doDataRefresh: function(store, data, operation) {
         var records = operation.getRecords(),
-            me = this,
-            destroyRemovedRecords = me.getDestroyRemovedRecords(),
-            currentRecords = data.all.slice(),
-            ln = currentRecords.length,
-            ln2 = records.length,
-            ids = {},
-            i, record;
+                me = this,
+                destroyRemovedRecords = me.getDestroyRemovedRecords(),
+                currentRecords = data.all.slice(),
+                ln = currentRecords.length,
+                ln2 = records.length,
+                ids = {},
+                i, record;
 
         if (operation.getAddRecords() !== true) {
             for (i = 0; i < ln2; i++) {
@@ -2351,7 +2243,6 @@ Ext.define('Ext.data.Store', {
 
         me.fireEvent('refresh', me, data);
     },
-
     /**
      * @private
      * Callback for any write Operation over the Proxy. Updates the Store's MixedCollection to reflect
@@ -2359,8 +2250,8 @@ Ext.define('Ext.data.Store', {
      */
     onProxyWrite: function(operation) {
         var me = this,
-            success = operation.wasSuccessful(),
-            records = operation.getRecords();
+                success = operation.wasSuccessful(),
+                records = operation.getRecords();
 
         switch (operation.getAction()) {
             case 'create':
@@ -2380,16 +2271,15 @@ Ext.define('Ext.data.Store', {
         //this is a callback that would have been passed to the 'create', 'update' or 'destroy' function and is optional
         Ext.callback(operation.getCallback(), operation.getScope() || me, [records, operation, success]);
     },
-
     // These methods are now just template methods since updating the records etc is all taken care of
     // by the operation itself.
-    onCreateRecords: function(records, operation, success) {},
-    onUpdateRecords: function(records, operation, success) {},
-
+    onCreateRecords: function(records, operation, success) {
+    },
+    onUpdateRecords: function(records, operation, success) {
+    },
     onDestroyRecords: function(records, operation, success) {
         this.removed = [];
     },
-
     onMetaChange: function(data) {
         var model = this.getProxy().getModel();
         if (!this.getModel() && model) {
@@ -2404,7 +2294,6 @@ Ext.define('Ext.data.Store', {
          */
         this.fireEvent('metachange', this, data);
     },
-
     /**
      * Returns all Model instances that are either currently a phantom (e.g. have no id), or have an ID but have not
      * yet been saved on this Store (this happens when adding a non-phantom record from another Store into this one).
@@ -2416,7 +2305,6 @@ Ext.define('Ext.data.Store', {
             return item.phantom === true && item.isValid();
         }).items;
     },
-
     /**
      * Returns all Model instances that have been updated in the Store but not yet synchronized with the Proxy.
      * @return {Ext.data.Model[]} The updated Model instances.
@@ -2427,7 +2315,6 @@ Ext.define('Ext.data.Store', {
             return item.dirty === true && item.phantom !== true && item.isValid();
         }).items;
     },
-
     /**
      * Returns any records that have been removed from the store but not yet destroyed on the proxy.
      * @return {Ext.data.Model[]} The removed Model instances.
@@ -2435,7 +2322,6 @@ Ext.define('Ext.data.Store', {
     getRemovedRecords: function() {
         return this.removed;
     },
-
     // PAGING METHODS
     /**
      * Loads a given 'page' of data by setting the start and limit values appropriately. Internally this just causes a normal
@@ -2453,8 +2339,8 @@ Ext.define('Ext.data.Store', {
 
         }
         var me = this,
-            pageSize = me.getPageSize(),
-            clearOnPageLoad = me.getClearOnPageLoad();
+                pageSize = me.getPageSize(),
+                clearOnPageLoad = me.getClearOnPageLoad();
 
         options = Ext.apply({}, options);
 
@@ -2467,7 +2353,6 @@ Ext.define('Ext.data.Store', {
             addRecords: !clearOnPageLoad
         }));
     },
-
     /**
      * Loads the next 'page' in the current data set.
      * @param {Object} options See options for {@link #method-load}.
@@ -2475,7 +2360,6 @@ Ext.define('Ext.data.Store', {
     nextPage: function(options) {
         this.loadPage(this.currentPage + 1, options);
     },
-
     /**
      * Loads the previous 'page' in the current data set.
      * @param {Object} options See options for {@link #method-load}.
@@ -2483,7 +2367,6 @@ Ext.define('Ext.data.Store', {
     previousPage: function(options) {
         this.loadPage(this.currentPage - 1, options);
     },
-
     destroy: function() {
         this.clearData();
         var proxy = this.getProxy();
@@ -2495,7 +2378,7 @@ Ext.define('Ext.data.Store', {
         Ext.destroy(this.getPlugins());
 
         if (this.implicitModel && this.getModel()) {
-          delete Ext.data.ModelManager.types[this.getModel().getName()];
+            delete Ext.data.ModelManager.types[this.getModel().getName()];
         }
         Ext.destroy(this.data);
 
@@ -2503,11 +2386,11 @@ Ext.define('Ext.data.Store', {
     }
 
     // <deprecated product=touch since=2.0>
-    ,onClassExtended: function(cls, data) {
+    , onClassExtended: function(cls, data) {
         var prototype = this.prototype,
-            defaultConfig = prototype.config,
-            config = data.config || {},
-            key;
+                defaultConfig = prototype.config,
+                config = data.config || {},
+                key;
 
         // Convert deprecated properties in application into a config object
         for (key in defaultConfig) {
@@ -2516,7 +2399,7 @@ Ext.define('Ext.data.Store', {
                 delete data[key];
                 // <debug warn>
                 Ext.Logger.deprecate(key + ' is deprecated as a property directly on the ' + this.$className +
-                    ' prototype. Please put it inside the config object.');
+                        ' prototype. Please put it inside the config object.');
                 // </debug>
             }
         }
@@ -2540,11 +2423,10 @@ Ext.define('Ext.data.Store', {
                 this.setData(data);
             }
         },
-
         //@private
         doAddListener: function(name, fn, scope, options, order) {
             // <debug>
-            switch(name) {
+            switch (name) {
                 case 'update':
                     Ext.Logger.warn('The update event on Store has been removed. Please use the updaterecord event from now on.');
                     return this;
@@ -2557,7 +2439,7 @@ Ext.define('Ext.data.Store', {
                 case 'datachanged':
                     Ext.Logger.warn('The datachanged event on Store has been removed. Please use the refresh event from now on.');
                     return this;
-                break;
+                    break;
             }
             // </debug>
 

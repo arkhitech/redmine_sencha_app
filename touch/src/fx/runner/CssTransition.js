@@ -5,35 +5,30 @@
 Ext.define('Ext.fx.runner.CssTransition', {
     extend: 'Ext.fx.runner.Css',
     requires: ['Ext.AnimationQueue'],
-
     listenersAttached: false,
-
     constructor: function() {
         this.runningAnimationsData = {};
 
         return this.callParent(arguments);
     },
-
     attachListeners: function() {
         this.listenersAttached = true;
         this.getEventDispatcher().addListener('element', '*', 'transitionend', 'onTransitionEnd', this);
     },
-
     onTransitionEnd: function(e) {
         var target = e.target,
-            id = target.id;
+                id = target.id;
 
         if (id && this.runningAnimationsData.hasOwnProperty(id)) {
             this.refreshRunningAnimationsData(Ext.get(target), [e.browserEvent.propertyName]);
         }
     },
-
     onAnimationEnd: function(element, data, animation, isInterrupted, isReplaced) {
         var id = element.getId(),
-            runningData = this.runningAnimationsData[id],
-            endRules = {},
-            endData = {},
-            runningNameMap, toPropertyNames, i, ln, name;
+                runningData = this.runningAnimationsData[id],
+                endRules = {},
+                endData = {},
+                runningNameMap, toPropertyNames, i, ln, name;
 
         animation.un('stop', 'onAnimationStop', this);
 
@@ -53,7 +48,7 @@ Ext.define('Ext.fx.runner.CssTransition', {
         if (isReplaced || (!isInterrupted && !data.preserveEndState)) {
             toPropertyNames = data.toPropertyNames;
 
-            for (i = 0,ln = toPropertyNames.length; i < ln; i++) {
+            for (i = 0, ln = toPropertyNames.length; i < ln; i++) {
                 name = toPropertyNames[i];
 
                 if (runningNameMap && !runningNameMap.hasOwnProperty(name)) {
@@ -76,10 +71,9 @@ Ext.define('Ext.fx.runner.CssTransition', {
         this.fireEvent('animationend', this, animation, element, isInterrupted);
         Ext.AnimationQueue.stop(Ext.emptyFn, animation);
     },
-
     onAllAnimationsEnd: function(element) {
         var id = element.getId(),
-            endRules = {};
+                endRules = {};
 
         delete this.runningAnimationsData[id];
 
@@ -93,29 +87,27 @@ Ext.define('Ext.fx.runner.CssTransition', {
         this.applyStyles(endRules);
         this.fireEvent('animationallend', this, element);
     },
-
     hasRunningAnimations: function(element) {
         var id = element.getId(),
-            runningAnimationsData = this.runningAnimationsData;
+                runningAnimationsData = this.runningAnimationsData;
 
         return runningAnimationsData.hasOwnProperty(id) && runningAnimationsData[id].sessions.length > 0;
     },
-
     refreshRunningAnimationsData: function(element, propertyNames, interrupt, replace) {
         var id = element.getId(),
-            runningAnimationsData = this.runningAnimationsData,
-            runningData = runningAnimationsData[id];
+                runningAnimationsData = this.runningAnimationsData,
+                runningData = runningAnimationsData[id];
 
         if (!runningData) {
             return;
         }
 
         var nameMap = runningData.nameMap,
-            nameList = runningData.nameList,
-            sessions = runningData.sessions,
-            ln, j, subLn, name,
-            i, session, map, list,
-            hasCompletedSession = false;
+                nameList = runningData.nameList,
+                sessions = runningData.sessions,
+                ln, j, subLn, name,
+                i, session, map, list,
+                hasCompletedSession = false;
 
         interrupt = Boolean(interrupt);
         replace = Boolean(replace);
@@ -147,7 +139,7 @@ Ext.define('Ext.fx.runner.CssTransition', {
                 map = session.map;
                 list = session.list;
 
-                for (j = 0,subLn = propertyNames.length; j < subLn; j++) {
+                for (j = 0, subLn = propertyNames.length; j < subLn; j++) {
                     name = propertyNames[j];
 
                     if (map[name]) {
@@ -176,7 +168,6 @@ Ext.define('Ext.fx.runner.CssTransition', {
             this.onAllAnimationsEnd(element);
         }
     },
-
     getRunningData: function(id) {
         var runningAnimationsData = this.runningAnimationsData;
 
@@ -190,10 +181,9 @@ Ext.define('Ext.fx.runner.CssTransition', {
 
         return runningAnimationsData[id];
     },
-
     getTestElement: function() {
         var testElement = this.testElement,
-            iframe, iframeDocument, iframeStyle;
+                iframe, iframeDocument, iframeStyle;
 
         if (!testElement) {
             iframe = document.createElement('iframe');
@@ -220,11 +210,10 @@ Ext.define('Ext.fx.runner.CssTransition', {
 
         return testElement;
     },
-
     getCssStyleValue: function(name, value) {
         var testElement = this.getTestElement(),
-            computedStyle = this.testElementComputedStyle,
-            style = testElement.style;
+                computedStyle = this.testElementComputedStyle,
+                style = testElement.style;
 
         style.setProperty(name, value);
 
@@ -238,21 +227,20 @@ Ext.define('Ext.fx.runner.CssTransition', {
 
         return value;
     },
-
     run: function(animations) {
         var me = this,
-            isLengthPropertyMap = this.lengthProperties,
-            fromData = {},
-            toData = {},
-            data = {},
-            element, elementId, from, to, before,
-            fromPropertyNames, toPropertyNames,
-            doApplyTo, message,
-            runningData, elementData,
-            i, j, ln, animation, propertiesLength, sessionNameMap,
-            computedStyle, formattedName, name, toFormattedValue,
-            computedValue, fromFormattedValue, isLengthProperty,
-            runningNameMap, runningNameList, runningSessions, runningSession;
+                isLengthPropertyMap = this.lengthProperties,
+                fromData = {},
+                toData = {},
+                data = {},
+                element, elementId, from, to, before,
+                fromPropertyNames, toPropertyNames,
+                doApplyTo, message,
+                runningData, elementData,
+                i, j, ln, animation, propertiesLength, sessionNameMap,
+                computedStyle, formattedName, name, toFormattedValue,
+                computedValue, fromFormattedValue, isLengthProperty,
+                runningNameMap, runningNameList, runningSessions, runningSession;
 
         if (!this.listenersAttached) {
             this.attachListeners();
@@ -260,7 +248,7 @@ Ext.define('Ext.fx.runner.CssTransition', {
 
         animations = Ext.Array.from(animations);
 
-        for (i = 0,ln = animations.length; i < ln; i++) {
+        for (i = 0, ln = animations.length; i < ln; i++) {
             animation = animations[i];
             animation = Ext.factory(animation, Ext.fx.Animation);
             element = animation.getElement();
@@ -333,8 +321,8 @@ Ext.define('Ext.fx.runner.CssTransition', {
 
             if (runningSessions.length > 0) {
                 this.refreshRunningAnimationsData(
-                    element, Ext.Array.merge(fromPropertyNames, toPropertyNames), true, data.replacePrevious
-                );
+                        element, Ext.Array.merge(fromPropertyNames, toPropertyNames), true, data.replacePrevious
+                        );
             }
 
             runningNameMap = runningData.nameMap;
@@ -397,27 +385,26 @@ Ext.define('Ext.fx.runner.CssTransition', {
             }
         };
 
-        if(Ext.browser.is.IE) {
+        if (Ext.browser.is.IE) {
             window.requestAnimationFrame(function() {
                 window.addEventListener('message', doApplyTo, false);
                 window.postMessage(message, '*');
             });
-        }else{
+        } else {
             window.addEventListener('message', doApplyTo, false);
             window.postMessage(message, '*');
         }
     },
-
     onAnimationStop: function(animation) {
         var runningAnimationsData = this.runningAnimationsData,
-            id, runningData, sessions, i, ln, session;
+                id, runningData, sessions, i, ln, session;
 
         for (id in runningAnimationsData) {
             if (runningAnimationsData.hasOwnProperty(id)) {
                 runningData = runningAnimationsData[id];
                 sessions = runningData.sessions;
 
-                for (i = 0,ln = sessions.length; i < ln; i++) {
+                for (i = 0, ln = sessions.length; i < ln; i++) {
                     session = sessions[i];
                     if (session.animation === animation) {
                         this.refreshRunningAnimationsData(session.element, session.list.slice(), false);

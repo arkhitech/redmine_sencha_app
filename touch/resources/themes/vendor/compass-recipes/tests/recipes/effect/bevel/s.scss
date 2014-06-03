@@ -35,7 +35,7 @@
 
 .bevel-shadow-soft {
     @include bevel-shadow(
-        $blur: 2px,
+    $blur: 2px,
         $size: 10px
-    );
+        );
 }

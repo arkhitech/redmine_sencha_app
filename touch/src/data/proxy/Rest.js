@@ -101,8 +101,7 @@
 Ext.define('Ext.data.proxy.Rest', {
     extend: 'Ext.data.proxy.Ajax',
     alternateClassName: 'Ext.data.RestProxy',
-    alias : 'proxy.rest',
-
+    alias: 'proxy.rest',
     config: {
         /**
          * @cfg {Boolean} appendId
@@ -110,28 +109,24 @@ Ext.define('Ext.data.proxy.Rest', {
          * See Rest proxy intro docs for more details.
          */
         appendId: true,
-
         /**
          * @cfg {String} format
          * Optional data format to send to the server when making any request (e.g. 'json'). See the Rest proxy intro docs
          * for full details.
          */
         format: null,
-
         /**
          * @cfg {Boolean} batchActions
          * `true` to batch actions of a particular type when synchronizing the store.
          */
         batchActions: false,
-
         actionMethods: {
-            create : 'POST',
-            read   : 'GET',
-            update : 'PUT',
+            create: 'POST',
+            read: 'GET',
+            update: 'PUT',
             destroy: 'DELETE'
         }
     },
-
     /**
      * Specialized version of `buildUrl` that incorporates the {@link #appendId} and {@link #format} options into the
      * generated url. Override this to provide further customizations, but remember to call the superclass `buildUrl` so
@@ -140,16 +135,16 @@ Ext.define('Ext.data.proxy.Rest', {
      * @return {Object}
      */
     buildUrl: function(request) {
-        var me        = this,
-            operation = request.getOperation(),
-            records   = operation.getRecords() || [],
-            record    = records[0],
-            model     = me.getModel(),
-            idProperty= model.getIdProperty(),
-            format    = me.getFormat(),
-            url       = me.getUrl(request),
-            params    = request.getParams() || {},
-            id        = (record && !record.phantom) ? record.getId() : params[idProperty];
+        var me = this,
+                operation = request.getOperation(),
+                records = operation.getRecords() || [],
+                record = records[0],
+                model = me.getModel(),
+                idProperty = model.getIdProperty(),
+                format = me.getFormat(),
+                url = me.getUrl(request),
+                params = request.getParams() || {},
+                id = (record && !record.phantom) ? record.getId() : params[idProperty];
 
         if (me.getAppendId() && id) {
             if (!url.match(/\/$/)) {

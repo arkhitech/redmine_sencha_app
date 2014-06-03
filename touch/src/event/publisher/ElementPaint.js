@@ -2,28 +2,22 @@
  * @private
  */
 Ext.define('Ext.event.publisher.ElementPaint', {
-
     extend: 'Ext.event.publisher.Publisher',
-
     requires: [
         'Ext.util.PaintMonitor',
         'Ext.TaskQueue'
     ],
-
     targetType: 'element',
-
     handledEvents: ['painted'],
-
     constructor: function() {
         this.monitors = {};
 
         this.callSuper(arguments);
     },
-
     subscribe: function(target) {
         var match = target.match(this.idSelectorRegex),
-            subscribers = this.subscribers,
-            id, element;
+                subscribers = this.subscribers,
+                id, element;
 
         if (!match) {
             return false;
@@ -49,11 +43,10 @@ Ext.define('Ext.event.publisher.ElementPaint', {
 
         return true;
     },
-
     unsubscribe: function(target, eventName, all) {
         var match = target.match(this.idSelectorRegex),
-            subscribers = this.subscribers,
-            id;
+                subscribers = this.subscribers,
+                id;
 
         if (!match) {
             return false;
@@ -72,7 +65,6 @@ Ext.define('Ext.event.publisher.ElementPaint', {
 
         return true;
     },
-
     onElementPainted: function(target, element) {
         Ext.TaskQueue.requestRead('dispatch', this, [target, 'painted', [element]]);
     }

@@ -7,27 +7,21 @@
 Ext.define('Ext.chart.axis.segmenter.Numeric', {
     extend: 'Ext.chart.axis.segmenter.Segmenter',
     alias: 'segmenter.numeric',
-
-    renderer: function (value, context) {
+    renderer: function(value, context) {
         return value.toFixed(Math.max(0, context.majorTicks.unit.fixes));
     },
-
-    diff: function (min, max, unit) {
+    diff: function(min, max, unit) {
         return Math.floor((max - min) / unit.scale);
     },
-
-    align: function (value, step, unit) {
+    align: function(value, step, unit) {
         return Math.floor(value / (unit.scale * step)) * unit.scale * step;
     },
-
-
-    add: function (value, step, unit) {
+    add: function(value, step, unit) {
         return value + step * unit.scale;
     },
-
-    preferredStep: function (min, estStepSize) {
+    preferredStep: function(min, estStepSize) {
         var logs = Math.floor(Math.log(estStepSize) * Math.LOG10E), // common logarithm of estStepSize
-            scale = Math.pow(10, logs);
+                scale = Math.pow(10, logs);
         estStepSize /= scale;
         if (estStepSize < 2) {
             estStepSize = 2;
@@ -46,7 +40,6 @@ Ext.define('Ext.chart.axis.segmenter.Numeric', {
             step: estStepSize
         };
     },
-
     /**
      * Wraps the provided estimated step size of a range without altering it into a step size object.
      *
@@ -57,9 +50,9 @@ Ext.define('Ext.chart.axis.segmenter.Numeric', {
      * @return {Object} return.unit The unit.
      */
 
-    exactStep: function (min, estStepSize) {
+    exactStep: function(min, estStepSize) {
         var logs = Math.floor(Math.log(estStepSize) * Math.LOG10E),
-            scale = Math.pow(10, logs);
+                scale = Math.pow(10, logs);
         return {
             unit: {
                 // add one decimal point if estStepSize is not a multiple of scale

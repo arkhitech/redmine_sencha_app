@@ -19,11 +19,11 @@
     $transparent: rgba(black, 0);
     background-color: $bg-color;
     @include background-image(
-        linear-gradient(
-            $dir,
-            $transparent 50%,
-            $stripe-color 50%
-        )
+    linear-gradient(
+    $dir,
+    $transparent 50%,
+    $stripe-color 50%
+    )
     );
     background-size: $size $size;
 }
@@ -33,13 +33,13 @@
     $transparent: rgba(black, 0);
     background-color: $bg-color;
     @include background-image(
-        repeating-linear-gradient(
-            $dir,
-            $transparent,
-            $transparent $size / 2,
-            $stripe-color $size / 2,
-            $stripe-color $size
-        )
+    repeating-linear-gradient(
+    $dir,
+    $transparent,
+    $transparent $size / 2,
+    $stripe-color $size / 2,
+    $stripe-color $size
+    )
     );
 }
 

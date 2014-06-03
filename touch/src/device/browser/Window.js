@@ -3,7 +3,6 @@
  */
 Ext.define('Ext.device.browser.Window', {
     extend: 'Ext.Evented',
-
     open: function(config) {
         var me = this;
 
@@ -26,7 +25,6 @@ Ext.define('Ext.device.browser.Window', {
             me.fireEvent('close', me);
         });
     },
-
     close: function() {
         if (!this._window) {
             return;

@@ -38,21 +38,18 @@ Ext.define('Ext.chart.series.Pie3D', {
         region: [0, 0, 0, 0],
         thickness: 35,
         distortion: 0.5,
-
         /**
          * @cfg {String} field (required)
          * The store record field name to be used for the pie angles.
          * The values bound to this field name must be positive real numbers.
          */
         field: false,
-
         /**
          * @private
          * @cfg {String} lengthField
          * Not supported.
          */
         lengthField: false,
-
         /**
          * @cfg {Boolean/Number} donut
          * Whether to set the pie chart as donut chart.
@@ -60,32 +57,27 @@ Ext.define('Ext.chart.series.Pie3D', {
          * of the donut chart.
          */
         donut: false,
-
         rotation: 0
     },
-
-    applyRotation: function (rotation) {
+    applyRotation: function(rotation) {
         var twoPie = Math.PI * 2;
         return (rotation % twoPie + twoPie) % twoPie;
     },
-
-    updateRotation: function (rotation) {
+    updateRotation: function(rotation) {
         var sprites = this.getSprites(),
-            i, ln;
+                i, ln;
         for (i = 0, ln = sprites.length; i < ln; i++) {
             sprites[i].setAttributes({
                 baseRotation: rotation
             });
         }
     },
-
-    updateColors: function (colorSet) {
+    updateColors: function(colorSet) {
         this.setSubStyle({baseColor: colorSet});
     },
-    
-    doUpdateStyles: function () {
+    doUpdateStyles: function() {
         var sprites = this.getSprites(),
-            i = 0, j = 0, ln = sprites && sprites.length;
+                i = 0, j = 0, ln = sprites && sprites.length;
         for (; i < ln; i += 5, j++) {
             sprites[i].setAttributes(this.getStyleByIndex(j));
             sprites[i + 1].setAttributes(this.getStyleByIndex(j));
@@ -94,20 +86,19 @@ Ext.define('Ext.chart.series.Pie3D', {
             sprites[i + 4].setAttributes(this.getStyleByIndex(j));
         }
     },
-
-    processData: function () {
+    processData: function() {
         var me = this,
-            chart = me.getChart(),
-            animation = chart && chart.getAnimate(),
-            store = me.getStore(),
-            items = store.getData().items,
-            length = items.length,
-            field = me.getField(),
-            value, sum = 0, ratio,
-            summation = [],
-            i,
-            sprites = this.getSprites(),
-            lastAngle;
+                chart = me.getChart(),
+                animation = chart && chart.getAnimate(),
+                store = me.getStore(),
+                items = store.getData().items,
+                length = items.length,
+                field = me.getField(),
+                value, sum = 0, ratio,
+                summation = [],
+                i,
+                sprites = this.getSprites(),
+                lastAngle;
 
         for (i = 0; i < length; i++) {
             value = items[i].get(field);
@@ -136,34 +127,33 @@ Ext.define('Ext.chart.series.Pie3D', {
             lastAngle = summation[i];
         }
     },
-
-    getSprites: function () {
+    getSprites: function() {
         var me = this,
-            chart = this.getChart(),
-            surface = me.getSurface(),
-            store = me.getStore();
+                chart = this.getChart(),
+                surface = me.getSurface(),
+                store = me.getStore();
         if (!store) {
             return [];
         }
         var items = store.getData().items,
-            length = items.length,
-            animation = chart && chart.getAnimate(),
-            region = chart.getMainRegion() || [0, 0, 1, 1],
-            rotation = me.getRotation(),
-            center = me.getCenter(),
-            offsetX = me.getOffsetX(),
-            offsetY = me.getOffsetY(),
-            radius = Math.min((region[3] - me.getThickness() * 2) / me.getDistortion(), region[2]) / 2,
-            commonAttributes = {
-                centerX: center[0] + offsetX,
-                centerY: center[1] + offsetY - me.getThickness() / 2,
-                endRho: radius,
-                startRho: radius * me.getDonut() / 100,
-                thickness: me.getThickness(),
-                distortion: me.getDistortion()
-            }, sliceAttributes, twoPie = Math.PI * 2,
-            topSprite, startSprite, endSprite, innerSideSprite, outerSideSprite,
-            i;
+                length = items.length,
+                animation = chart && chart.getAnimate(),
+                region = chart.getMainRegion() || [0, 0, 1, 1],
+                rotation = me.getRotation(),
+                center = me.getCenter(),
+                offsetX = me.getOffsetX(),
+                offsetY = me.getOffsetY(),
+                radius = Math.min((region[3] - me.getThickness() * 2) / me.getDistortion(), region[2]) / 2,
+                commonAttributes = {
+                    centerX: center[0] + offsetX,
+                    centerY: center[1] + offsetY - me.getThickness() / 2,
+                    endRho: radius,
+                    startRho: radius * me.getDonut() / 100,
+                    thickness: me.getThickness(),
+                    distortion: me.getDistortion()
+                }, sliceAttributes, twoPie = Math.PI * 2,
+                topSprite, startSprite, endSprite, innerSideSprite, outerSideSprite,
+                i;
 
         for (i = 0; i < length; i++) {
             sliceAttributes = Ext.apply({}, this.getStyleByIndex(i), commonAttributes);

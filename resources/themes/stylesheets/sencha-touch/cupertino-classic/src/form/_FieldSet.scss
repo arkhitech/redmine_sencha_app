@@ -61,7 +61,7 @@
 .x-label-align-right {
     &:first-child {
         .x-form-label {
-          @include border-top-right-radius($form-fieldset-radius);
+            @include border-top-right-radius($form-fieldset-radius);
         }
     }
 

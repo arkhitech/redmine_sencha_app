@@ -8,11 +8,8 @@
 
 Ext.define('Ext.direct.JsonProvider', {
     extend: 'Ext.direct.Provider',
-
     alias: 'direct.jsonprovider',
-
     uses: ['Ext.direct.ExceptionEvent'],
-
     /**
      * Parse the JSON response.
      * @private
@@ -28,7 +25,6 @@ Ext.define('Ext.direct.JsonProvider', {
         }
         return null;
     },
-
     /**
      * Creates a set of events based on the XHR response.
      * @private
@@ -37,13 +33,13 @@ Ext.define('Ext.direct.JsonProvider', {
      */
     createEvents: function(response) {
         var data = null,
-            events = [],
-            i = 0,
-            ln, event;
+                events = [],
+                i = 0,
+                ln, event;
 
         try {
             data = this.parseResponse(response);
-        } catch(e) {
+        } catch (e) {
             event = Ext.create('Ext.direct.ExceptionEvent', {
                 data: e,
                 xhr: response,
@@ -62,7 +58,6 @@ Ext.define('Ext.direct.JsonProvider', {
         }
         return events;
     },
-
     /**
      * Create an event from a response object.
      * @param {Object} response The XHR response object.

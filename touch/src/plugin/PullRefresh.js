@@ -37,7 +37,6 @@ Ext.define('Ext.plugin.PullRefresh', {
     extend: 'Ext.Component',
     alias: 'plugin.pullrefresh',
     requires: ['Ext.DateExtras'],
-
     config: {
         /**
          * @cfg {Ext.dataview.List} list
@@ -46,50 +45,42 @@ Ext.define('Ext.plugin.PullRefresh', {
          * @accessor
          */
         list: null,
-
         /**
          * @cfg {String} pullText The text that will be shown while you are pulling down.
          * @accessor
          */
         pullText: 'Pull down to refresh...',
-
         /**
          * @cfg {String} releaseText The text that will be shown after you have pulled down enough to show the release message.
          * @accessor
          */
         releaseText: 'Release to refresh...',
-
         /**
          * @cfg {String} loadingText The text that will be shown while the list is refreshing.
          * @accessor
          */
         loadingText: 'Loading...',
-
         /**
          * @cfg {String} loadedText The text that will be when data has been loaded.
          * @accessor
          */
         loadedText: 'Loaded.',
-
         /**
          * @cfg {String} lastUpdatedText The text to be shown in front of the last updated time.
          * @accessor
          */
         lastUpdatedText: 'Last Updated:&nbsp;',
-
         /**
          * @cfg {Boolean} scrollerAutoRefresh Determines whether the attached scroller should automatically track size changes of its container.
          * Enabling this will have performance impacts but will be necessary if your list size changes dynamically. For example if your list contains images
          * that will be loading and have unspecified heights.
          */
         scrollerAutoRefresh: false,
-
         /**
          * @cfg {Boolean} autoSnapBack Determines whether the pulldown should automatically snap back after data has been loaded.
          * If false call {@link #snapBack}() to manually snap the pulldown back.
          */
         autoSnapBack: true,
-
         /**
          * @cfg {Number} snappingAnimationDuration The duration for snapping back animation after the data has been refreshed
          * @accessor
@@ -99,12 +90,10 @@ Ext.define('Ext.plugin.PullRefresh', {
          * @cfg {String} lastUpdatedDateFormat The format to be used on the last updated date.
          */
         lastUpdatedDateFormat: 'm/d/Y h:iA',
-
         /**
          * @cfg {Number} overpullSnapBackDuration The duration for snapping back when pulldown has been lowered further then its height.
          */
         overpullSnapBackDuration: 300,
-
         /**
          * @cfg {Ext.XTemplate/String/Array} pullTpl The template being used for the pull to refresh markup.
          * Will be passed a config object with properties state, message and updated
@@ -114,20 +103,18 @@ Ext.define('Ext.plugin.PullRefresh', {
         pullTpl: [
             '<div class="x-list-pullrefresh-arrow"></div>',
             '<div class="x-loading-spinner">',
-                '<span class="x-loading-top"></span>',
-                '<span class="x-loading-right"></span>',
-                '<span class="x-loading-bottom"></span>',
-                '<span class="x-loading-left"></span>',
+            '<span class="x-loading-top"></span>',
+            '<span class="x-loading-right"></span>',
+            '<span class="x-loading-bottom"></span>',
+            '<span class="x-loading-left"></span>',
             '</div>',
             '<div class="x-list-pullrefresh-wrap">',
-                '<h3 class="x-list-pullrefresh-message">{message}</h3>',
-                '<div class="x-list-pullrefresh-updated">{updated}</div>',
+            '<h3 class="x-list-pullrefresh-message">{message}</h3>',
+            '<div class="x-list-pullrefresh-updated">{updated}</div>',
             '</div>'
         ].join(''),
-
         translatable: true
     },
-
     // @private
     $state: "pull",
     // @private
@@ -149,7 +136,6 @@ Ext.define('Ext.plugin.PullRefresh', {
     setIsSnappingBack: function(value) {
         this.$isSnappingBack = value;
     },
-
     // @private
     init: function(list) {
         var me = this;
@@ -157,7 +143,6 @@ Ext.define('Ext.plugin.PullRefresh', {
         me.setList(list);
         me.initScrollable();
     },
-
     getElementConfig: function() {
         return {
             reference: 'element',
@@ -170,13 +155,12 @@ Ext.define('Ext.plugin.PullRefresh', {
             ]
         };
     },
-
     // @private
     initScrollable: function() {
         var me = this,
-            list = me.getList(),
-            scrollable = list.getScrollable(),
-            scroller;
+                list = me.getList(),
+                scrollable = list.getScrollable(),
+                scroller;
 
         if (!scrollable) {
             return;
@@ -196,7 +180,6 @@ Ext.define('Ext.plugin.PullRefresh', {
 
         this.updateView();
     },
-
     // @private
     applyPullTpl: function(config) {
         if (config instanceof Ext.XTemplate) {
@@ -205,7 +188,6 @@ Ext.define('Ext.plugin.PullRefresh', {
             return new Ext.XTemplate(config);
         }
     },
-
     // @private
     updateList: function(newList, oldList) {
         var me = this;
@@ -224,20 +206,18 @@ Ext.define('Ext.plugin.PullRefresh', {
             });
         }
     },
-
     // @private
     getPullHeight: function() {
-       return this.innerElement.getHeight();
+        return this.innerElement.getHeight();
     },
-
     /**
      * @private
      * Attempts to load the newest posts via the attached List's Store's Proxy
      */
     fetchLatest: function() {
         var store = this.getList().getStore(),
-            proxy = store.getProxy(),
-            operation;
+                proxy = store.getProxy(),
+                operation;
 
         operation = Ext.create('Ext.data.Operation', {
             page: 1,
@@ -251,7 +231,6 @@ Ext.define('Ext.plugin.PullRefresh', {
 
         proxy.read(operation, this.onLatestFetched, this);
     },
-
     /**
      * @private
      * Called after fetchLatest has finished grabbing data. Matches any returned records against what is already in the
@@ -261,11 +240,11 @@ Ext.define('Ext.plugin.PullRefresh', {
      */
     onLatestFetched: function(operation) {
         var store = this.getList().getStore(),
-            oldRecords = store.getData(),
-            newRecords = operation.getRecords(),
-            length = newRecords.length,
-            toInsert = [],
-            newRecord, oldRecord, i;
+                oldRecords = store.getData(),
+                newRecords = operation.getRecords(),
+                length = newRecords.length,
+                toInsert = [],
+                newRecord, oldRecord, i;
 
         for (i = 0; i < length; i++) {
             newRecord = newRecords[i];
@@ -287,16 +266,16 @@ Ext.define('Ext.plugin.PullRefresh', {
             this.snapBack();
         }
     },
-
     /**
      * Snaps the List back to the top after a pullrefresh is complete
      * @param {Boolean=} force Force the snapback to occur regardless of state {optional}
      */
     snapBack: function(force) {
-        if(this.getState() !== "loaded" && force !== true) return;
+        if (this.getState() !== "loaded" && force !== true)
+            return;
 
         var list = this.getList(),
-            scroller = list.getScrollable().getScroller();
+                scroller = list.getScrollable().getScroller();
 
         scroller.refresh();
         scroller.minPosition.y = 0;
@@ -310,7 +289,6 @@ Ext.define('Ext.plugin.PullRefresh', {
         this.setIsSnappingBack(true);
         scroller.scrollTo(null, 0, {duration: this.getSnappingAnimationDuration()});
     },
-
     /**
      * @private
      * Called when PullRefresh has been snapped back to the top
@@ -319,7 +297,6 @@ Ext.define('Ext.plugin.PullRefresh', {
         this.setState("pull");
         this.setIsSnappingBack(false);
     },
-
     /**
      * @private
      * Called when the Scroller updates from the list
@@ -330,13 +307,13 @@ Ext.define('Ext.plugin.PullRefresh', {
     onScrollChange: function(scroller, x, y) {
         if (y <= 0) {
             var pullHeight = this.getPullHeight(),
-                isSnappingBack = this.getIsSnappingBack();
+                    isSnappingBack = this.getIsSnappingBack();
 
-            if(this.getState() === "loaded" && !isSnappingBack) {
+            if (this.getState() === "loaded" && !isSnappingBack) {
                 this.snapBack();
             }
 
-            if (this.getState() !== "loading" && this.getState() !=="loaded") {
+            if (this.getState() !== "loading" && this.getState() !== "loaded") {
                 if (-y >= pullHeight + 10) {
                     this.setState("release");
                     scroller.getContainer().onBefore({
@@ -356,7 +333,6 @@ Ext.define('Ext.plugin.PullRefresh', {
             this.getTranslatable().translate(0, -y);
         }
     },
-
     /**
      * @private
      * Called when the user is done dragging, this listener is only added when the user has pulled far enough for a refresh
@@ -364,8 +340,8 @@ Ext.define('Ext.plugin.PullRefresh', {
     onScrollerDragEnd: function() {
         if (this.getState() !== "loading") {
             var list = this.getList(),
-                scroller = list.getScrollable().getScroller(),
-                translateable = scroller.getTranslatable();
+                    scroller = list.getScrollable().getScroller(),
+                    translateable = scroller.getTranslatable();
 
             this.setState("loading");
             translateable.setEasingY({duration: this.getOverpullSnapBackDuration()});
@@ -377,17 +353,16 @@ Ext.define('Ext.plugin.PullRefresh', {
             });
         }
     },
-
     /**
      * @private
      * Updates the content based on the PullRefresh Template
      */
     updateView: function() {
         var state = this.getState(),
-            lastUpdatedText = this.getLastUpdatedText() + Ext.util.Format.date(this.lastUpdated, this.getLastUpdatedDateFormat()),
-            templateConfig = {state: state, updated: lastUpdatedText},
-            stateFn = state.charAt(0).toUpperCase() + state.slice(1).toLowerCase(),
-            fn = "get" + stateFn + "Text";
+                lastUpdatedText = this.getLastUpdatedText() + Ext.util.Format.date(this.lastUpdated, this.getLastUpdatedDateFormat()),
+                templateConfig = {state: state, updated: lastUpdatedText},
+        stateFn = state.charAt(0).toUpperCase() + state.slice(1).toLowerCase(),
+                fn = "get" + stateFn + "Text";
 
         if (this[fn] && Ext.isFunction(this[fn])) {
             templateConfig.message = this[fn].call(this);

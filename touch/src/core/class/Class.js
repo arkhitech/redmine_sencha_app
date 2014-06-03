@@ -21,9 +21,9 @@
  */
 (function() {
     var ExtClass,
-        Base = Ext.Base,
-        baseStaticMembers = [],
-        baseStaticMember, baseStaticMemberLength;
+            Base = Ext.Base,
+            baseStaticMembers = [],
+            baseStaticMember, baseStaticMemberLength;
 
     for (baseStaticMember in Base) {
         if (Base.hasOwnProperty(baseStaticMember)) {
@@ -71,7 +71,6 @@
 
             hooks.onCreated.call(Class, Class);
         },
-
         /**
          * @private
          * @static
@@ -92,21 +91,20 @@
 
             return Class;
         },
-
         /**
          * @private
          * @static
          */
         process: function(Class, data, onCreated) {
             var preprocessorStack = data.preprocessors || ExtClass.defaultPreprocessors,
-                preprocessors = this.preprocessors,
-                hooks = {
-                    onBeforeCreated: this.onBeforeCreated,
-                    onCreated: onCreated || Ext.emptyFn
-                },
-                index = 0,
-                name, preprocessor, properties,
-                i, ln, fn, property, process;
+                    preprocessors = this.preprocessors,
+                    hooks = {
+                        onBeforeCreated: this.onBeforeCreated,
+                        onCreated: onCreated || Ext.emptyFn
+                    },
+            index = 0,
+                    name, preprocessor, properties,
+                    i, ln, fn, property, process;
 
             delete data.preprocessors;
 
@@ -124,7 +122,7 @@
                             fn = preprocessor.fn;
                         }
                         else {
-                            for (i = 0,ln = properties.length; i < ln; i++) {
+                            for (i = 0, ln = properties.length; i < ln; i++) {
                                 property = properties[i];
 
                                 if (data.hasOwnProperty(property)) {
@@ -147,13 +145,11 @@
 
             process.call(this, Class, data, hooks);
         },
-
         /**
          * @private
          * @static
          */
         preprocessors: {},
-
         /**
          * Register a new pre-processor to be used during the class creation process.
          *
@@ -201,7 +197,6 @@
 
             return this;
         },
-
         /**
          * Retrieve a pre-processor callback function by its name, which has been registered before.
          *
@@ -213,7 +208,6 @@
         getPreprocessor: function(name) {
             return this.preprocessors[name];
         },
-
         /**
          * @private
          * @static
@@ -221,13 +215,11 @@
         getPreprocessors: function() {
             return this.preprocessors;
         },
-
         /**
          * @private
          * @static
          */
         defaultPreprocessors: [],
-
         /**
          * Retrieve the array stack of default pre-processors.
          * @private
@@ -237,7 +229,6 @@
         getDefaultPreprocessors: function() {
             return this.defaultPreprocessors;
         },
-
         /**
          * Set the default array stack of default pre-processors.
          *
@@ -251,7 +242,6 @@
 
             return this;
         },
-
         /**
          * Insert this pre-processor at a specific position in the stack, optionally relative to
          * any existing pre-processor. For example:
@@ -275,7 +265,7 @@
          */
         setDefaultPreprocessorPosition: function(name, offset, relativeName) {
             var defaultPreprocessors = this.defaultPreprocessors,
-                index;
+                    index;
 
             if (typeof offset == 'string') {
                 if (offset === 'first') {
@@ -300,21 +290,19 @@
 
             return this;
         },
-
         /**
          * @private
          * @static
          */
         configNameCache: {},
-
         /**
          * @private
          * @static
          */
         getConfigNameMap: function(name) {
             var cache = this.configNameCache,
-                map = cache[name],
-                capitalizedName;
+                    map = cache[name],
+                    capitalizedName;
 
             if (!map) {
                 capitalizedName = name.charAt(0).toUpperCase() + name.substr(1);
@@ -328,29 +316,28 @@
                     set: 'set' + capitalizedName,
                     get: 'get' + capitalizedName,
                     initGet: 'initGet' + capitalizedName,
-                    doSet : 'doSet' + capitalizedName,
+                    doSet: 'doSet' + capitalizedName,
                     changeEvent: name.toLowerCase() + 'change'
                 }
             }
 
             return map;
         },
-
         /**
          * @private
          * @static
          */
         generateSetter: function(nameMap) {
             var internalName = nameMap.internal,
-                getName = nameMap.get,
-                applyName = nameMap.apply,
-                updateName = nameMap.update,
-                setter;
+                    getName = nameMap.get,
+                    applyName = nameMap.apply,
+                    updateName = nameMap.update,
+                    setter;
 
             setter = function(value) {
                 var oldValue = this[internalName],
-                    applier = this[applyName],
-                    updater = this[updateName];
+                        applier = this[applyName],
+                        updater = this[updateName];
 
                 delete this[getName];
 
@@ -374,16 +361,15 @@
 
             return setter;
         },
-
         /**
          * @private
          * @static
          */
         generateInitGetter: function(nameMap) {
             var name = nameMap.name,
-                setName = nameMap.set,
-                getName = nameMap.get,
-                initializingName = nameMap.initializing;
+                    setName = nameMap.set,
+                    getName = nameMap.get,
+                    initializingName = nameMap.initializing;
 
             return function() {
                 this[initializingName] = true;
@@ -395,7 +381,6 @@
                 return this[getName].apply(this, arguments);
             }
         },
-
         /**
          * @private
          * @static
@@ -435,8 +420,8 @@
      */
     ExtClass.registerPreprocessor('extend', function(Class, data) {
         var Base = Ext.Base,
-            extend = data.extend,
-            Parent;
+                extend = data.extend,
+                Parent;
 
         delete data.extend;
 
@@ -498,7 +483,7 @@
     });
     //</feature>
 
-        //<feature classSystem.platformConfig>
+    //<feature classSystem.platformConfig>
     /**
      * @cfg {Object} platformConfig
      * Allows for setting default config values on specific platforms or themes
@@ -518,16 +503,16 @@
      */
     ExtClass.registerPreprocessor('platformConfig', function(Class, data, hooks) {
         var platformConfigs = data.platformConfig,
-            config = data.config || {},
-            platform, theme, platformConfig, i, ln, j, ln2, exclude;
+                config = data.config || {},
+                platform, theme, platformConfig, i, ln, j, ln2, exclude;
 
         delete data.platformConfig;
 
         if (!Ext.filterPlatform) {
             Ext.filterPlatform = function(platform) {
                 var profileMatch = false,
-                    ua = navigator.userAgent,
-                    j, jln;
+                        ua = navigator.userAgent,
+                        j, jln;
 
                 platform = [].concat(platform);
 
@@ -540,21 +525,21 @@
                     // - Android with "Mobile" in the UA
 
                     return /(iPhone|iPod)/.test(ua) ||
-                              (!/(Silk)/.test(ua) && (/(Android)/.test(ua) && (/(Android 2)/.test(ua) || isMobile))) ||
-                              (/(BlackBerry|BB)/.test(ua) && isMobile) ||
-                              /(Windows Phone)/.test(ua);
+                            (!/(Silk)/.test(ua) && (/(Android)/.test(ua) && (/(Android 2)/.test(ua) || isMobile))) ||
+                            (/(BlackBerry|BB)/.test(ua) && isMobile) ||
+                            /(Windows Phone)/.test(ua);
                 }
 
                 function isTablet(ua) {
                     return !isPhone(ua) && (/iPad/.test(ua) || /Android/.test(ua) || /(RIM Tablet OS)/.test(ua) ||
-                        (/MSIE 10/.test(ua) && /; Touch/.test(ua)));
+                            (/MSIE 10/.test(ua) && /; Touch/.test(ua)));
                 }
 
                 // Check if the ?platform parameter is set in the URL
                 var paramsString = window.location.search.substr(1),
-                    paramsArray = paramsString.split("&"),
-                    params = {},
-                    testPlatform, i;
+                        paramsArray = paramsString.split("&"),
+                        params = {},
+                        testPlatform, i;
 
                 for (i = 0; i < paramsArray.length; i++) {
                     var tmpArray = paramsArray[i].split("=");
@@ -753,9 +738,9 @@
      */
     ExtClass.registerPreprocessor('config', function(Class, data) {
         var config = data.config,
-            prototype = Class.prototype,
-            defaultConfig = prototype.config,
-            nameMap, name, setName, getName, initGetName, internalName, value;
+                prototype = Class.prototype,
+                defaultConfig = prototype.config,
+                nameMap, name, setName, getName, initGetName, internalName, value;
 
         delete data.config;
 
@@ -810,13 +795,13 @@
      */
     ExtClass.registerPreprocessor('mixins', function(Class, data, hooks) {
         var mixins = data.mixins,
-            name, mixin, i, ln;
+                name, mixin, i, ln;
 
         delete data.mixins;
 
         Ext.Function.interceptBefore(hooks, 'onCreated', function() {
             if (mixins instanceof Array) {
-                for (i = 0,ln = mixins.length; i < ln; i++) {
+                for (i = 0, ln = mixins.length; i < ln; i++) {
                     mixin = mixins[i];
                     name = mixin.prototype.mixinId || mixin.$className;
 
@@ -853,25 +838,25 @@
         members.preprocessors = [
             'extend'
 
-            //<feature classSystem.statics>
-            ,'statics'
-            //</feature>
+                    //<feature classSystem.statics>
+                    , 'statics'
+                    //</feature>
 
-            //<feature classSystem.inheritableStatics>
-            ,'inheritableStatics'
-            //</feature>
+                    //<feature classSystem.inheritableStatics>
+                    , 'inheritableStatics'
+                    //</feature>
 
-            //<feature classSystem.mixins>
-            ,'mixins'
-            //</feature>
+                    //<feature classSystem.mixins>
+                    , 'mixins'
+                    //</feature>
 
-            //<feature classSystem.platformConfig>
-            ,'platformConfig'
-            //</feature>
+                    //<feature classSystem.platformConfig>
+                    , 'platformConfig'
+                    //</feature>
 
-            //<feature classSystem.config>
-            ,'config'
-            //</feature>
+                    //<feature classSystem.config>
+                    , 'config'
+                    //</feature>
         ];
 
         if (Class) {

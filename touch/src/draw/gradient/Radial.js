@@ -57,8 +57,7 @@ Ext.define("Ext.draw.gradient.Radial", {
             r: 1
         }
     },
-
-    applyStart: function (newStart, oldStart) {
+    applyStart: function(newStart, oldStart) {
         if (!oldStart) {
             return newStart;
         }
@@ -87,8 +86,7 @@ Ext.define("Ext.draw.gradient.Radial", {
         }
         return circle;
     },
-
-    applyEnd: function (newEnd, oldEnd) {
+    applyEnd: function(newEnd, oldEnd) {
         if (!oldEnd) {
             return newEnd;
         }
@@ -117,24 +115,23 @@ Ext.define("Ext.draw.gradient.Radial", {
         }
         return circle;
     },
-
     /**
      * @inheritdoc
      */
-    generateGradient: function (ctx, bbox) {
+    generateGradient: function(ctx, bbox) {
         var start = this.getStart(),
-            end = this.getEnd(),
-            w = bbox.width * 0.5,
-            h = bbox.height * 0.5,
-            x = bbox.x + w,
-            y = bbox.y + h,
-            gradient = ctx.createRadialGradient(
-                x + start.x * w, y + start.y * h, start.r * Math.max(w, h),
-                x + end.x * w, y + end.y * h, end.r * Math.max(w, h)
-            ),
-            stops = this.getStops(),
-            ln = stops.length,
-            i;
+                end = this.getEnd(),
+                w = bbox.width * 0.5,
+                h = bbox.height * 0.5,
+                x = bbox.x + w,
+                y = bbox.y + h,
+                gradient = ctx.createRadialGradient(
+                        x + start.x * w, y + start.y * h, start.r * Math.max(w, h),
+                        x + end.x * w, y + end.y * h, end.r * Math.max(w, h)
+                        ),
+                stops = this.getStops(),
+                ln = stops.length,
+                i;
 
         for (i = 0; i < ln; i++) {
             gradient.addColorStop(stops[i].offset, stops[i].color);

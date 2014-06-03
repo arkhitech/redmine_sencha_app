@@ -5,21 +5,17 @@
  */
 Ext.define('Ext.event.recognizer.EdgeSwipe', {
     extend: 'Ext.event.recognizer.Swipe',
-
     handledEvents: [
         'edgeswipe',
         'edgeswipestart',
         'edgeswipeend'
     ],
-
     inheritableStatics: {
         NOT_NEAR_EDGE: 0x13
     },
-
     config: {
         minDistance: 60
     },
-
     onTouchStart: function(e) {
         if (this.callParent(arguments) === false) {
             return false;
@@ -37,21 +33,20 @@ Ext.define('Ext.event.recognizer.EdgeSwipe', {
         this.startX = touch.pageX;
         this.startY = touch.pageY;
     },
-
     onTouchMove: function(e) {
         var touch = e.changedTouches[0],
-            x = touch.pageX,
-            y = touch.pageY,
-            deltaX = x - this.startX,
-            deltaY = y - this.startY,
-            absDeltaY = Math.abs(y - this.startY),
-            absDeltaX = Math.abs(x - this.startX),
-            minDistance = this.getMinDistance(),
-            maxOffset = this.getMaxOffset(),
-            duration = e.time - this.startTime,
-            elementWidth = Ext.Viewport && Ext.Viewport.element.getWidth(),
-            elementHeight = Ext.Viewport && Ext.Viewport.element.getHeight(),
-            direction, distance;
+                x = touch.pageX,
+                y = touch.pageY,
+                deltaX = x - this.startX,
+                deltaY = y - this.startY,
+                absDeltaY = Math.abs(y - this.startY),
+                absDeltaX = Math.abs(x - this.startX),
+                minDistance = this.getMinDistance(),
+                maxOffset = this.getMaxOffset(),
+                duration = e.time - this.startTime,
+                elementWidth = Ext.Viewport && Ext.Viewport.element.getWidth(),
+                elementHeight = Ext.Viewport && Ext.Viewport.element.getHeight(),
+                direction, distance;
 
         // Check if the swipe is going off vertical
         if (this.isVertical && absDeltaX > maxOffset) {
@@ -102,10 +97,10 @@ Ext.define('Ext.event.recognizer.EdgeSwipe', {
             if (this.direction == 'right' && this.startX > minDistance) {
                 return this.fail(this.self.NOT_NEAR_EDGE);
             }
-            else if (this.direction == 'down' &&  this.startY > minDistance) {
+            else if (this.direction == 'down' && this.startY > minDistance) {
                 return this.fail(this.self.NOT_NEAR_EDGE);
             }
-            else if (this.direction == 'left' &&  (elementWidth - this.startX) > minDistance) {
+            else if (this.direction == 'left' && (elementWidth - this.startX) > minDistance) {
                 return this.fail(this.self.NOT_NEAR_EDGE);
             }
             else if (this.direction == 'up' && (elementHeight - this.startY) > minDistance) {
@@ -131,11 +126,10 @@ Ext.define('Ext.event.recognizer.EdgeSwipe', {
             });
         }
     },
-
     onTouchEnd: function(e) {
         if (this.onTouchMove(e) !== false) {
             var touch = e.changedTouches[0],
-                duration = e.time - this.startTime;
+                    duration = e.time - this.startTime;
 
             this.fire('edgeswipeend', e, [touch], {
                 touch: touch,

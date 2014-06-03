@@ -33,11 +33,9 @@ Ext.define('Ext.data.Connection', {
     mixins: {
         observable: 'Ext.mixin.Observable'
     },
-
     statics: {
         requestId: 0
     },
-
     config: {
         /**
          * @cfg {String} url
@@ -45,9 +43,7 @@ Ext.define('Ext.data.Connection', {
          * @accessor
          */
         url: null,
-
         async: true,
-
         /**
          * @cfg {String} [method=undefined]
          * The default HTTP method to be used for requests.
@@ -57,71 +53,59 @@ Ext.define('Ext.data.Connection', {
          * Defaults to `undefined`; if not set but params are present will use "POST", otherwise "GET".
          */
         method: null,
-
         username: '',
         password: '',
-
         /**
          * @cfg {Boolean} disableCaching
          * `true` to add a unique cache-buster param to GET requests.
          * @accessor
          */
         disableCaching: true,
-
         /**
          * @cfg {String} disableCachingParam
          * Change the parameter which is sent went disabling caching through a cache buster.
          * @accessor
          */
         disableCachingParam: '_dc',
-
         /**
          * @cfg {Number} timeout
          * The timeout in milliseconds to be used for requests.
          * @accessor
          */
-        timeout : 30000,
-
+        timeout: 30000,
         /**
          * @cfg {Object} extraParams
          * Any parameters to be appended to the request.
          * @accessor
          */
         extraParams: null,
-
         /**
          * @cfg {Object} defaultHeaders
          * An object containing request headers which are added to each request made by this object.
          * @accessor
          */
         defaultHeaders: null,
-
-        useDefaultHeader : true,
-        defaultPostHeader : 'application/x-www-form-urlencoded; charset=UTF-8',
-
+        useDefaultHeader: true,
+        defaultPostHeader: 'application/x-www-form-urlencoded; charset=UTF-8',
         /**
          * @cfg {Boolean} useDefaultXhrHeader
          * Set this to false to not send the default Xhr header (X-Requested-With) with every request.
          * This should be set to false when making CORS (cross-domain) requests.
          * @accessor
          */
-        useDefaultXhrHeader : true,
-
+        useDefaultXhrHeader: true,
         /**
          * @cfg {String} defaultXhrHeader
          * The value of the default Xhr header (X-Requested-With). This is only used when {@link #useDefaultXhrHeader}
          * is set to `true`.
          */
-        defaultXhrHeader : 'XMLHttpRequest',
-
+        defaultXhrHeader: 'XMLHttpRequest',
         autoAbort: false
     },
-
     textAreaRe: /textarea/i,
     multiPartRe: /multipart\/form-data/i,
     lineBreakRe: /\r\n/g,
-
-    constructor : function(config) {
+    constructor: function(config) {
         this.initConfig(config);
 
         /**
@@ -150,7 +134,6 @@ Ext.define('Ext.data.Connection', {
          */
         this.requests = {};
     },
-
     /**
      * Sends an HTTP request to a remote server.
      *
@@ -272,13 +255,13 @@ Ext.define('Ext.data.Connection', {
     request: function(options) {
         options = options || {};
         var me = this,
-            scope = options.scope || window,
-            username = options.username || me.getUsername(),
-            password = options.password || me.getPassword() || '',
-            useXhr2 = options.xhr2 === true && Ext.feature.has.XHR2,
-            async, requestOptions, request, headers, xhr;
+                scope = options.scope || window,
+                username = options.username || me.getUsername(),
+                password = options.password || me.getPassword() || '',
+                useXhr2 = options.xhr2 === true && Ext.feature.has.XHR2,
+                async, requestOptions, request, headers, xhr;
 
-        if(!Ext.isEmpty(username) && !Ext.isEmpty(password, true) && Ext.isEmpty(options.withCredentials)){
+        if (!Ext.isEmpty(username) && !Ext.isEmpty(password, true) && Ext.isEmpty(options.withCredentials)) {
             options.withCredentials = true;
         }
 
@@ -329,14 +312,14 @@ Ext.define('Ext.data.Connection', {
                 xhr[useXhr2 ? 'onload' : 'onreadystatechange'] = Ext.Function.bind(me.onStateChange, me, [request]);
             }
 
-            if(useXhr2) {
+            if (useXhr2) {
                 xhr.onerror = Ext.Function.bind(me.onStateChange, me, [request]);
             }
 
-            if(options.progress) {
+            if (options.progress) {
                 xhr.onprogress = function(e) {
-                    if(options.progress.isProgressable) {
-                        if(e.total === 0 && options.progress.getDynamic()) {
+                    if (options.progress.isProgressable) {
+                        if (e.total === 0 && options.progress.getDynamic()) {
                             Ext.Logger.warn("Server is not configured to properly return Content-Length. Dynamic progress will be disabled");
                             options.progress.setState.call(options.progress, "download");
                             options.progress.setDynamic(false);
@@ -346,27 +329,28 @@ Ext.define('Ext.data.Connection', {
 
                         Ext.callback(options.progress.updateProgress, options.progress, [(e.loaded / e.total), "download"]);
 
-                        if(e.total > 0 && !options.progress.getDynamic() && options.progress.getInitialConfig().dynamic) {
+                        if (e.total > 0 && !options.progress.getDynamic() && options.progress.getInitialConfig().dynamic) {
                             options.progress.setDynamic(true);
                         }
-                    }else if(Ext.isFunction(options.progress)) {
+                    } else if (Ext.isFunction(options.progress)) {
                         Ext.callback(options.progress, options.progressScope || request, [e, "download"])
                     }
                 };
 
-                if(Ext.feature.has.XHRUploadProgress) {
-                        xhr.upload.onprogress = function (e){
+                if (Ext.feature.has.XHRUploadProgress) {
+                    xhr.upload.onprogress = function(e) {
                         me.fireEvent('requestuploadprogress', me, request, e);
-                        if(options.progress.isProgressable) {
+                        if (options.progress.isProgressable) {
                             Ext.callback(options.progress.updateProgress, options.progress, [(e.loaded / e.total), "upload"]);
-                        }else if(Ext.isFunction(options.progress)) {
+                        } else if (Ext.isFunction(options.progress)) {
                             Ext.callback(options.progress, options.progressScope || request, [e, "upload"])
                         }
                     };
                 }
 
-                if(options.progress.isProgressable) {
-                    if(!Ext.feature.has.XHRUploadProgress) options.progress.setDynamic(false);
+                if (options.progress.isProgressable) {
+                    if (!Ext.feature.has.XHRUploadProgress)
+                        options.progress.setDynamic(false);
                     Ext.callback(options.progress.startProgress, options.progress);
                 }
             }
@@ -383,7 +367,6 @@ Ext.define('Ext.data.Connection', {
             return null;
         }
     },
-
     /**
      * Uploads a form using a hidden iframe.
      * @param {String/HTMLElement/Ext.Element} form The form to upload.
@@ -396,17 +379,17 @@ Ext.define('Ext.data.Connection', {
         options = options || {};
 
         var id = Ext.id(),
-            me = this,
-            frame = document.createElement('iframe'),
-            hiddens = [],
-            encoding = 'multipart/form-data',
-            buf = {
-                target: form.target,
-                method: form.method,
-                encoding: form.encoding,
-                enctype: form.enctype,
-                action: form.action
-            }, addField = function(name, value) {
+                me = this,
+                frame = document.createElement('iframe'),
+                hiddens = [],
+                encoding = 'multipart/form-data',
+                buf = {
+                    target: form.target,
+                    method: form.method,
+                    encoding: form.encoding,
+                    enctype: form.enctype,
+                    action: form.action
+                }, addField = function(name, value) {
             hiddenItem = document.createElement('input');
             Ext.fly(hiddenItem).set({
                 type: 'hidden',
@@ -458,10 +441,10 @@ Ext.define('Ext.data.Connection', {
         }
 
         frame.addEventListener('load',
-            function() {
-                Ext.callback(me.onUploadComplete, me, [frame, options, id]);
-                frame.removeEventListener('load', arguments.callee)
-            }
+                function() {
+                    Ext.callback(me.onUploadComplete, me, [frame, options, id]);
+                    frame.removeEventListener('load', arguments.callee)
+                }
         );
         form.submit();
 
@@ -470,13 +453,12 @@ Ext.define('Ext.data.Connection', {
             Ext.removeNode(h);
         });
     },
-
     onUploadComplete: function(frame, options, id) {
         // bogus response object
         var response = {
-                responseText: '',
-                responseXML: null
-            }, doc, firstChild;
+            responseText: '',
+            responseXML: null
+        }, doc, firstChild;
 
         try {
             doc = frame.contentWindow || frame.contentWindow.document || frame.contentDocument || window.frames[id].document;
@@ -499,7 +481,6 @@ Ext.define('Ext.data.Connection', {
 
         this.onAfterUploadComplete(response, frame, options);
     },
-
     onAfterUploadComplete: function(response, frame, options) {
         var me = this;
 
@@ -512,7 +493,6 @@ Ext.define('Ext.data.Connection', {
             Ext.removeNode(frame);
         }, 100);
     },
-
     /**
      * Detects whether the form is intended to be used for an upload.
      * @private
@@ -524,7 +504,6 @@ Ext.define('Ext.data.Connection', {
         }
         return false;
     },
-
     /**
      * Gets the form object from options.
      * @private
@@ -534,7 +513,6 @@ Ext.define('Ext.data.Connection', {
     getForm: function(options) {
         return Ext.getDom(options.form) || null;
     },
-
     /**
      * Sets various options such as the url, params for the request.
      * @param {Object} options The initial options.
@@ -543,14 +521,14 @@ Ext.define('Ext.data.Connection', {
      */
     setOptions: function(options, scope) {
         var me = this,
-            params = options.params || {},
-            extraParams = me.getExtraParams(),
-            urlParams = options.urlParams,
-            url = options.url || me.getUrl(),
-            jsonData = options.jsonData,
-            method,
-            disableCache,
-            data;
+                params = options.params || {},
+                extraParams = me.getExtraParams(),
+                urlParams = options.urlParams,
+                url = options.url || me.getUrl(),
+                jsonData = options.jsonData,
+                method,
+                disableCache,
+                data;
 
         // allow params to be a method that returns the params object
         if (Ext.isFunction(params)) {
@@ -580,7 +558,7 @@ Ext.define('Ext.data.Connection', {
         if (options.binaryData) {
             //<debug>
             if (!Ext.isArray(options.binaryData) && !(options.binaryData instanceof Blob)) {
-                Ext.Logger.warn("Binary submission data must be an array of byte values or a Blob! Instead got " + typeof(options.binaryData));
+                Ext.Logger.warn("Binary submission data must be an array of byte values or a Blob! Instead got " + typeof (options.binaryData));
             }
             //</debug>
             if (data instanceof Array) {
@@ -636,7 +614,6 @@ Ext.define('Ext.data.Connection', {
             data: data || params || null
         };
     },
-
     /**
      * Template method for overriding url.
      * @private
@@ -651,8 +628,6 @@ Ext.define('Ext.data.Connection', {
         }
         return url;
     },
-
-
     /**
      * Template method for overriding params.
      * @private
@@ -662,14 +637,13 @@ Ext.define('Ext.data.Connection', {
      */
     setupParams: function(options, params) {
         var form = this.getForm(options),
-            serializedForm;
+                serializedForm;
         if (form && !this.isFormUpload(options)) {
             serializedForm = Ext.Element.serializeForm(form);
             params = params ? (params + '&' + serializedForm) : serializedForm;
         }
         return params;
     },
-
     /**
      * Template method for overriding method.
      * @private
@@ -683,7 +657,6 @@ Ext.define('Ext.data.Connection', {
         }
         return method;
     },
-
     /**
      * Setup all the headers for the request.
      * @private
@@ -694,12 +667,12 @@ Ext.define('Ext.data.Connection', {
      */
     setupHeaders: function(xhr, options, data, params) {
         var me = this,
-            headers = Ext.apply({}, options.headers || {}, me.getDefaultHeaders() || {}),
-            contentType = me.getDefaultPostHeader(),
-            jsonData = options.jsonData,
-            xmlData = options.xmlData,
-            key,
-            header;
+                headers = Ext.apply({}, options.headers || {}, me.getDefaultHeaders() || {}),
+                contentType = me.getDefaultPostHeader(),
+                jsonData = options.jsonData,
+                xmlData = options.xmlData,
+                key,
+                header;
 
         if (!headers['Content-Type'] && (data || params)) {
             if (data) {
@@ -722,8 +695,8 @@ Ext.define('Ext.data.Connection', {
             headers['X-Requested-With'] = me.getDefaultXhrHeader();
         }
 
-        if(!Ext.isEmpty(options.username) && !Ext.isEmpty(options.password)) {
-            headers['Authorization'] = "Basic " + btoa(options.username+":"+options.password);
+        if (!Ext.isEmpty(options.username) && !Ext.isEmpty(options.password)) {
+            headers['Authorization'] = "Basic " + btoa(options.username + ":" + options.password);
         }
 
         // set up all the request headers on the xhr object
@@ -735,11 +708,11 @@ Ext.define('Ext.data.Connection', {
                 }
 
             }
-        } catch(e) {
+        } catch (e) {
             me.fireEvent('exception', key, header);
         }
 
-        if(options.responseType) {
+        if (options.responseType) {
             try {
                 xhr.responseType = options.responseType === "blob" && Ext.browser.is.Safari ? "arraybuffer" : options.responseType;
             } catch (e) {
@@ -753,41 +726,39 @@ Ext.define('Ext.data.Connection', {
 
         return headers;
     },
-
     /**
      * Creates the appropriate XHR transport for the browser.
      * @private
      */
     getXhrInstance: (function() {
         var options = [function() {
-            return new XMLHttpRequest();
-        }, function() {
-            return new ActiveXObject('MSXML2.XMLHTTP.3.0');
-        }, function() {
-            return new ActiveXObject('MSXML2.XMLHTTP');
-        }, function() {
-            return new ActiveXObject('Microsoft.XMLHTTP');
-        }], i = 0,
-            len = options.length,
-            xhr;
+                return new XMLHttpRequest();
+            }, function() {
+                return new ActiveXObject('MSXML2.XMLHTTP.3.0');
+            }, function() {
+                return new ActiveXObject('MSXML2.XMLHTTP');
+            }, function() {
+                return new ActiveXObject('Microsoft.XMLHTTP');
+            }], i = 0,
+                len = options.length,
+                xhr;
 
         for (; i < len; ++i) {
             try {
                 xhr = options[i];
                 xhr();
                 break;
-            } catch(e) {
+            } catch (e) {
             }
         }
         return xhr;
     })(),
-
     /**
      * Determines whether this object has a request outstanding.
      * @param {Object} request The request to check.
      * @return {Boolean} True if there is an outstanding request.
      */
-    isLoading : function(request) {
+    isLoading: function(request) {
         if (!(request && request.xhr)) {
             return false;
         }
@@ -795,15 +766,14 @@ Ext.define('Ext.data.Connection', {
         var state = request.xhr.readyState;
         return !(state === 0 || state == 4);
     },
-
     /**
      * Aborts any outstanding request.
      * @param {Object} request (Optional) Defaults to the last request.
      */
-    abort : function(request) {
+    abort: function(request) {
         var me = this,
-            requests = me.requests,
-            id;
+                requests = me.requests,
+                id;
 
         if (request && me.isLoading(request)) {
             /*
@@ -827,27 +797,24 @@ Ext.define('Ext.data.Connection', {
             }
         }
     },
-
     /**
      * Aborts all outstanding requests.
      */
     abortAll: function() {
         this.abort();
     },
-
     /**
      * Fires when the state of the XHR changes.
      * @private
      * @param {Object} request The request
      */
-    onStateChange : function(request) {
+    onStateChange: function(request) {
         if (request.xhr.readyState == 4) {
             this.clearTimeout(request);
             this.onComplete(request);
             this.cleanup(request);
         }
     },
-
     /**
      * Clears the timeout on the request.
      * @private
@@ -857,7 +824,6 @@ Ext.define('Ext.data.Connection', {
         clearTimeout(request.timeout);
         delete request.timeout;
     },
-
     /**
      * Cleans up any left over information from the request.
      * @private
@@ -867,19 +833,18 @@ Ext.define('Ext.data.Connection', {
         request.xhr = null;
         delete request.xhr;
     },
-
     /**
      * To be called when the request has come back from the server.
      * @private
      * @param {Object} request
      * @return {Object} The response.
      */
-    onComplete : function(request) {
+    onComplete: function(request) {
         var me = this,
-            options = request.options,
-            result,
-            success,
-            response;
+                options = request.options,
+                result,
+                success,
+                response;
 
         try {
             result = me.parseStatus(request.xhr.status, request.xhr);
@@ -890,8 +855,8 @@ Ext.define('Ext.data.Connection', {
         } catch (e) {
             // in some browsers we can't access the status if the readyState is not 4, so the request has failed
             result = {
-                success : false,
-                isException : false
+                success: false,
+                isException: false
             };
         }
         success = result.success;
@@ -911,14 +876,13 @@ Ext.define('Ext.data.Connection', {
         }
         Ext.callback(options.callback, options.scope, [options, success, response]);
 
-        if(options.progress && options.progress.isProgressable) {
+        if (options.progress && options.progress.isProgressable) {
             Ext.callback(options.progress.endProgress, options.progress, [result]);
         }
 
         delete me.requests[request.id];
         return response;
     },
-
     /**
      * Checks if the response status was successful.
      * @param {Number} status The status code.
@@ -930,7 +894,7 @@ Ext.define('Ext.data.Connection', {
         status = status == 1223 ? 204 : status;
 
         var success = (status >= 200 && status < 300) || status == 304 || (status == 0 && xhr.responseText && xhr.responseText.length > 0),
-            isException = false;
+                isException = false;
 
         if (!success) {
             switch (status) {
@@ -949,20 +913,18 @@ Ext.define('Ext.data.Connection', {
             isException: isException
         };
     },
-
     /**
      * Creates the response object.
      * @private
      * @param {Object} request
      */
-    createResponse : function(request) {
+    createResponse: function(request) {
         var xhr = request.xhr,
-            headers = {},
-            lines, count, line, index, key, response,
-
-            binaryResponse = xhr.responseType === "blob" || xhr.responseType === "arraybuffer",
-            textResponse = xhr.responseType === "text",
-            documentResponse = xhr.responseType === "document";
+                headers = {},
+                lines, count, line, index, key, response,
+                binaryResponse = xhr.responseType === "blob" || xhr.responseType === "arraybuffer",
+                textResponse = xhr.responseType === "text",
+                documentResponse = xhr.responseType === "document";
 
         //we need to make this check here because if a request times out an exception is thrown
         //when calling getAllResponseHeaders() because the response never came back to populate it
@@ -991,22 +953,22 @@ Ext.define('Ext.data.Connection', {
         delete request.xhr;
         response = {
             request: request,
-            requestId : request.id,
-            status : xhr.status,
-            statusText : xhr.statusText,
-            getResponseHeader : function(header) {
+            requestId: request.id,
+            status: xhr.status,
+            statusText: xhr.statusText,
+            getResponseHeader: function(header) {
                 return headers[header.toLowerCase()];
             },
-            getAllResponseHeaders : function() {
+            getAllResponseHeaders: function() {
                 return headers;
             },
-            responseText : binaryResponse ? null : documentResponse ? null : xhr.responseText,
-            responseXML : binaryResponse ? null : textResponse ? null : xhr.responseXML,
-            responseBytes : binaryResponse ? xhr.response : null
+            responseText: binaryResponse ? null : documentResponse ? null : xhr.responseText,
+            responseXML: binaryResponse ? null : textResponse ? null : xhr.responseXML,
+            responseBytes: binaryResponse ? xhr.response : null
         };
 
-        if(request.options.responseType === "blob" && xhr.responseType === "arraybuffer") {
-            response.responseBytes = new Blob([response.responseBytes], {type:xhr.getResponseHeader("Content-Type")})
+        if (request.options.responseType === "blob" && xhr.responseType === "arraybuffer") {
+            response.responseBytes = new Blob([response.responseBytes], {type: xhr.getResponseHeader("Content-Type")})
         }
 
         // If we don't explicitly tear down the xhr reference, IE6/IE7 will hold this in the closure of the
@@ -1014,18 +976,17 @@ Ext.define('Ext.data.Connection', {
         xhr = null;
         return response;
     },
-
     /**
      * Creates the exception object.
      * @private
      * @param {Object} request
      */
-    createException : function(request) {
+    createException: function(request) {
         return {
-            request : request,
-            requestId : request.id,
-            status : request.aborted ? -1 : 0,
-            statusText : request.aborted ? 'transaction aborted' : 'communication failure',
+            request: request,
+            requestId: request.id,
+            status: request.aborted ? -1 : 0,
+            statusText: request.aborted ? 'transaction aborted' : 'communication failure',
             aborted: request.aborted,
             timedout: request.timedout
         };

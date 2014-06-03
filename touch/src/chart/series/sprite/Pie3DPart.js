@@ -18,57 +18,46 @@ Ext.define("Ext.chart.series.sprite.Pie3DPart", {
                  * @cfg {Number} [centerX=0] The central point of the series on the x-axis.
                  */
                 centerX: "number",
-
                 /**
                  * @cfg {Number} [centerY=0] The central point of the series on the x-axis.
                  */
                 centerY: "number",
-
                 /**
                  * @cfg {Number} [startAngle=0] The starting angle of the polar series.
                  */
                 startAngle: "number",
-
                 /**
                  * @cfg {Number} [endAngle=Math.PI] The ending angle of the polar series.
                  */
                 endAngle: "number",
-
                 /**
                  * @cfg {Number} [startRho=0] The starting radius of the polar series.
                  */
                 startRho: "number",
-
                 /**
                  * @cfg {Number} [endRho=150] The ending radius of the polar series.
                  */
                 endRho: "number",
-
                 /**
                  * @cfg {Number} [margin=0] Margin from the center of the pie. Used for donut.
                  */
                 margin: "number",
-
                 /**
                  * @cfg {Number} [thickness=0] The thickness of the 3D pie part.
                  */
                 thickness: "number",
-
                 /**
                  * @cfg {Number} [distortion=0] The distortion of the 3D pie part.
                  */
                 distortion: "number",
-
                 /**
                  * @cfg {Object} [baseColor='white'] The color of the 3D pie part before adding the 3D effect.
                  */
                 baseColor: "color",
-
                 /**
                  * @cfg {Number} [baseRotation=0] The starting rotation of the polar series.
                  */
                 baseRotation: "number",
-
                 /**
                  * @cfg {String} [part=0] The part of the 3D Pie represented by the sprite.
                  */
@@ -104,9 +93,9 @@ Ext.define("Ext.chart.series.sprite.Pie3DPart", {
                 part: "top"
             },
             updaters: {
-                "partColor": function (attrs) {
+                "partColor": function(attrs) {
                     var color = Ext.draw.Color.fly(attrs.baseColor),
-                        fillStyle;
+                            fillStyle;
                     switch (attrs.part) {
                         case 'top':
                             fillStyle = color.toString();
@@ -168,7 +157,7 @@ Ext.define("Ext.chart.series.sprite.Pie3DPart", {
                     attrs.fillStyle = fillStyle;
                     attrs.canvasAttributes.fillStyle = fillStyle;
                 },
-                "partZIndex": function (attrs) {
+                "partZIndex": function(attrs) {
                     var rotation = attrs.baseRotation;
                     switch (attrs.part) {
                         case 'top':
@@ -192,41 +181,37 @@ Ext.define("Ext.chart.series.sprite.Pie3DPart", {
             }
         }
     },
-
-    updatePlainBBox: function (plain) {
+    updatePlainBBox: function(plain) {
         var attr = this.attr,
-            rho = attr.part === 'inner' ? attr.startRho : attr.endRho;
+                rho = attr.part === 'inner' ? attr.startRho : attr.endRho;
         plain.width = rho * 2;
         plain.height = rho * attr.distortion * 2 + attr.thickness;
         plain.x = attr.centerX - rho;
         plain.y = attr.centerY - rho * attr.distortion;
     },
-    
-    updateTransformedBBox: function (transform) {
+    updateTransformedBBox: function(transform) {
         return this.updatePlainBBox(transform);
     },
-    
-    updatePath: function (path) {
+    updatePath: function(path) {
         if (this.attr.endAngle < this.attr.startAngle) {
             return;
         }
         this[this.attr.part + 'Renderer'](path);
     },
-
-    topRenderer: function (path) {
+    topRenderer: function(path) {
         var attr = this.attr,
-            margin = attr.margin,
-            distortion = attr.distortion,
-            centerX = attr.centerX,
-            centerY = attr.centerY,
-            baseRotation = attr.baseRotation,
-            startAngle = attr.startAngle + baseRotation ,
-            endAngle = attr.endAngle + baseRotation ,
-            startRho = attr.startRho,
-            endRho = attr.endRho,
-            midAngle,
-            sinEnd = Math.sin(endAngle),
-            cosEnd = Math.cos(endAngle);
+                margin = attr.margin,
+                distortion = attr.distortion,
+                centerX = attr.centerX,
+                centerY = attr.centerY,
+                baseRotation = attr.baseRotation,
+                startAngle = attr.startAngle + baseRotation,
+                endAngle = attr.endAngle + baseRotation,
+                startRho = attr.startRho,
+                endRho = attr.endRho,
+                midAngle,
+                sinEnd = Math.sin(endAngle),
+                cosEnd = Math.cos(endAngle);
         midAngle = (startAngle + endAngle) * 0.5;
         centerX += Math.cos(midAngle) * margin;
         centerY += Math.sin(midAngle) * margin * distortion;
@@ -235,22 +220,21 @@ Ext.define("Ext.chart.series.sprite.Pie3DPart", {
         path.ellipse(centerX, centerY, endRho, endRho * distortion, 0, endAngle, startAngle, true);
         path.closePath();
     },
-
-    startRenderer: function (path) {
+    startRenderer: function(path) {
         var attr = this.attr,
-            margin = attr.margin,
-            centerX = attr.centerX,
-            centerY = attr.centerY,
-            distortion = attr.distortion,
-            baseRotation = attr.baseRotation,
-            startAngle = attr.startAngle + baseRotation ,
-            endAngle = attr.endAngle + baseRotation,
-            thickness = attr.thickness,
-            startRho = attr.startRho,
-            endRho = attr.endRho,
-            sinStart = Math.sin(startAngle),
-            cosStart = Math.cos(startAngle),
-            midAngle;
+                margin = attr.margin,
+                centerX = attr.centerX,
+                centerY = attr.centerY,
+                distortion = attr.distortion,
+                baseRotation = attr.baseRotation,
+                startAngle = attr.startAngle + baseRotation,
+                endAngle = attr.endAngle + baseRotation,
+                thickness = attr.thickness,
+                startRho = attr.startRho,
+                endRho = attr.endRho,
+                sinStart = Math.sin(startAngle),
+                cosStart = Math.cos(startAngle),
+                midAngle;
         if (cosStart < 0) {
             midAngle = (startAngle + endAngle) * 0.5;
             centerX += Math.cos(midAngle) * margin;
@@ -262,21 +246,20 @@ Ext.define("Ext.chart.series.sprite.Pie3DPart", {
             path.closePath();
         }
     },
-
-    endRenderer: function (path) {
+    endRenderer: function(path) {
         var attr = this.attr,
-            margin = attr.margin,
-            centerX = attr.centerX,
-            centerY = attr.centerY,
-            distortion = attr.distortion,
-            baseRotation = attr.baseRotation,
-            startAngle = attr.startAngle + baseRotation ,
-            endAngle = attr.endAngle + baseRotation,
-            thickness = attr.thickness,
-            startRho = attr.startRho,
-            endRho = attr.endRho,
-            sin = Math.sin(endAngle),
-            cos = Math.cos(endAngle), midAngle;
+                margin = attr.margin,
+                centerX = attr.centerX,
+                centerY = attr.centerY,
+                distortion = attr.distortion,
+                baseRotation = attr.baseRotation,
+                startAngle = attr.startAngle + baseRotation,
+                endAngle = attr.endAngle + baseRotation,
+                thickness = attr.thickness,
+                startRho = attr.startRho,
+                endRho = attr.endRho,
+                sin = Math.sin(endAngle),
+                cos = Math.cos(endAngle), midAngle;
         if (cos > 0) {
             midAngle = (startAngle + endAngle) * 0.5;
             centerX += Math.cos(midAngle) * margin;
@@ -288,20 +271,19 @@ Ext.define("Ext.chart.series.sprite.Pie3DPart", {
             path.closePath();
         }
     },
-
-    innerRenderer: function (path) {
+    innerRenderer: function(path) {
         var attr = this.attr,
-            margin = attr.margin,
-            centerX = attr.centerX,
-            centerY = attr.centerY,
-            distortion = attr.distortion,
-            baseRotation = attr.baseRotation,
-            startAngle = attr.startAngle + baseRotation ,
-            endAngle = attr.endAngle + baseRotation,
-            thickness = attr.thickness,
-            startRho = attr.startRho,
-            sinEnd, cosEnd,
-            tempStart, tempEnd, midAngle;
+                margin = attr.margin,
+                centerX = attr.centerX,
+                centerY = attr.centerY,
+                distortion = attr.distortion,
+                baseRotation = attr.baseRotation,
+                startAngle = attr.startAngle + baseRotation,
+                endAngle = attr.endAngle + baseRotation,
+                thickness = attr.thickness,
+                startRho = attr.startRho,
+                sinEnd, cosEnd,
+                tempStart, tempEnd, midAngle;
         midAngle = (startAngle + endAngle) * 0.5;
         centerX += Math.cos(midAngle) * margin;
         centerY += Math.sin(midAngle) * margin * distortion;
@@ -330,20 +312,19 @@ Ext.define("Ext.chart.series.sprite.Pie3DPart", {
             path.closePath();
         }
     },
-
-    outerRenderer: function (path) {
+    outerRenderer: function(path) {
         var attr = this.attr,
-            margin = attr.margin,
-            centerX = attr.centerX,
-            centerY = attr.centerY,
-            distortion = attr.distortion,
-            baseRotation = attr.baseRotation,
-            startAngle = attr.startAngle + baseRotation ,
-            endAngle = attr.endAngle + baseRotation,
-            thickness = attr.thickness,
-            endRho = attr.endRho,
-            sinEnd, cosEnd,
-            tempStart, tempEnd, midAngle;
+                margin = attr.margin,
+                centerX = attr.centerX,
+                centerY = attr.centerY,
+                distortion = attr.distortion,
+                baseRotation = attr.baseRotation,
+                startAngle = attr.startAngle + baseRotation,
+                endAngle = attr.endAngle + baseRotation,
+                thickness = attr.thickness,
+                endRho = attr.endRho,
+                sinEnd, cosEnd,
+                tempStart, tempEnd, midAngle;
         midAngle = (startAngle + endAngle) * 0.5;
         centerX += Math.cos(midAngle) * margin;
         centerY += Math.sin(midAngle) * margin * distortion;

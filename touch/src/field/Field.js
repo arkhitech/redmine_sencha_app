@@ -31,7 +31,6 @@ Ext.define('Ext.field.Field', {
     requires: [
         'Ext.field.Input'
     ],
-
     /**
      * Set to `true` on all Ext.field.Field subclasses. This is used by {@link Ext.form.Panel#getValues} to determine which
      * components inside a form are fields.
@@ -39,50 +38,42 @@ Ext.define('Ext.field.Field', {
      * @type Boolean
      */
     isField: true,
-
     // @private
     isFormField: true,
-
     config: {
         /**
          * @cfg
          * @inheritdoc
          */
         baseCls: Ext.baseCSSPrefix + 'field',
-
         /**
          * The label of this field
          * @cfg {String} label
          * @accessor
          */
         label: null,
-
         /**
          * @cfg {String} labelAlign The position to render the label relative to the field input.
          * Available options are: 'top', 'left', 'bottom' and 'right'
          * @accessor
          */
         labelAlign: 'left',
-
         /**
          * @cfg {Number/String} labelWidth The width to make this field's label.
          * @accessor
          */
         labelWidth: '30%',
-
         /**
          * @cfg {Boolean} labelWrap `true` to allow the label to wrap. If set to `false`, the label will be truncated with
          * an ellipsis.
          * @accessor
          */
         labelWrap: false,
-
         /**
          * @cfg {Boolean} clearIcon `true` to use a clear icon in this field.
          * @accessor
          */
         clearIcon: null,
-
         /**
          * @cfg {Boolean} required `true` to make this field required.
          *
@@ -92,7 +83,6 @@ Ext.define('Ext.field.Field', {
          * @accessor
          */
         required: false,
-
         /**
          * The label Element associated with this Field.
          *
@@ -110,7 +100,6 @@ Ext.define('Ext.field.Field', {
          * @accessor
          */
         inputType: null,
-
         /**
          * @cfg {String} name The field's HTML name attribute.
          *
@@ -119,13 +108,11 @@ Ext.define('Ext.field.Field', {
          * @accessor
          */
         name: null,
-
         /**
          * @cfg {Mixed} value A value to initialize this field with.
          * @accessor
          */
         value: null,
-
         /**
          * @cfg {Number} tabIndex The `tabIndex` for this field. Note this only applies to fields that are rendered,
          * not those which are built via `applyTo`.
@@ -133,40 +120,35 @@ Ext.define('Ext.field.Field', {
          */
         tabIndex: null
 
-        /**
-         * @cfg {Object} component The inner component for this field.
-         */
+                /**
+                 * @cfg {Object} component The inner component for this field.
+                 */
 
-        /**
-         * @cfg {Boolean} fullscreen
-         * @hide
-         */
+                /**
+                 * @cfg {Boolean} fullscreen
+                 * @hide
+                 */
     },
-
     platformConfig: [{
-        theme: ['Windows', 'MountainView', 'Blackberry', 'Tizen'],
-        labelAlign: 'top'
-    }],
-
+            theme: ['Windows', 'MountainView', 'Blackberry', 'Tizen'],
+            labelAlign: 'top'
+        }],
     cachedConfig: {
         /**
          * @cfg {String} labelCls Optional CSS class to add to the Label element.
          * @accessor
          */
         labelCls: null,
-
         /**
          * @cfg {String} requiredCls The `className` to be applied to this Field when the {@link #required} configuration is set to `true`.
          * @accessor
          */
         requiredCls: Ext.baseCSSPrefix + 'field-required',
-
         /**
          * @cfg {String} inputCls CSS class to add to the input element of this fields {@link #component}
          */
         inputCls: null
     },
-
     /**
      * @cfg {Boolean} isFocused
      * `true` if this field is currently focused.
@@ -184,9 +166,9 @@ Ext.define('Ext.field.Field', {
                     reference: 'label',
                     cls: prefix + 'form-label',
                     children: [{
-                        reference: 'labelspan',
-                        tag: 'span'
-                    }]
+                            reference: 'labelspan',
+                            tag: 'span'
+                        }]
                 },
                 {
                     reference: 'innerElement',
@@ -195,11 +177,10 @@ Ext.define('Ext.field.Field', {
             ]
         };
     },
-
     // @private
     updateLabel: function(newLabel, oldLabel) {
         var renderElement = this.renderElement,
-            prefix = Ext.baseCSSPrefix;
+                prefix = Ext.baseCSSPrefix;
 
         if (newLabel) {
             this.labelspan.setHtml(newLabel);
@@ -208,11 +189,10 @@ Ext.define('Ext.field.Field', {
             renderElement.removeCls(prefix + 'field-labeled');
         }
     },
-
     // @private
     updateLabelAlign: function(newLabelAlign, oldLabelAlign) {
         var renderElement = this.renderElement,
-            prefix = Ext.baseCSSPrefix;
+                prefix = Ext.baseCSSPrefix;
 
         if (newLabelAlign) {
             renderElement.addCls(prefix + 'label-align-' + newLabelAlign);
@@ -228,7 +208,6 @@ Ext.define('Ext.field.Field', {
             renderElement.removeCls(prefix + 'label-align-' + oldLabelAlign);
         }
     },
-
     // @private
     updateLabelCls: function(newLabelCls, oldLabelCls) {
         if (newLabelCls) {
@@ -239,7 +218,6 @@ Ext.define('Ext.field.Field', {
             this.label.removeCls(oldLabelCls);
         }
     },
-
     // @private
     updateLabelWidth: function(newLabelWidth) {
         var labelAlign = this.getLabelAlign();
@@ -252,7 +230,6 @@ Ext.define('Ext.field.Field', {
             }
         }
     },
-
     // @private
     updateLabelWrap: function(newLabelWrap, oldLabelWrap) {
         var cls = Ext.baseCSSPrefix + 'form-label-nowrap';
@@ -263,7 +240,6 @@ Ext.define('Ext.field.Field', {
             this.removeCls(cls);
         }
     },
-
     /**
      * Updates the {@link #required} configuration.
      * @private
@@ -271,7 +247,6 @@ Ext.define('Ext.field.Field', {
     updateRequired: function(newRequired) {
         this.renderElement[newRequired ? 'addCls' : 'removeCls'](this.getRequiredCls());
     },
-
     /**
      * Updates the {@link #required} configuration
      * @private
@@ -281,7 +256,6 @@ Ext.define('Ext.field.Field', {
             this.renderElement.replaceCls(oldRequiredCls, newRequiredCls);
         }
     },
-
     // @private
     initialize: function() {
         var me = this;
@@ -289,7 +263,6 @@ Ext.define('Ext.field.Field', {
 
         me.doInitValue();
     },
-
     /**
      * @private
      */
@@ -301,7 +274,6 @@ Ext.define('Ext.field.Field', {
          */
         this.originalValue = this.getInitialConfig().value;
     },
-
     /**
      * Resets the current field value back to the original value on this field when it was created.
      *
@@ -324,7 +296,6 @@ Ext.define('Ext.field.Field', {
 
         return this;
     },
-
     /**
      * Resets the field's {@link #originalValue} property so it matches the current {@link #getValue value}. This is
      * called by {@link Ext.form.Panel}.{@link Ext.form.Panel#setValues setValues} if the form's
@@ -333,7 +304,6 @@ Ext.define('Ext.field.Field', {
     resetOriginalValue: function() {
         this.originalValue = this.getValue();
     },
-
     /**
      * Returns `true` if the value of this Field has been changed from its {@link #originalValue}.
      * Will return `false` if the field is disabled or has not been rendered yet.
@@ -370,7 +340,7 @@ Ext.define('Ext.field.Field', {
                 }
             };
 
-			// See https://sencha.jira.com/browse/TOUCH-1184
+            // See https://sencha.jira.com/browse/TOUCH-1184
 
             /**
              * @member Ext.field.Field

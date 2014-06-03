@@ -48,11 +48,8 @@
 
 Ext.define('Ext.layout.Card', {
     extend: 'Ext.layout.Default',
-
     alias: 'layout.card',
-
     isCard: true,
-
     /**
      * @event activeitemchange
      * @preventable doActiveItemChange
@@ -61,22 +58,18 @@ Ext.define('Ext.layout.Card', {
      * @param {Mixed} newActiveItem The new active item
      * @param {Mixed} oldActiveItem The old active item
      */
-        
+
     layoutClass: 'x-layout-card',
-
     itemClass: 'x-layout-card-item',
-
     requires: [
         'Ext.fx.layout.Card'
     ],
-
     /**
      * @private
      */
     applyAnimation: function(animation) {
         return new Ext.fx.layout.Card(animation);
     },
-
     /**
      * @private
      */
@@ -89,40 +82,36 @@ Ext.define('Ext.layout.Card', {
             oldAnimation.destroy();
         }
     },
-
     setContainer: function(container) {
         this.callSuper(arguments);
 
         container.innerElement.addCls(this.layoutClass);
         container.onInitialized('onContainerInitialized', this);
     },
-
     onContainerInitialized: function() {
         var container = this.container,
-            firstItem = container.getInnerAt(0),
-            activeItem = container.getActiveItem();
+                firstItem = container.getInnerAt(0),
+                activeItem = container.getActiveItem();
 
         if (activeItem) {
             activeItem.show();
-            if(firstItem && firstItem !== activeItem) {
+            if (firstItem && firstItem !== activeItem) {
                 firstItem.hide();
             }
         }
 
         container.on('activeitemchange', 'onContainerActiveItemChange', this);
     },
-
     /**
      * @private
      */
     onContainerActiveItemChange: function(container) {
         this.relayEvent(arguments, 'doActiveItemChange');
     },
-
     onItemInnerStateChange: function(item, isInner, destroying) {
         this.callSuper(arguments);
         var container = this.container,
-            activeItem = container.getActiveItem();
+                activeItem = container.getActiveItem();
 
         item.toggleCls(this.itemClass, isInner);
         item.setLayoutSizeFlags(isInner ? container.LAYOUT_BOTH : 0);
@@ -138,7 +127,6 @@ Ext.define('Ext.layout.Card', {
             }
         }
     },
-
     /**
      * @private
      */
@@ -151,8 +139,7 @@ Ext.define('Ext.layout.Card', {
             newActiveItem.show();
         }
     },
-
-    destroy:  function () {
+    destroy: function() {
         this.callParent(arguments);
         Ext.destroy(this.getAnimation());
     }

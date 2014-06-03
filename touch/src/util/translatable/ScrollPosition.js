@@ -5,17 +5,14 @@
  */
 Ext.define('Ext.util.translatable.ScrollPosition', {
     extend: 'Ext.util.translatable.Dom',
-
     type: 'scrollposition',
-
     config: {
         useWrapper: true
     },
-
     getWrapper: function() {
         var wrapper = this.wrapper,
-            element = this.getElement(),
-            container;
+                element = this.getElement(),
+                container;
 
         if (!wrapper) {
             container = element.getParent();
@@ -51,10 +48,9 @@ Ext.define('Ext.util.translatable.ScrollPosition', {
 
         return wrapper;
     },
-
     doTranslate: function(x, y) {
         var wrapper = this.getWrapper(),
-            dom;
+                dom;
 
         if (wrapper) {
             dom = wrapper.dom;
@@ -68,10 +64,9 @@ Ext.define('Ext.util.translatable.ScrollPosition', {
             }
         }
     },
-
     destroy: function() {
         var element = this.getElement(),
-            wrapper = this.wrapper;
+                wrapper = this.wrapper;
 
         if (wrapper) {
             if (!element.isDestroyed) {

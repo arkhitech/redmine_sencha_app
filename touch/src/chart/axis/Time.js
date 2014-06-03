@@ -83,24 +83,20 @@ Ext.define('Ext.chart.axis.Time', {
          * minimum will be calculated automatically.
          */
         calculateByLabelSize: true,
-
         /**
          * @cfg {String/Boolean} dateFormat
          * Indicates the format the date will be rendered on.
          * For example: 'M d' will render the dates as 'Jan 30', etc.
          */
         dateFormat: null,
-
         /**
          * @cfg {Date} fromDate The starting date for the time axis.
          */
         fromDate: null,
-
         /**
          * @cfg {Date} toDate The ending date for the time axis.
          */
         toDate: null,
-
         /**
          * @cfg {Array} [step=[Ext.Date.DAY, 1]] An array with two components:
          *
@@ -109,29 +105,22 @@ Ext.define('Ext.chart.axis.Time', {
          *
          */
         step: [Ext.Date.DAY, 1],
-
         layout: 'continuous',
-
         segmenter: 'time',
-
         aggregator: 'time'
     },
-
-    updateDateFormat: function (format) {
-        this.setRenderer(function (date) {
+    updateDateFormat: function(format) {
+        this.setRenderer(function(date) {
             return Ext.Date.format(new Date(date), format);
         });
     },
-
-    updateFromDate: function (date) {
+    updateFromDate: function(date) {
         this.setMinimum(+date);
     },
-
-    updateToDate: function (date) {
+    updateToDate: function(date) {
         this.setMaximum(+date);
     },
-
-    getCoordFor: function (value) {
+    getCoordFor: function(value) {
         if (Ext.isString(value)) {
             value = new Date(value);
         }

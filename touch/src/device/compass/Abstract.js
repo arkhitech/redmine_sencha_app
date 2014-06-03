@@ -8,7 +8,6 @@ Ext.define('Ext.device.compass.Abstract', {
          */
         frequency: 100
     },
-
     getHeadingAvailable: function(config) {
         // <debug>
         if (!config.callback) {
@@ -18,7 +17,6 @@ Ext.define('Ext.device.compass.Abstract', {
 
         return config;
     },
-
     getCurrentHeading: function(config) {
         // <debug>
         if (!config.success) {
@@ -28,7 +26,6 @@ Ext.define('Ext.device.compass.Abstract', {
 
         return config;
     },
-
     watchHeading: function(config) {
         var defaultConfig = Ext.device.compass.Abstract.prototype.config;
 
@@ -44,6 +41,5 @@ Ext.define('Ext.device.compass.Abstract', {
 
         return config;
     },
-
     clearWatch: Ext.emptyFn
 });

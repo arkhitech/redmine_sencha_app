@@ -155,14 +155,12 @@ Ext.define('Ext.data.reader.Xml', {
     extend: 'Ext.data.reader.Reader',
     alternateClassName: 'Ext.data.XmlReader',
     alias: 'reader.xml',
-
     config: {
         /**
          * @cfg {String} record The DomQuery path to the repeated element which contains record information.
          */
         record: null
     },
-
     /**
      * @private
      * Creates a function to return some particular key of data from a response. The {@link #totalProperty} and
@@ -185,14 +183,12 @@ Ext.define('Ext.data.reader.Xml', {
             return me.getNodeValue(Ext.DomQuery.selectNode(expr, root));
         };
     },
-
     getNodeValue: function(node) {
         if (node && node.firstChild) {
             return node.firstChild.nodeValue;
         }
         return undefined;
     },
-
     //inherit docs
     getResponseData: function(response) {
         // Check to see if the response is already an xml node.
@@ -218,7 +214,6 @@ Ext.define('Ext.data.reader.Xml', {
 
         return xml;
     },
-
     /**
      * Normalizes the data object.
      * @param {Object} data The raw data object.
@@ -227,7 +222,6 @@ Ext.define('Ext.data.reader.Xml', {
     getData: function(data) {
         return data.documentElement || data;
     },
-
     /**
      * @private
      * Given an XML object, returns the Element that represents the root as configured by the Reader's meta data.
@@ -236,7 +230,7 @@ Ext.define('Ext.data.reader.Xml', {
      */
     getRoot: function(data) {
         var nodeName = data.nodeName,
-            root = this.getRootProperty();
+                root = this.getRootProperty();
 
         if (!root || (nodeName && nodeName == root)) {
             return data;
@@ -247,7 +241,6 @@ Ext.define('Ext.data.reader.Xml', {
             return Ext.DomQuery.selectNode(root, data);
         }
     },
-
     /**
      * @private
      * We're just preparing the data for the superclass by pulling out the record nodes we want.
@@ -270,7 +263,6 @@ Ext.define('Ext.data.reader.Xml', {
         }
         return this.callParent([root]);
     },
-
     /**
      * @private
      * See {@link Ext.data.reader.Reader#getAssociatedDataRoot} docs.
@@ -281,7 +273,6 @@ Ext.define('Ext.data.reader.Xml', {
     getAssociatedDataRoot: function(data, associationName) {
         return Ext.DomQuery.select(associationName, data)[0];
     },
-
     /**
      * Parses an XML document and returns a ResultSet containing the model instances.
      * @param {Object} doc Parsed XML document.
@@ -294,7 +285,6 @@ Ext.define('Ext.data.reader.Xml', {
         }
         return this.callParent([doc]);
     },
-
     /**
      * @private
      * Returns an accessor expression for the passed Field from an XML element using either the Field's mapping, or
@@ -304,7 +294,7 @@ Ext.define('Ext.data.reader.Xml', {
      */
     createFieldAccessExpression: function(field, fieldVarName, dataName) {
         var selector = field.getMapping() || field.getName(),
-            result;
+                result;
 
         if (typeof selector === 'function') {
             result = fieldVarName + '.getMapping()(' + dataName + ', this)';

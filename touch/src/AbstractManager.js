@@ -2,15 +2,12 @@
  * @private
  */
 Ext.define('Ext.AbstractManager', {
-
     /* Begin Definitions */
 
     requires: ['Ext.util.HashMap'],
-
     /* End Definitions */
 
     typeName: 'type',
-
     constructor: function(config) {
         Ext.apply(this, config || {});
 
@@ -22,17 +19,15 @@ Ext.define('Ext.AbstractManager', {
 
         this.types = {};
     },
-
     /**
      * Returns an item by id.
      * For additional details see {@link Ext.util.HashMap#get}.
      * @param {String} id The `id` of the item.
      * @return {Object} The item, `undefined` if not found.
      */
-    get : function(id) {
+    get: function(id) {
         return this.all.get(id);
     },
-
     /**
      * Registers an item to be managed.
      * @param {Object} item The item to register.
@@ -40,7 +35,6 @@ Ext.define('Ext.AbstractManager', {
     register: function(item) {
         this.all.add(item);
     },
-
     /**
      * Unregisters an item by removing it from this manager.
      * @param {Object} item The item to unregister.
@@ -48,26 +42,23 @@ Ext.define('Ext.AbstractManager', {
     unregister: function(item) {
         this.all.remove(item);
     },
-
     /**
      * Registers a new item constructor, keyed by a type key.
      * @param {String} type The mnemonic string by which the class may be looked up.
      * @param {Function} cls The new instance class.
      */
-    registerType : function(type, cls) {
+    registerType: function(type, cls) {
         this.types[type] = cls;
         cls[this.typeName] = type;
     },
-
     /**
      * Checks if an item type is registered.
      * @param {String} type The mnemonic string by which the class may be looked up.
      * @return {Boolean} Whether the type is registered.
      */
-    isRegistered : function(type){
+    isRegistered: function(type) {
         return this.types[type] !== undefined;
     },
-
     /**
      * Creates and returns an instance of whatever this manager manages, based on the supplied type and
      * config object.
@@ -76,8 +67,8 @@ Ext.define('Ext.AbstractManager', {
      * @return {Object} The instance of whatever this manager is managing.
      */
     create: function(config, defaultType) {
-        var type        = config[this.typeName] || config.type || defaultType,
-            Constructor = this.types[type];
+        var type = config[this.typeName] || config.type || defaultType,
+                Constructor = this.types[type];
 
         //<debug>
         if (Constructor == undefined) {
@@ -87,7 +78,6 @@ Ext.define('Ext.AbstractManager', {
 
         return new Constructor(config);
     },
-
     /**
      * Registers a function that will be called when an item with the specified id is added to the manager.
      * This will happen on instantiation.
@@ -96,15 +86,15 @@ Ext.define('Ext.AbstractManager', {
      * @param {Object} scope The scope (`this` reference) in which the callback is executed.
      * Defaults to the item.
      */
-    onAvailable : function(id, fn, scope){
+    onAvailable: function(id, fn, scope) {
         var all = this.all,
-            item;
+                item;
 
         if (all.containsKey(id)) {
             item = all.get(id);
             fn.call(scope || item, item);
         } else {
-            all.on('add', function(map, key, item){
+            all.on('add', function(map, key, item) {
                 if (key == id) {
                     fn.call(scope || item, item);
                     all.un('add', fn, scope);
@@ -112,7 +102,6 @@ Ext.define('Ext.AbstractManager', {
             });
         }
     },
-
     /**
      * Executes the specified function once for each item in the collection.
      * @param {Function} fn The function to execute.
@@ -122,15 +111,14 @@ Ext.define('Ext.AbstractManager', {
      * @param {Boolean} fn.return False to cease iteration.
      * @param {Object} [scope=this] The scope to execute in.
      */
-    each: function(fn, scope){
+    each: function(fn, scope) {
         this.all.each(fn, scope || this);
     },
-
     /**
      * Gets the number of items in the collection.
      * @return {Number} The number of items in the collection.
      */
-    getCount: function(){
+    getCount: function() {
         return this.all.getCount();
     }
 });

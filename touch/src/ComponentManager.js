@@ -19,17 +19,15 @@
 Ext.define('Ext.ComponentManager', {
     alternateClassName: 'Ext.ComponentMgr',
     singleton: true,
-
     constructor: function() {
         var map = {};
 
         // The sole reason for this is just to support the old code of ComponentQuery
         this.all = {
             map: map,
-
             getArray: function() {
                 var list = [],
-                    id;
+                        id;
 
                 for (id in map) {
                     if (map.hasOwnProperty(id)) {
@@ -42,7 +40,6 @@ Ext.define('Ext.ComponentManager', {
 
         this.map = map;
     },
-
     /**
      * Registers an item to be managed.
      * @param {Object} component The item to register.
@@ -58,7 +55,6 @@ Ext.define('Ext.ComponentManager', {
 
         this.map[component.getId()] = component;
     },
-
     /**
      * Unregisters an item by removing it from this manager.
      * @param {Object} component The item to unregister.
@@ -66,16 +62,14 @@ Ext.define('Ext.ComponentManager', {
     unregister: function(component) {
         delete this.map[component.getId()];
     },
-
     /**
      * Checks if an item type is registered.
      * @param {String} component The mnemonic string by which the class may be looked up.
      * @return {Boolean} Whether the type is registered.
      */
-    isRegistered : function(component){
+    isRegistered: function(component) {
         return this.map[component] !== undefined;
     },
-
     /**
      * Returns an item by id.
      * For additional details see {@link Ext.util.HashMap#get}.
@@ -85,7 +79,6 @@ Ext.define('Ext.ComponentManager', {
     get: function(id) {
         return this.map[id];
     },
-
     /**
      * Creates a new Component from the specified config object using the
      * config object's `xtype` to determine the class to instantiate.
@@ -107,6 +100,5 @@ Ext.define('Ext.ComponentManager', {
             return Ext.createByAlias('widget.' + type, component);
         }
     },
-
     registerType: Ext.emptyFn
 });

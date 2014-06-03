@@ -23,12 +23,9 @@
  *     });
  */
 Ext.define('Ext.chart.interactions.ItemInfo', {
-
     extend: 'Ext.chart.interactions.Abstract',
-
     type: 'iteminfo',
     alias: 'interaction.iteminfo',
-
     /**
      * @event show
      * Fires when the info panel is shown.
@@ -43,7 +40,6 @@ Ext.define('Ext.chart.interactions.ItemInfo', {
          * Defines the gesture type that should trigger the item info panel to be displayed.
          */
         gesture: 'itemtap',
-
         /**
          * @cfg {Object} panel
          * An optional set of configuration overrides for the {@link Ext.Panel} that gets
@@ -69,12 +65,10 @@ Ext.define('Ext.chart.interactions.ItemInfo', {
             ]
         }
     },
-
-    applyPanel: function (panel, oldPanel) {
+    applyPanel: function(panel, oldPanel) {
         return Ext.factory(panel, 'Ext.Panel', oldPanel);
     },
-
-    updatePanel: function (panel, oldPanel) {
+    updatePanel: function(panel, oldPanel) {
         if (panel) {
             panel.on('hide', "reset", this);
         }
@@ -82,24 +76,22 @@ Ext.define('Ext.chart.interactions.ItemInfo', {
             oldPanel.un('hide', "reset", this);
         }
     },
-
-    onGesture: function (series, item) {
+    onGesture: function(series, item) {
         var me = this,
-            panel = me.getPanel();
+                panel = me.getPanel();
         me.item = item;
         me.fireEvent('show', me, item, panel);
         Ext.Viewport.add(panel);
         panel.show('pop');
-        series.setAttributesForItem(item, { highlighted: true });
+        series.setAttributesForItem(item, {highlighted: true});
         me.sync();
         return false;
     },
-
-    reset: function () {
+    reset: function() {
         var me = this,
-            item = me.item;
+                item = me.item;
         if (item) {
-            item.series.setAttributesForItem(item, { highlighted: false });
+            item.series.setAttributesForItem(item, {highlighted: false});
             delete me.item;
             me.sync();
         }

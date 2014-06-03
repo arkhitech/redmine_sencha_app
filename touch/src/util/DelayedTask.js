@@ -68,7 +68,6 @@ Ext.define('Ext.util.DelayedTask', {
         scope: null,
         args: null
     },
-
     constructor: function(fn, scope, args) {
         var config = {
             fn: fn,
@@ -78,7 +77,6 @@ Ext.define('Ext.util.DelayedTask', {
 
         this.initConfig(config);
     },
-
     /**
      * Cancels any pending timeout and queues a new one.
      * @param {Number} delay The milliseconds to delay
@@ -119,14 +117,12 @@ Ext.define('Ext.util.DelayedTask', {
 
         me.setInterval(setInterval(call, me.getDelay()));
     },
-
     /**
      * Cancel the last queued timeout
      */
     cancel: function() {
         this.setInterval(null);
     },
-
     /**
      * @private
      * Clears the old interval
@@ -136,7 +132,6 @@ Ext.define('Ext.util.DelayedTask', {
             clearInterval(oldInterval);
         }
     },
-
     /**
      * @private
      * Changes the value into an array if it isn't one.

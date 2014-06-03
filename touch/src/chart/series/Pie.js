@@ -51,7 +51,6 @@ Ext.define('Ext.chart.series.Pie', {
     type: 'pie',
     alias: 'series.pie',
     seriesType: 'pieslice',
-
     config: {
         /**
          * @cfg {String} labelField
@@ -59,66 +58,53 @@ Ext.define('Ext.chart.series.Pie', {
          * The store record field name to be used for the pie slice labels.
          */
         labelField: false,
-
         /**
          * @cfg {Boolean/Number} donut Whether to set the pie chart as donut chart.
          * Can be set to a particular percentage to set the radius of the donut chart.
          */
         donut: false,
-
         /**
          * @cfg {String} field
          * @deprecated Use xField directly
          */
         field: null,
-
         /**
          * @cfg {Number} rotation The starting angle of the pie slices.
          */
         rotation: 0,
-
         /**
          * @cfg {Number} [totalAngle=2*PI] The total angle of the pie series.
          */
         totalAngle: Math.PI * 2,
-
         /**
          * @cfg {Array} hidden Determines which pie slices are hidden.
          */
         hidden: [],
-
         /**
          * @cfg {Number} Allows adjustment of the radius by a spefic perfentage.
          */
         radiusFactor: 100,
-
         style: {
-
         }
     },
-
     directions: ['X'],
-
-    setField: function (f) {
+    setField: function(f) {
         return this.setXField(f);
     },
-
-    getField: function () {
+    getField: function() {
         return this.getXField();
     },
-
-    applyRadius : function (radius) {
+    applyRadius: function(radius) {
         return radius * this.getRadiusFactor() * 0.01;
     },
-
-    updateLabelData: function () {
+    updateLabelData: function() {
         var me = this,
-            store = me.getStore(),
-            items = store.getData().items,
-            sprites = me.getSprites(),
-            labelField = me.getLabel().getTemplate().getField(),
-            hidden = me.getHidden(),
-            i, ln, labels, sprite;
+                store = me.getStore(),
+                items = store.getData().items,
+                sprites = me.getSprites(),
+                labelField = me.getLabel().getTemplate().getField(),
+                hidden = me.getHidden(),
+                i, ln, labels, sprite;
         if (sprites.length > 0 && labelField) {
             labels = [];
             for (i = 0, ln = items.length; i < ln; i++) {
@@ -131,19 +117,18 @@ Ext.define('Ext.chart.series.Pie', {
             }
         }
     },
-
-    coordinateX: function () {
+    coordinateX: function() {
         var me = this,
-            store = me.getStore(),
-            items = store.getData().items,
-            length = items.length,
-            field = me.getXField(),
-            value, sum = 0,
-            hidden = me.getHidden(),
-            summation = [], i,
-            lastAngle = 0,
-            totalAngle = me.getTotalAngle(),
-            sprites = me.getSprites();
+                store = me.getStore(),
+                items = store.getData().items,
+                length = items.length,
+                field = me.getXField(),
+                value, sum = 0,
+                hidden = me.getHidden(),
+                summation = [], i,
+                lastAngle = 0,
+                totalAngle = me.getTotalAngle(),
+                sprites = me.getSprites();
 
         if (!sprites) {
             return;
@@ -179,24 +164,21 @@ Ext.define('Ext.chart.series.Pie', {
         }
         me.getChart().refreshLegendStore();
     },
-
-    updateCenter: function (center) {
+    updateCenter: function(center) {
         this.setStyle({
             translationX: center[0] + this.getOffsetX(),
             translationY: center[1] + this.getOffsetY()
         });
         this.doUpdateStyles();
     },
-
-    updateRadius: function (radius) {
+    updateRadius: function(radius) {
         this.setStyle({
             startRho: radius * this.getDonut() * 0.01, // Percentage
             endRho: radius
         });
         this.doUpdateStyles();
     },
-
-    updateDonut: function (donut) {
+    updateDonut: function(donut) {
         var radius = this.getRadius();
         this.setStyle({
             startRho: radius * donut * 0.01, // Percentage
@@ -204,35 +186,32 @@ Ext.define('Ext.chart.series.Pie', {
         });
         this.doUpdateStyles();
     },
-
-    updateRotation: function (rotation) {
+    updateRotation: function(rotation) {
         this.setStyle({
             rotationRads: rotation
         });
         this.doUpdateStyles();
     },
-
-    updateTotalAngle: function (totalAngle) {
+    updateTotalAngle: function(totalAngle) {
         this.processData();
     },
-
-    getSprites: function () {
+    getSprites: function() {
         var me = this,
-            chart = me.getChart(),
-            store = me.getStore();
+                chart = me.getChart(),
+                store = me.getStore();
         if (!chart || !store) {
             return [];
         }
         me.getColors();
         me.getSubStyle();
         var items = store.getData().items,
-            length = items.length,
-            animation = chart && chart.getAnimate(),
-            sprites = me.sprites, sprite,
-            spriteIndex = 0, rendererData,
-            i, spriteCreated = false,
-            label = me.getLabel(),
-            labelTpl = label.getTemplate();
+                length = items.length,
+                animation = chart && chart.getAnimate(),
+                sprites = me.sprites, sprite,
+                spriteIndex = 0, rendererData,
+                i, spriteCreated = false,
+                label = me.getLabel(),
+                labelTpl = label.getTemplate();
 
         rendererData = {
             store: store,
@@ -267,16 +246,14 @@ Ext.define('Ext.chart.series.Pie', {
         }
         return me.sprites;
     },
-
-    normalizeAngle: function (angle) {
+    normalizeAngle: function(angle) {
         var pi2 = Math.PI * 2;
         if (angle >= 0) {
             return angle % pi2;
         }
         return (angle % pi2 + pi2) % pi2;
     },
-
-    betweenAngle: function (x, a, b) {
+    betweenAngle: function(x, a, b) {
         var normalize = this.normalizeAngle;
         a = normalize(a);
         b = normalize(b);
@@ -286,15 +263,14 @@ Ext.define('Ext.chart.series.Pie', {
         }
         return x >= a && x < b;
     },
-
     /**
      * Returns the pie slice for a given angle
      * @param {Number} angle The angle to search for the slice
      * @return {Object} An object containing the reocord, sprite, scope etc.
      */
-    getItemForAngle: function (angle) {
-        var me      = this,
-            sprites = me.getSprites();
+    getItemForAngle: function(angle) {
+        var me = this,
+                sprites = me.getSprites();
 
         angle %= Math.PI * 2;
 
@@ -303,18 +279,18 @@ Ext.define('Ext.chart.series.Pie', {
         }
 
         if (sprites) {
-            var store  = me.getStore(),
-                items  = store.getData().items,
-                hidden = me.getHidden(),
-                i      = 0,
-                ln     = store.getCount();
+            var store = me.getStore(),
+                    items = store.getData().items,
+                    hidden = me.getHidden(),
+                    i = 0,
+                    ln = store.getCount();
 
             for (; i < ln; i++) {
-                if(!hidden[i]) {
+                if (!hidden[i]) {
                     // Fortunately, the id of items equals the index of it in instances list.
                     attr = sprites[i].attr;
 
-                    if (attr.startAngle <= angle &&  attr.endAngle >= angle) {
+                    if (attr.startAngle <= angle && attr.endAngle >= angle) {
                         return {
                             series: me,
                             sprite: sprites[i],
@@ -329,28 +305,27 @@ Ext.define('Ext.chart.series.Pie', {
 
         return null;
     },
-
-    getItemForPoint: function (x, y) {
+    getItemForPoint: function(x, y) {
         var me = this,
-            sprites = me.getSprites();
+                sprites = me.getSprites();
         if (sprites) {
             var center = me.getCenter(),
-                offsetX = me.getOffsetX(),
-                offsetY = me.getOffsetY(),
-                originalX = x - center[0] + offsetX,
-                originalY = y - center[1] + offsetY,
-                store = me.getStore(),
-                donut = me.getDonut(),
-                items = store.getData().items,
-                direction = Math.atan2(originalY, originalX) - me.getRotation(),
-                donutLimit = Math.sqrt(originalX * originalX + originalY * originalY),
-                endRadius = me.getRadius(),
-                startRadius = donut / 100 * endRadius,
-                hidden = me.getHidden(),
-                i, ln, attr;
+                    offsetX = me.getOffsetX(),
+                    offsetY = me.getOffsetY(),
+                    originalX = x - center[0] + offsetX,
+                    originalY = y - center[1] + offsetY,
+                    store = me.getStore(),
+                    donut = me.getDonut(),
+                    items = store.getData().items,
+                    direction = Math.atan2(originalY, originalX) - me.getRotation(),
+                    donutLimit = Math.sqrt(originalX * originalX + originalY * originalY),
+                    endRadius = me.getRadius(),
+                    startRadius = donut / 100 * endRadius,
+                    hidden = me.getHidden(),
+                    i, ln, attr;
 
             for (i = 0, ln = items.length; i < ln; i++) {
-                if(!hidden[i]) {
+                if (!hidden[i]) {
                     // Fortunately, the id of items equals the index of it in instances list.
                     attr = sprites[i].attr;
                     if (startRadius + attr.margin <= donutLimit && donutLimit + attr.margin <= endRadius) {
@@ -369,17 +344,16 @@ Ext.define('Ext.chart.series.Pie', {
             return null;
         }
     },
-
-    provideLegendInfo: function (target) {
+    provideLegendInfo: function(target) {
         var store = this.getStore();
         if (store) {
             var items = store.getData().items,
-                labelField = this.getLabel().getTemplate().getField(),
-                field = this.getField(),
-                hidden = this.getHidden();
+                    labelField = this.getLabel().getTemplate().getField(),
+                    field = this.getField(),
+                    hidden = this.getHidden();
             for (var i = 0; i < items.length; i++) {
                 target.push({
-                    name: labelField ? String(items[i].get(labelField))  : field + ' ' + i,
+                    name: labelField ? String(items[i].get(labelField)) : field + ' ' + i,
                     mark: this.getStyleByIndex(i).fillStyle || this.getStyleByIndex(i).strokeStyle || 'black',
                     disabled: hidden[i],
                     series: this.getId(),

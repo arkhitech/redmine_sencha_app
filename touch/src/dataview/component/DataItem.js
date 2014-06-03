@@ -119,26 +119,21 @@
 
 Ext.define('Ext.dataview.component.DataItem', {
     extend: 'Ext.Container',
-    xtype : 'dataitem',
-
+    xtype: 'dataitem',
     config: {
         baseCls: Ext.baseCSSPrefix + 'data-item',
-
         defaultType: 'component',
-
         /**
          * @cfg {Ext.data.Model} record The model instance of this DataItem. It is controlled by the Component DataView.
          * @accessor
          */
         record: null,
-
         /**
          * @cfg {String} itemCls
          * An additional CSS class to apply to items within the DataView.
          * @accessor
          */
         itemCls: null,
-
         /**
          * @cfg dataMap
          * The dataMap allows you to map {@link #record} fields to specific configurations in this component.
@@ -157,25 +152,20 @@ Ext.define('Ext.dataview.component.DataItem', {
          * property a value of an object, which then has `setHtml` (the html setter) as the key, and `text` (the field name) as the value.
          */
         dataMap: {},
-
         /*
          * @private dataview
          */
         dataview: null,
-
         width: '100%',
-
         items: [{
-            xtype: 'component'
-        }]
+                xtype: 'component'
+            }]
     },
-
     updateBaseCls: function(newBaseCls, oldBaseCls) {
         var me = this;
 
         me.callParent(arguments);
     },
-
     updateItemCls: function(newCls, oldCls) {
         if (oldCls) {
             this.removeCls(oldCls);
@@ -184,7 +174,6 @@ Ext.define('Ext.dataview.component.DataItem', {
             this.addCls(newCls);
         }
     },
-
     doMapData: function(dataMap, data, item) {
         var componentName, component, setterMap, setterName;
 
@@ -205,7 +194,6 @@ Ext.define('Ext.dataview.component.DataItem', {
             item.updateData(data);
         }
     },
-
     /**
      * Updates this container's child items, passing through the `dataMap`.
      * @param {Ext.data.Model} newRecord
@@ -218,11 +206,11 @@ Ext.define('Ext.dataview.component.DataItem', {
         this._record = newRecord;
 
         var me = this,
-            dataview = me.dataview || this.getDataview(),
-            data = dataview.prepareData(newRecord.getData(true), dataview.getStore().indexOf(newRecord), newRecord),
-            items = me.getItems(),
-            item = items.first(),
-            dataMap = me.getDataMap();
+                dataview = me.dataview || this.getDataview(),
+                data = dataview.prepareData(newRecord.getData(true), dataview.getStore().indexOf(newRecord), newRecord),
+                items = me.getItems(),
+                item = items.first(),
+                dataMap = me.getDataMap();
 
         if (!item) {
             return;

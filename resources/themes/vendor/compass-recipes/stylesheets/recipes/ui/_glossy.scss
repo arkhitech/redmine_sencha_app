@@ -14,10 +14,10 @@
 
     border-left: 0;
     border-right: 0;
-    
+
     border: $border-width solid $border-color-top;
     border-bottom-color: $border-color-bottom;
-    
+
     outline: $border-width solid rgba(0,0,0,.6);
     background: $color;
     background: transparentize($color, $opacity);

@@ -170,15 +170,15 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 
 .x-android .x-input-el {
-  -webkit-text-fill-color: #000;
+    -webkit-text-fill-color: #000;
 }
 
 .x-android .x-empty .x-input-el {
-  -webkit-text-fill-color: #A9A9A9;
+    -webkit-text-fill-color: #A9A9A9;
 }
 
 .x-android .x-item-disabled .x-input-el {
-  -webkit-text-fill-color: #b3b3b3;
+    -webkit-text-fill-color: #b3b3b3;
 }
 
 // Ext.form.FieldSet
@@ -208,7 +208,7 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 
 .x-ie {
-  .x-field-select .x-field-mask {
-    z-index: 3;
-  }
+    .x-field-select .x-field-mask {
+        z-index: 3;
+    }
 }

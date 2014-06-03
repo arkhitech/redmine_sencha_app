@@ -129,30 +129,26 @@
  *
  */
 Ext.define('Ext.dom.Helper', {
-    emptyTags : /^(?:br|frame|hr|img|input|link|meta|range|spacer|wbr|area|param|col)$/i,
-    confRe : /tag|children|cn|html|tpl|tplData$/i,
-    endRe : /end/i,
-
-    attribXlat: { cls : 'class', htmlFor : 'for' },
-
+    emptyTags: /^(?:br|frame|hr|img|input|link|meta|range|spacer|wbr|area|param|col)$/i,
+    confRe: /tag|children|cn|html|tpl|tplData$/i,
+    endRe: /end/i,
+    attribXlat: {cls: 'class', htmlFor: 'for'},
     closeTags: {},
-
-    decamelizeName : function () {
+    decamelizeName: function() {
         var camelCaseRe = /([a-z])([A-Z])/g,
-            cache = {};
+                cache = {};
 
-        function decamel (match, p1, p2) {
+        function decamel(match, p1, p2) {
             return p1 + '-' + p2.toLowerCase();
         }
 
-        return function (s) {
+        return function(s) {
             return cache[s] || (cache[s] = s.replace(camelCaseRe, decamel));
         };
     }(),
-
     generateMarkup: function(spec, buffer) {
         var me = this,
-            attr, val, tag, i, closeTags;
+                attr, val, tag, i, closeTags;
 
         if (typeof spec == "string") {
             buffer.push(spec);
@@ -205,7 +201,6 @@ Ext.define('Ext.dom.Helper', {
 
         return buffer;
     },
-
     /**
      * Converts the styles from the given object to text. The styles are CSS style names
      * with their associated value.
@@ -235,9 +230,9 @@ Ext.define('Ext.dom.Helper', {
      * @return {String/String[]} If buffer is passed, it is returned. Otherwise the style
      * string is returned.
      */
-    generateStyles: function (styles, buffer) {
+    generateStyles: function(styles, buffer) {
         var a = buffer || [],
-            name;
+                name;
 
         for (name in styles) {
             if (styles.hasOwnProperty(name)) {
@@ -247,7 +242,6 @@ Ext.define('Ext.dom.Helper', {
 
         return buffer || a.join('');
     },
-
     /**
      * Returns the markup for the passed Element(s) config.
      * @param {Object} spec The DOM object spec (and children).
@@ -261,7 +255,6 @@ Ext.define('Ext.dom.Helper', {
         var buf = this.generateMarkup(spec, []);
         return buf.join('');
     },
-
     /**
      * Applies a style specification to an element.
      * @param {String/HTMLElement} el The element to apply styles to
@@ -271,16 +264,15 @@ Ext.define('Ext.dom.Helper', {
     applyStyles: function(el, styles) {
         Ext.fly(el).applyStyles(styles);
     },
-
     /**
      * @private
      * Fix for browsers which no longer support createContextualFragment
      */
-    createContextualFragment: function(html){
+    createContextualFragment: function(html) {
         var div = document.createElement("div"),
-            fragment = document.createDocumentFragment(),
-            i = 0,
-            length, childNodes;
+                fragment = document.createDocumentFragment(),
+                i = 0,
+                length, childNodes;
 
         div.innerHTML = html;
         childNodes = div.childNodes;
@@ -292,7 +284,6 @@ Ext.define('Ext.dom.Helper', {
 
         return fragment;
     },
-
     /**
      * Inserts an HTML fragment into the DOM.
      * @param {String} where Where to insert the html in relation to el - beforeBegin, afterBegin, beforeEnd, afterEnd.
@@ -316,7 +307,7 @@ Ext.define('Ext.dom.Helper', {
         where = where.toLowerCase();
 
         if (Ext.isTextNode(el)) {
-            if (where == 'afterbegin' ) {
+            if (where == 'afterbegin') {
                 where = 'beforebegin';
             }
             else if (where == 'beforeend') {
@@ -351,7 +342,7 @@ Ext.define('Ext.dom.Helper', {
                         range[setStart](el[rangeEl]);
                         frag = range.createContextualFragment(html);
                     }
-                    catch(e) {
+                    catch (e) {
                         frag = this.createContextualFragment(html);
                     }
                 } else {
@@ -369,7 +360,6 @@ Ext.define('Ext.dom.Helper', {
             return el[rangeEl];
         }
     },
-
     /**
      * Creates new DOM element(s) and inserts them before el.
      * @param {String/HTMLElement/Ext.Element} el The context element
@@ -380,7 +370,6 @@ Ext.define('Ext.dom.Helper', {
     insertBefore: function(el, o, returnElement) {
         return this.doInsert(el, o, returnElement, 'beforebegin');
     },
-
     /**
      * Creates new DOM element(s) and inserts them after el.
      * @param {String/HTMLElement/Ext.Element} el The context element
@@ -391,7 +380,6 @@ Ext.define('Ext.dom.Helper', {
     insertAfter: function(el, o, returnElement) {
         return this.doInsert(el, o, returnElement, 'afterend');
     },
-
     /**
      * Creates new DOM element(s) and inserts them as the first child of el.
      * @param {String/HTMLElement/Ext.Element} el The context element
@@ -402,7 +390,6 @@ Ext.define('Ext.dom.Helper', {
     insertFirst: function(el, o, returnElement) {
         return this.doInsert(el, o, returnElement, 'afterbegin');
     },
-
     /**
      * Creates new DOM element(s) and appends them to el.
      * @param {String/HTMLElement/Ext.Element} el The context element
@@ -413,7 +400,6 @@ Ext.define('Ext.dom.Helper', {
     append: function(el, o, returnElement) {
         return this.doInsert(el, o, returnElement, 'beforeend');
     },
-
     /**
      * Creates new DOM element(s) and overwrites the contents of el with them.
      * @param {String/HTMLElement/Ext.Element} el The context element
@@ -426,12 +412,10 @@ Ext.define('Ext.dom.Helper', {
         el.innerHTML = this.markup(o);
         return returnElement ? Ext.get(el.firstChild) : el.firstChild;
     },
-
     doInsert: function(el, o, returnElement, pos) {
         var newNode = this.insertHtml(pos, Ext.getDom(el), this.markup(o));
         return returnElement ? Ext.get(newNode, true) : newNode;
     },
-
     /**
      * Creates a new Ext.Template from the DOM object spec.
      * @param {Object} o The DOM object spec (and children)

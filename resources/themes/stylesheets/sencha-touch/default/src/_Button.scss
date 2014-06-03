@@ -164,7 +164,7 @@ $tip-width: $mask-width - $mask-offset + $shadow-width;
         padding-right: .4em;
 
         &:before,
-        &:after {
+            &:after {
             -webkit-mask: -4px 0 theme_image('default', "tip2_right.png") no-repeat;
             -webkit-mask-size: 15px 100%;
         }

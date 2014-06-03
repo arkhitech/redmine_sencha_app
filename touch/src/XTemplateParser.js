@@ -3,10 +3,9 @@
  * @private
  */
 Ext.define('Ext.XTemplateParser', {
-    constructor: function (config) {
+    constructor: function(config) {
         Ext.apply(this, config);
     },
-
     /**
      * @property {Number} level The 'for' loop context level. This is adjusted up by one
      * prior to calling {@link #doFor} and down by one after calling the corresponding
@@ -123,15 +122,14 @@ Ext.define('Ext.XTemplateParser', {
      * @method
      */
     doTpl: Ext.emptyFn,
-
-    parse: function (str) {
+    parse: function(str) {
         var me = this,
-            len = str.length,
-            aliases = { elseif: 'elif' },
-            topRe = me.topRe,
-            actionsRe = me.actionsRe,
-            index, stack, s, m, t, prev, frame, subMatch, begin, end, actions,
-            prop;
+                len = str.length,
+                aliases = {elseif: 'elif'},
+        topRe = me.topRe,
+                actionsRe = me.actionsRe,
+                index, stack, s, m, t, prev, frame, subMatch, begin, end, actions,
+                prop;
 
         me.level = 0;
         me.stack = stack = [];
@@ -153,12 +151,12 @@ Ext.define('Ext.XTemplateParser', {
             }
 
             if (m[1]) {
-                end = str.indexOf('%}', begin+2);
-                me.doEval(str.substring(begin+2, end));
+                end = str.indexOf('%}', begin + 2);
+                me.doEval(str.substring(begin + 2, end));
                 end += 2;
             } else if (m[2]) {
-                end = str.indexOf(']}', begin+2);
-                me.doExpr(str.substring(begin+2, end));
+                end = str.indexOf(']}', begin + 2);
+                me.doExpr(str.substring(begin + 2, end));
                 end += 2;
             } else if (m[3]) { // if ('{' token)
                 me.doTag(m[3]);
@@ -190,16 +188,16 @@ Ext.define('Ext.XTemplateParser', {
                         me.doDefault();
                     } else {
                         me.doTpl();
-                        stack.push({ type: 'tpl' });
+                        stack.push({type: 'tpl'});
                     }
                 }
                 else if (actions['if']) {
                     me.doIf(actions['if'], actions);
-                    stack.push({ type: 'if' });
+                    stack.push({type: 'if'});
                 }
                 else if (actions['switch']) {
                     me.doSwitch(actions['switch'], actions);
-                    stack.push({ type: 'switch' });
+                    stack.push({type: 'switch'});
                 }
                 else if (actions['case']) {
                     me.doCase(actions['case'], actions);
@@ -215,21 +213,21 @@ Ext.define('Ext.XTemplateParser', {
                         actions.propName = prop[1] || prop[2];
                     }
                     me.doFor(actions['for'], actions);
-                    stack.push({ type: 'for', actions: actions });
+                    stack.push({type: 'for', actions: actions});
                 }
                 else if (actions.exec) {
                     me.doExec(actions.exec, actions);
-                    stack.push({ type: 'exec', actions: actions });
+                    stack.push({type: 'exec', actions: actions});
                 }
                 /*
-                else {
-                    // todo - error
-                }
-                */
+                 else {
+                 // todo - error
+                 }
+                 */
             } else if (m[0].length === 5) {
                 // if the length of m[0] is 5, assume that we're dealing with an opening tpl tag with no attributes (e.g. <tpl>...</tpl>)
                 // in this case no action is needed other than pushing it on to the stack
-                stack.push({ type: 'tpl' });
+                stack.push({type: 'tpl'});
             } else {
                 frame = stack.pop();
                 me.doEnd(frame.type, frame.actions);
@@ -239,12 +237,11 @@ Ext.define('Ext.XTemplateParser', {
             }
         }
     },
-
     // Internal regexes
-    
-    topRe:     /(?:(\{\%)|(\{\[)|\{([^{}]*)\})|(?:<tpl([^>]*)\>)|(?:<\/tpl>)/g,
+
+    topRe: /(?:(\{\%)|(\{\[)|\{([^{}]*)\})|(?:<tpl([^>]*)\>)|(?:<\/tpl>)/g,
     actionsRe: /\s*(elif|elseif|if|for|exec|switch|case|eval)\s*\=\s*(?:(?:"([^"]*)")|(?:'([^']*)'))\s*/g,
-    propRe:    /prop=(?:(?:"([^"]*)")|(?:'([^']*)'))/,
+    propRe: /prop=(?:(?:"([^"]*)")|(?:'([^']*)'))/,
     defaultRe: /^\s*default\s*$/,
-    elseRe:    /^\s*else\s*$/
+    elseRe: /^\s*else\s*$/
 });

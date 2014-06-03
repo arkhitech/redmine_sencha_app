@@ -5,7 +5,6 @@ Ext.define('Ext.layout.wrapper.Dock', {
     requires: [
         'Ext.util.Wrapper'
     ],
-
     config: {
         direction: 'horizontal',
         element: {
@@ -18,14 +17,12 @@ Ext.define('Ext.layout.wrapper.Dock', {
         sizeState: false,
         container: null
     },
-
     positionMap: {
         top: 'start',
         left: 'start',
         bottom: 'end',
         right: 'end'
     },
-
     constructor: function(config) {
         this.items = {
             start: [],
@@ -36,7 +33,6 @@ Ext.define('Ext.layout.wrapper.Dock', {
 
         this.initConfig(config);
     },
-
     addItems: function(items) {
         var i, ln, item;
 
@@ -45,16 +41,15 @@ Ext.define('Ext.layout.wrapper.Dock', {
             this.addItem(item);
         }
     },
-
     addItem: function(item) {
         var docked = item.getDocked(),
-            position = this.positionMap[docked],
-            wrapper = item.$dockWrapper,
-            container = this.getContainer(),
-            index = container.indexOf(item),
-            items = this.items,
-            sideItems = items[position],
-            itemWrapper, element, i, ln, sibling, referenceElement, siblingIndex;
+                position = this.positionMap[docked],
+                wrapper = item.$dockWrapper,
+                container = this.getContainer(),
+                index = container.indexOf(item),
+                items = this.items,
+                sideItems = items[position],
+                itemWrapper, element, i, ln, sibling, referenceElement, siblingIndex;
 
         if (wrapper) {
             wrapper.removeItem(item);
@@ -95,10 +90,9 @@ Ext.define('Ext.layout.wrapper.Dock', {
         itemWrapper.wrap(item.element);
         itemWrapper.bindSize(this.getDirection() === 'horizontal' ? 'width' : 'height');
     },
-
     removeItem: function(item) {
         var position = item.getDocked(),
-            items = this.items[this.positionMap[position]];
+                items = this.items[this.positionMap[position]];
 
         item.removeCls('x-docked-' + position);
         Ext.Array.remove(items, item);
@@ -110,12 +104,11 @@ Ext.define('Ext.layout.wrapper.Dock', {
             this.destroy();
         }
     },
-
     getItemsSlice: function(index) {
         var container = this.getContainer(),
-            items = this.items,
-            slice = [],
-            sideItems, i, ln, item;
+                items = this.items,
+                slice = [],
+                sideItems, i, ln, item;
 
         for (sideItems = items.start, i = 0, ln = sideItems.length; i < ln; i++) {
             item = sideItems[i];
@@ -133,23 +126,18 @@ Ext.define('Ext.layout.wrapper.Dock', {
 
         return slice;
     },
-
     applyElement: function(element) {
         return Ext.Element.create(element);
     },
-
     updateElement: function(element) {
         element.addCls('x-dock-' + this.getDirection());
     },
-
     applyBodyElement: function(bodyElement) {
         return Ext.Element.create(bodyElement);
     },
-
     updateBodyElement: function(bodyElement) {
         this.getElement().append(bodyElement);
     },
-
     updateInnerWrapper: function(innerWrapper, oldInnerWrapper) {
         var innerElement = this.getBodyElement();
 
@@ -164,7 +152,6 @@ Ext.define('Ext.layout.wrapper.Dock', {
             innerElement.append(innerWrapper.getElement());
         }
     },
-
     updateSizeState: function(state) {
         var innerWrapper = this.getInnerWrapper();
 
@@ -174,10 +161,9 @@ Ext.define('Ext.layout.wrapper.Dock', {
             innerWrapper.setSizeState(state);
         }
     },
-
     destroy: function() {
         var innerWrapper = this.getInnerWrapper(),
-            outerWrapper = this.$outerWrapper;
+                outerWrapper = this.$outerWrapper;
 
         if (innerWrapper) {
             if (outerWrapper) {

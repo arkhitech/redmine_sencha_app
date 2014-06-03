@@ -96,9 +96,7 @@
 Ext.define('Ext.data.Field', {
     requires: ['Ext.data.Types', 'Ext.data.SortTypes'],
     alias: 'data.field',
-
     isField: true,
-
     config: {
         /**
          * @cfg {String} name
@@ -110,7 +108,6 @@ Ext.define('Ext.data.Field', {
          * just a String for the field name.
          */
         name: null,
-
         /**
          * @cfg {String/Object} type
          *
@@ -131,7 +128,6 @@ Ext.define('Ext.data.Field', {
          * Ext.data.Types} class.
          */
         type: 'auto',
-
         /**
          * @cfg {Function} convert
          *
@@ -198,7 +194,6 @@ Ext.define('Ext.data.Field', {
          *     ];
          */
         convert: undefined,
-
         /**
          * @cfg {String} dateFormat
          *
@@ -209,7 +204,6 @@ Ext.define('Ext.data.Field', {
          * timestamp. See {@link Ext.Date}.
          */
         dateFormat: null,
-
         /**
          * @cfg {Boolean} allowNull
          *
@@ -217,7 +211,6 @@ Ext.define('Ext.data.Field', {
          * parsed, `null` will be used if `allowNull` is `true`, otherwise the value will be 0.
          */
         allowNull: true,
-
         /**
          * @cfg {Object} [defaultValue='']
          *
@@ -226,7 +219,6 @@ Ext.define('Ext.data.Field', {
          * (i.e. `undefined`).
          */
         defaultValue: undefined,
-
         /**
          * @cfg {String/Number} mapping
          *
@@ -256,7 +248,6 @@ Ext.define('Ext.data.Field', {
          * return the desired data.
          */
         mapping: null,
-
         /**
          * @cfg {Function} sortType
          *
@@ -279,15 +270,13 @@ Ext.define('Ext.data.Field', {
          *        }
          *     }
          */
-        sortType : undefined,
-
+        sortType: undefined,
         /**
          * @cfg {String} sortDir
          *
          * Initial direction to sort (`"ASC"` or `"DESC"`).
          */
-        sortDir : "ASC",
-
+        sortDir: "ASC",
         /**
          * @cfg {Boolean} allowBlank
          * @private
@@ -295,8 +284,7 @@ Ext.define('Ext.data.Field', {
          * Used for validating a {@link Ext.data.Model model}. An empty value here will cause
          * {@link Ext.data.Model}.{@link Ext.data.Model#isValid isValid} to evaluate to `false`.
          */
-        allowBlank : true,
-
+        allowBlank: true,
         /**
          * @cfg {Boolean} persist
          *
@@ -305,15 +293,12 @@ Ext.define('Ext.data.Field', {
          * not need to be persisted to the server.
          */
         persist: true,
-
         // Used in LocalStorage stuff
         encode: null,
         decode: null,
-
         bubbleEvents: 'action'
     },
-
-    constructor : function(config) {
+    constructor: function(config) {
         // This adds support for just passing a string used as the field name
         if (Ext.isString(config)) {
             config = {name: config};
@@ -321,10 +306,9 @@ Ext.define('Ext.data.Field', {
 
         this.initConfig(config);
     },
-
     applyType: function(type) {
         var types = Ext.data.Types,
-            autoType = types.AUTO;
+                autoType = types.AUTO;
 
         if (type) {
             if (Ext.isString(type)) {
@@ -337,18 +321,16 @@ Ext.define('Ext.data.Field', {
 
         return autoType;
     },
-
     updateType: function(newType, oldType) {
         var convert = this.getConvert();
         if (oldType && convert === oldType.convert) {
             this.setConvert(newType.convert);
         }
     },
-
     applySortType: function(sortType) {
         var sortTypes = Ext.data.SortTypes,
-            type = this.getType(),
-            defaultSortType = type.sortType;
+                type = this.getType(),
+                defaultSortType = type.sortType;
 
         if (sortType) {
             if (Ext.isString(sortType)) {
@@ -361,7 +343,6 @@ Ext.define('Ext.data.Field', {
 
         return defaultSortType;
     },
-
     applyConvert: function(convert) {
         var defaultConvert = this.getType().convert;
         if (convert && convert !== defaultConvert) {
@@ -372,7 +353,6 @@ Ext.define('Ext.data.Field', {
             return defaultConvert;
         }
     },
-
     hasCustomConvert: function() {
         return this._hasCustomConvert;
     }

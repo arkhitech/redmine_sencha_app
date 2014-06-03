@@ -94,12 +94,10 @@ Ext.define('Ext.device.sqlite.Sencha', {
     Ext.define('Ext.device.sqlite.Database', {
         id: 0,
         version: null,
-
         constructor: function(id, version) {
             this.id = id;
             this.version = version;
         },
-
         /**
          * Returns the current version of the database.
          *
@@ -113,7 +111,6 @@ Ext.define('Ext.device.sqlite.Sencha', {
                 databaseId: this.id
             });
         },
-
         /**
          * Performs a {@link Ext.device.sqlite.SQLTransaction} instance in a read/write mode.
          *
@@ -264,7 +261,6 @@ Ext.define('Ext.device.sqlite.Sencha', {
                 scope: config.scope || this
             });
         },
-
         /**
          * Works the same way as {@link Ext.device.sqlite.Database#transaction},
          * but performs a {@link Ext.device.sqlite.SQLTransaction} instance in a read-only mode.
@@ -274,7 +270,6 @@ Ext.define('Ext.device.sqlite.Sencha', {
                 readOnly: true
             }));
         },
-
         /**
          * Verifies and changes the version of the database at the same time
          * as doing a schema update with a {@link Ext.device.sqlite.SQLTransaction} instance.
@@ -343,12 +338,10 @@ Ext.define('Ext.device.sqlite.Sencha', {
             id: 0,
             active: false,
             statements: null,
-
             constructor: function(id) {
                 this.id = id;
                 this.statements = new Array();
             },
-
             /**
              * Executes an SQL statement.
              *
@@ -410,13 +403,11 @@ Ext.define('Ext.device.sqlite.Sencha', {
                 insertId: 0,
                 rowsAffected: 0,
                 rows: null,
-
                 constructor: function(data) {
                     this.insertId = data.insertId;
                     this.rowsAffected = data.rowsAffected;
                     this.rows = Ext.create('Ext.device.sqlite.SQLResultSetRowList', data);
                 },
-
                 /**
                  * Returns the row ID of the last row that the SQL statement inserted into the database,
                  * if the statement inserted any rows.
@@ -433,7 +424,6 @@ Ext.define('Ext.device.sqlite.Sencha', {
                         return null;
                     }
                 },
-
                 /**
                  * Returns the number of rows that were changed by the SQL statement.
                  * If the statement did not change any rows, returns zero.
@@ -444,7 +434,6 @@ Ext.define('Ext.device.sqlite.Sencha', {
                 getRowsAffected: function() {
                     return this.rowsAffected;
                 },
-
                 /**
                  * Returns a {@link Ext.device.sqlite.SQLResultSetRowList} instance representing rows returned by the SQL statement.
                  *
@@ -461,12 +450,10 @@ Ext.define('Ext.device.sqlite.Sencha', {
                 Ext.define('Ext.device.sqlite.SQLResultSetRowList', {
                     names: null,
                     rows: null,
-
                     constructor: function(data) {
                         this.names = data.names;
                         this.rows = data.rows;
                     },
-
                     /**
                      * Returns the number of rows returned by the SQL statement.
                      *
@@ -476,7 +463,6 @@ Ext.define('Ext.device.sqlite.Sencha', {
                     getLength: function() {
                         return this.rows.length;
                     },
-
                     /**
                      * Returns a row at specified index returned by the SQL statement.
                      * If there is no such row, returns null.

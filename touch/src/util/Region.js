@@ -3,9 +3,7 @@
  * to compare regions.
  */
 Ext.define('Ext.util.Region', {
-
     requires: ['Ext.util.Offset'],
-
     statics: {
         /**
          * @static
@@ -16,7 +14,6 @@ Ext.define('Ext.util.Region', {
         getRegion: function(el) {
             return Ext.fly(el).getPageBox(true);
         },
-
         /**
          * @static
          * Creates new Region from an object:
@@ -36,7 +33,6 @@ Ext.define('Ext.util.Region', {
             return new this(o.top, o.right, o.bottom, o.left);
         }
     },
-
     /**
      * Creates new Region.
      * @param {Number} top Top
@@ -53,7 +49,6 @@ Ext.define('Ext.util.Region', {
         me.left = left;
         me[0] = left;
     },
-
     /**
      * Checks if this region completely contains the region that is passed in.
      * @param {Ext.util.Region} region
@@ -67,7 +62,6 @@ Ext.define('Ext.util.Region', {
                 region.bottom <= me.bottom);
 
     },
-
     /**
      * Checks if this region intersects the region passed in.
      * @param {Ext.util.Region} region
@@ -75,10 +69,10 @@ Ext.define('Ext.util.Region', {
      */
     intersect: function(region) {
         var me = this,
-            t = Math.max(me.top, region.top),
-            r = Math.min(me.right, region.right),
-            b = Math.min(me.bottom, region.bottom),
-            l = Math.max(me.left, region.left);
+                t = Math.max(me.top, region.top),
+                r = Math.min(me.right, region.right),
+                b = Math.min(me.bottom, region.bottom),
+                l = Math.max(me.left, region.left);
 
         if (b > t && r > l) {
             return new Ext.util.Region(t, r, b, l);
@@ -87,7 +81,6 @@ Ext.define('Ext.util.Region', {
             return false;
         }
     },
-
     /**
      * Returns the smallest region that contains the current AND `targetRegion`.
      * @param {Ext.util.Region} region
@@ -95,14 +88,13 @@ Ext.define('Ext.util.Region', {
      */
     union: function(region) {
         var me = this,
-            t = Math.min(me.top, region.top),
-            r = Math.max(me.right, region.right),
-            b = Math.max(me.bottom, region.bottom),
-            l = Math.min(me.left, region.left);
+                t = Math.min(me.top, region.top),
+                r = Math.max(me.right, region.right),
+                b = Math.max(me.bottom, region.bottom),
+                l = Math.min(me.left, region.left);
 
         return new Ext.util.Region(t, r, b, l);
     },
-
     /**
      * Modifies the current region to be constrained to the `targetRegion`.
      * @param {Ext.util.Region} targetRegion
@@ -110,14 +102,13 @@ Ext.define('Ext.util.Region', {
      */
     constrainTo: function(targetRegion) {
         var me = this,
-            constrain = Ext.util.Numbers.constrain;
+                constrain = Ext.util.Numbers.constrain;
         me.top = constrain(me.top, targetRegion.top, targetRegion.bottom);
         me.bottom = constrain(me.bottom, targetRegion.top, targetRegion.bottom);
         me.left = constrain(me.left, targetRegion.left, targetRegion.right);
         me.right = constrain(me.right, targetRegion.left, targetRegion.right);
         return me;
     },
-
     /**
      * Modifies the current region to be adjusted by offsets.
      * @param {Number} top Top offset
@@ -135,7 +126,6 @@ Ext.define('Ext.util.Region', {
         me.bottom += bottom;
         return me;
     },
-
     /**
      * Get the offset amount of a point outside the region.
      * @param {String/Object} axis optional.
@@ -151,13 +141,12 @@ Ext.define('Ext.util.Region', {
             }
         } else {
             var d = new Ext.util.Offset();
-                d.x = this.getOutOfBoundOffsetX(axis.x);
-                d.y = this.getOutOfBoundOffsetY(axis.y);
+            d.x = this.getOutOfBoundOffsetX(axis.x);
+            d.y = this.getOutOfBoundOffsetY(axis.y);
             return d;
         }
 
     },
-
     /**
      * Get the offset amount on the x-axis.
      * @param {Number} p The offset.
@@ -172,7 +161,6 @@ Ext.define('Ext.util.Region', {
 
         return 0;
     },
-
     /**
      * Get the offset amount on the y-axis.
      * @param {Number} p The offset.
@@ -187,7 +175,6 @@ Ext.define('Ext.util.Region', {
 
         return 0;
     },
-
     /**
      * Check whether the point / offset is out of bounds.
      * @param {String} axis optional
@@ -206,7 +193,6 @@ Ext.define('Ext.util.Region', {
             return (this.isOutOfBoundX(p.x) || this.isOutOfBoundY(p.y));
         }
     },
-
     /**
      * Check whether the offset is out of bound in the x-axis.
      * @param {Number} p The offset.
@@ -215,7 +201,6 @@ Ext.define('Ext.util.Region', {
     isOutOfBoundX: function(p) {
         return (p < this.left || p > this.right);
     },
-
     /**
      * Check whether the offset is out of bound in the y-axis.
      * @param {Number} p The offset.
@@ -224,7 +209,6 @@ Ext.define('Ext.util.Region', {
     isOutOfBoundY: function(p) {
         return (p < this.top || p > this.bottom);
     },
-
     /**
      * Restrict a point within the region by a certain factor.
      * @param {String} axis Optional
@@ -261,7 +245,6 @@ Ext.define('Ext.util.Region', {
             }
         }
     },
-
     /*
      * Restrict an offset within the region by a certain factor, on the x-axis.
      * @param {Number} p
@@ -281,7 +264,6 @@ Ext.define('Ext.util.Region', {
         }
         return p;
     },
-
     /*
      * Restrict an offset within the region by a certain factor, on the y-axis.
      * @param {Number} p
@@ -301,7 +283,6 @@ Ext.define('Ext.util.Region', {
         }
         return p;
     },
-
     /*
      * Get the width / height of this region.
      * @return {Object} An object with `width` and `height` properties.
@@ -314,7 +295,6 @@ Ext.define('Ext.util.Region', {
             height: this.bottom - this.top
         };
     },
-
     /**
      * Copy a new instance.
      * @return {Ext.util.Region}
@@ -322,7 +302,6 @@ Ext.define('Ext.util.Region', {
     copy: function() {
         return new Ext.util.Region(this.top, this.right, this.bottom, this.left);
     },
-
     /**
      * Dump this to an eye-friendly string, great for debugging.
      * @return {String} For example `Region[0,1,3,2]`.
@@ -330,8 +309,6 @@ Ext.define('Ext.util.Region', {
     toString: function() {
         return "Region[" + this.top + "," + this.right + "," + this.bottom + "," + this.left + "]";
     },
-
-
     /**
      * Translate this region by the given offset amount.
      * @param {Object} offset
@@ -346,7 +323,6 @@ Ext.define('Ext.util.Region', {
 
         return this;
     },
-
     /**
      * Round all the properties of this region.
      * @return {Ext.util.Region} This Region.
@@ -360,7 +336,6 @@ Ext.define('Ext.util.Region', {
 
         return this;
     },
-
     /**
      * Check whether this region is equivalent to the given region.
      * @param {Ext.util.Region} region The region to compare with.

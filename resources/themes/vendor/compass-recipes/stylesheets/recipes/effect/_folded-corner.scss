@@ -12,12 +12,12 @@
 @import "recipes/shared/pseudo-element";
 
 @mixin folded-corner (
-    $position: top-right,
-    $color: #ddd,
-    $background-color: #fff,
-    $width: 1em,
-    $border-radius: .3em,
-    $box-shadow: rgba(0, 0, 0, .3) 0 0 .6em)
+$position: top-right,
+$color: #ddd,
+$background-color: #fff,
+$width: 1em,
+$border-radius: .3em,
+$box-shadow: rgba(0, 0, 0, .3) 0 0 .6em)
 {
     position: relative;
     overflow: hidden;

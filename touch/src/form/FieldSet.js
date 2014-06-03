@@ -39,17 +39,15 @@
  * required.
  */
 Ext.define('Ext.form.FieldSet', {
-    extend  : 'Ext.Container',
-    alias   : 'widget.fieldset',
+    extend: 'Ext.Container',
+    alias: 'widget.fieldset',
     requires: ['Ext.Title'],
-
     config: {
         /**
          * @cfg
          * @inheritdoc
          */
         baseCls: Ext.baseCSSPrefix + 'form-fieldset',
-
         /**
          * @cfg {String} title
          * Optional fieldset title, rendered just above the grouped fields.
@@ -70,7 +68,6 @@ Ext.define('Ext.form.FieldSet', {
          * @accessor
          */
         title: null,
-
         /**
          * @cfg {String} instructions
          * Optional fieldset instructions, rendered just below the grouped fields.
@@ -92,7 +89,6 @@ Ext.define('Ext.form.FieldSet', {
          */
         instructions: null
     },
-
     // @private
     applyTitle: function(title) {
         if (typeof title == 'string') {
@@ -100,13 +96,12 @@ Ext.define('Ext.form.FieldSet', {
         }
 
         Ext.applyIf(title, {
-            docked : 'top',
+            docked: 'top',
             baseCls: this.getBaseCls() + '-title'
         });
 
         return Ext.factory(title, Ext.Title, this._title);
     },
-
     // @private
     updateTitle: function(newTitle, oldTitle) {
         if (newTitle) {
@@ -116,7 +111,6 @@ Ext.define('Ext.form.FieldSet', {
             this.remove(oldTitle);
         }
     },
-
     // @private
     getTitle: function() {
         var title = this._title;
@@ -127,7 +121,6 @@ Ext.define('Ext.form.FieldSet', {
 
         return title;
     },
-
     // @private
     applyInstructions: function(instructions) {
         if (typeof instructions == 'string') {
@@ -135,13 +128,12 @@ Ext.define('Ext.form.FieldSet', {
         }
 
         Ext.applyIf(instructions, {
-            docked : 'bottom',
+            docked: 'bottom',
             baseCls: this.getBaseCls() + '-instructions'
         });
 
         return Ext.factory(instructions, Ext.Title, this._instructions);
     },
-
     // @private
     updateInstructions: function(newInstructions, oldInstructions) {
         if (newInstructions) {
@@ -151,7 +143,6 @@ Ext.define('Ext.form.FieldSet', {
             this.remove(oldInstructions);
         }
     },
-
     // @private
     getInstructions: function() {
         var instructions = this._instructions;
@@ -162,12 +153,11 @@ Ext.define('Ext.form.FieldSet', {
 
         return instructions;
     },
-
     /**
      * A convenient method to disable all fields in this FieldSet
      * @return {Ext.form.FieldSet} This FieldSet
      */
-     
+
     doSetDisabled: function(newDisabled) {
         this.getFieldsAsArray().forEach(function(field) {
             field.setDisabled(newDisabled);
@@ -175,21 +165,20 @@ Ext.define('Ext.form.FieldSet', {
 
         return this;
     },
-
     /**
      * @private
      */
     getFieldsAsArray: function() {
         var fields = [],
-            getFieldsFrom = function(item) {
-                if (item.isField) {
-                    fields.push(item);
-                }
+                getFieldsFrom = function(item) {
+                    if (item.isField) {
+                        fields.push(item);
+                    }
 
-                if (item.isContainer) {
-                    item.getItems().each(getFieldsFrom);
-                }
-            };
+                    if (item.isContainer) {
+                        item.getItems().each(getFieldsFrom);
+                    }
+                };
 
         this.getItems().each(getFieldsFrom);
 

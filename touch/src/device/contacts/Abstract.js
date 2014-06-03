@@ -3,7 +3,6 @@
  */
 Ext.define('Ext.device.contacts.Abstract', {
     mixins: ['Ext.mixin.Observable'],
-
     config: {
         /**
          * @cfg {Boolean} includeImages
@@ -11,7 +10,6 @@ Ext.define('Ext.device.contacts.Abstract', {
          */
         includeImages: false
     },
-
     /**
      * Returns an Array of contact objects.
      * @return {Object[]} An array of contact objects.
@@ -38,23 +36,20 @@ Ext.define('Ext.device.contacts.Abstract', {
 
         config.success.call(config.scope || this, this._store);
     },
-
-     /**
+    /**
      * Returns base64 encoded image thumbnail for a contact specified in config.id
-      * **This method is for Sencha Native Packager only**
-      *
+     * **This method is for Sencha Native Packager only**
+     *
      * @return {String} base64 string
      */
 
     getThumbnail: function(config) {
         config.callback.call(config.scope || this, "");
     },
-
-
-     /**
+    /**
      * Returns localized, user readable label for a contact field (i.e. "Mobile", "Home")
-      * **This method is for Sencha Native Packager only**
-      *
+     * **This method is for Sencha Native Packager only**
+     *
      * @return {String} user readable string
      */
     getLocalizedLabel: function(config) {

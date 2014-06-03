@@ -39,13 +39,13 @@ $picker-row-height: 2.9em !default;
     padding: 0.3em 1.02em;
 
     > div {
-    	font-weight: normal;
+        font-weight: normal;
         font-size: 0.8em;
     }
 }
 
 .x-picker-slot {
-	border-right: 1px solid #292929;
+    border-right: 1px solid #292929;
 
     .x-dataview-item {
         text-align: center;
@@ -53,7 +53,7 @@ $picker-row-height: 2.9em !default;
         height: $picker-row-height;
         line-height: $picker-row-height;
         padding: 0 10px;
-		font-weight: normal !important;
-		@include box-shadow(none);
+        font-weight: normal !important;
+        @include box-shadow(none);
     }
 }

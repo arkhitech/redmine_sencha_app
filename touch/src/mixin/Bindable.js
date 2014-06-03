@@ -3,18 +3,16 @@
  */
 Ext.define('Ext.mixin.Bindable', {
     extend: 'Ext.mixin.Mixin',
-
     mixinConfig: {
         id: 'bindable'
     },
-
     bind: function(instance, boundMethod, bindingMethod, preventDefault, extraArgs) {
         if (!bindingMethod) {
             bindingMethod = boundMethod;
         }
 
         var boundFn = instance[boundMethod],
-            fn, binding;
+                fn, binding;
 
         if (boundFn && boundFn.hasOwnProperty('$binding')) {
             binding = boundFn.$binding;
@@ -25,8 +23,8 @@ Ext.define('Ext.mixin.Bindable', {
 
         instance[boundMethod] = fn = function() {
             var binding = fn.$binding,
-                scope = binding.bindingScope,
-                args = Array.prototype.slice.call(arguments);
+                    scope = binding.bindingScope,
+                    args = Array.prototype.slice.call(arguments);
 
             args.push(arguments);
 
@@ -47,15 +45,14 @@ Ext.define('Ext.mixin.Bindable', {
 
         return this;
     },
-
     unbind: function(instance, boundMethod, bindingMethod) {
         if (!bindingMethod) {
             bindingMethod = boundMethod;
         }
 
         var fn = instance[boundMethod],
-            binding = fn.$binding,
-            boundFn, currentBinding;
+                binding = fn.$binding,
+                boundFn, currentBinding;
 
         while (binding) {
             boundFn = binding.boundFn;

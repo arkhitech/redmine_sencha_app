@@ -15,7 +15,6 @@
 Ext.define('Ext.data.writer.Writer', {
     alias: 'writer.base',
     alternateClassName: ['Ext.data.DataWriter', 'Ext.data.Writer'],
-
     config: {
         /**
          * @cfg {Boolean} writeAllFields `true` to write all fields from the record to the server. If set to `false` it
@@ -23,7 +22,6 @@ Ext.define('Ext.data.writer.Writer', {
          * {@link Ext.data.Field#persist} set to false will still be ignored.
          */
         writeAllFields: true,
-
         /**
          * @cfg {String} nameProperty This property is used to read the key for each value that will be sent to the server.
          * For example:
@@ -58,7 +56,6 @@ Ext.define('Ext.data.writer.Writer', {
          */
         nameProperty: 'name'
     },
-
     /**
      * Creates new Writer.
      * @param {Object} config (optional) Config object.
@@ -66,7 +63,6 @@ Ext.define('Ext.data.writer.Writer', {
     constructor: function(config) {
         this.initConfig(config);
     },
-
     /**
      * Prepares a Proxy's Ext.data.Request object.
      * @param {Ext.data.Request} request The request object.
@@ -74,17 +70,16 @@ Ext.define('Ext.data.writer.Writer', {
      */
     write: function(request) {
         var operation = request.getOperation(),
-            records   = operation.getRecords() || [],
-            len       = records.length,
-            i         = 0,
-            data      = [];
+                records = operation.getRecords() || [],
+                len = records.length,
+                i = 0,
+                data = [];
 
         for (; i < len; i++) {
             data.push(this.getRecordData(records[i]));
         }
         return this.writeRecords(request, data);
     },
-
     writeDate: function(field, date) {
         if (!date) {
             return null;
@@ -93,14 +88,13 @@ Ext.define('Ext.data.writer.Writer', {
         var dateFormat = field.getDateFormat() || 'timestamp';
         switch (dateFormat) {
             case 'timestamp':
-                return date.getTime()/1000;
+                return date.getTime() / 1000;
             case 'time':
                 return date.getTime();
             default:
                 return Ext.Date.format(date, dateFormat);
         }
     },
-
     /**
      * Formats the data for each record before sending it to the server. This
      * method should be overridden to format the data in a way that differs from the default.
@@ -110,11 +104,11 @@ Ext.define('Ext.data.writer.Writer', {
      */
     getRecordData: function(record) {
         var isPhantom = record.phantom === true,
-            writeAll = this.getWriteAllFields() || isPhantom,
-            nameProperty = this.getNameProperty(),
-            fields = record.getFields(),
-            data = {},
-            changes, name, field, key, value;
+                writeAll = this.getWriteAllFields() || isPhantom,
+                nameProperty = this.getNameProperty(),
+                fields = record.getFields(),
+                data = {},
+                changes, name, field, key, value;
 
         if (writeAll) {
             fields.each(function(field) {
@@ -153,11 +147,11 @@ Ext.define('Ext.data.writer.Writer', {
 
     // Convert old properties in data into a config object
     // <deprecated product=touch since=2.0>
-    ,onClassExtended: function(cls, data, hooks) {
+    , onClassExtended: function(cls, data, hooks) {
         var Component = this,
-            defaultConfig = Component.prototype.config,
-            config = data.config || {},
-            key;
+                defaultConfig = Component.prototype.config,
+                config = data.config || {},
+                key;
 
 
         for (key in defaultConfig) {
@@ -166,7 +160,7 @@ Ext.define('Ext.data.writer.Writer', {
                 delete data[key];
                 // <debug warn>
                 Ext.Logger.deprecate(key + ' is deprecated as a property directly on the Writer prototype. ' +
-                    'Please put it inside the config object.');
+                        'Please put it inside the config object.');
                 // </debug>
             }
         }

@@ -4,7 +4,6 @@
 Ext.define('Ext.field.FileInput', {
     extend: 'Ext.field.Input',
     xtype: 'fileinput',
-
     config: {
         type: "file",
         accept: null,
@@ -12,7 +11,6 @@ Ext.define('Ext.field.FileInput', {
         name: null,
         multiple: false
     },
-
     /**
      * @property {Object} Lookup of capture devices to accept types
      * @private
@@ -22,7 +20,6 @@ Ext.define('Ext.field.FileInput', {
         image: "camera",
         audio: "microphone"
     },
-
     // @private
     initialize: function() {
         var me = this;
@@ -34,7 +31,6 @@ Ext.define('Ext.field.FileInput', {
             change: 'onInputChange'
         });
     },
-
     /**
      * Returns the field data value.
      * @return {String} value The field value.
@@ -48,7 +44,6 @@ Ext.define('Ext.field.FileInput', {
 
         return this._value;
     },
-
     /**
      * Sets the internal value. Security restrictions prevent setting file values on the input element
      * @cfg newValue {string} New Value
@@ -64,7 +59,6 @@ Ext.define('Ext.field.FileInput', {
 
         return this;
     },
-
     /**
      * Returns the field files.
      * @return {FileList} List of the files selected.
@@ -78,12 +72,10 @@ Ext.define('Ext.field.FileInput', {
 
         return this.$files;
     },
-
     // @private
     onInputChange: function(e) {
         this.setValue(e.target.value);
     },
-
     /**
      * Called when the value changes on this input item
      * @cfg me {Ext.field.FileInput}
@@ -93,22 +85,20 @@ Ext.define('Ext.field.FileInput', {
     onChange: function(me, value, startValue) {
         this.fireEvent('change', me, value, startValue);
     },
-
     /**
      * Called when the name being changed
      * @cfg value   new value
      * @returns {*}
      */
     applyName: function(value) {
-        if(this.getMultiple() && value.substr(-2, 2) !== "[]") {
+        if (this.getMultiple() && value.substr(-2, 2) !== "[]") {
             value += "[]";
-        }else if((!this.getMultiple()) && value.substr(-2, 2) === "[]") {
-            value = value.substr(0, value.length-2)
+        } else if ((!this.getMultiple()) && value.substr(-2, 2) === "[]") {
+            value = value.substr(0, value.length - 2)
         }
 
         return value;
     },
-
     /**
      * Applies the multiple attribute to the input
      * @cfg value {boolean}
@@ -118,17 +108,15 @@ Ext.define('Ext.field.FileInput', {
         this.updateFieldAttribute('multiple', value ? '' : null);
         return value;
     },
-
     /**
      * Called when the multiple property is updated. The name will automatically be toggled to an array if needed.
      */
     updateMultiple: function() {
         var name = this.getName();
-        if(!Ext.isEmpty(name)) {
+        if (!Ext.isEmpty(name)) {
             this.setName(name);
         }
     },
-
     /*
      * Updates the accept attribute with the {@link #accept} configuration.
      * 
@@ -144,7 +132,6 @@ Ext.define('Ext.field.FileInput', {
 
         this.updateFieldAttribute('accept', value);
     },
-
     /**
      * Updated the capture attribute with the {@ink capture} configuration
      */

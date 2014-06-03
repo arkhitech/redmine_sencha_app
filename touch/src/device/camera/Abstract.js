@@ -2,36 +2,30 @@
  * @private
  */
 Ext.define('Ext.device.camera.Abstract', {
-
     source: {
         library: 0,
         camera: 1,
         album: 2
     },
-
     destination: {
         data: 0,
         file: 1,
         'native': 2
     },
-
     encoding: {
         jpeg: 0,
         jpg: 0,
         png: 1
     },
-
     media: {
         picture: 0,
         video: 1,
         all: 2
     },
-
     direction: {
         back: 0,
-        front:1
+        front: 1
     },
-
     /**
      * Allows you to capture a photo.
      *

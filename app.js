@@ -9,7 +9,7 @@
  changes and its generated code, it will produce a "merge conflict" that you
  will need to resolve manually.
  */
-Ext.Loader.setConfig({disableCaching: true});
+Ext.Loader.setConfig({disableCaching: false});
 Ext.application({
     name: 'RedmineApp',
     views: ['Issue', 'ProjectIssues', 'RedmineIssuesNavigator', 'RedmineTabPanel', 'RedmineChart', 'RedmineChartsNavigator', 'UserInputView', 'RedmineIDChart', 'RedminePriorityChart', 'RedmineTrackerChart', 'RedmineStatusChart', 'IssueHistory'],

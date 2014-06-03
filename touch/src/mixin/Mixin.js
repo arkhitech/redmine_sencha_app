@@ -9,8 +9,8 @@
 Ext.define('Ext.mixin.Mixin', {
     onClassExtended: function(cls, data) {
         var mixinConfig = data.mixinConfig,
-            parentClassMixinConfig,
-            beforeHooks, afterHooks;
+                parentClassMixinConfig,
+                beforeHooks, afterHooks;
 
         if (mixinConfig) {
             parentClassMixinConfig = cls.superclass.mixinConfig;

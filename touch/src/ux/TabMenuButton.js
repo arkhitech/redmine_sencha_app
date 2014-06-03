@@ -29,18 +29,15 @@
  */
 Ext.define('Ext.ux.TabMenuButton', {
     extend: 'Ext.ux.MenuButton',
-
     config: {
         /**
          * @hide
          */
         ui: 'tab',
-
         /**
          * @hide
          */
         cls: 'tabmenu',
-
         /**
          * The items to be used within the {@link Ext.Menu} which is shown when this button is tapped.
          *
@@ -70,13 +67,11 @@ Ext.define('Ext.ux.TabMenuButton', {
          * @type {}
          */
         menuItems: [],
-
         /**
          * @hide
          */
         menuSide: 'left'
     },
-
     onMenuButtonTap: function(button) {
         if (button) {
             this.setText(button.getText());

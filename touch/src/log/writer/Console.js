@@ -1,17 +1,14 @@
 //<feature logger>
 Ext.define('Ext.log.writer.Console', {
-
     extend: 'Ext.log.writer.Writer',
-
     config: {
         throwOnErrors: true,
         throwOnWarnings: false
     },
-
     doWrite: function(event) {
         var message = event.message,
-            priority = event.priorityName,
-            consoleMethod;
+                priority = event.priorityName,
+                consoleMethod;
 
         if (priority === 'error' && this.getThrowOnErrors()) {
             throw new Error(message);

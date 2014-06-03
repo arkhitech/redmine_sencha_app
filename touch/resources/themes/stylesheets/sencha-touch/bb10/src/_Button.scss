@@ -189,7 +189,7 @@ $button-border-radius: 5px;
     }
 
     &.x-button-pressed,
-		&.x-button-pressing {
+    &.x-button-pressing {
         background: transparent;
         background-image: none;
 
@@ -200,24 +200,24 @@ $button-border-radius: 5px;
     }
 
     &.x-button-pressing .x-badge {
-			display: block !important;
-			position: absolute;
-			left: 0px;
-			width: 4px;
-			top: 4px;
-			bottom: 4px;
-			border-radius: 0px;
-			padding: 0px;
-			border: 0px;
-			min-width: 4px;
+        display: block !important;
+        position: absolute;
+        left: 0px;
+        width: 4px;
+        top: 4px;
+        bottom: 4px;
+        border-radius: 0px;
+        padding: 0px;
+        border: 0px;
+        min-width: 4px;
     }
 
-		.x-button-label {
-			margin: 0 0 3px;
-			font-size: 10px;
-			line-height: 12px;
-			min-width: 29px;
-		}
+    .x-button-label {
+        margin: 0 0 3px;
+        font-size: 10px;
+        line-height: 12px;
+        min-width: 29px;
+    }
 
     .x-landscape & {
         .x-button-icon {
@@ -229,7 +229,7 @@ $button-border-radius: 5px;
 
 .x-toolbar .x-button-back {
     padding: 0 30px 0 14px;
-    
+
     &:before {
         @include rotate(10deg);
         right: 6px;

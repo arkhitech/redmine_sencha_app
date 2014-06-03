@@ -32,12 +32,10 @@ Ext.define("Ext.draw.sprite.EllipticalArc", {
                  * @cfg {Number} [startAngle=0] The beginning angle of the arc.
                  */
                 startAngle: "number",
-
                 /**
                  * @cfg {Number} [endAngle=Math.PI*2] The ending angle of the arc.
                  */
                 endAngle: "number",
-
                 /**
                  * @cfg {Boolean} [anticlockwise=false] Determines whether or not the arc is drawn clockwise.
                  */
@@ -61,8 +59,7 @@ Ext.define("Ext.draw.sprite.EllipticalArc", {
             }
         }
     },
-
-    updatePath: function (path, attr) {
+    updatePath: function(path, attr) {
         path.ellipse(attr.cx, attr.cy, attr.rx, attr.ry, attr.axisRotation, attr.startAngle, attr.endAngle, attr.anticlockwise);
     }
 });

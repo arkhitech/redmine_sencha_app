@@ -2,14 +2,12 @@
  * @private
  */
 Ext.define('Ext.device.storage.Abstract', {
-
     config: {
         databaseName: "Sencha",
         databaseVersion: '1.0',
         databaseDisplayName: 'Sencha Database',
         databaseSize: 5 * 1024 * 1024
     },
-
     openDatabase: function(config) {
         var defaultConfig = Ext.device.storage.Abstract.prototype.config;
 
@@ -22,7 +20,6 @@ Ext.define('Ext.device.storage.Abstract', {
 
         return config;
     },
-
     numKeys: Ext.emptyFn,
     getKey: Ext.emptyFn,
     getItem: Ext.emptyFn,

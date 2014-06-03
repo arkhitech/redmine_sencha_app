@@ -6,27 +6,23 @@
  * e.g. Gauge, Treemap
  */
 Ext.define('Ext.chart.SpaceFillingChart', {
-
     extend: 'Ext.chart.AbstractChart',
     xtype: 'spacefilling',
-
     config: {
-
     },
-
-    performLayout: function () {
+    performLayout: function() {
         try {
             this.resizing++;
             this.callSuper();
             var me = this,
-                size = me.element.getSize(),
-                series = me.getSeries(), seriesItem,
-                padding = me.getInsetPadding(),
-                width = size.width - padding.left - padding.right,
-                height = size.height - padding.top - padding.bottom,
-                region = [padding.left, padding.top, width, height],
-                fullRegion = [0, 0, size.width, size.height],
-                i, ln;
+                    size = me.element.getSize(),
+                    series = me.getSeries(), seriesItem,
+                    padding = me.getInsetPadding(),
+                    width = size.width - padding.left - padding.right,
+                    height = size.height - padding.top - padding.bottom,
+                    region = [padding.left, padding.top, width, height],
+                    fullRegion = [0, 0, size.width, size.height],
+                    i, ln;
             me.getSurface().setRegion(region);
             me.setMainRegion(region);
             for (i = 0, ln = series.length; i < ln; i++) {
@@ -41,11 +37,10 @@ Ext.define('Ext.chart.SpaceFillingChart', {
             this.resizing--;
         }
     },
-
-    redraw: function () {
+    redraw: function() {
         var me = this,
-            series = me.getSeries(), seriesItem,
-            i, ln;
+                series = me.getSeries(), seriesItem,
+                i, ln;
 
         for (i = 0, ln = series.length; i < ln; i++) {
             seriesItem = series[i];

@@ -10,24 +10,20 @@ Ext.define('Ext.device.geolocation.Abstract', {
          * new location information is made immediately.
          */
         maximumAge: 0,
-
         /**
          * @cfg {Number} frequency The default frequency to get the current position when using {@link Ext.device.Geolocation#watchPosition}.
          */
         frequency: 10000,
-
         /**
          * @cfg {Boolean} allowHighAccuracy True to allow high accuracy when getting the current position.
          */
         allowHighAccuracy: false,
-
         /**
          * @cfg {Number} timeout
          * The maximum number of milliseconds allowed to elapse between a location update operation.
          */
         timeout: Infinity
     },
-
     /**
      * Attempts to get the current position of this device.
      *
@@ -84,7 +80,6 @@ Ext.define('Ext.device.geolocation.Abstract', {
 
         return config;
     },
-
     /**
      * Watches for the current position and calls the callback when successful depending on the specified {@link #frequency}.
      *
@@ -133,9 +128,9 @@ Ext.define('Ext.device.geolocation.Abstract', {
 
         return config;
     },
-
     /**
      * If you are currently watching for the current position, this will stop that task.
      */
-    clearWatch: function() {}
+    clearWatch: function() {
+    }
 });

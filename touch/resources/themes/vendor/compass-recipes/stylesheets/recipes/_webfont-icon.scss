@@ -53,12 +53,12 @@ $webfont-icon-default-gradient: matte !default;
 
 @mixin include-font-websymbols {
     @include font-face(
-        "websymbols",
-        font-files(
-            "websymbols/websymbols-regular-webfont.ttf", truetype,
+    "websymbols",
+    font-files(
+    "websymbols/websymbols-regular-webfont.ttf", truetype,
 
-            "websymbols/websymbols-regular-webfont.eot", opentype
-        )
+    "websymbols/websymbols-regular-webfont.eot", opentype
+    )
     );
     .webfont-icon-websymbols {
         font-family: websymbols;
@@ -68,10 +68,10 @@ $webfont-icon-default-gradient: matte !default;
 
 @mixin include-font-heydings {
     @include font-face(
-        "heydings",
-        font-files(
-            "heydings/heydings_icons.ttf", truetype
-        )
+    "heydings",
+    font-files(
+    "heydings/heydings_icons.ttf", truetype
+    )
     );
     .webfont-icon-heydings {
         font-family: heydings;
@@ -81,11 +81,11 @@ $webfont-icon-default-gradient: matte !default;
 
 @mixin include-font-iconic {
     @include font-face(
-        "iconic",
-        font-files(
-            "iconic/iconic_stroke.ttf", truetype,
-            "iconic/iconic_stroke.otf", opentype
-        )
+    "iconic",
+    font-files(
+    "iconic/iconic_stroke.ttf", truetype,
+    "iconic/iconic_stroke.otf", opentype
+    )
     );
     .webfont-icon-iconic {
         font-family: iconic;
@@ -111,33 +111,33 @@ $webfont-icon-default-gradient: matte !default;
  * True to include states for hover and active. Defaults to `true`.
  */
 @mixin webfont-icon(
-    $character: attr(data-icon),
-    $class: 'base',
-    
-    $color: $webfont-icon-base-color,
-    $color-hover: $webfont-icon-highlight-color,
-    $color-active: darken($color-hover, 7%),
+$character: attr(data-icon),
+$class: 'base',
 
-    $size: 48px,
-    
-    $glow: null,
-    $glow-hover: $webfont-icon-highlight-color 0 0 10px,
-    $glow-active: $glow-hover,
+$color: $webfont-icon-base-color,
+$color-hover: $webfont-icon-highlight-color,
+$color-active: darken($color-hover, 7%),
 
-    $shadow: rgba(#000, .5) 0 1px 3px, // Shadow doesn't change, but hover does
+$size: 48px,
 
-    $stroke: false,
-    $stroke-hover: 1px darken($color-hover, 5),
-    $stroke-active: 1px darken($color-active, 5),
+$glow: null,
+$glow-hover: $webfont-icon-highlight-color 0 0 10px,
+$glow-active: $glow-hover,
 
-    $gradient: $webfont-icon-default-gradient,
-    $gradient-hover: $gradient,
-    $gradient-active: recessed,
+$shadow: rgba(#000, .5) 0 1px 3px, // Shadow doesn't change, but hover does
 
-    $include-states: true,
-    $hide-text: true,
-    $text-align: right,
-    $text-spacing: 4px
+$stroke: false,
+$stroke-hover: 1px darken($color-hover, 5),
+$stroke-active: 1px darken($color-active, 5),
+
+$gradient: $webfont-icon-default-gradient,
+$gradient-hover: $gradient,
+$gradient-active: recessed,
+
+$include-states: true,
+$hide-text: true,
+$text-align: right,
+$text-spacing: 4px
 ) {
     @include background-clip(text);
     overflow: visible;
@@ -170,7 +170,7 @@ $webfont-icon-default-gradient: matte !default;
 
         font-size: $size;
         content: $character;
-        
+
         @include background-gradient($color, $gradient);
     }
     &:before {
@@ -178,7 +178,7 @@ $webfont-icon-default-gradient: matte !default;
         background: none;
         @include text-shadow($shadow);
     }
-    
+
     @if $include-states {
         &:hover {
             @if $stroke-hover and $stroke {

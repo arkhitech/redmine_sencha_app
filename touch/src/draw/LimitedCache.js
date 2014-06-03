@@ -14,16 +14,14 @@ Ext.define("Ext.draw.LimitedCache", {
          * The amount limit of the cache.
          */
         limit: 40,
-
         /**
          * @cfg {Function}
          * Function that generates the object when look-up failed.
          * @return {Number}
          */
-        feeder: function () {
+        feeder: function() {
             return 0;
         },
-
         /**
          * @cfg {Object}
          * The scope for {@link #feeder}
@@ -31,26 +29,24 @@ Ext.define("Ext.draw.LimitedCache", {
         scope: null
     },
     cache: null,
-
-    constructor: function (config) {
+    constructor: function(config) {
         this.cache = {};
         this.cache.list = [];
         this.cache.tail = 0;
         this.initConfig(config);
     },
-
     /**
      * Get a cached object.
      * @param {String} id
      * @param {Mixed...} args Arguments appended to feeder.
      * @return {Object}
      */
-    get: function (id) {
+    get: function(id) {
         // TODO: Implement cache hit optimization
         var cache = this.cache,
-            limit = this.getLimit(),
-            feeder = this.getFeeder(),
-            scope = this.getScope() || this;
+                limit = this.getLimit(),
+                feeder = this.getFeeder(),
+                scope = this.getScope() || this;
 
         if (cache[id]) {
             return cache[id].value;
@@ -68,11 +64,10 @@ Ext.define("Ext.draw.LimitedCache", {
         }
         return cache[id].value;
     },
-
     /**
      * Clear all the objects.
      */
-    clear: function () {
+    clear: function() {
         this.cache = {};
         this.cache.list = [];
         this.cache.tail = 0;

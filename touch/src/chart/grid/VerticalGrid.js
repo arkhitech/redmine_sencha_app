@@ -7,7 +7,6 @@
 Ext.define("Ext.chart.grid.VerticalGrid", {
     extend: 'Ext.draw.sprite.Sprite',
     alias: 'grid.vertical',
-
     inheritableStatics: {
         def: {
             processors: {
@@ -16,7 +15,6 @@ Ext.define("Ext.chart.grid.VerticalGrid", {
                 width: 'number',
                 height: 'number'
             },
-
             defaults: {
                 x: 0,
                 y: 0,
@@ -26,11 +24,10 @@ Ext.define("Ext.chart.grid.VerticalGrid", {
             }
         }
     },
-
-    render: function (surface, ctx, clipRegion) {
+    render: function(surface, ctx, clipRegion) {
         var attr = this.attr,
-            x = surface.roundPixel(attr.x),
-            halfLineWidth = ctx.lineWidth * 0.5;
+                x = surface.roundPixel(attr.x),
+                halfLineWidth = ctx.lineWidth * 0.5;
         ctx.beginPath();
         ctx.rect(x - halfLineWidth, clipRegion[1] - surface.matrix.getDY(), attr.width, clipRegion[3]);
         ctx.fill();

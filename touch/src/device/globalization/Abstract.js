@@ -3,7 +3,6 @@
  */
 Ext.define('Ext.device.globalization.Abstract', {
     mixins: ['Ext.mixin.Observable'],
-
     config: {
         formatLength: 'full',
         selector: 'date and time',
@@ -12,7 +11,6 @@ Ext.define('Ext.device.globalization.Abstract', {
         numberType: 'decimal',
         currencyCode: "USD"
     },
-
     getPreferredLanguage: function(config) {
         // <debug>
         if (!config.success) {

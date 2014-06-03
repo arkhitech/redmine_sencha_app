@@ -32,7 +32,6 @@ Ext.define('Ext.data.proxy.SessionStorage', {
     extend: 'Ext.data.proxy.WebStorage',
     alias: 'proxy.sessionstorage',
     alternateClassName: 'Ext.data.SessionStorageProxy',
-
     //inherit docs
     getStorageObject: function() {
         return window.sessionStorage;

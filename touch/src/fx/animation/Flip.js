@@ -3,36 +3,30 @@
  */
 Ext.define('Ext.fx.animation.Flip', {
     extend: 'Ext.fx.animation.Abstract',
-
     alias: 'animation.flip',
-
     config: {
         easing: 'ease-in',
-
         /**
          * @cfg {String} direction The direction of which the slide animates
          * @accessor
          */
         direction: 'right',
-
         half: false,
-
         out: null
     },
-
     getData: function() {
         var from = this.getFrom(),
-            to = this.getTo(),
-            direction = this.getDirection(),
-            out = this.getOut(),
-            half = this.getHalf(),
-            rotate = (half) ? 90 : 180,
-            fromScale = 1,
-            toScale = 1,
-            fromRotateX = 0,
-            fromRotateY = 0,
-            toRotateX = 0,
-            toRotateY = 0;
+                to = this.getTo(),
+                direction = this.getDirection(),
+                out = this.getOut(),
+                half = this.getHalf(),
+                rotate = (half) ? 90 : 180,
+                fromScale = 1,
+                toScale = 1,
+                fromRotateX = 0,
+                fromRotateY = 0,
+                toRotateX = 0,
+                toRotateY = 0;
 
 
         if (out) {

@@ -4,42 +4,38 @@
 Ext.define('Ext.fx.animation.Wipe', {
     extend: 'Ext.fx.Animation',
     alternateClassName: 'Ext.fx.animation.WipeIn',
-
     config: {
         /**
          * Valid values are 'ease', 'linear', ease-in', 'ease-out', 'ease-in-out',
          * or a cubic-bezier curve as defined by CSS.
          */
         easing: 'ease-out',
-
         /**
          * @cfg {String} direction The direction of which the slide animates
          * @accessor
          */
         direction: 'right',
-
         /**
          * @cfg {Boolean} out True if you want to make this animation wipe out, instead of slide in.
          * @accessor
          */
         out: false
     },
-
     refresh: function() {
         var me = this,
-            el        = me.getElement(),
-            elBox     = el.dom.getBoundingClientRect(),
-            elWidth   = elBox.width,
-            elHeight  = elBox.height,
-            from      = me.getFrom(),
-            to        = me.getTo(),
-            out       = me.getOut(),
-            direction = me.getDirection(),
-            maskFromX = 0,
-            maskFromY = 0,
-            maskToX   = 0,
-            maskToY   = 0,
-            mask, tmp;
+                el = me.getElement(),
+                elBox = el.dom.getBoundingClientRect(),
+                elWidth = elBox.width,
+                elHeight = elBox.height,
+                from = me.getFrom(),
+                to = me.getTo(),
+                out = me.getOut(),
+                direction = me.getDirection(),
+                maskFromX = 0,
+                maskFromY = 0,
+                maskToX = 0,
+                maskToY = 0,
+                mask, tmp;
 
         switch (direction) {
             case 'up':
@@ -113,7 +109,6 @@ Ext.define('Ext.fx.animation.Wipe', {
 
         // me.setEasing(out ? 'ease-in' : 'ease-out');
     },
-
     getData: function() {
         this.refresh();
 

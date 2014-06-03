@@ -46,18 +46,14 @@
  *     Ext.Viewport.add(chart);
  */
 Ext.define('Ext.chart.series.Bar', {
-
     extend: 'Ext.chart.series.StackedCartesian',
-
     alias: 'series.bar',
     type: 'bar',
     seriesType: 'barSeries',
-
     requires: [
         'Ext.chart.series.sprite.Bar',
         'Ext.draw.sprite.Rect'
     ],
-
     config: {
         /**
          * @private
@@ -76,12 +72,11 @@ Ext.define('Ext.chart.series.Bar', {
             }
         }
     },
-
-    getItemForPoint: function (x, y) {
+    getItemForPoint: function(x, y) {
         if (this.getSprites()) {
             var me = this,
-                chart = me.getChart(),
-                padding = chart.getInnerPadding();
+                    chart = me.getChart(),
+                    padding = chart.getInnerPadding();
 
             // Convert the coordinates because the "items" sprites that draw the bars ignore the chart's InnerPadding.
             // See also Ext.chart.series.sprite.Bar.getItemForPoint(x,y) regarding the series's vertical coordinate system.
@@ -92,15 +87,13 @@ Ext.define('Ext.chart.series.Bar', {
             return me.callParent(arguments);
         }
     },
-
-    updateXAxis: function (axis) {
+    updateXAxis: function(axis) {
         axis.setLabelInSpan(true);
         this.callSuper(arguments);
     },
-
-    updateStacked: function (stacked) {
+    updateStacked: function(stacked) {
         var sprites = this.getSprites(),
-            attrs = {}, i, ln = sprites.length;
+                attrs = {}, i, ln = sprites.length;
 
         if (this.getStacked()) {
             attrs.groupCount = 1;

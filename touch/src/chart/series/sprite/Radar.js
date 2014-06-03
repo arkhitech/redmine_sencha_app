@@ -7,26 +7,25 @@
 Ext.define('Ext.chart.series.sprite.Radar', {
     alias: 'sprite.radar',
     extend: 'Ext.chart.series.sprite.Polar',
-
-    render: function (surface, ctx) {
+    render: function(surface, ctx) {
         var me = this,
-            attr = me.attr,
-            centerX = attr.centerX,
-            centerY = attr.centerY,
-            matrix = attr.matrix,
-            minX = attr.dataMinX,
-            maxX = attr.dataMaxX,
-            maxY = attr.dataMaxY,
-            dataX = attr.dataX,
-            dataY = attr.dataY,
-            rangeY = attr.rangeY,
-            endRho = attr.endRho,
-            startRho = attr.startRho,
-            baseRotation = attr.baseRotation,
-            i, length = dataX.length,
-            markerCfg = {},
-            surfaceMatrix = me.surfaceMatrix,
-            x, y, r, th;
+                attr = me.attr,
+                centerX = attr.centerX,
+                centerY = attr.centerY,
+                matrix = attr.matrix,
+                minX = attr.dataMinX,
+                maxX = attr.dataMaxX,
+                maxY = attr.dataMaxY,
+                dataX = attr.dataX,
+                dataY = attr.dataY,
+                rangeY = attr.rangeY,
+                endRho = attr.endRho,
+                startRho = attr.startRho,
+                baseRotation = attr.baseRotation,
+                i, length = dataX.length,
+                markerCfg = {},
+                surfaceMatrix = me.surfaceMatrix,
+                x, y, r, th;
         ctx.beginPath();
         for (i = 0; i < length; i++) {
             th = (dataX[i] - minX) / (maxX - minX + 1) * 2 * Math.PI + baseRotation;

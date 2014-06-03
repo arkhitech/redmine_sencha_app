@@ -14,14 +14,14 @@
         content:"";
         position:absolute;
         z-index: -2;
-        
+
         bottom: $height;
 
         width: 50%;
         height: 20%;
-        
+
         @include box-shadow(0 $height $margin $color);
-        
+
     }
 
     &::before
@@ -29,7 +29,7 @@
         left: $margin;
         @include transform(rotate(-$angle));
     }
-    
+
     &::after
     {
         right: $margin;

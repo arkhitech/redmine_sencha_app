@@ -19,7 +19,7 @@ div
     }
 
     &:hover
-    {
+        {
         @include transform(rotate(3deg));
     }
 }

@@ -12,10 +12,9 @@ Ext.define('Ext.fx.layout.Card', {
 //        'Ext.fx.layout.card.Cube',
         'Ext.fx.layout.card.Scroll'
     ],
-
     constructor: function(config) {
         var defaultClass = Ext.fx.layout.card.Abstract,
-            type;
+                type;
 
         if (!config) {
             return null;

@@ -3,7 +3,6 @@
  */
 Ext.define('Ext.device.contacts.Sencha', {
     extend: 'Ext.device.contacts.Abstract',
-
     getContacts: function(config) {
         var includeImages = this.getIncludeImages();
         if (typeof config.includeImages != "undefined") {
@@ -36,7 +35,6 @@ Ext.define('Ext.device.contacts.Sencha', {
             scope: this
         });
     },
-
     getThumbnail: function(config) {
         if (!config || typeof config.id == "undefined") {
             Ext.Logger.warn('Ext.device.Contacts#getThumbnail: You must specify an `id` of the contact.');
@@ -63,7 +61,6 @@ Ext.define('Ext.device.contacts.Sencha', {
             scope: this
         });
     },
-
     getLocalizedLabel: function(config) {
         if (!config || typeof config.label == "undefined") {
             Ext.Logger.warn('Ext.device.Contacts#getLocalizedLabel: You must specify an `label` to be localized.');

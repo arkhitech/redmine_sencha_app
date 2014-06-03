@@ -70,7 +70,6 @@ Ext.define('Ext.app.Profile', {
     mixins: {
         observable: "Ext.mixin.Observable"
     },
-
     config: {
         /**
          * @cfg {String} namespace The namespace that this Profile's classes can be found in. Defaults to the lowercased
@@ -81,14 +80,12 @@ Ext.define('Ext.app.Profile', {
          * @accessor
          */
         namespace: 'auto',
-
         /**
          * @cfg {String} name The name of this Profile. Defaults to the last section of the class name (e.g. a profile
          * called MyApp.profile.Phone will default the name to 'Phone').
          * @accessor
          */
         name: 'auto',
-
         /**
          * @cfg {Array} controllers Any additional {@link Ext.app.Application#controllers Controllers} to load for this
          * profile. Note that each item here will be prepended with the Profile namespace when loaded. Example usage:
@@ -102,7 +99,6 @@ Ext.define('Ext.app.Profile', {
          * @accessor
          */
         controllers: [],
-
         /**
          * @cfg {Array} models Any additional {@link Ext.app.Application#models Models} to load for this profile. Note
          * that each item here will be prepended with the Profile namespace when loaded. Example usage:
@@ -116,7 +112,6 @@ Ext.define('Ext.app.Profile', {
          * @accessor
          */
         models: [],
-
         /**
          * @cfg {Array} views Any additional {@link Ext.app.Application#views views} to load for this profile. Note
          * that each item here will be prepended with the Profile namespace when loaded. Example usage:
@@ -130,7 +125,6 @@ Ext.define('Ext.app.Profile', {
          * @accessor
          */
         views: [],
-
         /**
          * @cfg {Array} stores Any additional {@link Ext.app.Application#stores Stores} to load for this profile. Note
          * that each item here will be prepended with the Profile namespace when loaded. Example usage:
@@ -144,7 +138,6 @@ Ext.define('Ext.app.Profile', {
          * @accessor
          */
         stores: [],
-
         /**
          * @cfg {Ext.app.Application} application The {@link Ext.app.Application Application} instance that this
          * Profile is bound to. This is set automatically.
@@ -153,7 +146,6 @@ Ext.define('Ext.app.Profile', {
          */
         application: null
     },
-
     /**
      * Creates a new Profile instance
      */
@@ -162,7 +154,6 @@ Ext.define('Ext.app.Profile', {
 
         this.mixins.observable.constructor.apply(this, arguments);
     },
-
     /**
      * Determines whether or not this Profile is active on the device isActive is executed on. Should return true if
      * this profile is meant to be active on this device, false otherwise. Each Profile should implement this function
@@ -172,7 +163,6 @@ Ext.define('Ext.app.Profile', {
     isActive: function() {
         return false;
     },
-
     /**
      * @method
      * The launch function is called by the {@link Ext.app.Application Application} if this Profile's {@link #isActive}
@@ -184,7 +174,6 @@ Ext.define('Ext.app.Profile', {
      *     }
      */
     launch: Ext.emptyFn,
-
     /**
      * @private
      */
@@ -195,7 +184,6 @@ Ext.define('Ext.app.Profile', {
 
         return name.toLowerCase();
     },
-
     /**
      * @private
      */
@@ -207,7 +195,6 @@ Ext.define('Ext.app.Profile', {
 
         return name;
     },
-
     /**
      * @private
      * Computes the full class names of any specified model, view, controller and store dependencies, returns them in
@@ -215,16 +202,16 @@ Ext.define('Ext.app.Profile', {
      */
     getDependencies: function() {
         var allClasses = [],
-            format = Ext.String.format,
-            appName = this.getApplication().getName(),
-            namespace = this.getNamespace(),
-            map = {
-                model: this.getModels(),
-                view: this.getViews(),
-                controller: this.getControllers(),
-                store: this.getStores()
-            },
-            classType, classNames, fullyQualified;
+                format = Ext.String.format,
+                appName = this.getApplication().getName(),
+                namespace = this.getNamespace(),
+                map = {
+                    model: this.getModels(),
+                    view: this.getViews(),
+                    controller: this.getControllers(),
+                    store: this.getStores()
+                },
+        classType, classNames, fullyQualified;
 
         for (classType in map) {
             classNames = [];

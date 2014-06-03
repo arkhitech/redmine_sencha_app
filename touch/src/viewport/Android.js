@@ -4,15 +4,13 @@
  */
 Ext.define('Ext.viewport.Android', {
     extend: 'Ext.viewport.Default',
-
     config: {
         translatable: {
             translationMethod: 'csstransform'
         }
     },
-
     constructor: function() {
-        this.on('orientationchange', 'hideKeyboardIfNeeded', this, { prepend: true });
+        this.on('orientationchange', 'hideKeyboardIfNeeded', this, {prepend: true});
 
         this.callSuper(arguments);
 
@@ -20,20 +18,17 @@ Ext.define('Ext.viewport.Android', {
             buffer: 1
         });
     },
-
-    getWindowWidth: function () {
+    getWindowWidth: function() {
         return this.element.getWidth();
 
     },
-
-    getWindowHeight: function () {
+    getWindowHeight: function() {
         return this.element.getHeight();
     },
-
     getDummyInput: function() {
         var input = this.dummyInput,
-            focusedElement = this.focusedElement,
-            box = Ext.fly(focusedElement).getPageBox();
+                focusedElement = this.focusedElement,
+                box = Ext.fly(focusedElement).getPageBox();
 
         if (!input) {
             this.dummyInput = input = document.createElement('input');
@@ -49,11 +44,10 @@ Ext.define('Ext.viewport.Android', {
 
         return input;
     },
-
     doBlurInput: function(e) {
         var target = e.target,
-            focusedElement = this.focusedElement,
-            dummy;
+                focusedElement = this.focusedElement,
+                dummy;
 
         if (focusedElement && !this.isInputRegex.test(target.tagName)) {
             dummy = this.getDummyInput();
@@ -65,10 +59,9 @@ Ext.define('Ext.viewport.Android', {
             }, 100);
         }
     },
-
     hideKeyboardIfNeeded: function() {
         var eventController = arguments[arguments.length - 1],
-            focusedElement = this.focusedElement;
+                focusedElement = this.focusedElement;
 
         if (focusedElement) {
             delete this.focusedElement;
@@ -87,7 +80,6 @@ Ext.define('Ext.viewport.Android', {
             }, 1000);
         }
     },
-
     doFireOrientationChangeEvent: function() {
         var eventController = arguments[arguments.length - 1];
 
@@ -114,19 +106,16 @@ Ext.define('Ext.viewport.Android', {
 
         return this;
     },
-
     determineOrientation: function() {
         return (this.getWindowHeight() >= this.getWindowWidth()) ? this.PORTRAIT : this.LANDSCAPE;
     },
-
     getActualWindowOuterHeight: function() {
         return Math.round(this.getWindowOuterHeight() / window.devicePixelRatio);
     },
-
     maximize: function() {
         var stretchHeights = this.stretchHeights,
-            orientation = this.orientation,
-            height;
+                orientation = this.orientation,
+                height;
 
         height = stretchHeights[orientation];
 
@@ -145,35 +134,31 @@ Ext.define('Ext.viewport.Android', {
         this.scrollToTop();
         this.waitUntil(isHeightMaximized, this.fireMaximizeEvent, this.fireMaximizeEvent);
     },
-
     isHeightMaximized: function(height) {
         this.scrollToTop();
         return this.getWindowHeight() === height;
     },
-
-    supportsOrientation: function () {
+    supportsOrientation: function() {
         return false;
     },
-
-    onResize: function () {
-        this.waitUntil(function () {
+    onResize: function() {
+        this.waitUntil(function() {
             var oldWidth = this.windowWidth,
-                oldHeight = this.windowHeight,
-                width = this.getWindowWidth(),
-                height = this.getWindowHeight(),
-                currentOrientation = this.getOrientation(),
-                newOrientation = this.determineOrientation();
+                    oldHeight = this.windowHeight,
+                    width = this.getWindowWidth(),
+                    height = this.getWindowHeight(),
+                    currentOrientation = this.getOrientation(),
+                    newOrientation = this.determineOrientation();
 
             return ((oldWidth !== width && oldHeight !== height) && currentOrientation !== newOrientation);
-        }, function () {
+        }, function() {
             var currentOrientation = this.getOrientation(),
-                newOrientation = this.determineOrientation();
+                    newOrientation = this.determineOrientation();
 
             this.fireOrientationChangeEvent(newOrientation, currentOrientation);
-         }, Ext.emptyFn, 250);
+        }, Ext.emptyFn, 250);
     },
-
-    doPreventZooming: function (e) {
+    doPreventZooming: function(e) {
         // Don't prevent right mouse event
         if ('button' in e && e.button !== 0) {
             return;
@@ -192,10 +177,10 @@ Ext.define('Ext.viewport.Android', {
     }
 
     var version = Ext.os.version,
-        userAgent = Ext.browser.userAgent,
-        // These Android devices have a nasty bug which causes JavaScript timers to be completely frozen
-        // when the browser's viewport is being panned.
-        isBuggy = /(htc|desire|incredible|ADR6300)/i.test(userAgent) && version.lt('2.3');
+            userAgent = Ext.browser.userAgent,
+            // These Android devices have a nasty bug which causes JavaScript timers to be completely frozen
+            // when the browser's viewport is being panned.
+            isBuggy = /(htc|desire|incredible|ADR6300)/i.test(userAgent) && version.lt('2.3');
 
     if (isBuggy) {
         this.override({
@@ -212,15 +197,13 @@ Ext.define('Ext.viewport.Android', {
 
                 return this.callParent([config]);
             },
-
             watchDogTick: function() {
                 this.watchDogLastTick = Ext.Date.now();
             },
-
             doPreventPanning: function() {
                 var now = Ext.Date.now(),
-                    lastTick = this.watchDogLastTick,
-                    deltaTime = now - lastTick;
+                        lastTick = this.watchDogLastTick,
+                        deltaTime = now - lastTick;
 
                 // Timers are frozen
                 if (deltaTime >= 2000) {
@@ -229,11 +212,10 @@ Ext.define('Ext.viewport.Android', {
 
                 return this.callParent(arguments);
             },
-
             doPreventZooming: function() {
                 var now = Ext.Date.now(),
-                    lastTick = this.watchDogLastTick,
-                    deltaTime = now - lastTick;
+                        lastTick = this.watchDogLastTick,
+                        deltaTime = now - lastTick;
 
                 // Timers are frozen
                 if (deltaTime >= 2000) {
@@ -252,23 +234,21 @@ Ext.define('Ext.viewport.Android', {
 
                 this.callParent(arguments);
             },
-
             scrollToTop: function() {
                 document.body.scrollTop = 100;
             },
-
             onWindowResize: function() {
                 var oldWidth = this.windowWidth,
-                    oldHeight = this.windowHeight,
-                    width = this.getWindowWidth(),
-                    height = this.getWindowHeight();
+                        oldHeight = this.windowHeight,
+                        width = this.getWindowWidth(),
+                        height = this.getWindowHeight();
 
                 if (this.getAutoMaximize() && !this.isMaximizing && !this.orientationChanging
-                    && window.scrollY === 0
-                    && oldWidth === width
-                    && height < oldHeight
-                    && ((height >= oldHeight - this.addressBarHeight) || !this.focusedElement)) {
-                        this.scrollToTop();
+                        && window.scrollY === 0
+                        && oldWidth === width
+                        && height < oldHeight
+                        && ((height >= oldHeight - this.addressBarHeight) || !this.focusedElement)) {
+                    this.scrollToTop();
                 }
             }
         });

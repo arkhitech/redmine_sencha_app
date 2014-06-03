@@ -7,17 +7,14 @@ Ext.define('Ext.tab.Tab', {
     extend: 'Ext.Button',
     xtype: 'tab',
     alternateClassName: 'Ext.Tab',
-
     // @private
     isTab: true,
-
     config: {
         /**
          * @cfg baseCls
          * @inheritdoc
          */
         baseCls: Ext.baseCSSPrefix + 'tab',
-
         /**
          * @cfg {String} pressedCls
          * The CSS class to be applied to a Tab when it is pressed.
@@ -25,7 +22,6 @@ Ext.define('Ext.tab.Tab', {
          * @accessor
          */
         pressedCls: Ext.baseCSSPrefix + 'tab-pressed',
-
         /**
          * @cfg {String} activeCls
          * The CSS class to be applied to a Tab when it is active.
@@ -33,14 +29,12 @@ Ext.define('Ext.tab.Tab', {
          * @accessor
          */
         activeCls: Ext.baseCSSPrefix + 'tab-active',
-
         /**
          * @cfg {Boolean} active
          * Set this to `true` to have the tab be active by default.
          * @accessor
          */
         active: false,
-
         /**
          * @cfg {String} title
          * The title of the card that this tab is bound to.
@@ -48,8 +42,7 @@ Ext.define('Ext.tab.Tab', {
          */
         title: '&nbsp;'
     },
-
-    updateIconCls : function(newCls, oldCls) {
+    updateIconCls: function(newCls, oldCls) {
         this.callParent([newCls, oldCls]);
 
         if (oldCls) {
@@ -60,7 +53,6 @@ Ext.define('Ext.tab.Tab', {
             this.addCls('x-tab-icon');
         }
     },
-
     /**
      * @event activate
      * Fires when a tab is activated
@@ -76,7 +68,6 @@ Ext.define('Ext.tab.Tab', {
     updateTitle: function(title) {
         this.setText(title);
     },
-
     updateActive: function(active, oldActive) {
         var activeCls = this.getActiveCls();
         if (active && !oldActive) {
@@ -92,7 +83,6 @@ Ext.define('Ext.tab.Tab', {
         activate: function() {
             this.setActive(true);
         },
-
         deactivate: function() {
             this.setActive(false);
         }

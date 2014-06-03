@@ -126,9 +126,7 @@
 Ext.define('Ext.data.association.HasOne', {
     extend: 'Ext.data.association.Association',
     alternateClassName: 'Ext.data.HasOneAssociation',
-
     alias: 'association.hasone',
-
     config: {
         /**
          * @cfg {String} foreignKey The name of the foreign key on the owner model that links it to the associated
@@ -155,22 +153,18 @@ Ext.define('Ext.data.association.HasOne', {
          *
          */
         foreignKey: undefined,
-
         /**
          * @cfg {String} getterName The name of the getter function that will be added to the local model's prototype.
          * Defaults to 'get' + the name of the foreign model, e.g. getAddress
          */
         getterName: undefined,
-
         /**
          * @cfg {String} setterName The name of the setter function that will be added to the local model's prototype.
          * Defaults to 'set' + the name of the foreign model, e.g. setAddress
          */
         setterName: undefined,
-
         instanceName: undefined
     },
-
     applyForeignKey: function(foreignKey) {
         if (!foreignKey) {
             var inverse = this.getInverseAssociation();
@@ -182,10 +176,9 @@ Ext.define('Ext.data.association.HasOne', {
         }
         return foreignKey;
     },
-
     updateForeignKey: function(foreignKey, oldForeignKey) {
         var fields = this.getOwnerModel().getFields(),
-            field = fields.get(foreignKey);
+                field = fields.get(foreignKey);
 
         if (!field) {
             field = new Ext.data.Field({
@@ -203,14 +196,12 @@ Ext.define('Ext.data.association.HasOne', {
             }
         }
     },
-
     applyInstanceName: function(instanceName) {
         if (!instanceName) {
             instanceName = this.getAssociatedName() + 'HasOneInstance';
         }
         return instanceName;
     },
-
     applyAssociationKey: function(associationKey) {
         if (!associationKey) {
             var associatedName = this.getAssociatedName();
@@ -218,7 +209,6 @@ Ext.define('Ext.data.association.HasOne', {
         }
         return associationKey;
     },
-
     applyGetterName: function(getterName) {
         if (!getterName) {
             var associatedName = this.getAssociatedName();
@@ -226,7 +216,6 @@ Ext.define('Ext.data.association.HasOne', {
         }
         return getterName;
     },
-
     applySetterName: function(setterName) {
         if (!setterName) {
             var associatedName = this.getAssociatedName();
@@ -234,7 +223,6 @@ Ext.define('Ext.data.association.HasOne', {
         }
         return setterName;
     },
-
     updateGetterName: function(getterName, oldGetterName) {
         var ownerProto = this.getOwnerModel().prototype;
         if (oldGetterName) {
@@ -244,7 +232,6 @@ Ext.define('Ext.data.association.HasOne', {
             ownerProto[getterName] = this.createGetter();
         }
     },
-
     updateSetterName: function(setterName, oldSetterName) {
         var ownerProto = this.getOwnerModel().prototype;
         if (oldSetterName) {
@@ -254,22 +241,21 @@ Ext.define('Ext.data.association.HasOne', {
             ownerProto[setterName] = this.createSetter();
         }
     },
-
     /**
      * @private
      * Returns a setter function to be placed on the owner model's prototype
      * @return {Function} The setter function
      */
     createSetter: function() {
-        var me              = this,
-            foreignKey      = me.getForeignKey(),
-            instanceName    = me.getInstanceName(),
-            associatedModel = me.getAssociatedModel();
+        var me = this,
+                foreignKey = me.getForeignKey(),
+                instanceName = me.getInstanceName(),
+                associatedModel = me.getAssociatedModel();
 
         //'this' refers to the Model instance inside this function
         return function(value, options, scope) {
             var Model = Ext.data.Model,
-                record;
+                    record;
 
             if (value && value.isModel) {
                 value = value.getId();
@@ -300,7 +286,6 @@ Ext.define('Ext.data.association.HasOne', {
             return this;
         };
     },
-
     /**
      * @private
      * Returns a getter function to be placed on the owner model's prototype. We cache the loaded instance
@@ -308,18 +293,18 @@ Ext.define('Ext.data.association.HasOne', {
      * @return {Function} The getter function
      */
     createGetter: function() {
-        var me              = this,
-            associatedModel = me.getAssociatedModel(),
-            foreignKey      = me.getForeignKey(),
-            instanceName    = me.getInstanceName();
+        var me = this,
+                associatedModel = me.getAssociatedModel(),
+                foreignKey = me.getForeignKey(),
+                instanceName = me.getInstanceName();
 
         //'this' refers to the Model instance inside this function
         return function(options, scope) {
             options = options || {};
 
             var model = this,
-                foreignKeyId = model.get(foreignKey),
-                success, instance, args;
+                    foreignKeyId = model.get(foreignKey),
+                    success, instance, args;
 
             if (options.reload === true || model[instanceName] === undefined) {
                 if (typeof options == 'function') {
@@ -331,7 +316,7 @@ Ext.define('Ext.data.association.HasOne', {
 
                 // Overwrite the success handler so we can assign the current instance
                 success = options.success;
-                options.success = function(rec){
+                options.success = function(rec) {
                     model[instanceName] = rec;
                     if (success) {
                         success.apply(this, arguments);
@@ -353,7 +338,6 @@ Ext.define('Ext.data.association.HasOne', {
             }
         };
     },
-
     /**
      * Read associated data
      * @private
@@ -363,7 +347,7 @@ Ext.define('Ext.data.association.HasOne', {
      */
     read: function(record, reader, associationData) {
         var inverse = this.getInverseAssociation(),
-            newRecord = reader.read([associationData]).getRecords()[0];
+                newRecord = reader.read([associationData]).getRecords()[0];
 
         record[this.getSetterName()].call(record, newRecord);
 
@@ -372,7 +356,6 @@ Ext.define('Ext.data.association.HasOne', {
             newRecord[inverse.getInstanceName()] = record;
         }
     },
-
     getInverseAssociation: function() {
         var ownerName = this.getOwnerModel().modelName;
 

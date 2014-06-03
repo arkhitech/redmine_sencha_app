@@ -56,9 +56,7 @@ Ext.define('Ext.data.proxy.Memory', {
     extend: 'Ext.data.proxy.Client',
     alias: 'proxy.memory',
     alternateClassName: 'Ext.data.MemoryProxy',
-
     isMemoryProxy: true,
-
     config: {
         /**
          * @cfg {Object} data
@@ -66,7 +64,6 @@ Ext.define('Ext.data.proxy.Memory', {
          */
         data: []
     },
-
     /**
      * @private
      * Fake processing function to commit the records, set the current operation
@@ -77,8 +74,8 @@ Ext.define('Ext.data.proxy.Memory', {
     finishOperation: function(operation, callback, scope) {
         if (operation) {
             var i = 0,
-                recs = operation.getRecords(),
-                len = recs.length;
+                    recs = operation.getRecords(),
+                    len = recs.length;
 
             for (i; i < len; i++) {
                 recs[i].commit();
@@ -90,7 +87,6 @@ Ext.define('Ext.data.proxy.Memory', {
             Ext.callback(callback, scope || this, [operation]);
         }
     },
-
     /**
      * Currently this is a hard-coded method that simply commits any records and sets the operation to successful,
      * then calls the callback function, if provided. It is essentially mocking a server call in memory, but since
@@ -105,7 +101,6 @@ Ext.define('Ext.data.proxy.Memory', {
     create: function() {
         this.finishOperation.apply(this, arguments);
     },
-
     /**
      * Currently this is a hard-coded method that simply commits any records and sets the operation to successful,
      * then calls the callback function, if provided. It is essentially mocking a server call in memory, but since
@@ -120,7 +115,6 @@ Ext.define('Ext.data.proxy.Memory', {
     update: function() {
         this.finishOperation.apply(this, arguments);
     },
-
     /**
      * Currently this is a hard-coded method that simply commits any records and sets the operation to successful,
      * then calls the callback function, if provided. It is essentially mocking a server call in memory, but since
@@ -135,7 +129,6 @@ Ext.define('Ext.data.proxy.Memory', {
     destroy: function() {
         this.finishOperation.apply(this, arguments);
     },
-
     /**
      * Reads data from the configured {@link #data} object. Uses the Proxy's {@link #reader}, if present.
      * @param {Ext.data.Operation} operation The read Operation
@@ -143,8 +136,8 @@ Ext.define('Ext.data.proxy.Memory', {
      * @param {Object} scope The scope to call the callback function in
      */
     read: function(operation, callback, scope) {
-        var me     = this,
-            reader = me.getReader();
+        var me = this,
+                reader = me.getReader();
 
         if (operation.process('read', reader.process(me.getData())) === false) {
             this.fireEvent('exception', this, null, operation);
@@ -152,6 +145,5 @@ Ext.define('Ext.data.proxy.Memory', {
 
         Ext.callback(callback, scope || me, [operation]);
     },
-
     clear: Ext.emptyFn
 });

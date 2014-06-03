@@ -26,7 +26,7 @@ Ext.define('Ext.draw.sprite.Path', {
                 /**
                  * @cfg {String} path The SVG based path string used by the sprite.
                  */
-                path: function (n, o) {
+                path: function(n, o) {
                     if (!(n instanceof Ext.draw.Path)) {
                         n = new Ext.draw.Path(n);
                     }
@@ -40,7 +40,7 @@ Ext.define('Ext.draw.sprite.Path', {
                 path: 'bbox'
             },
             updaters: {
-                path: function (attr) {
+                path: function(attr) {
                     var path = attr.path;
                     if (!path || path.bindAttr !== attr) {
                         path = new Ext.draw.Path();
@@ -54,22 +54,19 @@ Ext.define('Ext.draw.sprite.Path', {
             }
         }
     },
-
-    updatePlainBBox: function (plain) {
+    updatePlainBBox: function(plain) {
         if (this.attr.path) {
             this.attr.path.getDimension(plain);
         }
     },
-
-    updateTransformedBBox: function (transform) {
+    updateTransformedBBox: function(transform) {
         if (this.attr.path) {
             this.attr.path.getDimensionWithTransform(this.attr.matrix, transform);
         }
     },
-
-    render: function (surface, ctx) {
+    render: function(surface, ctx) {
         var mat = this.attr.matrix,
-            attr = this.attr;
+                attr = this.attr;
         if (!attr.path || attr.path.coords.length === 0) {
             return;
         }
@@ -77,12 +74,12 @@ Ext.define('Ext.draw.sprite.Path', {
         ctx.appendPath(attr.path);
         ctx.fillStroke(attr);
     },
-
     /**
      * Update the path.
      * @param {Ext.draw.Path} path An empty path to draw on using path API.
      * @param {Object} attr The attribute object. Note: DO NOT use the `sprite.attr` instead of this
      * if you want to work with instancing.
      */
-    updatePath: function (path, attr) {}
+    updatePath: function(path, attr) {
+    }
 });

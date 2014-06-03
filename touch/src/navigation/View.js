@@ -56,14 +56,12 @@ Ext.define('Ext.navigation.View', {
     alternateClassName: 'Ext.NavigationView',
     xtype: 'navigationview',
     requires: ['Ext.navigation.Bar'],
-
     config: {
         /**
          * @cfg
          * @inheritdoc
          */
         baseCls: Ext.baseCSSPrefix + 'navigationview',
-
         /**
          * @cfg {Boolean/Object} navigationBar
          * The NavigationBar used in this navigation view. It defaults to be docked to the top.
@@ -88,7 +86,6 @@ Ext.define('Ext.navigation.View', {
         navigationBar: {
             docked: 'top'
         },
-
         /**
          * @cfg {String} defaultBackButtonText
          * The text to be displayed on the back button if:
@@ -98,7 +95,6 @@ Ext.define('Ext.navigation.View', {
          * @accessor
          */
         defaultBackButtonText: 'Back',
-
         /**
          * @cfg {Boolean} useTitleForBackButtonText
          * Set to `false` if you always want to display the {@link #defaultBackButtonText} as the text
@@ -106,7 +102,6 @@ Ext.define('Ext.navigation.View', {
          * @accessor
          */
         useTitleForBackButtonText: false,
-
         /**
          * @cfg {Array/Object} items The child items to add to this NavigationView. This is usually an array of Component
          * configurations or instances, for example:
@@ -151,7 +146,6 @@ Ext.define('Ext.navigation.View', {
             }
         }
     },
-
     /**
      * @event push
      * Fires when a view is pushed into this navigation view
@@ -173,16 +167,15 @@ Ext.define('Ext.navigation.View', {
      */
 
     platformConfig: [{
-        theme: ['Blackberry'],
-        navigationBar: {
-            splitNavigation: true
-        }
-    }],
-
+            theme: ['Blackberry'],
+            navigationBar: {
+                splitNavigation: true
+            }
+        }],
     // @private
     initialize: function() {
-        var me     = this,
-            navBar = me.getNavigationBar();
+        var me = this,
+                navBar = me.getNavigationBar();
 
         //add a listener onto the back button in the navigationbar
         if (navBar) {
@@ -206,7 +199,6 @@ Ext.define('Ext.navigation.View', {
         }
         //</debug>
     },
-
     /**
      * @private
      */
@@ -215,7 +207,6 @@ Ext.define('Ext.navigation.View', {
 
         return config;
     },
-
     /**
      * @private
      * Called when the user taps on the back button
@@ -224,7 +215,6 @@ Ext.define('Ext.navigation.View', {
         this.pop();
         this.fireEvent('back', this);
     },
-
     /**
      * Pushes a new view into this navigation view using the default animation that this view has.
      * @param {Object} view The view to push.
@@ -233,7 +223,6 @@ Ext.define('Ext.navigation.View', {
     push: function(view) {
         return this.add(view);
     },
-
     /**
      * Removes the current active view from the stack and sets the previous view using the default animation
      * of this view. You can also pass a {@link Ext.ComponentQuery} selector to target what inner item to pop to.
@@ -246,7 +235,6 @@ Ext.define('Ext.navigation.View', {
             return this.doPop();
         }
     },
-
     /**
      * @private
      * Calculates whether it needs to remove any items from the stack when you are popping more than 1
@@ -255,11 +243,11 @@ Ext.define('Ext.navigation.View', {
      */
     beforePop: function(count) {
         var me = this,
-            innerItems = me.getInnerItems();
+                innerItems = me.getInnerItems();
 
         if (Ext.isString(count) || Ext.isObject(count)) {
             var last = innerItems.length - 1,
-                i;
+                    i;
 
             for (i = last; i >= 0; i--) {
                 if ((Ext.isString(count) && Ext.ComponentQuery.is(innerItems[i], count)) || (Ext.isObject(count) && count == innerItems[i])) {
@@ -274,7 +262,7 @@ Ext.define('Ext.navigation.View', {
         }
 
         var ln = innerItems.length,
-            toRemove;
+                toRemove;
 
         //default to 1 pop
         if (!Ext.isNumber(count) || count < 1) {
@@ -299,13 +287,12 @@ Ext.define('Ext.navigation.View', {
 
         return false;
     },
-
     /**
      * @private
      */
     doPop: function() {
         var me = this,
-            innerItems = this.getInnerItems();
+                innerItems = this.getInnerItems();
 
         //set the new active item to be the new last item of the stack
         me.remove(innerItems[innerItems.length - 1]);
@@ -331,7 +318,6 @@ Ext.define('Ext.navigation.View', {
 
         return this.getActiveItem();
     },
-
     /**
      * Returns the previous item, if one exists.
      * @return {Mixed} The previous view
@@ -340,7 +326,6 @@ Ext.define('Ext.navigation.View', {
         var innerItems = this.getInnerItems();
         return innerItems[innerItems.length - 2];
     },
-
     /**
      * Updates the backbutton text accordingly in the {@link #navigationBar}
      * @private
@@ -351,7 +336,6 @@ Ext.define('Ext.navigation.View', {
             navigationBar.setUseTitleForBackButtonText(useTitleForBackButtonText);
         }
     },
-
     /**
      * Updates the backbutton text accordingly in the {@link #navigationBar}
      * @private
@@ -362,7 +346,6 @@ Ext.define('Ext.navigation.View', {
             navigationBar.setDefaultBackButtonText(defaultBackButtonText);
         }
     },
-
     // @private
     applyNavigationBar: function(config) {
         if (!config) {
@@ -376,7 +359,7 @@ Ext.define('Ext.navigation.View', {
             delete config.title;
             //<debug>
             Ext.Logger.warn("Ext.navigation.View: The 'navigationBar' configuration does not accept a 'title' property. You " +
-                            "set the title of the navigationBar by giving this navigation view's children a 'title' property.");
+                    "set the title of the navigationBar by giving this navigation view's children a 'title' property.");
             //</debug>
         }
 
@@ -418,7 +401,6 @@ Ext.define('Ext.navigation.View', {
 
         return Ext.factory(config, Ext.navigation.Bar, this.getNavigationBar());
     },
-
     // @private
     updateNavigationBar: function(newNavigationBar, oldNavigationBar) {
         if (oldNavigationBar) {
@@ -429,13 +411,12 @@ Ext.define('Ext.navigation.View', {
             this.add(newNavigationBar);
         }
     },
-
     /**
      * @private
      */
     applyActiveItem: function(activeItem, currentActiveItem) {
         var me = this,
-            innerItems = me.getInnerItems();
+                innerItems = me.getInnerItems();
 
         // Make sure the items are already initialized
         me.getItems();
@@ -447,11 +428,10 @@ Ext.define('Ext.navigation.View', {
 
         return this.callParent([activeItem, currentActiveItem]);
     },
-
     doResetActiveItem: function(innerIndex) {
         var me = this,
-            innerItems = me.getInnerItems(),
-            animation = me.getLayout().getAnimation();
+                innerItems = me.getInnerItems(),
+                animation = me.getLayout().getAnimation();
 
         if (innerIndex > 0) {
             if (animation && animation.isAnimation) {
@@ -461,7 +441,6 @@ Ext.define('Ext.navigation.View', {
             me.getNavigationBar().onViewRemove(me, innerItems[innerIndex], innerIndex);
         }
     },
-
     /**
      * @private
      */
@@ -474,7 +453,6 @@ Ext.define('Ext.navigation.View', {
 
         this.callParent(arguments);
     },
-
     /**
      * @private
      */
@@ -512,7 +490,6 @@ Ext.define('Ext.navigation.View', {
             this.fireEvent('add', this, item, index);
         }
     },
-
     /**
      * @private
      * Updates the title of the titleContainer, if it exists
@@ -533,7 +510,6 @@ Ext.define('Ext.navigation.View', {
             this.$currentTitle = title;
         }
     },
-
     /**
      * Resets the view by removing all items between the first and last item.
      * @return {Ext.Component} The view that is now active

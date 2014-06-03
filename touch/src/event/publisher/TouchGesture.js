@@ -2,32 +2,24 @@
  * @private
  */
 Ext.define('Ext.event.publisher.TouchGesture', {
-
     extend: 'Ext.event.publisher.Dom',
-
     requires: [
         'Ext.util.Point',
         'Ext.event.Touch',
         'Ext.AnimationQueue'
     ],
-
     isNotPreventable: /^(select|a)$/i,
-
     handledEvents: ['touchstart', 'touchmove', 'touchend', 'touchcancel'],
-
     mouseToTouchMap: {
         mousedown: 'touchstart',
         mousemove: 'touchmove',
         mouseup: 'touchend'
     },
-
     lastEventType: null,
-
     config: {
         moveThrottle: 0,
         recognizers: {}
     },
-
     constructor: function(config) {
         this.eventProcessors = {
             touchstart: this.onTouchStart,
@@ -63,7 +55,6 @@ Ext.define('Ext.event.publisher.TouchGesture', {
 
         return this.callSuper();
     },
-
     applyRecognizers: function(recognizers) {
         var i, recognizer;
 
@@ -79,19 +70,17 @@ Ext.define('Ext.event.publisher.TouchGesture', {
 
         return recognizers;
     },
-
     handles: function(eventName) {
         return this.callSuper(arguments) || this.eventToRecognizerMap.hasOwnProperty(eventName);
     },
-
     doesEventBubble: function() {
         // All touch events bubble
         return true;
     },
     onEvent: function(e) {
         var type = e.type,
-            lastEventType = this.lastEventType,
-            touchList = [e];
+                lastEventType = this.lastEventType,
+                touchList = [e];
 
         if (this.eventProcessors[type]) {
             this.eventProcessors[type].call(this, e);
@@ -106,7 +95,7 @@ Ext.define('Ext.event.publisher.TouchGesture', {
             // when the element is being animated with webkit-transition (2 mousedowns without any mouseup)
             if (type === 'mousedown' && lastEventType && lastEventType !== 'mouseup') {
                 var fixedEvent = document.createEvent("MouseEvent");
-                    fixedEvent.initMouseEvent('mouseup', e.bubbles, e.cancelable,
+                fixedEvent.initMouseEvent('mouseup', e.bubbles, e.cancelable,
                         document.defaultView, e.detail, e.screenX, e.screenY, e.clientX,
                         e.clientY, e.ctrlKey, e.altKey, e.shiftKey, e.metaKey, e.metaKey,
                         e.button, e.relatedTarget);
@@ -126,17 +115,16 @@ Ext.define('Ext.event.publisher.TouchGesture', {
             this.eventProcessors[this.mouseToTouchMap[type]].call(this, e);
         }
     },
-
     registerRecognizer: function(recognizer) {
         var map = this.eventToRecognizerMap,
-            activeRecognizers = this.activeRecognizers,
-            handledEvents = recognizer.getHandledEvents(),
-            i, ln, eventName;
+                activeRecognizers = this.activeRecognizers,
+                handledEvents = recognizer.getHandledEvents(),
+                i, ln, eventName;
 
         recognizer.setOnRecognized(this.onRecognized);
         recognizer.setCallbackScope(this);
 
-        for (i = 0,ln = handledEvents.length; i < ln; i++) {
+        for (i = 0, ln = handledEvents.length; i < ln; i++) {
             eventName = handledEvents[i];
 
             map[eventName] = recognizer;
@@ -146,11 +134,10 @@ Ext.define('Ext.event.publisher.TouchGesture', {
 
         return this;
     },
-
     onRecognized: function(eventName, e, touches, info) {
         var targetGroups = [],
-            ln = touches.length,
-            targets, i, touch;
+                ln = touches.length,
+                targets, i, touch;
 
         if (ln === 1) {
             return this.publish(eventName, touches[0].targets, e, info);
@@ -165,23 +152,21 @@ Ext.define('Ext.event.publisher.TouchGesture', {
 
         this.publish(eventName, targets, e, info);
     },
-
     publish: function(eventName, targets, event, info) {
         event.set(info);
         return this.callSuper([eventName, targets, event]);
     },
-
     getCommonTargets: function(targetGroups) {
         var firstTargetGroup = targetGroups[0],
-            ln = targetGroups.length;
+                ln = targetGroups.length;
 
         if (ln === 1) {
             return firstTargetGroup;
         }
 
         var commonTargets = [],
-            i = 1,
-            target, targets, j;
+                i = 1,
+                target, targets, j;
 
         while (true) {
             target = firstTargetGroup[firstTargetGroup.length - i];
@@ -204,11 +189,10 @@ Ext.define('Ext.event.publisher.TouchGesture', {
 
         return commonTargets;
     },
-
     invokeRecognizers: function(methodName, e) {
         var recognizers = this.activeRecognizers,
-            ln = recognizers.length,
-            i, recognizer;
+                ln = recognizers.length,
+                i, recognizer;
 
         if (methodName === 'onStart') {
             for (i = 0; i < ln; i++) {
@@ -223,15 +207,13 @@ Ext.define('Ext.event.publisher.TouchGesture', {
             }
         }
     },
-
     getActiveRecognizers: function() {
         return this.activeRecognizers;
     },
-
     updateTouch: function(touch) {
         var identifier = touch.identifier,
-            currentTouch = this.touchesMap[identifier],
-            target, x, y;
+                currentTouch = this.touchesMap[identifier],
+                target, x, y;
 
         if (!currentTouch) {
             target = this.getElementTarget(touch.target);
@@ -245,8 +227,8 @@ Ext.define('Ext.event.publisher.TouchGesture', {
             this.currentIdentifiers.push(identifier);
         }
 
-        x  = touch.pageX;
-        y  = touch.pageY;
+        x = touch.pageX;
+        y = touch.pageY;
 
         if (x === currentTouch.pageX && y === currentTouch.pageY) {
             return false;
@@ -259,10 +241,9 @@ Ext.define('Ext.event.publisher.TouchGesture', {
 
         return currentTouch;
     },
-
     updateTouches: function(touches) {
         var i, ln, touch,
-            changedTouches = [];
+                changedTouches = [];
 
         for (i = 0, ln = touches.length; i < ln; i++) {
             touch = this.updateTouch(touches[i]);
@@ -273,17 +254,15 @@ Ext.define('Ext.event.publisher.TouchGesture', {
 
         return changedTouches;
     },
-
     factoryEvent: function(e) {
         return new Ext.event.Touch(e, null, this.touchesMap, this.currentIdentifiers);
     },
-
     onTouchStart: function(e) {
         var changedTouches = e.changedTouches,
-            target = e.target,
-            ln = changedTouches.length,
-            isNotPreventable = this.isNotPreventable,
-            i, touch, parent;
+                target = e.target,
+                ln = changedTouches.length,
+                isNotPreventable = this.isNotPreventable,
+                i, touch, parent;
 
         this.updateTouches(changedTouches);
 
@@ -304,7 +283,6 @@ Ext.define('Ext.event.publisher.TouchGesture', {
 
         parent = target.parentNode || {};
     },
-
     onTouchMove: function(e) {
         if (!this.isStarted) {
             return;
@@ -317,7 +295,6 @@ Ext.define('Ext.event.publisher.TouchGesture', {
 
         this.lastMoveEvent = e;
     },
-
     onAnimationFrame: function() {
         var event = this.lastMoveEvent;
 
@@ -326,7 +303,6 @@ Ext.define('Ext.event.publisher.TouchGesture', {
             this.doTouchMove(event);
         }
     },
-
     doTouchMove: function(e) {
         var changedTouches, i, ln, touch;
 
@@ -345,7 +321,6 @@ Ext.define('Ext.event.publisher.TouchGesture', {
             this.invokeRecognizers('onTouchMove', e);
         }
     },
-
     onTouchEnd: function(e) {
         if (!this.isStarted) {
             return;
@@ -356,10 +331,10 @@ Ext.define('Ext.event.publisher.TouchGesture', {
         }
 
         var touchesMap = this.touchesMap,
-            currentIdentifiers = this.currentIdentifiers,
-            changedTouches = e.changedTouches,
-            ln = changedTouches.length,
-            identifier, i, touch;
+                currentIdentifiers = this.currentIdentifiers,
+                changedTouches = e.changedTouches,
+                ln = changedTouches.length,
+                identifier, i, touch;
 
         this.updateTouches(changedTouches);
 
@@ -410,14 +385,12 @@ Ext.define('Ext.event.publisher.TouchGesture', {
                 pointerup: 'touchend',
                 pointercancel: 'touchcancel'
             },
-
             touchToPointerMap: {
                 touchstart: 'MSPointerDown',
                 touchmove: 'MSPointerMove',
                 touchend: 'MSPointerUp',
                 touchcancel: 'MSPointerCancel'
             },
-
             attachListener: function(eventName, doc) {
                 eventName = this.touchToPointerMap[eventName];
 
@@ -427,7 +400,6 @@ Ext.define('Ext.event.publisher.TouchGesture', {
 
                 return this.callOverridden([eventName, doc]);
             },
-
             onEvent: function(e) {
                 if ('button' in e && e.button > 0) {
                     return;

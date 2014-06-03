@@ -8,7 +8,6 @@ Ext.define('Ext.device.accelerometer.Abstract', {
          */
         frequency: 10000
     },
-
     getCurrentAcceleration: function(config) {
         // <debug>
         if (!config.success) {
@@ -18,7 +17,6 @@ Ext.define('Ext.device.accelerometer.Abstract', {
 
         return config;
     },
-
     watchAcceleration: function(config) {
         var defaultConfig = Ext.device.accelerometer.Abstract.prototype.config;
 
@@ -34,6 +32,5 @@ Ext.define('Ext.device.accelerometer.Abstract', {
 
         return config;
     },
-
     clearWatch: Ext.emptyFn
 });

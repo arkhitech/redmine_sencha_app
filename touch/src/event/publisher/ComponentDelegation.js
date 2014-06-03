@@ -3,21 +3,16 @@
  */
 Ext.define('Ext.event.publisher.ComponentDelegation', {
     extend: 'Ext.event.publisher.Publisher',
-
     requires: [
         'Ext.Component',
         'Ext.ComponentQuery'
     ],
-
     targetType: 'component',
-
     optimizedSelectorRegex: /^#([\w\-]+)((?:[\s]*)>(?:[\s]*)|(?:\s*))([\w\-]+)$/i,
-
     handledEvents: ['*'],
-
     getSubscribers: function(eventName, createIfNotExist) {
         var subscribers = this.subscribers,
-            eventSubscribers = subscribers[eventName];
+                eventSubscribers = subscribers[eventName];
 
         if (!eventSubscribers && createIfNotExist) {
             eventSubscribers = subscribers[eventName] = {
@@ -31,7 +26,6 @@ Ext.define('Ext.event.publisher.ComponentDelegation', {
 
         return eventSubscribers;
     },
-
     subscribe: function(target, eventName) {
         // Ignore id-only selectors since they are already handled
         if (this.idSelectorRegex.test(target)) {
@@ -39,10 +33,10 @@ Ext.define('Ext.event.publisher.ComponentDelegation', {
         }
 
         var optimizedSelector = target.match(this.optimizedSelectorRegex),
-            subscribers = this.getSubscribers(eventName, true),
-            typeSubscribers = subscribers.type,
-            selectorSubscribers = subscribers.selector,
-            id, isDescendant, type, map, subMap;
+                subscribers = this.getSubscribers(eventName, true),
+                typeSubscribers = subscribers.type,
+                selectorSubscribers = subscribers.selector,
+                id, isDescendant, type, map, subMap;
 
         if (optimizedSelector !== null) {
             id = optimizedSelector[1];
@@ -89,7 +83,6 @@ Ext.define('Ext.event.publisher.ComponentDelegation', {
 
         return true;
     },
-
     unsubscribe: function(target, eventName, all) {
         var subscribers = this.getSubscribers(eventName);
 
@@ -98,9 +91,9 @@ Ext.define('Ext.event.publisher.ComponentDelegation', {
         }
 
         var match = target.match(this.optimizedSelectorRegex),
-            typeSubscribers = subscribers.type,
-            selectorSubscribers = subscribers.selector,
-            id, isDescendant, type, map, subMap;
+                typeSubscribers = subscribers.type,
+                selectorSubscribers = subscribers.selector,
+                id, isDescendant, type, map, subMap;
 
         all = Boolean(all);
 
@@ -141,10 +134,9 @@ Ext.define('Ext.event.publisher.ComponentDelegation', {
 
         return true;
     },
-
     notify: function(target, eventName) {
         var subscribers = this.getSubscribers(eventName),
-            id, component;
+                id, component;
 
         if (!subscribers || subscribers.$length === 0) {
             return false;
@@ -159,15 +151,12 @@ Ext.define('Ext.event.publisher.ComponentDelegation', {
             }, 'before');
         }
     },
-
     matchesSelector: function(component, selector) {
         return Ext.ComponentQuery.is(component, selector);
     },
-
     dispatch: function(target, eventName, args, connectedController) {
         this.dispatcher.doDispatchEvent(this.targetType, target, eventName, args, null, connectedController);
     },
-
     publish: function(eventName, component) {
         var subscribers = this.getSubscribers(eventName);
 
@@ -176,14 +165,14 @@ Ext.define('Ext.event.publisher.ComponentDelegation', {
         }
 
         var eventController = arguments[arguments.length - 1],
-            typeSubscribers = subscribers.type,
-            selectorSubscribers = subscribers.selector,
-            args = Array.prototype.slice.call(arguments, 2, -2),
-            types = component.xtypesChain,
-            descendentsSubscribers, childrenSubscribers,
-            parentId, ancestorIds, ancestorId, parentComponent,
-            selector,
-            i, ln, type, j, subLn;
+                typeSubscribers = subscribers.type,
+                selectorSubscribers = subscribers.selector,
+                args = Array.prototype.slice.call(arguments, 2, -2),
+                types = component.xtypesChain,
+                descendentsSubscribers, childrenSubscribers,
+                parentId, ancestorIds, ancestorId, parentComponent,
+                selector,
+                i, ln, type, j, subLn;
 
         for (i = 0, ln = types.length; i < ln; i++) {
             type = types[i];

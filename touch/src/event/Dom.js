@@ -6,10 +6,9 @@
  */
 Ext.define('Ext.event.Dom', {
     extend: 'Ext.event.Event',
-
     constructor: function(event) {
         var target = event.target,
-            touches;
+                touches;
 
         if (target && target.nodeType !== 1) {
             target = target.parentNode;
@@ -33,7 +32,6 @@ Ext.define('Ext.event.Dom', {
 
         return this;
     },
-
     /**
      * @property {Number} distance
      * The distance of the event.
@@ -60,14 +58,12 @@ Ext.define('Ext.event.Dom', {
 
         return this.callParent();
     },
-
     /**
      * Prevents the browsers default handling of the event.
      */
     preventDefault: function() {
         this.browserEvent.preventDefault();
     },
-
     /**
      * Gets the x coordinate of the event.
      * @deprecated 2.0 Please use {@link #pageX} property directly.
@@ -76,7 +72,6 @@ Ext.define('Ext.event.Dom', {
     getPageX: function() {
         return this.pageX || this.browserEvent.pageX;
     },
-
     /**
      * Gets the y coordinate of the event.
      * @deprecated 2.0 Please use {@link #pageX} property directly.
@@ -85,7 +80,6 @@ Ext.define('Ext.event.Dom', {
     getPageY: function() {
         return this.pageY || this.browserEvent.pageY;
     },
-
     /**
      * Gets the X and Y coordinates of the event.
      * @deprecated 2.0 Please use the {@link #pageX} and {@link #pageY} properties directly.
@@ -98,7 +92,6 @@ Ext.define('Ext.event.Dom', {
 
         return this.xy;
     },
-
     /**
      * Gets the target for the event. Unlike {@link #target}, this returns the main element for your event. So if you are
      * listening to a tap event on Ext.Viewport.element, and you tap on an inner element of Ext.Viewport.element, this will
@@ -119,7 +112,6 @@ Ext.define('Ext.event.Dom', {
 
         return selector ? Ext.fly(this.target).findParent(selector, maxDepth, returnEl) : (returnEl ? Ext.get(this.target) : this.target);
     },
-
     /**
      * Returns the time of the event.
      * @return {Date}
@@ -127,11 +119,9 @@ Ext.define('Ext.event.Dom', {
     getTime: function() {
         return this.time;
     },
-
     setDelegatedTarget: function(target) {
         this.delegatedTarget = target;
     },
-
     makeUnpreventable: function() {
         this.browserEvent.preventDefault = Ext.emptyFn;
     }

@@ -11,11 +11,9 @@ Ext.define('Ext.direct.RemotingMethod', {
         len: null,
         ordered: true
     },
-
     constructor: function(config) {
         this.initConfig(config);
     },
-
     applyParams: function(params) {
         if (Ext.isNumber(params)) {
             this.setLen(params);
@@ -23,8 +21,8 @@ Ext.define('Ext.direct.RemotingMethod', {
             this.setOrdered(false);
 
             var ln = params.length,
-                ret = [],
-                i, param, name;
+                    ret = [],
+                    i, param, name;
 
             for (i = 0; i < ln; i++) {
                 param = params[i];
@@ -35,10 +33,9 @@ Ext.define('Ext.direct.RemotingMethod', {
             return ret;
         }
     },
-
     getArgs: function(params, paramOrder, paramsAsHash) {
         var args = [],
-            i, ln;
+                i, ln;
 
         if (this.getOrdered()) {
             if (this.getLen() > 0) {
@@ -58,7 +55,6 @@ Ext.define('Ext.direct.RemotingMethod', {
 
         return args;
     },
-
     /**
      * Takes the arguments for the Direct function and splits the arguments
      * from the scope and the callback.
@@ -67,10 +63,10 @@ Ext.define('Ext.direct.RemotingMethod', {
      */
     getCallData: function(args) {
         var me = this,
-            data = null,
-            len  = me.getLen(),
-            params = me.getParams(),
-            callback, scope, name;
+                data = null,
+                len = me.getLen(),
+                params = me.getParams(),
+                callback, scope, name;
 
         if (me.getOrdered()) {
             callback = args[len];

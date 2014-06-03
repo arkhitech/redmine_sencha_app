@@ -21,45 +21,39 @@ Ext.define("Ext.draw.modifier.Animation", {
     ],
     extend: 'Ext.draw.modifier.Modifier',
     alias: 'modifier.animation',
-
     config: {
         /**
          * @cfg {Function} easing
          * Default easing function.
          */
-        easing: function (x) {
+        easing: function(x) {
             return x;
         },
-
         /**
          * @cfg {Number} duration
          * Default duration time (ms).
          */
         duration: 0,
-
         /**
          * @cfg {Object} customEasings Overrides the default easing function for defined attributes.
          */
         customEasings: {},
-
         /**
          * @cfg {Object} customDuration Overrides the default duration for defined attributes.
          */
         customDuration: {}
     },
-
-    constructor: function () {
+    constructor: function() {
         this.anyAnimation = false;
         this.anySpecialAnimations = false;
         this.animating = 0;
         this.animatingPool = [];
         this.callSuper(arguments);
     },
-
     /**
      * @inheritdoc
      */
-    prepareAttributes: function (attr) {
+    prepareAttributes: function(attr) {
         if (!attr.hasOwnProperty('timers')) {
             attr.animating = false;
             attr.timers = {};
@@ -70,25 +64,21 @@ Ext.define("Ext.draw.modifier.Animation", {
             this._previous.prepareAttributes(attr.animationOriginal);
         }
     },
-
-    updateSprite: function (sprite) {
+    updateSprite: function(sprite) {
         // Apply the config that was configured in the sprite.
         this.setConfig(sprite.config.fx);
     },
-
-    updateDuration: function (duration) {
+    updateDuration: function(duration) {
         this.anyAnimation = duration > 0;
     },
-
-    applyEasing: function (easing) {
+    applyEasing: function(easing) {
         if (typeof easing === 'string') {
             return Ext.draw.TimingFunctions.easingMap[easing];
         } else {
             return easing;
         }
     },
-
-    applyCustomEasings: function (newCustomEasing, oldCustomEasing) {
+    applyCustomEasings: function(newCustomEasing, oldCustomEasing) {
         oldCustomEasing = oldCustomEasing || {};
         var attr, attrs, easing, i, ln;
 
@@ -104,37 +94,34 @@ Ext.define("Ext.draw.modifier.Animation", {
         }
         return oldCustomEasing;
     },
-
     /**
      * Set special easings on the given attributes.
      * @param {String/Array} attrs The source attribute(s).
      * @param {String} easing The special easings.
      */
-    setEasingOn: function (attrs, easing) {
+    setEasingOn: function(attrs, easing) {
         attrs = Ext.Array.from(attrs).slice();
         var customEasings = {},
-            i = 0,
-            ln = attrs.length;
+                i = 0,
+                ln = attrs.length;
 
         for (; i < ln; i++) {
             customEasings[attrs[i]] = easing;
         }
         this.setCustomEasings(customEasings);
     },
-
     /**
      * Remove special easings on the given attributes.
      * @param {String/Array} attrs The source attribute(s).
      */
-    clearEasingOn: function (attrs) {
+    clearEasingOn: function(attrs) {
         attrs = Ext.Array.from(attrs, true);
         var i = 0, ln = attrs.length;
         for (; i < ln; i++) {
             delete this._customEasings[attrs[i]];
         }
     },
-
-    applyCustomDuration: function (newCustomDuration, oldCustomDuration) {
+    applyCustomDuration: function(newCustomDuration, oldCustomDuration) {
         oldCustomDuration = oldCustomDuration || {};
         var attr, duration, attrs, i, ln, anySpecialAnimations = this.anySpecialAnimations;
 
@@ -150,29 +137,27 @@ Ext.define("Ext.draw.modifier.Animation", {
         this.anySpecialAnimations = anySpecialAnimations;
         return oldCustomDuration;
     },
-
     /**
      * Set special duration on the given attributes.
      * @param {String/Array} attrs The source attributes.
      * @param {Number} duration The special duration.
      */
-    setDurationOn: function (attrs, duration) {
+    setDurationOn: function(attrs, duration) {
         attrs = Ext.Array.from(attrs).slice();
         var customDurations = {},
-            i = 0,
-            ln = attrs.length;
+                i = 0,
+                ln = attrs.length;
 
         for (; i < ln; i++) {
             customDurations[attrs[i]] = duration;
         }
         this.setCustomDuration(customDurations);
     },
-
     /**
      * Remove special easings on the given attributes.
      * @param {Object} attrs The source attributes.
      */
-    clearDurationOn: function (attrs) {
+    clearDurationOn: function(attrs) {
         attrs = Ext.Array.from(attrs, true);
         var i = 0, ln = attrs.length;
 
@@ -180,16 +165,15 @@ Ext.define("Ext.draw.modifier.Animation", {
             delete this._customDuration[attrs[i]];
         }
     },
-
     /**
      * @private
      * Initializes Animator for the animation.
      * @param {Object} attributes The source attributes.
      * @param {String} animating The animating flag.
      */
-    setAnimating: function (attributes, animating) {
+    setAnimating: function(attributes, animating) {
         var me = this,
-            i, j;
+                i, j;
 
         if (attributes.animating !== animating) {
             attributes.animating = animating;
@@ -209,7 +193,6 @@ Ext.define("Ext.draw.modifier.Animation", {
             }
         }
     },
-
     /**
      * @private
      * Set the attr with given easing and duration.
@@ -217,18 +200,18 @@ Ext.define("Ext.draw.modifier.Animation", {
      * @param {Object} changes The changes that popped up from lower modifier.
      * @return {Object} The changes to pop up.
      */
-    setAttrs: function (attr, changes) {
+    setAttrs: function(attr, changes) {
         var timers = attr.timers,
-            parsers = this._sprite.self.def._animationProcessors,
-            defaultEasing = this._easing,
-            defaultDuration = this._duration,
-            customDuration = this._customDuration,
-            customEasings = this._customEasings,
-            anySpecial = this.anySpecialAnimations,
-            any = this.anyAnimation || anySpecial,
-            original = attr.animationOriginal,
-            ignite = false,
-            timer, name, newValue, startValue, parser, easing, duration;
+                parsers = this._sprite.self.def._animationProcessors,
+                defaultEasing = this._easing,
+                defaultDuration = this._duration,
+                customDuration = this._customDuration,
+                customEasings = this._customEasings,
+                anySpecial = this.anySpecialAnimations,
+                any = this.anyAnimation || anySpecial,
+                original = attr.animationOriginal,
+                ignite = false,
+                timer, name, newValue, startValue, parser, easing, duration;
 
         if (!any) {
             // If there is no animation enabled
@@ -313,7 +296,6 @@ Ext.define("Ext.draw.modifier.Animation", {
 
         return changes;
     },
-
     /**
      * @private
      *
@@ -323,16 +305,16 @@ Ext.define("Ext.draw.modifier.Animation", {
      * @param {Object} attr The source attributes.
      * @return {Object} the changes to popup.
      */
-    updateAttributes: function (attr) {
+    updateAttributes: function(attr) {
         if (!attr.animating) {
             return {};
         }
         var changes = {}, change,
-            any = false,
-            original = attr.animationOriginal,
-            timers = attr.timers,
-            now = Ext.draw.Animator.animationTime(),
-            name, timer, delta;
+                any = false,
+                original = attr.animationOriginal,
+                timers = attr.timers,
+                now = Ext.draw.Animator.animationTime(),
+                name, timer, delta;
 
         // If updated in the same frame, return.
         if (attr.lastUpdate === now) {
@@ -360,19 +342,17 @@ Ext.define("Ext.draw.modifier.Animation", {
         this.setAnimating(attr, any);
         return changes;
     },
-
     /**
      * @inheritdoc
      */
-    pushDown: function (attr, changes) {
+    pushDown: function(attr, changes) {
         changes = Ext.draw.modifier.Modifier.prototype.pushDown.call(this, attr.animationOriginal, changes);
         return this.setAttrs(attr, changes);
     },
-
     /**
      * @inheritdoc
      */
-    popUp: function (attr, changes) {
+    popUp: function(attr, changes) {
         attr = attr.upperLevel;
         changes = this.setAttrs(attr, changes);
         if (this._next) {
@@ -381,18 +361,17 @@ Ext.define("Ext.draw.modifier.Animation", {
             return Ext.apply(attr, changes);
         }
     },
-
     // This is called as an animated object in `Ext.draw.Animator`.
-    step: function () {
+    step: function() {
         var me = this,
-            pool = me.animatingPool.slice(),
-            attributes,
-            i, ln;
+                pool = me.animatingPool.slice(),
+                attributes,
+                i, ln;
 
         for (i = 0, ln = pool.length; i < ln; i++) {
             attributes = pool[i];
             var changes = this.updateAttributes(attributes),
-                name;
+                    name;
 
             // Looking for anything in changes
             //noinspection LoopStatementThatDoesntLoopJS
@@ -404,16 +383,15 @@ Ext.define("Ext.draw.modifier.Animation", {
             }
         }
     },
-
     /**
      * Stop all animations effected by this modifier
      */
-    stop: function () {
+    stop: function() {
         this.step();
 
         var me = this,
-            pool = me.animatingPool,
-            i, ln;
+                pool = me.animatingPool,
+                i, ln;
 
         for (i = 0, ln = pool.length; i < ln; i++) {
             pool[i].animating = false;
@@ -422,8 +400,7 @@ Ext.define("Ext.draw.modifier.Animation", {
         me.animating = 0;
         Ext.draw.Animator.remove(me);
     },
-
-    destroy: function () {
+    destroy: function() {
         var me = this;
         me.animatingPool.length = 0;
         me.animating = 0;

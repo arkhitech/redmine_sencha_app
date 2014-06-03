@@ -7,12 +7,10 @@
  */
 Ext.define('Ext.device.Media', {
     singleton: true,
-
     requires: [
         'Ext.device.Communicator',
         'Ext.device.media.Cordova'
     ],
-
     constructor: function() {
         var browserEnv = Ext.browser.is;
 

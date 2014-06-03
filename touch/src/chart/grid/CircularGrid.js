@@ -7,7 +7,6 @@
 Ext.define('Ext.chart.grid.CircularGrid', {
     extend: 'Ext.draw.sprite.Circle',
     alias: 'grid.circular',
-    
     inheritableStatics: {
         def: {
             defaults: {

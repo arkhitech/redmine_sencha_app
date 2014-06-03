@@ -5,9 +5,7 @@
  */
 Ext.define('Ext.event.recognizer.HorizontalSwipe', {
     extend: 'Ext.event.recognizer.Swipe',
-
     handledEvents: ['swipe'],
-
     onTouchStart: function(e) {
         if (this.callParent(arguments) === false) {
             return false;
@@ -20,14 +18,13 @@ Ext.define('Ext.event.recognizer.HorizontalSwipe', {
         this.startX = touch.pageX;
         this.startY = touch.pageY;
     },
-
     onTouchMove: function(e) {
         var touch = e.changedTouches[0],
-            y = touch.pageY,
-            absDeltaY = Math.abs(y - this.startY),
-            time = e.time,
-            maxDuration = this.getMaxDuration(),
-            maxOffset = this.getMaxOffset();
+                y = touch.pageY,
+                absDeltaY = Math.abs(y - this.startY),
+                time = e.time,
+                maxDuration = this.getMaxDuration(),
+                maxOffset = this.getMaxOffset();
 
         if (time - this.startTime > maxDuration) {
             return this.fail(this.self.MAX_DURATION_EXCEEDED);
@@ -37,16 +34,15 @@ Ext.define('Ext.event.recognizer.HorizontalSwipe', {
             return this.fail(this.self.MAX_OFFSET_EXCEEDED);
         }
     },
-
     onTouchEnd: function(e) {
         if (this.onTouchMove(e) !== false) {
             var touch = e.changedTouches[0],
-                x = touch.pageX,
-                deltaX = x - this.startX,
-                distance = Math.abs(deltaX),
-                duration = e.time - this.startTime,
-                minDistance = this.getMinDistance(),
-                direction;
+                    x = touch.pageX,
+                    deltaX = x - this.startX,
+                    distance = Math.abs(deltaX),
+                    duration = e.time - this.startTime,
+                    minDistance = this.getMinDistance(),
+                    direction;
 
             if (distance < minDistance) {
                 return this.fail(this.self.DISTANCE_NOT_ENOUGH);

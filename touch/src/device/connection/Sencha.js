@@ -3,7 +3,6 @@
  */
 Ext.define('Ext.device.connection.Sencha', {
     extend: 'Ext.device.connection.Abstract',
-
     /**
      * @event onlinechange
      * Fires when the connection status changes.
@@ -21,7 +20,6 @@ Ext.define('Ext.device.connection.Sencha', {
             scope: this
         });
     },
-
     onConnectionChange: function(e) {
         this.setOnline(Boolean(e.online));
         this.setType(this[e.type]);

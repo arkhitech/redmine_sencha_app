@@ -4,11 +4,8 @@
  * @private
  */
 Ext.define('Ext.event.Controller', {
-
     isFiring: false,
-
     listenerStack: null,
-
     constructor: function(info) {
         this.firingListeners = [];
         this.firingArguments = [];
@@ -17,29 +14,25 @@ Ext.define('Ext.event.Controller', {
 
         return this;
     },
-
     setInfo: function(info) {
         this.info = info;
     },
-
     getInfo: function() {
         return this.info;
     },
-
     setListenerStacks: function(listenerStacks) {
         this.listenerStacks = listenerStacks;
     },
-
     fire: function(args, action) {
         var listenerStacks = this.listenerStacks,
-            firingListeners = this.firingListeners,
-            firingArguments = this.firingArguments,
-            push = firingListeners.push,
-            ln = listenerStacks.length,
-            listeners, beforeListeners, currentListeners, afterListeners,
-            isActionBefore = false,
-            isActionAfter = false,
-            i;
+                firingListeners = this.firingListeners,
+                firingArguments = this.firingArguments,
+                push = firingListeners.push,
+                ln = listenerStacks.length,
+                listeners, beforeListeners, currentListeners, afterListeners,
+                isActionBefore = false,
+                isActionAfter = false,
+                i;
 
         firingListeners.length = 0;
 
@@ -127,20 +120,19 @@ Ext.define('Ext.event.Controller', {
 
         return this;
     },
-
     doFire: function() {
         var firingListeners = this.firingListeners,
-            firingArguments = this.firingArguments,
-            optionsArgumentIndex = firingArguments.length - 2,
-            i, ln, listener, options, fn, firingFn,
-            boundFn, isLateBinding, scope, args, result;
+                firingArguments = this.firingArguments,
+                optionsArgumentIndex = firingArguments.length - 2,
+                i, ln, listener, options, fn, firingFn,
+                boundFn, isLateBinding, scope, args, result;
 
         this.isPausing = false;
         this.isPaused = false;
         this.isStopped = false;
         this.isFiring = true;
 
-        for (i = 0,ln = firingListeners.length; i < ln; i++) {
+        for (i = 0, ln = firingListeners.length; i < ln; i++) {
             listener = firingListeners[i];
             options = listener.options;
             fn = listener.fn;
@@ -219,11 +211,9 @@ Ext.define('Ext.event.Controller', {
         firingArguments.length = 0;
         this.connectingController = null;
     },
-
     connect: function(controller) {
         this.connectingController = controller;
     },
-
     resume: function() {
         var connectingController = this.connectingController;
 
@@ -240,11 +230,9 @@ Ext.define('Ext.event.Controller', {
 
         return this;
     },
-
     isInterrupted: function() {
         return this.isStopped || this.isPaused;
     },
-
     stop: function() {
         var connectingController = this.connectingController;
 
@@ -261,7 +249,6 @@ Ext.define('Ext.event.Controller', {
 
         return this;
     },
-
     pause: function() {
         var connectingController = this.connectingController;
 

@@ -37,10 +37,9 @@
 Ext.define('Ext.Ajax', {
     extend: 'Ext.data.Connection',
     singleton: true,
-
     /**
      * @property {Boolean} autoAbort
      * Whether a new request should abort any pending requests.
      */
-    autoAbort : false
+    autoAbort: false
 });

@@ -2,16 +2,13 @@
  * @private
  */
 Ext.define('Ext.behavior.Draggable', {
-
     extend: 'Ext.behavior.Behavior',
-
     requires: [
         'Ext.util.Draggable'
     ],
-
     setConfig: function(config) {
         var draggable = this.draggable,
-            component = this.component;
+                component = this.component;
 
         if (config) {
             if (!draggable) {
@@ -33,15 +30,12 @@ Ext.define('Ext.behavior.Draggable', {
 
         return this;
     },
-
     getDraggable: function() {
         return this.draggable;
     },
-
     onDraggableDestroy: function() {
         delete this.draggable;
     },
-
     onComponentDestroy: function() {
         var draggable = this.draggable;
 

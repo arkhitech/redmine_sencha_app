@@ -37,14 +37,12 @@
  */
 Ext.define('Ext.device.Connection', {
     singleton: true,
-
     requires: [
         'Ext.device.Communicator',
         'Ext.device.connection.Sencha',
         'Ext.device.connection.Cordova',
         'Ext.device.connection.Simulator'
     ],
-
     /**
      * @event onlinechange
      * @inheritdoc Ext.device.connection.Sencha#onlinechange

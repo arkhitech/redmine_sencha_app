@@ -3,13 +3,11 @@
  */
 Ext.define('Ext.ux.ApplicationMenu', {
     extend: 'Ext.Menu',
-
     config: {
         /**
          * @hide
          */
         ui: 'application',
-
         /**
          * @hide
          */
@@ -17,7 +15,6 @@ Ext.define('Ext.ux.ApplicationMenu', {
             type: 'hbox',
             pack: 'center'
         },
-
         defaults: {
             flex: 0,
             iconAlign: 'top',

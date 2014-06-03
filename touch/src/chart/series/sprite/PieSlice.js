@@ -9,7 +9,6 @@ Ext.define('Ext.chart.series.sprite.PieSlice', {
         markerHolder: 'Ext.chart.MarkerHolder'
     },
     extend: 'Ext.draw.sprite.Sector',
-
     inheritableStatics: {
         def: {
             processors: {
@@ -17,23 +16,19 @@ Ext.define('Ext.chart.series.sprite.PieSlice', {
                  * @cfg {Boolean} [doCallout=true] 'true' if the pie series uses label callouts.
                  */
                 doCallout: 'bool',
-
                 /**
                  * @cfg {Boolean} [rotateLabels=true] 'true' if the labels are rotated for easier reading.
                  */
                 rotateLabels: 'bool',
-
                 /**
                  * @cfg {String} [label=''] Label associated with the Pie sprite.
                  */
                 label: 'string',
-
                 /**
                  * @cfg {Number} [labelOverflowPadding=10] Padding around labels to determine overlap.
                  * Any negative number allows the labels to overlap.
                  */
                 labelOverflowPadding: 'number',
-
                 renderer: 'default'
             },
             defaults: {
@@ -45,7 +40,6 @@ Ext.define('Ext.chart.series.sprite.PieSlice', {
             }
         }
     },
-
     config: {
         /**
          * @private
@@ -58,12 +52,11 @@ Ext.define('Ext.chart.series.sprite.PieSlice', {
         rendererData: null,
         rendererIndex: 0
     },
-
-    render: function (ctx, surface, clipRegion) {
+    render: function(ctx, surface, clipRegion) {
         var me = this,
-            attr = me.attr,
-            itemCfg = {},
-            changes;
+                attr = me.attr,
+                itemCfg = {},
+                changes;
 
         if (attr.renderer) {
             itemCfg = {
@@ -89,23 +82,22 @@ Ext.define('Ext.chart.series.sprite.PieSlice', {
             me.placeLabel();
         }
     },
-
-    placeLabel: function () {
+    placeLabel: function() {
         var me = this,
-            attr = me.attr,
-            startAngle = Math.min(attr.startAngle, attr.endAngle),
-            endAngle = Math.max(attr.startAngle, attr.endAngle),
-            midAngle = (startAngle + endAngle) * 0.5,
-            margin = attr.margin,
-            centerX = attr.centerX,
-            centerY = attr.centerY,
-            startRho = Math.min(attr.startRho, attr.endRho) + margin,
-            endRho = Math.max(attr.startRho, attr.endRho) + margin,
-            midRho = (startRho + endRho) * 0.5,
-            surfaceMatrix = me.surfaceMatrix,
-            labelCfg = me.labelCfg || (me.labelCfg = {}),
-            labelTpl = me.getBoundMarker('labels')[0].getTemplate(),
-            labelBox, x, y, changes;
+                attr = me.attr,
+                startAngle = Math.min(attr.startAngle, attr.endAngle),
+                endAngle = Math.max(attr.startAngle, attr.endAngle),
+                midAngle = (startAngle + endAngle) * 0.5,
+                margin = attr.margin,
+                centerX = attr.centerX,
+                centerY = attr.centerY,
+                startRho = Math.min(attr.startRho, attr.endRho) + margin,
+                endRho = Math.max(attr.startRho, attr.endRho) + margin,
+                midRho = (startRho + endRho) * 0.5,
+                surfaceMatrix = me.surfaceMatrix,
+                labelCfg = me.labelCfg || (me.labelCfg = {}),
+                labelTpl = me.getBoundMarker('labels')[0].getTemplate(),
+                labelBox, x, y, changes;
 
         surfaceMatrix.appendMatrix(attr.matrix);
 
@@ -154,13 +146,12 @@ Ext.define('Ext.chart.series.sprite.PieSlice', {
             }
         }
     },
-
-    sliceContainsLabel: function (attr, bbox) {
+    sliceContainsLabel: function(attr, bbox) {
         var padding = attr.labelOverflowPadding,
-            middle = (attr.endRho + attr.startRho) / 2,
-            outer = middle + (bbox.width + padding) / 2,
-            inner = middle - (bbox.width + padding) / 2,
-            sliceAngle, l1, l2, l3;
+                middle = (attr.endRho + attr.startRho) / 2,
+                outer = middle + (bbox.width + padding) / 2,
+                inner = middle - (bbox.width + padding) / 2,
+                sliceAngle, l1, l2, l3;
 
         if (padding < 0) {
             return 1;
@@ -171,7 +162,7 @@ Ext.define('Ext.chart.series.sprite.PieSlice', {
         l1 = Math.sqrt(attr.endRho * attr.endRho - outer * outer);
         l2 = Math.sqrt(attr.endRho * attr.endRho - inner * inner);
         sliceAngle = Math.abs(attr.endAngle - attr.startAngle);
-        l3 = (sliceAngle > Math.PI/2 ? inner : Math.abs(Math.tan(sliceAngle / 2)) * inner);
+        l3 = (sliceAngle > Math.PI / 2 ? inner : Math.abs(Math.tan(sliceAngle / 2)) * inner);
         if (bbox.height + padding * 2 > Math.min(l1, l2, l3) * 2) {
             return 0;
         }

@@ -124,7 +124,6 @@ Ext.define('Ext.data.association.BelongsTo', {
     extend: 'Ext.data.association.Association',
     alternateClassName: 'Ext.data.BelongsToAssociation',
     alias: 'association.belongsto',
-
     config: {
         /**
          * @cfg {String} foreignKey The name of the foreign key on the owner model that links it to the associated
@@ -151,32 +150,27 @@ Ext.define('Ext.data.association.BelongsTo', {
          *
          */
         foreignKey: undefined,
-
         /**
          * @cfg {String} getterName The name of the getter function that will be added to the local model's prototype.
          * Defaults to 'get' + the name of the foreign model, e.g. getCategory
          */
         getterName: undefined,
-
         /**
          * @cfg {String} setterName The name of the setter function that will be added to the local model's prototype.
          * Defaults to 'set' + the name of the foreign model, e.g. setCategory
          */
         setterName: undefined,
-
         instanceName: undefined
     },
-
     applyForeignKey: function(foreignKey) {
         if (!foreignKey) {
             foreignKey = this.getAssociatedName().toLowerCase() + '_id';
         }
         return foreignKey;
     },
-
     updateForeignKey: function(foreignKey, oldForeignKey) {
         var fields = this.getOwnerModel().getFields(),
-            field = fields.get(foreignKey);
+                field = fields.get(foreignKey);
 
         if (!field) {
             field = new Ext.data.Field({
@@ -194,14 +188,12 @@ Ext.define('Ext.data.association.BelongsTo', {
             }
         }
     },
-
     applyInstanceName: function(instanceName) {
         if (!instanceName) {
             instanceName = this.getAssociatedName() + 'BelongsToInstance';
         }
         return instanceName;
     },
-
     applyAssociationKey: function(associationKey) {
         if (!associationKey) {
             var associatedName = this.getAssociatedName();
@@ -209,7 +201,6 @@ Ext.define('Ext.data.association.BelongsTo', {
         }
         return associationKey;
     },
-
     applyGetterName: function(getterName) {
         if (!getterName) {
             var associatedName = this.getAssociatedName();
@@ -217,7 +208,6 @@ Ext.define('Ext.data.association.BelongsTo', {
         }
         return getterName;
     },
-
     applySetterName: function(setterName) {
         if (!setterName) {
             var associatedName = this.getAssociatedName();
@@ -225,7 +215,6 @@ Ext.define('Ext.data.association.BelongsTo', {
         }
         return setterName;
     },
-
     updateGetterName: function(getterName, oldGetterName) {
         var ownerProto = this.getOwnerModel().prototype;
         if (oldGetterName) {
@@ -235,7 +224,6 @@ Ext.define('Ext.data.association.BelongsTo', {
             ownerProto[getterName] = this.createGetter();
         }
     },
-
     updateSetterName: function(setterName, oldSetterName) {
         var ownerProto = this.getOwnerModel().prototype;
         if (oldSetterName) {
@@ -245,7 +233,6 @@ Ext.define('Ext.data.association.BelongsTo', {
             ownerProto[setterName] = this.createSetter();
         }
     },
-
     /**
      * @private
      * Returns a setter function to be placed on the owner model's prototype
@@ -253,14 +240,14 @@ Ext.define('Ext.data.association.BelongsTo', {
      */
     createSetter: function() {
         var me = this,
-            foreignKey = me.getForeignKey(),
-            associatedModel = me.getAssociatedModel(),
-            currentOwner, newOwner, store;
+                foreignKey = me.getForeignKey(),
+                associatedModel = me.getAssociatedModel(),
+                currentOwner, newOwner, store;
 
         //'this' refers to the Model instance inside this function
         return function(value, options, scope) {
             var inverse = me.getInverseAssociation(),
-                record = this;
+                    record = this;
 
             // If we pass in an instance, pull the id out
             if (value && value.isModel) {
@@ -278,7 +265,7 @@ Ext.define('Ext.data.association.BelongsTo', {
             delete record[me.getInstanceName()];
 
             currentOwner = Ext.data.Model.cache[Ext.data.Model.generateCacheId(associatedModel.modelName, this.get(foreignKey))];
-            newOwner     = Ext.data.Model.cache[Ext.data.Model.generateCacheId(associatedModel.modelName, value)];
+            newOwner = Ext.data.Model.cache[Ext.data.Model.generateCacheId(associatedModel.modelName, value)];
 
             record.set(foreignKey, value);
 
@@ -314,7 +301,6 @@ Ext.define('Ext.data.association.BelongsTo', {
             return record;
         };
     },
-
     /**
      * @private
      * Returns a getter function to be placed on the owner model's prototype. We cache the loaded instance
@@ -322,20 +308,20 @@ Ext.define('Ext.data.association.BelongsTo', {
      * @return {Function} The getter function
      */
     createGetter: function() {
-        var me              = this,
-            associatedModel = me.getAssociatedModel(),
-            foreignKey      = me.getForeignKey(),
-            instanceName    = me.getInstanceName();
+        var me = this,
+                associatedModel = me.getAssociatedModel(),
+                foreignKey = me.getForeignKey(),
+                instanceName = me.getInstanceName();
 
         //'this' refers to the Model instance inside this function
         return function(options, scope) {
             options = options || {};
 
             var model = this,
-                foreignKeyId = model.get(foreignKey),
-                success,
-                instance,
-                args;
+                    foreignKeyId = model.get(foreignKey),
+                    success,
+                    instance,
+                    args;
 
             instance = model[instanceName];
 
@@ -377,7 +363,6 @@ Ext.define('Ext.data.association.BelongsTo', {
             }
         };
     },
-
     /**
      * Read associated data
      * @private
@@ -385,13 +370,12 @@ Ext.define('Ext.data.association.BelongsTo', {
      * @param {Ext.data.reader.Reader} reader The reader for the associated model
      * @param {Object} associationData The raw associated data
      */
-    read: function(record, reader, associationData){
+    read: function(record, reader, associationData) {
         record[this.getInstanceName()] = reader.read([associationData]).getRecords()[0];
     },
-
     getInverseAssociation: function() {
         var ownerName = this.getOwnerModel().modelName,
-            foreignKey = this.getForeignKey();
+                foreignKey = this.getForeignKey();
 
         return this.getAssociatedModel().associations.findBy(function(assoc) {
             var type = assoc.getType().toLowerCase();

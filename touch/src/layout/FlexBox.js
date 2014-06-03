@@ -33,23 +33,17 @@
  */
 Ext.define('Ext.layout.FlexBox', {
     extend: 'Ext.layout.Box',
-
     alias: 'layout.box',
-
     config: {
         align: 'stretch'
     },
-
     layoutBaseClass: 'x-layout-box',
-
     itemClass: 'x-layout-box-item',
-
     setContainer: function(container) {
         this.callSuper(arguments);
 
         this.monitorSizeFlagsChange();
     },
-
     applyOrient: function(orient) {
         //<debug error>
         if (orient !== 'horizontal' && orient !== 'vertical') {
@@ -59,12 +53,11 @@ Ext.define('Ext.layout.FlexBox', {
 
         return orient;
     },
-
     updateOrient: function(orient, oldOrient) {
         var container = this.container,
-            delegation = {
-                delegate: '> component'
-            };
+                delegation = {
+                    delegate: '> component'
+                };
 
         if (orient === 'horizontal') {
             this.sizePropertyName = 'width';
@@ -82,7 +75,6 @@ Ext.define('Ext.layout.FlexBox', {
 
         container.on(orient === 'horizontal' ? 'widthchange' : 'heightchange', 'onItemSizeChange', this, delegation);
     },
-
     onItemInnerStateChange: function(item, isInner) {
         this.callSuper(arguments);
 
@@ -104,15 +96,14 @@ Ext.define('Ext.layout.FlexBox', {
 
         this.refreshItemSizeState(item);
     },
-
     refreshItemSizeState: function(item) {
         var isInner = item.isInnerItem(),
-            container = this.container,
-            LAYOUT_HEIGHT = container.LAYOUT_HEIGHT,
-            LAYOUT_WIDTH = container.LAYOUT_WIDTH,
-            dimension = this.sizePropertyName,
-            layoutSizeFlags = 0,
-            containerSizeFlags = container.getSizeFlags();
+                container = this.container,
+                LAYOUT_HEIGHT = container.LAYOUT_HEIGHT,
+                LAYOUT_WIDTH = container.LAYOUT_WIDTH,
+                dimension = this.sizePropertyName,
+                layoutSizeFlags = 0,
+                containerSizeFlags = container.getSizeFlags();
 
         if (isInner) {
             layoutSizeFlags |= container.LAYOUT_STRETCHED;
@@ -128,43 +119,37 @@ Ext.define('Ext.layout.FlexBox', {
 
         item.setLayoutSizeFlags(layoutSizeFlags);
     },
-
     refreshAllItemSizedStates: function() {
         var innerItems = this.container.innerItems,
-            i, ln, item;
+                i, ln, item;
 
-        for (i = 0,ln = innerItems.length; i < ln; i++) {
+        for (i = 0, ln = innerItems.length; i < ln; i++) {
             item = innerItems[i];
             this.refreshItemSizeState(item);
         }
     },
-
     onContainerSizeFlagsChange: function() {
         this.refreshAllItemSizedStates();
 
         this.callSuper(arguments);
     },
-
     onItemSizeChange: function(item, size) {
         if (item.isInnerItem()) {
             this.doItemSizeChange(item, size);
         }
     },
-
     doItemSizeChange: function(item, size) {
         if (size) {
             item.setFlex(null);
             this.redrawContainer();
         }
     },
-
     onItemFlexChange: function(item, flex) {
         if (item.isInnerItem()) {
             this.doItemFlexChange(item, flex);
             this.refreshItemSizeState(item);
         }
     },
-
     doItemFlexChange: function(item, flex) {
         this.setItemFlex(item, flex);
 
@@ -175,16 +160,14 @@ Ext.define('Ext.layout.FlexBox', {
             this.redrawContainer();
         }
     },
-
     redrawContainer: function() {
         var container = this.container,
-            renderedTo = container.element.dom.parentNode;
+                renderedTo = container.element.dom.parentNode;
 
         if (renderedTo && renderedTo.nodeType !== 11) {
             container.innerElement.redraw();
         }
     },
-
     /**
      * Sets the flex of an item in this box layout.
      * @param {Ext.Component} item The item of this layout which you want to update the flex of.
@@ -212,7 +195,6 @@ Ext.define('Ext.layout.FlexBox', {
             element.dom.style.setProperty('flex', flex + ' 0 0px', null);
         }
     },
-
     convertPosition: function(position) {
         var positionMap = this.positionMap;
 
@@ -222,11 +204,9 @@ Ext.define('Ext.layout.FlexBox', {
 
         return position;
     },
-
     applyAlign: function(align) {
         return this.convertPosition(align);
     },
-
     updateAlign: function(align, oldAlign) {
         var container = this.container;
 
@@ -236,11 +216,9 @@ Ext.define('Ext.layout.FlexBox', {
             this.refreshAllItemSizedStates();
         }
     },
-
     applyPack: function(pack) {
         return this.convertPosition(pack);
     },
-
     updatePack: function(pack, oldPack) {
         this.container.innerElement.swapCls(pack, oldPack, true, 'x-pack');
     }

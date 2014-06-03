@@ -16,12 +16,10 @@ Ext.define('Ext.util.Collection', {
         autoFilter: true,
         autoSort: true
     },
-
     mixins: {
         sortable: 'Ext.mixin.Sortable',
         filterable: 'Ext.mixin.Filterable'
     },
-
     constructor: function(keyFn, config) {
         var me = this;
 
@@ -67,19 +65,16 @@ Ext.define('Ext.util.Collection', {
 
         this.initConfig(config);
     },
-
     updateAutoSort: function(autoSort, oldAutoSort) {
         if (oldAutoSort === false && autoSort && this.items.length) {
             this.sort();
         }
     },
-
     updateAutoFilter: function(autoFilter, oldAutoFilter) {
         if (oldAutoFilter === false && autoFilter && this.all.length) {
             this.filter();
         }
     },
-
     insertSorters: function() {
         // We override the insertSorters method that exists on the Sortable mixin. This method always
         // gets called whenever you add or insert a new sorter. We do this because we actually want
@@ -90,7 +85,6 @@ Ext.define('Ext.util.Collection', {
         }
         return this;
     },
-
     removeSorters: function(sorters) {
         // We override the removeSorters method that exists on the Sortable mixin. This method always
         // gets called whenever you remove a sorter. If we are still sorted after we removed this sorter,
@@ -101,7 +95,6 @@ Ext.define('Ext.util.Collection', {
         }
         return this;
     },
-
     applyFilters: function(filters) {
         var collection = this.mixins.filterable.applyFilters.call(this, filters);
         if (!filters && this.all.length && this.getAutoFilter()) {
@@ -109,7 +102,6 @@ Ext.define('Ext.util.Collection', {
         }
         return collection;
     },
-
     addFilters: function(filters) {
         // We override the insertFilters method that exists on the Filterable mixin. This method always
         // gets called whenever you add or insert a new filter. We do this because we actually want
@@ -120,7 +112,6 @@ Ext.define('Ext.util.Collection', {
         }
         return this;
     },
-
     removeFilters: function(filters) {
         // We override the removeFilters method that exists on the Filterable mixin. This method always
         // gets called whenever you remove a filter. If we are still filtered after we removed this filter,
@@ -131,7 +122,6 @@ Ext.define('Ext.util.Collection', {
         }
         return this;
     },
-
     /**
      * This method will sort a collection based on the currently configured sorters.
      * @param {Object} property
@@ -145,9 +135,9 @@ Ext.define('Ext.util.Collection', {
         if (property) {
             if (Ext.isString(property)) {
                 this.addFilters({
-                    property     : property,
-                    value        : value,
-                    anyMatch     : anyMatch,
+                    property: property,
+                    value: value,
+                    anyMatch: anyMatch,
                     caseSensitive: caseSensitive
                 });
                 return this.items;
@@ -165,13 +155,12 @@ Ext.define('Ext.util.Collection', {
             this.sort();
         }
     },
-
     updateAfterFilter: function() {
         var items = this.items,
-            keys = this.keys,
-            indices = this.indices = {},
-            ln = items.length,
-            i, item, key;
+                keys = this.keys,
+                indices = this.indices = {},
+                ln = items.length,
+                i, item, key;
 
         keys.length = 0;
 
@@ -185,13 +174,12 @@ Ext.define('Ext.util.Collection', {
         this.length = items.length;
         this.dirtyIndices = false;
     },
-
     sort: function(sorters, defaultDirection) {
         var items = this.items,
-            keys = this.keys,
-            indices = this.indices,
-            ln = items.length,
-            i, item, key;
+                keys = this.keys,
+                indices = this.indices,
+                ln = items.length,
+                i, item, key;
 
         // If we pass sorters to this method we have to add them first.
         // Because adding a sorter automatically sorts the items collection
@@ -222,11 +210,9 @@ Ext.define('Ext.util.Collection', {
 
         this.dirtyIndices = true;
     },
-
     handleSort: function(items) {
         this.mixins.sortable.sort.call(this, items);
     },
-
     /**
      * Adds an item to the collection.
      * @param {String} key
@@ -241,15 +227,15 @@ Ext.define('Ext.util.Collection', {
      */
     add: function(key, item) {
         var me = this,
-            filtered = this.filtered,
-            sorted = this.sorted,
-            all = this.all,
-            items = this.items,
-            keys = this.keys,
-            indices = this.indices,
-            filterable = this.mixins.filterable,
-            currentLength = items.length,
-            index = currentLength;
+                filtered = this.filtered,
+                sorted = this.sorted,
+                all = this.all,
+                items = this.items,
+                keys = this.keys,
+                indices = this.indices,
+                filterable = this.mixins.filterable,
+                currentLength = items.length,
+                index = currentLength;
 
         if (arguments.length == 1) {
             item = key;
@@ -289,7 +275,6 @@ Ext.define('Ext.util.Collection', {
 
         return item;
     },
-
     /**
      * MixedCollection has a generic way to fetch keys if you implement getKey. The default implementation simply
      * returns **`item.id`** but you can provide your own implementation to return a different value as in the following
@@ -319,9 +304,8 @@ Ext.define('Ext.util.Collection', {
      * @return {Object} The key for the passed item.
      */
     getKey: function(item) {
-         return item.id;
+        return item.id;
     },
-
     /**
      * Replaces an item in the collection. Fires the {@link #replace} event when complete.
      * @param {String} oldKey
@@ -338,16 +322,16 @@ Ext.define('Ext.util.Collection', {
      */
     replace: function(oldKey, item) {
         var me = this,
-            sorted = me.sorted,
-            filtered = me.filtered,
-            filterable = me.mixins.filterable,
-            items = me.items,
-            keys = me.keys,
-            all = me.all,
-            map = me.map,
-            returnItem = null,
-            oldItemsLn = items.length,
-            oldItem, index, newKey;
+                sorted = me.sorted,
+                filtered = me.filtered,
+                filterable = me.mixins.filterable,
+                items = me.items,
+                keys = me.keys,
+                all = me.all,
+                map = me.map,
+                returnItem = null,
+                oldItemsLn = items.length,
+                oldItem, index, newKey;
 
         if (arguments.length == 1) {
             item = oldKey;
@@ -358,7 +342,7 @@ Ext.define('Ext.util.Collection', {
 
         oldItem = map[oldKey];
         if (typeof oldKey == 'undefined' || oldKey === null || typeof oldItem == 'undefined') {
-             return me.add(newKey, item);
+            return me.add(newKey, item);
         }
 
         me.map[newKey] = item;
@@ -428,7 +412,6 @@ Ext.define('Ext.util.Collection', {
 
         return returnItem;
     },
-
     /**
      * Adds all elements of an Array or an Object to the collection.
      * @param {Object/Array} addItems An Object containing properties which will be added to the collection, or an Array of
@@ -437,19 +420,19 @@ Ext.define('Ext.util.Collection', {
      */
     addAll: function(addItems) {
         var me = this,
-            filtered = me.filtered,
-            sorted = me.sorted,
-            all = me.all,
-            items = me.items,
-            keys = me.keys,
-            map = me.map,
-            autoFilter = me.getAutoFilter(),
-            autoSort = me.getAutoSort(),
-            newKeys = [],
-            newItems = [],
-            filterable = me.mixins.filterable,
-            addedItems = [],
-            ln, key, i, item;
+                filtered = me.filtered,
+                sorted = me.sorted,
+                all = me.all,
+                items = me.items,
+                keys = me.keys,
+                map = me.map,
+                autoFilter = me.getAutoFilter(),
+                autoSort = me.getAutoSort(),
+                newKeys = [],
+                newItems = [],
+                filterable = me.mixins.filterable,
+                addedItems = [],
+                ln, key, i, item;
 
         if (Ext.isObject(addItems)) {
             for (key in addItems) {
@@ -504,7 +487,6 @@ Ext.define('Ext.util.Collection', {
 
         return null;
     },
-
     /**
      * Executes the specified function once for every item in the collection.
      * The function should return a Boolean value. Returning `false` from the function will stop the iteration.
@@ -517,9 +499,9 @@ Ext.define('Ext.util.Collection', {
      */
     each: function(fn, scope) {
         var items = this.items.slice(), // each safe for removal
-            i = 0,
-            len = items.length,
-            item;
+                i = 0,
+                len = items.length,
+                item;
 
         for (; i < len; i++) {
             item = items[i];
@@ -528,7 +510,6 @@ Ext.define('Ext.util.Collection', {
             }
         }
     },
-
     /**
      * Executes the specified function once for every key in the collection, passing each key, and its associated item
      * as the first two parameters.
@@ -538,14 +519,13 @@ Ext.define('Ext.util.Collection', {
      */
     eachKey: function(fn, scope) {
         var keys = this.keys,
-            items = this.items,
-            ln = keys.length, i;
+                items = this.items,
+                ln = keys.length, i;
 
         for (i = 0; i < ln; i++) {
             fn.call(scope || window, keys[i], items[i], i, ln);
         }
     },
-
     /**
      * Returns the first item in the collection which elicits a `true` return value from the passed selection function.
      * @param {Function} fn The selection function to execute for each item.
@@ -555,9 +535,9 @@ Ext.define('Ext.util.Collection', {
      */
     findBy: function(fn, scope) {
         var keys = this.keys,
-            items = this.items,
-            i = 0,
-            len = items.length;
+                items = this.items,
+                i = 0,
+                len = items.length;
 
         for (; i < len; i++) {
             if (fn.call(scope || window, items[i], keys[i])) {
@@ -566,7 +546,6 @@ Ext.define('Ext.util.Collection', {
         }
         return null;
     },
-
     /**
      * Filter by a function. Returns a _new_ collection that has been filtered. The passed function will be called with
      * each object in the collection. If the function returns `true`, the value is included otherwise it is filtered.
@@ -579,11 +558,11 @@ Ext.define('Ext.util.Collection', {
      */
     filterBy: function(fn, scope) {
         var me = this,
-            newCollection = new this.self(),
-            keys   = me.keys,
-            items  = me.all,
-            length = items.length,
-            i;
+                newCollection = new this.self(),
+                keys = me.keys,
+                items = me.all,
+                length = items.length,
+                i;
 
         newCollection.getKey = me.getKey;
 
@@ -595,7 +574,6 @@ Ext.define('Ext.util.Collection', {
 
         return newCollection;
     },
-
     /**
      * Inserts an item at the specified index in the collection. Fires the {@link #add} event when complete.
      * @param {Number} index The index to insert the item at.
@@ -605,9 +583,9 @@ Ext.define('Ext.util.Collection', {
      */
     insert: function(index, key, item) {
         var me = this,
-            sorted = this.sorted,
-            map = this.map,
-            filtered = this.filtered;
+                sorted = this.sorted,
+                map = this.map,
+                filtered = this.filtered;
 
         if (arguments.length == 2) {
             item = key;
@@ -641,27 +619,26 @@ Ext.define('Ext.util.Collection', {
 
         return item;
     },
-
     insertAll: function(index, insertItems) {
         if (index >= this.items.length || (this.sorted && this.getAutoSort())) {
             return this.addAll(insertItems);
         }
 
         var me = this,
-            filtered = this.filtered,
-            sorted = this.sorted,
-            all = this.all,
-            items = this.items,
-            keys = this.keys,
-            map = this.map,
-            autoFilter = this.getAutoFilter(),
-            autoSort = this.getAutoSort(),
-            newKeys = [],
-            newItems = [],
-            addedItems = [],
-            filterable = this.mixins.filterable,
-            insertedUnfilteredItem = false,
-            ln, key, i, item;
+                filtered = this.filtered,
+                sorted = this.sorted,
+                all = this.all,
+                items = this.items,
+                keys = this.keys,
+                map = this.map,
+                autoFilter = this.getAutoFilter(),
+                autoSort = this.getAutoSort(),
+                newKeys = [],
+                newItems = [],
+                addedItems = [],
+                filterable = this.mixins.filterable,
+                insertedUnfilteredItem = false,
+                ln, key, i, item;
 
         if (sorted && this.getAutoSort()) {
             // <debug>
@@ -723,7 +700,6 @@ Ext.define('Ext.util.Collection', {
 
         return null;
     },
-
     /**
      * Remove an item from the collection.
      * @param {Object} item The item to remove.
@@ -745,7 +721,6 @@ Ext.define('Ext.util.Collection', {
         }
         return this.removeAt(this.items.indexOf(item));
     },
-
     /**
      * Remove all items in the passed array from the collection.
      * @param {Array} items An array of items to be removed.
@@ -762,7 +737,6 @@ Ext.define('Ext.util.Collection', {
 
         return this;
     },
-
     /**
      * Remove an item from a specified index in the collection. Fires the {@link #remove} event when complete.
      * @param {Number} index The index within the collection of the item to remove.
@@ -770,10 +744,10 @@ Ext.define('Ext.util.Collection', {
      */
     removeAt: function(index) {
         var me = this,
-            items = me.items,
-            keys = me.keys,
-            all = me.all,
-            item, key;
+                items = me.items,
+                keys = me.keys,
+                all = me.all,
+                item, key;
 
         if (index < me.length && index >= 0) {
             item = items[index];
@@ -798,7 +772,6 @@ Ext.define('Ext.util.Collection', {
 
         return false;
     },
-
     /**
      * Removed an item associated with the passed key from the collection.
      * @param {String} key The key of the item to remove.
@@ -807,7 +780,6 @@ Ext.define('Ext.util.Collection', {
     removeAtKey: function(key) {
         return this.removeAt(this.indexOfKey(key));
     },
-
     /**
      * Returns the number of items in the collection.
      * @return {Number} the number of items in the collection.
@@ -815,7 +787,6 @@ Ext.define('Ext.util.Collection', {
     getCount: function() {
         return this.length;
     },
-
     /**
      * Returns index within the collection of the passed Object.
      * @param {Object} item The item to find the index of.
@@ -829,7 +800,6 @@ Ext.define('Ext.util.Collection', {
         var index = item ? this.indices[this.getKey(item)] : -1;
         return (index === undefined) ? -1 : index;
     },
-
     /**
      * Returns index within the collection of the passed key.
      * @param {String} key The key to find the index of.
@@ -843,12 +813,11 @@ Ext.define('Ext.util.Collection', {
         var index = this.indices[key];
         return (index === undefined) ? -1 : index;
     },
-
     updateIndices: function() {
         var items = this.items,
-            ln = items.length,
-            indices = this.indices = {},
-            i, item, key;
+                ln = items.length,
+                indices = this.indices = {},
+                i, item, key;
 
         for (i = 0; i < ln; i++) {
             item = items[i];
@@ -858,7 +827,6 @@ Ext.define('Ext.util.Collection', {
 
         this.dirtyIndices = false;
     },
-
     /**
      * Returns the item associated with the passed key OR index. Key has priority over index. This is the equivalent of
      * calling {@link #getByKey} first, then if nothing matched calling {@link #getAt}.
@@ -868,8 +836,8 @@ Ext.define('Ext.util.Collection', {
      */
     get: function(key) {
         var me = this,
-            fromMap = me.map[key],
-            item;
+                fromMap = me.map[key],
+                item;
 
         if (fromMap !== undefined) {
             item = fromMap;
@@ -880,7 +848,6 @@ Ext.define('Ext.util.Collection', {
 
         return typeof item != 'function' || me.getAllowFunctions() ? item : null; // for prototype!
     },
-
     /**
      * Returns the item at the specified index.
      * @param {Number} index The index of the item.
@@ -889,7 +856,6 @@ Ext.define('Ext.util.Collection', {
     getAt: function(index) {
         return this.items[index];
     },
-
     /**
      * Returns the item associated with the passed key.
      * @param {String/Number} key The key of the item.
@@ -898,7 +864,6 @@ Ext.define('Ext.util.Collection', {
     getByKey: function(key) {
         return this.map[key];
     },
-
     /**
      * Returns `true` if the collection contains the passed Object as an item.
      * @param {Object} item The Object to look for in the collection.
@@ -912,7 +877,6 @@ Ext.define('Ext.util.Collection', {
             return Ext.Array.contains(this.items, item);
         }
     },
-
     /**
      * Returns `true` if the collection contains the passed Object as a key.
      * @param {String} key The key to look for in the collection.
@@ -921,11 +885,10 @@ Ext.define('Ext.util.Collection', {
     containsKey: function(key) {
         return typeof this.map[key] != 'undefined';
     },
-
     /**
      * Removes all items from the collection. Fires the {@link #clear} event when complete.
      */
-    clear: function(){
+    clear: function() {
         var me = this;
 
         me.length = 0;
@@ -936,7 +899,6 @@ Ext.define('Ext.util.Collection', {
         me.indices = {};
         me.map = {};
     },
-
     /**
      * Returns the first item in the collection.
      * @return {Object} the first item in the collection.
@@ -944,7 +906,6 @@ Ext.define('Ext.util.Collection', {
     first: function() {
         return this.items[0];
     },
-
     /**
      * Returns the last item in the collection.
      * @return {Object} the last item in the collection.
@@ -952,7 +913,6 @@ Ext.define('Ext.util.Collection', {
     last: function() {
         return this.items[this.length - 1];
     },
-
     /**
      * Returns a range of items in this collection
      * @param {Number} [start=0] The starting index.
@@ -961,9 +921,9 @@ Ext.define('Ext.util.Collection', {
      */
     getRange: function(start, end) {
         var me = this,
-            items = me.items,
-            range = [],
-            i;
+                items = me.items,
+                range = [],
+                i;
 
         if (items.length < 1) {
             return range;
@@ -983,7 +943,6 @@ Ext.define('Ext.util.Collection', {
 
         return range;
     },
-
     /**
      * Find the index of the first matching object in this collection by a function. If the function returns `true` it
      * is considered a match.
@@ -997,10 +956,10 @@ Ext.define('Ext.util.Collection', {
      */
     findIndexBy: function(fn, scope, start) {
         var me = this,
-            keys = me.keys,
-            items = me.items,
-            i = start || 0,
-            ln = items.length;
+                keys = me.keys,
+                items = me.items,
+                i = start || 0,
+                ln = items.length;
 
         for (; i < ln; i++) {
             if (fn.call(scope || me, items[i], keys[i])) {
@@ -1010,27 +969,25 @@ Ext.define('Ext.util.Collection', {
 
         return -1;
     },
-
     /**
      * Creates a shallow copy of this collection
      * @return {Ext.util.MixedCollection}
      */
     clone: function() {
         var me = this,
-            copy = new this.self(),
-            keys = me.keys,
-            items = me.items,
-            i = 0,
-            ln = items.length;
+                copy = new this.self(),
+                keys = me.keys,
+                items = me.items,
+                i = 0,
+                ln = items.length;
 
-        for(; i < ln; i++) {
+        for (; i < ln; i++) {
             copy.add(keys[i], items[i]);
         }
 
         copy.getKey = me.getKey;
         return copy;
     },
-
     destroy: function() {
         this.callSuper();
         this.clear();

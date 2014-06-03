@@ -2,16 +2,13 @@
  * @private
  */
 Ext.define('Ext.behavior.Translatable', {
-
     extend: 'Ext.behavior.Behavior',
-
     requires: [
         'Ext.util.Translatable'
     ],
-
     setConfig: function(config) {
         var translatable = this.translatable,
-            component = this.component;
+                component = this.component;
 
         if (config) {
             if (!translatable) {
@@ -29,15 +26,12 @@ Ext.define('Ext.behavior.Translatable', {
 
         return this;
     },
-
     getTranslatable: function() {
         return this.translatable;
     },
-
     onTranslatableDestroy: function() {
         delete this.translatable;
     },
-
     onComponentDestroy: function() {
         var translatable = this.translatable;
 

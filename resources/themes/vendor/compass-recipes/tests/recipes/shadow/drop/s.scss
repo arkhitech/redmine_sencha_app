@@ -35,9 +35,9 @@ a.more
 .drop-shadow-perspective,
 {
     @include drop-shadow-transform-requirement($background);
-    
+
     &:hover
-    {
+        {
         @include transform(rotate(3deg));
     }
 }

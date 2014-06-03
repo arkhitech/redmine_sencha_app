@@ -4,11 +4,9 @@
 Ext.define('Ext.util.Audio', {
     singleton: true,
     ctx: null,
-
     beep: function(callback) {
         this.oscillate(200, 1, callback);
     },
-
     oscillate: function(duration, type, callback) {
         if (!this.ctx) {
             this.ctx = new (window.audioContext || window.webkitAudioContext);
@@ -29,7 +27,8 @@ Ext.define('Ext.util.Audio', {
 
             setTimeout(function() {
                 osc.noteOff(0);
-                if(callback) callback();
+                if (callback)
+                    callback();
             }, duration);
         } catch (e) {
             throw new Error("[Ext.util.Audio.oscillate] Error with Oscillator playback");
@@ -38,7 +37,7 @@ Ext.define('Ext.util.Audio', {
     }
 
 })
-;
+        ;
 
 
 

@@ -5,9 +5,9 @@
  */
 @mixin egg($width: 12em, $height: 18em, $color: #000)
 {
-   display:block;
-   width: $width;
-   height: $height;
-   background-color: $color;
-   @include border-radius(50% 50% 50% 50% / 60% 60% 40% 40%);
+    display:block;
+    width: $width;
+    height: $height;
+    background-color: $color;
+    @include border-radius(50% 50% 50% 50% / 60% 60% 40% 40%);
 }

@@ -12,31 +12,26 @@ Ext.define('Ext.data.Batch', {
     mixins: {
         observable: 'Ext.mixin.Observable'
     },
-
     config: {
         /**
          * @cfg {Boolean} autoStart `true` to immediately start processing the batch as soon as it is constructed.
          */
         autoStart: false,
-
         /**
          * @cfg {Boolean} pauseOnException `true` to automatically pause the execution of the batch if any operation encounters an exception.
          */
         pauseOnException: true,
-
         /**
          * @cfg {Ext.data.Proxy} proxy The proxy this Batch belongs to. Used to make the requests for each operation in the Batch.
          */
         proxy: null
     },
-
     /**
      * The index of the current operation being executed.
      * @property current
      * @type Number
      */
     current: -1,
-
     /**
      * The total number of operations in this batch.
      * @property total
@@ -44,28 +39,24 @@ Ext.define('Ext.data.Batch', {
      * @readonly
      */
     total: 0,
-
     /**
      * `true` if the batch is currently running.
      * @property isRunning
      * @type Boolean
      */
     isRunning: false,
-
     /**
      * `true` if this batch has been executed completely.
      * @property isComplete
      * @type Boolean
      */
     isComplete: false,
-
     /**
      * `true` if this batch has encountered an exception. This is cleared at the start of each operation.
      * @property hasException
      * @type Boolean
      */
     hasException: false,
-
     /**
      * @event complete
      * Fired when all operations of this batch have been completed.
@@ -102,7 +93,6 @@ Ext.define('Ext.data.Batch', {
          */
         me.operations = [];
     },
-
     /**
      * Adds a new operation to this batch.
      * @param {Object} operation The {@link Ext.data.Operation Operation} object.
@@ -114,7 +104,6 @@ Ext.define('Ext.data.Batch', {
 
         this.operations.push(operation);
     },
-
     /**
      * Kicks off the execution of the batch, continuing from the next operation if the previous
      * operation encountered an exception, or if execution was paused.
@@ -125,7 +114,6 @@ Ext.define('Ext.data.Batch', {
 
         this.runNextOperation();
     },
-
     /**
      * @private
      * Runs the next operation, relative to `this.current`.
@@ -133,23 +121,21 @@ Ext.define('Ext.data.Batch', {
     runNextOperation: function() {
         this.runOperation(this.current + 1);
     },
-
     /**
      * Pauses execution of the batch, but does not cancel the current operation.
      */
     pause: function() {
         this.isRunning = false;
     },
-
     /**
      * Executes a operation by its numeric index.
      * @param {Number} index The operation index to run.
      */
     runOperation: function(index) {
         var me = this,
-            operations = me.operations,
-            operation = operations[index],
-            onProxyReturn;
+                operations = me.operations,
+                operation = operations[index],
+                onProxyReturn;
 
         if (operation === undefined) {
             me.isRunning = false;

@@ -7,8 +7,7 @@
 Ext.define("Ext.chart.axis.layout.CombineDuplicate", {
     extend: 'Ext.chart.axis.layout.Discrete',
     alias: 'axisLayout.combineDuplicate',
-
-    getCoordFor: function (value, field, idx, items) {
+    getCoordFor: function(value, field, idx, items) {
         if (!(value in this.labelMap)) {
             var result = this.labelMap[value] = this.labels.length;
             this.labels.push(value);

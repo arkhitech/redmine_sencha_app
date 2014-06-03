@@ -26,13 +26,11 @@ Ext.define('Ext.chart.CartesianChart', {
          * If flipXY is true, the X axes will be vertical and Y axes will be horizontal.
          */
         flipXY: false,
-
         innerRegion: [0, 0, 1, 1]
     },
     xtype: 'chart',
     alias: 'Ext.chart.Chart',
-
-    getDirectionForAxis: function (position) {
+    getDirectionForAxis: function(position) {
         var flipXY = this.getFlipXY();
         if (position === 'left' || position === 'right') {
             if (flipXY) {
@@ -48,35 +46,34 @@ Ext.define('Ext.chart.CartesianChart', {
             }
         }
     },
-
     /**
      * Layout the axes and series.
      */
-    performLayout: function () {
+    performLayout: function() {
         try {
             this.resizing++;
             this.callSuper();
             this.suspendThicknessChanged();
             var me = this,
-                axes = me.getAxes(), axis,
-                serieses = me.getSeries(), series,
-                axisSurface, thickness,
-                size = me.element.getSize(),
-                width = size.width,
-                height = size.height,
-                insetPadding = me.getInsetPadding(),
-                innerPadding = me.getInnerPadding(),
-                surface,
-                shrinkBox = {
-                    top: insetPadding.top,
-                    left: insetPadding.left,
-                    right: insetPadding.right,
-                    bottom: insetPadding.bottom
-                },
-                gridSurface,
-                mainRegion, innerWidth, innerHeight,
-                elements, floating, matrix, i, ln,
-                flipXY = me.getFlipXY();
+                    axes = me.getAxes(), axis,
+                    serieses = me.getSeries(), series,
+                    axisSurface, thickness,
+                    size = me.element.getSize(),
+                    width = size.width,
+                    height = size.height,
+                    insetPadding = me.getInsetPadding(),
+                    innerPadding = me.getInnerPadding(),
+                    surface,
+                    shrinkBox = {
+                        top: insetPadding.top,
+                        left: insetPadding.left,
+                        right: insetPadding.right,
+                        bottom: insetPadding.bottom
+                    },
+            gridSurface,
+                    mainRegion, innerWidth, innerHeight,
+                    elements, floating, matrix, i, ln,
+                    flipXY = me.getFlipXY();
 
             if (width <= 0 || height <= 0) {
                 return;
@@ -175,20 +172,19 @@ Ext.define('Ext.chart.CartesianChart', {
             this.resumeThicknessChanged();
         }
     },
-
-    redraw: function () {
+    redraw: function() {
         var me = this,
-            series = me.getSeries(),
-            axes = me.getAxes(),
-            region = me.getMainRegion(),
-            innerWidth, innerHeight,
-            innerPadding = me.getInnerPadding(),
-            left, right, top, bottom, i, j,
-            sprites, xRange, yRange, isSide, attr,
-            axisX, axisY, range, visibleRange,
-            flipXY = me.getFlipXY(),
-            sprite, zIndex, zBase = 1000,
-            markers, markerCount, markerIndex, markerSprite, markerZIndex;
+                series = me.getSeries(),
+                axes = me.getAxes(),
+                region = me.getMainRegion(),
+                innerWidth, innerHeight,
+                innerPadding = me.getInnerPadding(),
+                left, right, top, bottom, i, j,
+                sprites, xRange, yRange, isSide, attr,
+                axisX, axisY, range, visibleRange,
+                flipXY = me.getFlipXY(),
+                sprite, zIndex, zBase = 1000,
+                markers, markerCount, markerIndex, markerSprite, markerZIndex;
 
         if (!region) {
             return;
@@ -237,7 +233,7 @@ Ext.define('Ext.chart.CartesianChart', {
                 zIndex = (sprite.attr.zIndex || 0);
                 if (zIndex < zBase) {
                     // Set the sprite's zIndex
-                    zIndex += (i+1) * 100 + zBase;
+                    zIndex += (i + 1) * 100 + zBase;
                     sprite.attr.zIndex = zIndex;
                     // Iterate through its marker sprites to do the same.
                     markers = sprite.boundMarkers;
@@ -290,10 +286,9 @@ Ext.define('Ext.chart.CartesianChart', {
         me.renderFrame();
         me.callSuper(arguments);
     },
-
-    onPlaceWatermark: function () {
+    onPlaceWatermark: function() {
         var region0 = this.element.getBox(),
-            region = this.getSurface ? this.getSurface('main').getRegion() : this.getItems().get(0).getRegion();
+                region = this.getSurface ? this.getSurface('main').getRegion() : this.getItems().get(0).getRegion();
         if (region) {
             this.watermarkElement.setStyle({
                 right: Math.round(region0.width - (region[2] + region[0])) + 'px',

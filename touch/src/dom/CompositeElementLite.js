@@ -24,9 +24,7 @@
  */
 Ext.define('Ext.dom.CompositeElementLite', {
     alternateClassName: ['Ext.CompositeElementLite', 'Ext.CompositeElement'],
-
     requires: ['Ext.dom.Element'],
-
     // We use the @mixins tag above to document that CompositeElement has
     // all the same methods as Element, but the @mixins tag also pulls in
     // configs and properties which we don't want, so hide them explicitly:
@@ -51,7 +49,6 @@ Ext.define('Ext.dom.CompositeElementLite', {
 
         }
     },
-
     constructor: function(elements, root) {
         /**
          * @property {HTMLElement[]} elements
@@ -85,20 +82,16 @@ Ext.define('Ext.dom.CompositeElementLite', {
         this.add(elements, root);
         this.el = new Ext.dom.Element.Fly();
     },
-
     isComposite: true,
-
     // @private
     getElement: function(el) {
         // Set the shared flyweight dom property to the current element
         return this.el.attach(el).synchronize();
     },
-
     // @private
     transformElement: function(el) {
         return Ext.getDom(el);
     },
-
     /**
      * Returns the number of elements in this Composite.
      * @return {Number}
@@ -106,7 +99,6 @@ Ext.define('Ext.dom.CompositeElementLite', {
     getCount: function() {
         return this.elements.length;
     },
-
     /**
      * Adds elements to this Composite object.
      * @param {HTMLElement[]/Ext.dom.CompositeElementLite} els Either an Array of DOM elements to add, or another Composite
@@ -116,7 +108,7 @@ Ext.define('Ext.dom.CompositeElementLite', {
      */
     add: function(els, root) {
         var elements = this.elements,
-            i, ln;
+                i, ln;
 
         if (!els) {
             return this;
@@ -138,12 +130,11 @@ Ext.define('Ext.dom.CompositeElementLite', {
 
         return this;
     },
-
     invoke: function(fn, args) {
         var elements = this.elements,
-            ln = elements.length,
-            element,
-            i;
+                ln = elements.length,
+                element,
+                i;
 
         for (i = 0; i < ln; i++) {
             element = elements[i];
@@ -154,7 +145,6 @@ Ext.define('Ext.dom.CompositeElementLite', {
         }
         return this;
     },
-
     /**
      * Returns a flyweight Element of the dom element object at the specified index.
      * @param {Number} index
@@ -162,7 +152,7 @@ Ext.define('Ext.dom.CompositeElementLite', {
      */
     item: function(index) {
         var el = this.elements[index],
-            out = null;
+                out = null;
 
         if (el) {
             out = this.getElement(el);
@@ -170,7 +160,6 @@ Ext.define('Ext.dom.CompositeElementLite', {
 
         return out;
     },
-
     // fixes scope with flyweight.
     addListener: function(eventName, handler, scope, opt) {
         var els = this.elements,
@@ -213,7 +202,6 @@ Ext.define('Ext.dom.CompositeElementLite', {
         }
         return me;
     },
-
     /**
      * Clears this Composite and adds the elements passed.
      * @param {HTMLElement[]/Ext.dom.CompositeElementLite} els Either an array of DOM elements, or another Composite from which
@@ -226,7 +214,6 @@ Ext.define('Ext.dom.CompositeElementLite', {
         me.add(els);
         return me;
     },
-
     /**
      * Filters this composite to only elements that match the passed selector.
      * @param {String/Function} selector A string CSS selector or a comparison function. The comparison function will be
@@ -239,7 +226,7 @@ Ext.define('Ext.dom.CompositeElementLite', {
         var els = [],
                 me = this,
                 fn = Ext.isFunction(selector) ? selector
-                        : function(el) {
+                : function(el) {
                     return el.is(selector);
                 };
 
@@ -252,7 +239,6 @@ Ext.define('Ext.dom.CompositeElementLite', {
         me.elements = els;
         return me;
     },
-
     /**
      * Find the index of the passed element within the composite collection.
      * @param {String/HTMLElement/Ext.Element/Number} el The id of an element, or an Ext.dom.Element, or an HtmlElement
@@ -262,7 +248,6 @@ Ext.define('Ext.dom.CompositeElementLite', {
     indexOf: function(el) {
         return Ext.Array.indexOf(this.elements, this.transformElement(el));
     },
-
     /**
      * Replaces the specified element with the passed element.
      * @param {String/HTMLElement/Ext.Element/Number} el The id of an element, the Element itself, the index of the
@@ -285,14 +270,12 @@ Ext.define('Ext.dom.CompositeElementLite', {
         }
         return this;
     },
-
     /**
      * Removes all elements.
      */
     clear: function() {
         this.elements = [];
     },
-
     addElements: function(els, root) {
         if (!els) {
             return this;
@@ -310,7 +293,6 @@ Ext.define('Ext.dom.CompositeElementLite', {
 
         return this;
     },
-
     /**
      * Returns the first Element
      * @return {Ext.dom.Element}
@@ -318,7 +300,6 @@ Ext.define('Ext.dom.CompositeElementLite', {
     first: function() {
         return this.item(0);
     },
-
     /**
      * Returns the last Element
      * @return {Ext.dom.Element}
@@ -326,7 +307,6 @@ Ext.define('Ext.dom.CompositeElementLite', {
     last: function() {
         return this.item(this.getCount() - 1);
     },
-
     /**
      * Returns `true` if this composite contains the passed element
      * @param {String/HTMLElement/Ext.Element/Number} el The id of an element, or an Ext.Element, or an HtmlElement to
@@ -336,7 +316,6 @@ Ext.define('Ext.dom.CompositeElementLite', {
     contains: function(el) {
         return this.indexOf(el) != -1;
     },
-
     /**
      * Removes the specified element(s).
      * @param {String/HTMLElement/Ext.Element/Number} el The id of an element, the Element itself, the index of the
@@ -368,9 +347,9 @@ Ext.define('Ext.dom.CompositeElementLite', {
 
 }, function() {
     var Element = Ext.dom.Element,
-        elementPrototype = Element.prototype,
-        prototype = this.prototype,
-        name;
+            elementPrototype = Element.prototype,
+            prototype = this.prototype,
+            name;
 
     for (name in elementPrototype) {
         if (typeof elementPrototype[name] == 'function') {

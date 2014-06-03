@@ -2,13 +2,10 @@
  * @private
  */
 Ext.define('Ext.util.Grouper', {
-
     /* Begin Definitions */
 
     extend: 'Ext.util.Sorter',
-
     isGrouper: true,
-
     config: {
         /**
          * @cfg {Function} groupFn This function will be called for each item in the collection to
@@ -17,13 +14,11 @@ Ext.define('Ext.util.Grouper', {
          * @cfg {String} groupFn.return The group identifier for the item
          */
         groupFn: null,
-
         /**
          * @cfg {String} sortProperty You can define this configuration if you want the groups to be sorted
          * on something other then the group string returned by the `groupFn`.
          */
         sortProperty: null,
-
         /**
          * @cfg {Function} sorterFn
          * Grouper has a custom sorterFn that cannot be overridden by the user. If a property has been defined
@@ -31,7 +26,7 @@ Ext.define('Ext.util.Grouper', {
          */
         sorterFn: function(item1, item2) {
             var property = this.getSortProperty(),
-                groupFn, group1, group2, modifier;
+                    groupFn, group1, group2, modifier;
 
             groupFn = this.getGroupFn();
             group1 = groupFn.call(this, item1);
@@ -47,17 +42,16 @@ Ext.define('Ext.util.Grouper', {
             return (group1 > group2) ? 1 : ((group1 < group2) ? -1 : 0);
         }
     },
-
     /**
      * @private
      * Basic default sorter function that just compares the defined property of each object.
      */
     defaultSortFn: function(item1, item2) {
         var me = this,
-            transform = me._transform,
-            root = me._root,
-            value1, value2,
-            property = me._sortProperty;
+                transform = me._transform,
+                root = me._root,
+                value1, value2,
+                property = me._sortProperty;
 
         if (root !== null) {
             item1 = item1[root];
@@ -74,15 +68,13 @@ Ext.define('Ext.util.Grouper', {
 
         return value1 > value2 ? 1 : (value1 < value2 ? -1 : 0);
     },
-
     updateProperty: function(property) {
         this.setGroupFn(this.standardGroupFn);
     },
-
     standardGroupFn: function(item) {
         var root = this.getRoot(),
-            property = this.getProperty(),
-            data = item;
+                property = this.getProperty(),
+                data = item;
 
         if (root) {
             data = item[root];
@@ -90,7 +82,6 @@ Ext.define('Ext.util.Grouper', {
 
         return data[property];
     },
-
     getGroupString: function(item) {
         var group = this.getGroupFn().call(this, item);
         return (group !== null && typeof group != 'undefined') ? group.toString() : '';

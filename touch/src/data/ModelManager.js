@@ -55,9 +55,7 @@
 Ext.define('Ext.data.ModelManager', {
     extend: 'Ext.AbstractManager',
     alternateClassName: ['Ext.ModelMgr', 'Ext.ModelManager'],
-
     singleton: true,
-
     /**
      * @property defaultProxyType
      * The string type of the default Model Proxy.
@@ -71,7 +69,6 @@ Ext.define('Ext.data.ModelManager', {
      */
 
     modelNamespace: null,
-
     /**
      * Registers a model definition. All model plugins marked with `isDefault: true` are bootstrapped
      * immediately, as are any addition plugins defined in the model config.
@@ -81,7 +78,7 @@ Ext.define('Ext.data.ModelManager', {
      */
     registerType: function(name, config) {
         var proto = config.prototype,
-            model;
+                model;
 
         if (proto && proto.isModel) {
             // registering an already defined model
@@ -96,9 +93,7 @@ Ext.define('Ext.data.ModelManager', {
         this.types[name] = model;
         return model;
     },
-
     onModelDefined: Ext.emptyFn,
-
     // /**
     //  * @private
     //  * Private callback called whenever a model has just been defined. This sets up any associations
@@ -152,7 +147,6 @@ Ext.define('Ext.data.ModelManager', {
         }
         return model;
     },
-
     /**
      * Creates a new instance of a Model using the given data.
      *
@@ -191,7 +185,7 @@ Ext.define('Ext.data.ModelManager', {
     Ext.regModel = function() {
         //<debug>
         Ext.Logger.deprecate('Ext.regModel has been deprecated. Models can now be created by ' +
-            'extending Ext.data.Model: Ext.define("MyModel", {extend: "Ext.data.Model", fields: []});.');
+                'extending Ext.data.Model: Ext.define("MyModel", {extend: "Ext.data.Model", fields: []});.');
         //</debug>
         return this.ModelManager.registerType.apply(this.ModelManager, arguments);
     };

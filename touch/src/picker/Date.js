@@ -44,7 +44,6 @@ Ext.define('Ext.picker.Date', {
     xtype: 'datepicker',
     alternateClassName: 'Ext.DatePicker',
     requires: ['Ext.DateExtras', 'Ext.util.InputBlocker'],
-
     /**
      * @event change
      * Fired when the value of this picker has changed and the done button is pressed.
@@ -60,7 +59,6 @@ Ext.define('Ext.picker.Date', {
          * @accessor
          */
         yearFrom: 1980,
-
         /**
          * @cfg {Number} [yearTo=new Date().getFullYear()]
          * The last year for the date picker. If {@link #yearFrom} is greater than
@@ -68,35 +66,30 @@ Ext.define('Ext.picker.Date', {
          * @accessor
          */
         yearTo: new Date().getFullYear(),
-
         /**
          * @cfg {String} monthText
          * The label to show for the month column.
          * @accessor
          */
         monthText: 'Month',
-
         /**
          * @cfg {String} dayText
          * The label to show for the day column.
          * @accessor
          */
         dayText: 'Day',
-
         /**
          * @cfg {String} yearText
          * The label to show for the year column.
          * @accessor
          */
         yearText: 'Year',
-
         /**
          * @cfg {Array} slotOrder
          * An array of strings that specifies the order of the slots.
          * @accessor
          */
         slotOrder: ['month', 'day', 'year'],
-
         /**
          * @cfg {Object/Date} value
          * Default value for the field and the internal {@link Ext.picker.Date} component. Accepts an object of 'year',
@@ -126,16 +119,14 @@ Ext.define('Ext.picker.Date', {
          */
         doneButton: true
     },
-
     platformConfig: [{
-        theme: ['Windows'],
-        doneButton: {
-            iconCls: 'check2',
-            ui: 'round',
-            text: ''
-        }
-    }],
-
+            theme: ['Windows'],
+            doneButton: {
+                iconCls: 'check2',
+                ui: 'round',
+                text: ''
+            }
+        }],
     initialize: function() {
         this.callParent();
 
@@ -150,25 +141,23 @@ Ext.define('Ext.picker.Date', {
             show: this.onSlotPick
         });
     },
-
     setValue: function(value, animated) {
         if (Ext.isDate(value)) {
             value = {
-                day  : value.getDate(),
+                day: value.getDate(),
                 month: value.getMonth() + 1,
-                year : value.getFullYear()
+                year: value.getFullYear()
             };
         }
 
         this.callParent([value, animated]);
         this.onSlotPick();
     },
-
     getValue: function(useDom) {
         var values = {},
-            items = this.getItems().items,
-            ln = items.length,
-            daysInMonth, day, month, year, item, i;
+                items = this.getItems().items,
+                ln = items.length,
+                daysInMonth, day, month, year, item, i;
 
         for (i = 0; i < ln; i++) {
             item = items[i];
@@ -189,11 +178,10 @@ Ext.define('Ext.picker.Date', {
         if (month && year && month && day) {
             daysInMonth = this.getDaysInMonth(month, year);
         }
-        day = (daysInMonth) ? Math.min(day, daysInMonth): day;
+        day = (daysInMonth) ? Math.min(day, daysInMonth) : day;
 
         return new Date(year, month - 1, day);
     },
-
     /**
      * Updates the yearFrom configuration
      */
@@ -202,7 +190,6 @@ Ext.define('Ext.picker.Date', {
             this.createSlots();
         }
     },
-
     /**
      * Updates the yearTo configuration
      */
@@ -211,14 +198,13 @@ Ext.define('Ext.picker.Date', {
             this.createSlots();
         }
     },
-
     /**
      * Updates the monthText configuration
      */
     updateMonthText: function(newMonthText, oldMonthText) {
         var innerItems = this.getInnerItems,
-            ln = innerItems.length,
-            item, i;
+                ln = innerItems.length,
+                item, i;
 
         //loop through each of the current items and set the title on the correct slice
         if (this.initialized) {
@@ -231,14 +217,13 @@ Ext.define('Ext.picker.Date', {
             }
         }
     },
-
     /**
      * Updates the {@link #dayText} configuration.
      */
     updateDayText: function(newDayText, oldDayText) {
         var innerItems = this.getInnerItems,
-            ln = innerItems.length,
-            item, i;
+                ln = innerItems.length,
+                item, i;
 
         //loop through each of the current items and set the title on the correct slice
         if (this.initialized) {
@@ -251,14 +236,13 @@ Ext.define('Ext.picker.Date', {
             }
         }
     },
-
     /**
      * Updates the yearText configuration
      */
     updateYearText: function(yearText) {
         var innerItems = this.getInnerItems,
-            ln = innerItems.length,
-            item, i;
+                ln = innerItems.length,
+                item, i;
 
         //loop through each of the current items and set the title on the correct slice
         if (this.initialized) {
@@ -271,32 +255,30 @@ Ext.define('Ext.picker.Date', {
             }
         }
     },
-
     // @private
     constructor: function() {
         this.callParent(arguments);
         this.createSlots();
     },
-
     /**
      * Generates all slots for all years specified by this component, and then sets them on the component
      * @private
      */
     createSlots: function() {
-        var me        = this,
-            slotOrder = me.getSlotOrder(),
-            yearsFrom = me.getYearFrom(),
-            yearsTo   = me.getYearTo(),
-            years     = [],
-            days      = [],
-            months    = [],
-            reverse   = yearsFrom > yearsTo,
-            ln, i, daysInMonth;
+        var me = this,
+                slotOrder = me.getSlotOrder(),
+                yearsFrom = me.getYearFrom(),
+                yearsTo = me.getYearTo(),
+                years = [],
+                days = [],
+                months = [],
+                reverse = yearsFrom > yearsTo,
+                ln, i, daysInMonth;
 
         while (yearsFrom) {
             years.push({
-                text  : yearsFrom,
-                value : yearsFrom
+                text: yearsFrom,
+                value: yearsFrom
             });
 
             if (yearsFrom === yearsTo) {
@@ -314,27 +296,26 @@ Ext.define('Ext.picker.Date', {
 
         for (i = 0; i < daysInMonth; i++) {
             days.push({
-                text  : i + 1,
-                value : i + 1
+                text: i + 1,
+                value: i + 1
             });
         }
 
         for (i = 0, ln = Ext.Date.monthNames.length; i < ln; i++) {
             months.push({
-                text  : Ext.Date.monthNames[i],
-                value : i + 1
+                text: Ext.Date.monthNames[i],
+                value: i + 1
             });
         }
 
         var slots = [];
 
-        slotOrder.forEach(function (item) {
+        slotOrder.forEach(function(item) {
             slots.push(me.createSlot(item, days, months, years));
         });
 
         me.setSlots(slots);
     },
-
     /**
      * Returns a slot config for a specified date.
      * @private
@@ -367,14 +348,13 @@ Ext.define('Ext.picker.Date', {
                 };
         }
     },
-
     onSlotPick: function() {
         var value = this.getValue(true),
-            slot = this.getDaySlot(),
-            year = value.getFullYear(),
-            month = value.getMonth(),
-            days = [],
-            daysInMonth, i;
+                slot = this.getDaySlot(),
+                year = value.getFullYear(),
+                month = value.getMonth(),
+                days = [],
+                daysInMonth, i;
 
         if (!value || !Ext.isDate(value) || !slot) {
             return;
@@ -400,9 +380,9 @@ Ext.define('Ext.picker.Date', {
 
         // Now we have the correct amount of days for the day slot, lets update it
         var store = slot.getStore(),
-            viewItems = slot.getViewItems(),
-            valueField = slot.getValueField(),
-            index, item;
+                viewItems = slot.getViewItems(),
+                valueField = slot.getValueField(),
+                index, item;
 
         index = store.find(valueField, value.getDate());
         if (index == -1) {
@@ -415,11 +395,10 @@ Ext.define('Ext.picker.Date', {
         slot.scrollToItem(item);
         slot.setValue(slot.getValue(true));
     },
-
     getDaySlot: function() {
         var innerItems = this.getInnerItems(),
-            ln = innerItems.length,
-            i, slot;
+                ln = innerItems.length,
+                i, slot;
 
         if (this.daySlot) {
             return this.daySlot;
@@ -435,22 +414,19 @@ Ext.define('Ext.picker.Date', {
 
         return null;
     },
-
     // @private
     getDaysInMonth: function(month, year) {
         var daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-        return month == 2 && this.isLeapYear(year) ? 29 : daysInMonth[month-1];
+        return month == 2 && this.isLeapYear(year) ? 29 : daysInMonth[month - 1];
     },
-
     // @private
     isLeapYear: function(year) {
         return !!((year & 3) === 0 && (year % 100 || (year % 400 === 0 && year)));
     },
-
     onDoneButtonTap: function() {
         var oldValue = this._value,
-            newValue = this.getValue(true),
-            testValue = newValue;
+                newValue = this.getValue(true),
+                testValue = newValue;
 
         if (Ext.isDate(newValue)) {
             testValue = newValue.toDateString();

@@ -64,7 +64,6 @@ Ext.define('Ext.data.proxy.LocalStorage', {
     extend: 'Ext.data.proxy.WebStorage',
     alias: 'proxy.localstorage',
     alternateClassName: 'Ext.data.LocalStorageProxy',
-
     //inherit docs
     getStorageObject: function() {
         return window.localStorage;

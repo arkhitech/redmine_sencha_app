@@ -4,8 +4,7 @@
 Ext.define('Ext.device.contacts.Cordova', {
     alternateClassName: 'Ext.device.contacts.PhoneGap',
     extend: 'Ext.device.contacts.Abstract',
-
-    getContacts: function (config) {
+    getContacts: function(config) {
         if (!config) {
             Ext.Logger.warn('Ext.device.Contacts#getContacts: You must specify a `config` object.');
             return false;

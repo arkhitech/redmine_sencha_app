@@ -10,7 +10,6 @@
  */
 Ext.define('Ext.app.History', {
     mixins: ['Ext.mixin.Observable'],
-
     /**
      * @event change
      * Fires when a change in browser url is detected
@@ -22,18 +21,15 @@ Ext.define('Ext.app.History', {
          * @cfg {Array} actions The stack of {@link Ext.app.Action action} instances that have occurred so far
          */
         actions: [],
-
         /**
          * @cfg {Boolean} updateUrl `true` to automatically update the browser's url when {@link #add} is called.
          */
         updateUrl: true,
-
         /**
          * @cfg {String} token The current token as read from the browser's location object.
          */
         token: ''
     },
-
     constructor: function(config) {
         if (Ext.feature.has.History) {
             window.addEventListener('hashchange', Ext.bind(this.detectStateChange, this));
@@ -47,7 +43,6 @@ Ext.define('Ext.app.History', {
             this.setToken(window.location.hash.substr(1));
         }
     },
-
     /**
      * Adds an {@link Ext.app.Action Action} to the stack, optionally updating the browser's url and firing the
      * {@link #change} event.
@@ -73,13 +68,12 @@ Ext.define('Ext.app.History', {
 
         this.setToken(url);
     },
-
     /**
      * Navigate to the previous active action. This changes the page url.
      */
     back: function() {
         var actions = this.getActions(),
-            previousAction = actions[actions.length - 2];
+                previousAction = actions[actions.length - 2];
 
         if (previousAction) {
             actions.pop();
@@ -90,27 +84,24 @@ Ext.define('Ext.app.History', {
             actions[actions.length - 1].getController().getApplication().redirectTo('');
         }
     },
-
     /**
      * @private
      */
     applyToken: function(token) {
         return token[0] == '#' ? token.substr(1) : token;
     },
-
     /**
      * @private
      */
     detectStateChange: function() {
         var newToken = this.applyToken(window.location.hash),
-            oldToken = this.getToken();
+                oldToken = this.getToken();
 
         if (newToken != oldToken) {
             this.onStateChange();
             this.setToken(newToken);
         }
     },
-
     /**
      * @private
      */

@@ -5,9 +5,7 @@
  *     var point = Ext.util.Point.fromEvent(e);
  */
 Ext.define('Ext.util.Point', {
-
     radianToDegreeConstant: 180 / Math.PI,
-
     statics: {
         /**
          * Returns a new instance of {@link Ext.util.Point} based on the `pageX` / `pageY` values of the given event.
@@ -17,11 +15,10 @@ Ext.define('Ext.util.Point', {
          */
         fromEvent: function(e) {
             var changedTouches = e.changedTouches,
-                touch = (changedTouches && changedTouches.length > 0) ? changedTouches[0] : e;
+                    touch = (changedTouches && changedTouches.length > 0) ? changedTouches[0] : e;
 
             return this.fromTouch(touch);
         },
-
         /**
          * Returns a new instance of {@link Ext.util.Point} based on the `pageX` / `pageY` values of the given touch.
          * @static
@@ -31,7 +28,6 @@ Ext.define('Ext.util.Point', {
         fromTouch: function(touch) {
             return new this(touch.pageX, touch.pageY);
         },
-
         /**
          * Returns a new point from an object that has `x` and `y` properties, if that object is not an instance
          * of {@link Ext.util.Point}. Otherwise, returns the given point itself.
@@ -50,7 +46,6 @@ Ext.define('Ext.util.Point', {
             return object;
         }
     },
-
     /**
      * Creates point on 2D plane.
      * @param {Number} [x=0] X coordinate.
@@ -70,7 +65,6 @@ Ext.define('Ext.util.Point', {
 
         return this;
     },
-
     /**
      * Copy a new instance of this point.
      * @return {Ext.util.Point} The new point.
@@ -78,7 +72,6 @@ Ext.define('Ext.util.Point', {
     clone: function() {
         return new this.self(this.x, this.y);
     },
-
     /**
      * Clones this Point.
      * @deprecated 2.0.0 Please use {@link #clone} instead.
@@ -87,7 +80,6 @@ Ext.define('Ext.util.Point', {
     copy: function() {
         return this.clone.apply(this, arguments);
     },
-
     /**
      * Copy the `x` and `y` values of another point / object to this point itself.
      * @param {Ext.util.Point/Object} point.
@@ -99,7 +91,6 @@ Ext.define('Ext.util.Point', {
 
         return this;
     },
-
     /**
      * Returns a human-eye-friendly string that represents this point,
      * useful for debugging.
@@ -108,7 +99,6 @@ Ext.define('Ext.util.Point', {
     toString: function() {
         return "Point[" + this.x + "," + this.y + "]";
     },
-
     /**
      * Compare this point and another point.
      * @param {Ext.util.Point/Object} point The point to compare with, either an instance
@@ -118,7 +108,6 @@ Ext.define('Ext.util.Point', {
     equals: function(point) {
         return (this.x === point.x && this.y === point.y);
     },
-
     /**
      * Whether the given point is not away from this point within the given threshold amount.
      * @param {Ext.util.Point/Object} point The point to check with, either an instance
@@ -133,14 +122,13 @@ Ext.define('Ext.util.Point', {
         }
 
         var x = point.x,
-            y = point.y,
-            thresholdX = threshold.x,
-            thresholdY = threshold.y;
+                y = point.y,
+                thresholdX = threshold.x,
+                thresholdY = threshold.y;
 
         return (this.x <= x + thresholdX && this.x >= x - thresholdX &&
                 this.y <= y + thresholdY && this.y >= y - thresholdY);
     },
-
     /**
      * Returns `true` if this point is close to another one.
      * @deprecated 2.0.0 Please use {@link #isCloseTo} instead.
@@ -149,7 +137,6 @@ Ext.define('Ext.util.Point', {
     isWithin: function() {
         return this.isCloseTo.apply(this, arguments);
     },
-
     /**
      * Translate this point by the given amounts.
      * @param {Number} x Amount to translate in the x-axis.
@@ -162,7 +149,6 @@ Ext.define('Ext.util.Point', {
 
         return this;
     },
-
     /**
      * Compare this point with another point when the `x` and `y` values of both points are rounded. For example:
      * [100.3,199.8] will equals to [100, 200].
@@ -172,31 +158,29 @@ Ext.define('Ext.util.Point', {
      */
     roundedEquals: function(point) {
         if (typeof point != 'object') {
-            point = { x: 0, y: 0};
+            point = {x: 0, y: 0};
         }
 
         return (Math.round(this.x) === Math.round(point.x) &&
                 Math.round(this.y) === Math.round(point.y));
     },
-
     getDistanceTo: function(point) {
         if (typeof point != 'object') {
-            point = { x: 0, y: 0};
+            point = {x: 0, y: 0};
         }
 
         var deltaX = this.x - point.x,
-            deltaY = this.y - point.y;
+                deltaY = this.y - point.y;
 
         return Math.sqrt(deltaX * deltaX + deltaY * deltaY);
     },
-
     getAngleTo: function(point) {
         if (typeof point != 'object') {
-            point = { x: 0, y: 0};
+            point = {x: 0, y: 0};
         }
 
         var deltaX = this.x - point.x,
-            deltaY = this.y - point.y;
+                deltaY = this.y - point.y;
 
         return Math.atan2(deltaY, deltaX) * this.radianToDegreeConstant;
     }

@@ -3,7 +3,6 @@
  */
 Ext.define('Ext.device.filesystem.Sencha', {
     extend: 'Ext.device.filesystem.Abstract',
-
     /**
      * Requests a {@link Ext.device.filesystem.FileSystem} instance.
      *
@@ -55,12 +54,10 @@ Ext.define('Ext.device.filesystem.Sencha', {
     Ext.define('Ext.device.filesystem.FileSystem', {
         id: 0,
         root: null,
-
         constructor: function(id) {
             this.id = id;
             this.root = Ext.create('Ext.device.filesystem.DirectoryEntry', '/', this);
         },
-
         /**
          * Returns a {@link Ext.device.filesystem.DirectoryEntry} instance for the root of the file system.
          *
@@ -82,13 +79,11 @@ Ext.define('Ext.device.filesystem.Sencha', {
             directory: false,
             path: 0,
             fileSystem: null,
-
             constructor: function(directory, path, fileSystem) {
                 this.directory = directory;
                 this.path = path;
                 this.fileSystem = fileSystem;
             },
-
             /**
              * Returns whether the entry is a file.
              *
@@ -98,7 +93,6 @@ Ext.define('Ext.device.filesystem.Sencha', {
             isFile: function() {
                 return !this.directory;
             },
-
             /**
              * Returns whether the entry is a directory.
              *
@@ -108,7 +102,6 @@ Ext.define('Ext.device.filesystem.Sencha', {
             isDirectory: function() {
                 return this.directory;
             },
-
             /**
              * Returns the name of the entry, excluding the path leading to it.
              *
@@ -125,7 +118,6 @@ Ext.define('Ext.device.filesystem.Sencha', {
 
                 return '/';
             },
-
             /**
              * Returns the full absolute path from the root to the entry.
              *
@@ -135,7 +127,6 @@ Ext.define('Ext.device.filesystem.Sencha', {
             getFullPath: function() {
                 return this.path;
             },
-
             /**
              * Returns the file system on which the entry resides.
              *
@@ -145,7 +136,6 @@ Ext.define('Ext.device.filesystem.Sencha', {
             getFileSystem: function() {
                 return this.fileSystem;
             },
-
             /**
              * Moves the entry to a different location on the file system.
              *
@@ -191,8 +181,8 @@ Ext.define('Ext.device.filesystem.Sencha', {
                         success: function(path) {
                             if (config.success) {
                                 var entry = me.directory
-                                    ? Ext.create('Ext.device.filesystem.DirectoryEntry', path, me.fileSystem)
-                                    : Ext.create('Ext.device.filesystem.FileEntry', path, me.fileSystem);
+                                        ? Ext.create('Ext.device.filesystem.DirectoryEntry', path, me.fileSystem)
+                                        : Ext.create('Ext.device.filesystem.FileEntry', path, me.fileSystem);
 
                                 config.success.call(config.scope || this, entry);
                             }
@@ -206,7 +196,6 @@ Ext.define('Ext.device.filesystem.Sencha', {
                     scope: config.scope || this
                 });
             },
-
             /**
              * Works the same way as {@link Ext.device.filesystem.Entry#moveTo}, but copies the entry.
              */
@@ -215,7 +204,6 @@ Ext.define('Ext.device.filesystem.Sencha', {
                     copy: true
                 }));
             },
-
             /**
              * Removes the entry from the file system.
              *
@@ -255,7 +243,6 @@ Ext.define('Ext.device.filesystem.Sencha', {
                     scope: config.scope || this
                 });
             },
-
             /**
              * Looks up the parent directory containing the entry.
              *
@@ -291,8 +278,8 @@ Ext.define('Ext.device.filesystem.Sencha', {
                     callbacks: {
                         success: function(path) {
                             var entry = me.directory
-                                ? Ext.create('Ext.device.filesystem.DirectoryEntry', path, me.fileSystem)
-                                : Ext.create('Ext.device.filesystem.FileEntry', path, me.fileSystem);
+                                    ? Ext.create('Ext.device.filesystem.DirectoryEntry', path, me.fileSystem)
+                                    : Ext.create('Ext.device.filesystem.FileEntry', path, me.fileSystem);
 
                             config.success.call(config.scope || this, entry);
                         },
@@ -312,11 +299,9 @@ Ext.define('Ext.device.filesystem.Sencha', {
          */
         Ext.define('Ext.device.filesystem.DirectoryEntry', {
             extend: 'Ext.device.filesystem.Entry',
-
             constructor: function(path, fileSystem) {
                 this.callParent([true, path, fileSystem]);
             },
-
             /**
              * Lists all the entries in the directory.
              *
@@ -353,8 +338,8 @@ Ext.define('Ext.device.filesystem.Sencha', {
                         success: function(entryInfos) {
                             var entries = entryInfos.map(function(entryInfo) {
                                 return entryInfo.directory
-                                    ? Ext.create('Ext.device.filesystem.DirectoryEntry', entryInfo.path, me.fileSystem)
-                                    : Ext.create('Ext.device.filesystem.FileEntry', entryInfo.path, me.fileSystem);
+                                        ? Ext.create('Ext.device.filesystem.DirectoryEntry', entryInfo.path, me.fileSystem)
+                                        : Ext.create('Ext.device.filesystem.FileEntry', entryInfo.path, me.fileSystem);
                             });
 
                             config.success.call(config.scope || this, entries);
@@ -368,7 +353,6 @@ Ext.define('Ext.device.filesystem.Sencha', {
                     scope: config.scope || this
                 });
             },
-
             /**
              * Creates or looks up a file.
              *
@@ -425,8 +409,8 @@ Ext.define('Ext.device.filesystem.Sencha', {
                         success: function(path) {
                             if (config.success) {
                                 var entry = config.directory
-                                    ? Ext.create('Ext.device.filesystem.DirectoryEntry', path, me.fileSystem)
-                                    : Ext.create('Ext.device.filesystem.FileEntry', path, me.fileSystem);
+                                        ? Ext.create('Ext.device.filesystem.DirectoryEntry', path, me.fileSystem)
+                                        : Ext.create('Ext.device.filesystem.FileEntry', path, me.fileSystem);
 
                                 config.success.call(config.scope || this, entry);
                             }
@@ -440,7 +424,6 @@ Ext.define('Ext.device.filesystem.Sencha', {
                     scope: config.scope || this
                 });
             },
-
             /**
              * Works the same way as {@link Ext.device.filesystem.DirectoryEntry#getFile},
              * but creates or looks up a directory.
@@ -450,7 +433,6 @@ Ext.define('Ext.device.filesystem.Sencha', {
                     directory: true
                 }));
             },
-
             /**
              * Works the same way as {@link Ext.device.filesystem.Entry#remove},
              * but removes the directory and all of its contents, if any.
@@ -467,15 +449,12 @@ Ext.define('Ext.device.filesystem.Sencha', {
          */
         Ext.define('Ext.device.filesystem.FileEntry', {
             extend: 'Ext.device.filesystem.Entry',
-
             offset: 0,
-
             constructor: function(path, fileSystem) {
                 this.callParent([false, path, fileSystem]);
 
                 this.offset = 0;
             },
-
             /**
              * Returns the byte offset into the file at which the next read/write will occur.
              *
@@ -485,7 +464,6 @@ Ext.define('Ext.device.filesystem.Sencha', {
             getOffset: function() {
                 return this.offset;
             },
-
             /**
              * Sets the byte offset into the file at which the next read/write will occur.
              *
@@ -536,7 +514,6 @@ Ext.define('Ext.device.filesystem.Sencha', {
                     scope: config.scope || this
                 });
             },
-
             /**
              * Reads the data from the file starting at the file offset.
              *
@@ -586,7 +563,6 @@ Ext.define('Ext.device.filesystem.Sencha', {
                     scope: config.scope || this
                 });
             },
-
             /**
              * Writes the data to the file starting at the file offset.
              *
@@ -638,7 +614,6 @@ Ext.define('Ext.device.filesystem.Sencha', {
                     scope: config.scope || this
                 });
             },
-
             /**
              * Truncates or extends the file to the specified size in bytes.
              * If the file is extended, the added bytes are null bytes.

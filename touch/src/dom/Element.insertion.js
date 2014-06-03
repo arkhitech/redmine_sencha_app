@@ -7,7 +7,6 @@
  * @class Ext.dom.Element
  */
 Ext.dom.Element.addMembers({
-
     /**
      * Appends the passed element(s) to this element.
      * @param {HTMLElement/Ext.dom.Element} element a DOM Node or an existing Element.
@@ -18,17 +17,14 @@ Ext.dom.Element.addMembers({
 
         return this;
     },
-
     removeChild: function(element) {
         this.dom.removeChild(Ext.getDom(element));
 
         return this;
     },
-
     append: function() {
         this.appendChild.apply(this, arguments);
     },
-
     /**
      * Appends this element to the passed element.
      * @param {String/HTMLElement/Ext.dom.Element} el The new parent element.
@@ -39,7 +35,6 @@ Ext.dom.Element.addMembers({
         Ext.getDom(el).appendChild(this.dom);
         return this;
     },
-
     /**
      * Inserts this element before the passed element in the DOM.
      * @param {String/HTMLElement/Ext.dom.Element} el The element before which this element will be inserted.
@@ -51,7 +46,6 @@ Ext.dom.Element.addMembers({
         el.parentNode.insertBefore(this.dom, el);
         return this;
     },
-
     /**
      * Inserts this element after the passed element in the DOM.
      * @param {String/HTMLElement/Ext.dom.Element} el The element to insert after.
@@ -63,8 +57,6 @@ Ext.dom.Element.addMembers({
         el.parentNode.insertBefore(this.dom, el.nextSibling);
         return this;
     },
-
-
     /**
      * Inserts an element as the first child of this element.
      * @param {String/HTMLElement/Ext.dom.Element} element The `id` or element to insert.
@@ -72,8 +64,8 @@ Ext.dom.Element.addMembers({
      */
     insertFirst: function(element) {
         var elementDom = Ext.getDom(element),
-            dom = this.dom,
-            firstChild = dom.firstChild;
+                dom = this.dom,
+                firstChild = dom.firstChild;
 
         if (!firstChild) {
             dom.appendChild(elementDom);
@@ -84,7 +76,6 @@ Ext.dom.Element.addMembers({
 
         return this;
     },
-
     /**
      * Inserts (or creates) the passed element (or DomHelper config) as a sibling of this element
      * @param {String/HTMLElement/Ext.dom.Element/Object/Array} el The id, element to insert or a DomHelper config
@@ -95,8 +86,8 @@ Ext.dom.Element.addMembers({
      */
     insertSibling: function(el, where, returnDom) {
         var me = this, rt,
-            isAfter = (where || 'before').toLowerCase() == 'after',
-            insertEl;
+                isAfter = (where || 'before').toLowerCase() == 'after',
+                insertEl;
 
         if (Ext.isArray(el)) {
             insertEl = me;
@@ -125,7 +116,6 @@ Ext.dom.Element.addMembers({
         }
         return rt;
     },
-
     /**
      * Replaces the passed element with this element.
      * @param {String/HTMLElement/Ext.dom.Element} element The element to replace.
@@ -139,7 +129,6 @@ Ext.dom.Element.addMembers({
 
         return this;
     },
-
     /**
      * Replaces this element with the passed element.
      * @param {String/HTMLElement/Ext.dom.Element/Object} el The new element (id of the node, a DOM Node
@@ -161,12 +150,10 @@ Ext.dom.Element.addMembers({
         me.id = Ext.id(me.dom = el);
         return me;
     },
-
     doReplaceWith: function(element) {
         var dom = this.dom;
         dom.parentNode.replaceChild(Ext.getDom(element), dom);
     },
-
     /**
      * Creates the passed DomHelper config and appends it to this element or optionally inserts it before the passed child element.
      * @param {Object} config DomHelper element config object.  If no tag is specified (e.g., `{tag:'input'}`) then a div will be
@@ -184,7 +171,6 @@ Ext.dom.Element.addMembers({
             return Ext.core.DomHelper[!this.dom.firstChild ? 'insertFirst' : 'append'](this.dom, config, returnDom !== true);
         }
     },
-
     /**
      * Creates and wraps this element with another element.
      * @param {Object} [config] (optional) DomHelper element config object for the wrapper element or `null` for an empty div
@@ -193,9 +179,9 @@ Ext.dom.Element.addMembers({
      */
     wrap: function(config, domNode) {
         var dom = this.dom,
-            wrapper = this.self.create(config, domNode),
-            wrapperDom = (domNode) ? wrapper : wrapper.dom,
-            parentNode = dom.parentNode;
+                wrapper = this.self.create(config, domNode),
+                wrapperDom = (domNode) ? wrapper : wrapper.dom,
+                parentNode = dom.parentNode;
 
         if (parentNode) {
             parentNode.insertBefore(wrapperDom, dom);
@@ -205,12 +191,11 @@ Ext.dom.Element.addMembers({
 
         return wrapper;
     },
-
     wrapAllChildren: function(config) {
         var dom = this.dom,
-            children = dom.childNodes,
-            wrapper = this.self.create(config),
-            wrapperDom = wrapper.dom;
+                children = dom.childNodes,
+                wrapper = this.self.create(config),
+                wrapperDom = wrapper.dom;
 
         while (children.length > 0) {
             wrapperDom.appendChild(dom.firstChild);
@@ -220,11 +205,10 @@ Ext.dom.Element.addMembers({
 
         return wrapper;
     },
-
     unwrapAllChildren: function() {
         var dom = this.dom,
-            children = dom.childNodes,
-            parentNode = dom.parentNode;
+                children = dom.childNodes,
+                parentNode = dom.parentNode;
 
         if (parentNode) {
             while (children.length > 0) {
@@ -234,11 +218,10 @@ Ext.dom.Element.addMembers({
             this.destroy();
         }
     },
-
     unwrap: function() {
         var dom = this.dom,
-            parentNode = dom.parentNode,
-            grandparentNode;
+                parentNode = dom.parentNode,
+                grandparentNode;
 
         if (parentNode) {
             grandparentNode = parentNode.parentNode;
@@ -252,7 +235,6 @@ Ext.dom.Element.addMembers({
 
         return this;
     },
-
     detach: function() {
         var dom = this.dom;
 
@@ -262,7 +244,6 @@ Ext.dom.Element.addMembers({
 
         return this;
     },
-
     /**
      * Inserts an HTML fragment into this element.
      * @param {String} where Where to insert the HTML in relation to this element - 'beforeBegin', 'afterBegin', 'beforeEnd', 'afterEnd'.

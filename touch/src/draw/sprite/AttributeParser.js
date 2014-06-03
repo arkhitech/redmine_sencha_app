@@ -11,22 +11,18 @@ Ext.define("Ext.draw.sprite.AttributeParser", {
         'Ext.draw.Color',
         'Ext.draw.sprite.GradientDefinition'
     ],
-
-    "default": function (n) {
+    "default": function(n) {
         return n;
     },
-    
-    string: function (n) {
+    string: function(n) {
         return String(n);
     },
-    
-    number: function (n) {
+    number: function(n) {
         if (!isNaN(n)) {
             return n;
         }
     },
-    
-    angle: function (n) {
+    angle: function(n) {
         if (!isNaN(n)) {
             n %= Math.PI * 2;
             if (n < -Math.PI) {
@@ -38,20 +34,17 @@ Ext.define("Ext.draw.sprite.AttributeParser", {
             return n;
         }
     },
-    
-    data: function (n) {
+    data: function(n) {
         if (Ext.isArray(n)) {
             return n.slice();
         } else if (n instanceof Float32Array) {
             return new Float32Array(n);
         }
     },
-    
-    bool: function (n) {
+    bool: function(n) {
         return !!n;
     },
-    
-    color: function (n) {
+    color: function(n) {
         if (n instanceof Ext.draw.Color) {
             return n.toString();
         } else if (n instanceof Ext.draw.gradient.Gradient) {
@@ -72,26 +65,23 @@ Ext.define("Ext.draw.sprite.AttributeParser", {
             return Ext.create('Ext.draw.gradient.Pattern', n);
         }
     },
-
-    limited: function (low, hi) {
-        return (function (n) {
+    limited: function(low, hi) {
+        return (function(n) {
             return isNaN(n) ? undefined : Math.min(Math.max(+n, low), hi);
         });
     },
-    
-    limited01: function (n) {
+    limited01: function(n) {
         return isNaN(n) ? undefined : Math.min(Math.max(+n, 0), 1);
     },
-    
-    enums: function () {
+    enums: function() {
         var enums = {},
-            args = Array.prototype.slice.call(arguments, 0),
-            i, ln;
+                args = Array.prototype.slice.call(arguments, 0),
+                i, ln;
 
         for (i = 0, ln = args.length; i < ln; i++) {
             enums[args[i]] = true;
         }
-        return (function (n) {
+        return (function(n) {
             return n in enums ? n : undefined;
         });
     }

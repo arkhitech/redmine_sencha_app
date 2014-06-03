@@ -66,18 +66,13 @@
  *
  */
 Ext.define('Ext.chart.series.Scatter', {
-
     extend: 'Ext.chart.series.Cartesian',
-
     alias: 'series.scatter',
-
     type: 'scatter',
     seriesType: 'scatterSeries',
-
     requires: [
         'Ext.chart.series.sprite.Scatter'
     ],
-
     config: {
         itemInstancing: {
             fx: {
@@ -88,13 +83,11 @@ Ext.define('Ext.chart.series.Scatter', {
             }
         }
     },
-
-    applyMarker: function (marker) {
+    applyMarker: function(marker) {
         this.getItemInstancing();
         this.setItemInstancing(marker);
     },
-
-    provideLegendInfo: function (target) {
+    provideLegendInfo: function(target) {
         var style = this.config.marker;
         target.push({
             name: this.getTitle() || this.getYField() || this.getId(),

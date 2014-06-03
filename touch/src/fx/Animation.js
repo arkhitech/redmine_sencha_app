@@ -5,7 +5,6 @@
  * This class is a factory class that will create and return an animation class based on the {@link #type} configuration.
  */
 Ext.define('Ext.fx.Animation', {
-
     requires: [
         'Ext.fx.animation.Slide',
         'Ext.fx.animation.SlideOut',
@@ -15,7 +14,6 @@ Ext.define('Ext.fx.Animation', {
         'Ext.fx.animation.Pop',
         'Ext.fx.animation.PopOut'
     ],
-
     /**
      * @cfg {String} type The type of animation to use. The possible values are:
      *
@@ -30,7 +28,7 @@ Ext.define('Ext.fx.Animation', {
 
     constructor: function(config) {
         var defaultClass = Ext.fx.animation.Abstract,
-            type;
+                type;
 
         if (typeof config == 'string') {
             type = config;

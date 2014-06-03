@@ -31,7 +31,7 @@
     .x-msgbox {
         .x-dock.x-dock-horizontal.x-unsized {
             > .x-dock-body {
-               @include st-box-flex(1, 0px);
+                @include st-box-flex(1, 0px);
             }
         }
     }

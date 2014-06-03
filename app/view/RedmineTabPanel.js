@@ -19,7 +19,7 @@ Ext.define('RedmineApp.view.RedmineTabPanel', {
         items: [
             {
                 iconCls: 'action',
-              //  style: 'text-align:center; background:#999999;height:30px;font-size:24',
+                //  style: 'text-align:center; background:#999999;height:30px;font-size:24',
                 title: 'Configure',
                 layout: 'fit',
                 flex: 1,
@@ -33,7 +33,7 @@ Ext.define('RedmineApp.view.RedmineTabPanel', {
             },
             {
                 iconCls: 'compose',
-             //   style: 'text-align:center; background:#999999;height:30px;font-size:24',
+                //   style: 'text-align:center; background:#999999;height:30px;font-size:24',
                 title: 'Analytics',
                 badgeText: 'New',
                 flex: 1,

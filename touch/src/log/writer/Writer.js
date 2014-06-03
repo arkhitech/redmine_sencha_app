@@ -1,23 +1,19 @@
 //<feature logger>
 Ext.define('Ext.log.writer.Writer', {
     extend: 'Ext.log.Base',
-
     requires: ['Ext.log.formatter.Formatter'],
-
     config: {
         formatter: null,
         filters: {}
     },
-
     constructor: function() {
         this.activeFilters = [];
 
         return this.callParent(arguments);
     },
-
     updateFilters: function(filters) {
         var activeFilters = this.activeFilters,
-            i, filter;
+                i, filter;
 
         activeFilters.length = 0;
 
@@ -28,13 +24,12 @@ Ext.define('Ext.log.writer.Writer', {
             }
         }
     },
-
     write: function(event) {
         var filters = this.activeFilters,
-            formatter = this.getFormatter(),
-            i, ln, filter;
+                formatter = this.getFormatter(),
+                i, ln, filter;
 
-        for (i = 0,ln = filters.length; i < ln; i++) {
+        for (i = 0, ln = filters.length; i < ln; i++) {
             filter = filters[i];
 
             if (!filters[i].accept(event)) {
@@ -50,7 +45,6 @@ Ext.define('Ext.log.writer.Writer', {
 
         return this;
     },
-
     // @private
     doWrite: Ext.emptyFn
 });

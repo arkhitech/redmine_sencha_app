@@ -9,22 +9,20 @@ Ext.define("Ext.draw.sprite.Instancing", {
     alias: 'sprite.instancing',
     type: 'instancing',
     config: {
-        
         /**
          * @cfg {Object} [template=null] The sprite template used by all instances.
          */
         template: null
     },
     instances: null,
-    constructor: function (config) {
+    constructor: function(config) {
         this.instances = [];
         this.callSuper([config]);
         if (config && config.template) {
             this.setTemplate(config.template);
         }
     },
-
-    applyTemplate: function (template) {
+    applyTemplate: function(template) {
         if (!(template instanceof Ext.draw.sprite.Sprite)) {
             template = Ext.create(template.xclass || "sprite." + template.type, template);
         }
@@ -34,7 +32,6 @@ Ext.define("Ext.draw.sprite.Instancing", {
         this.position = 0;
         return template;
     },
-
     /**
      * Creates a new sprite instance.
      * 
@@ -44,10 +41,10 @@ Ext.define("Ext.draw.sprite.Instancing", {
      * @param {Boolean} [avoidCopy] 'true' to avoid copying.
      * @return {Object} The attributes of the instance.
      */
-    createInstance: function (config, data, bypassNormalization, avoidCopy) {
+    createInstance: function(config, data, bypassNormalization, avoidCopy) {
         var template = this.getTemplate(),
-            originalAttr = template.attr,
-            attr = Ext.Object.chain(originalAttr);
+                originalAttr = template.attr,
+                attr = Ext.Object.chain(originalAttr);
         template.topModifier.prepareAttributes(attr);
         template.attr = attr;
         template.setAttributes(config, bypassNormalization, avoidCopy);
@@ -58,14 +55,14 @@ Ext.define("Ext.draw.sprite.Instancing", {
         originalAttr.children.push(attr);
         return attr;
     },
-
     /**
      * Not supported.
      * 
      * @return {null}
      */
-    getBBox: function () { return null; },
-
+    getBBox: function() {
+        return null;
+    },
     /**
      * Returns the bounding box for the instance at the given index.
      *
@@ -73,23 +70,22 @@ Ext.define("Ext.draw.sprite.Instancing", {
      * @param {Boolean} [isWithoutTransform] 'true' to not apply sprite transforms to the bounding box.
      * @return {Object} The bounding box for the instance.
      */
-    getBBoxFor: function (index, isWithoutTransform) {
+    getBBoxFor: function(index, isWithoutTransform) {
         var template = this.getTemplate(),
-            originalAttr = template.attr,
-            bbox;
+                originalAttr = template.attr,
+                bbox;
         template.attr = this.instances[index];
         bbox = template.getBBox(isWithoutTransform);
         template.attr = originalAttr;
         return bbox;
     },
-
-    render: function (surface, ctx, clipRegion, region) {
+    render: function(surface, ctx, clipRegion, region) {
         var me = this,
-            mat = me.attr.matrix,
-            template = me.getTemplate(),
-            originalAttr = template.attr,
-            instances = me.instances,
-            i, ln = me.position;
+                mat = me.attr.matrix,
+                template = me.getTemplate(),
+                originalAttr = template.attr,
+                instances = me.instances,
+                i, ln = me.position;
 
         mat.toContext(ctx);
         template.preRender(surface, ctx, clipRegion, region);
@@ -112,7 +108,6 @@ Ext.define("Ext.draw.sprite.Instancing", {
         }
         template.attr = originalAttr;
     },
-
     /**
      * Sets the attributes for the instance at the given index.
      * 
@@ -120,10 +115,10 @@ Ext.define("Ext.draw.sprite.Instancing", {
      * @param {Object} changes the attributes to change
      * @param {Boolean} [bypassNormalization] 'true' to avoid attribute normalization
      */
-    setAttributesFor: function (index, changes, bypassNormalization) {
+    setAttributesFor: function(index, changes, bypassNormalization) {
         var template = this.getTemplate(),
-            originalAttr = template.attr,
-            attr = this.instances[index];
+                originalAttr = template.attr,
+                attr = this.instances[index];
         template.attr = attr;
         try {
             if (bypassNormalization) {
@@ -137,8 +132,7 @@ Ext.define("Ext.draw.sprite.Instancing", {
             template.attr = originalAttr;
         }
     },
-
-    destroy: function () {
+    destroy: function() {
         this.callSuper();
         this.instances.length = 0;
         this.instances = null;

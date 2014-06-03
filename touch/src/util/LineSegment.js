@@ -5,7 +5,6 @@
  */
 Ext.define('Ext.util.LineSegment', {
     requires: ['Ext.util.Point'],
-
     /**
      * Creates new LineSegment out of two points.
      * @param {Ext.util.Point} point1
@@ -17,7 +16,6 @@ Ext.define('Ext.util.LineSegment', {
         this.point1 = Point.from(point1);
         this.point2 = Point.from(point2);
     },
-
     /**
      * Returns the point where two lines intersect.
      * @param {Ext.util.LineSegment} lineSegment The line to intersect with.
@@ -25,19 +23,19 @@ Ext.define('Ext.util.LineSegment', {
      */
     intersects: function(lineSegment) {
         var point1 = this.point1,
-            point2 = this.point2,
-            point3 = lineSegment.point1,
-            point4 = lineSegment.point2,
-            x1 = point1.x,
-            x2 = point2.x,
-            x3 = point3.x,
-            x4 = point4.x,
-            y1 = point1.y,
-            y2 = point2.y,
-            y3 = point3.y,
-            y4 = point4.y,
-            d = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4),
-            xi, yi;
+                point2 = this.point2,
+                point3 = lineSegment.point1,
+                point4 = lineSegment.point2,
+                x1 = point1.x,
+                x2 = point2.x,
+                x3 = point3.x,
+                x4 = point4.x,
+                y1 = point1.y,
+                y2 = point2.y,
+                y3 = point3.y,
+                y4 = point4.y,
+                d = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4),
+                xi, yi;
 
         if (d == 0) {
             return null;
@@ -47,37 +45,33 @@ Ext.define('Ext.util.LineSegment', {
         yi = ((y3 - y4) * (x1 * y2 - y1 * x2) - (y1 - y2) * (x3 * y4 - y3 * x4)) / d;
 
         if (xi < Math.min(x1, x2) || xi > Math.max(x1, x2)
-            || xi < Math.min(x3, x4) || xi > Math.max(x3, x4)
-            || yi < Math.min(y1, y2) || yi > Math.max(y1, y2)
-            || yi < Math.min(y3, y4) || yi > Math.max(y3, y4)) {
+                || xi < Math.min(x3, x4) || xi > Math.max(x3, x4)
+                || yi < Math.min(y1, y2) || yi > Math.max(y1, y2)
+                || yi < Math.min(y3, y4) || yi > Math.max(y3, y4)) {
             return null;
         }
 
         return new Ext.util.Point(xi, yi);
     },
-
     getLength: function() {
         return Math.abs(this.point1.getDistanceTo(this.point2));
     },
-
     getAngleToX: function() {
         var point1 = this.point1,
-            point2 = this.point2,
-            deltaY = point2.y - point1.y,
-            deltaX = point2.x - point1.x;
+                point2 = this.point2,
+                deltaY = point2.y - point1.y,
+                deltaX = point2.x - point1.x;
 
         return Math.atan2(deltaY, deltaX);
     },
-
     getInBetweenPoint: function(distance) {
         var point1 = this.point1,
-            angle = this.getAngleToX(),
-            x = point1.x + Math.cos(angle) * distance,
-            y = point1.y + Math.sin(angle) * distance;
+                angle = this.getAngleToX(),
+                x = point1.x + Math.cos(angle) * distance,
+                y = point1.y + Math.sin(angle) * distance;
 
         return new Ext.util.Point(x, y);
     },
-
     /**
      * Returns string representation of the line. Useful for debugging.
      * @return {String} For example `Point[12,8] Point[0,0]`

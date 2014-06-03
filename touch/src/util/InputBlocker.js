@@ -5,19 +5,19 @@
  */
 Ext.define('Ext.util.InputBlocker', {
     singleton: true,
-    blockInputs: function () {
+    blockInputs: function() {
         if (Ext.browser.is.ie) {
-            Ext.select('.x-field-text .x-field-input:not(.x-item-disabled) .x-input-el, .x-field-textarea .x-field-input:not(.x-item-disabled) .x-input-el, .x-field-search .x-field-input:not(.x-item-disabled) .x-input-el').each(function (item) {
-				if (item.dom.offsetWidth > 0) {
+            Ext.select('.x-field-text .x-field-input:not(.x-item-disabled) .x-input-el, .x-field-textarea .x-field-input:not(.x-item-disabled) .x-input-el, .x-field-search .x-field-input:not(.x-item-disabled) .x-input-el').each(function(item) {
+                if (item.dom.offsetWidth > 0) {
                     item.dom.setAttribute('disabled', true);
                     item.dom.setAttribute('overlayfix', true);
                 }
             });
         }
     },
-    unblockInputs: function () {
+    unblockInputs: function() {
         if (Ext.browser.is.ie) {
-            Ext.select('[overlayfix]').each(function (item) {
+            Ext.select('[overlayfix]').each(function(item) {
                 item.dom.removeAttribute('disabled');
                 item.dom.removeAttribute('overlayfix');
             });

@@ -18,7 +18,6 @@ Ext.define('Ext.util.HashMap', {
     mixins: {
         observable: 'Ext.mixin.Observable'
     },
-
     /**
      * @cfg {Function} keyFn
      * A function that is used to retrieve a default key for a passed object.
@@ -65,7 +64,6 @@ Ext.define('Ext.util.HashMap', {
 
         this.clear(true);
     },
-
     /**
      * Gets the number of items in the hash.
      * @return {Number} The number of items in the hash.
@@ -73,7 +71,6 @@ Ext.define('Ext.util.HashMap', {
     getCount: function() {
         return this.length;
     },
-
     /**
      * Implementation for being able to extract the key from an object if only
      * a single argument is passed.
@@ -91,7 +88,6 @@ Ext.define('Ext.util.HashMap', {
 
         return [key, value];
     },
-
     /**
      * Extracts the key from an object. This is a default implementation, it may be overridden.
      * @private
@@ -101,7 +97,6 @@ Ext.define('Ext.util.HashMap', {
     getKey: function(o) {
         return o.id;
     },
-
     /**
      * Add a new item to the hash. An exception will be thrown if the key already exists.
      * @param {String} key The key of the new item.
@@ -110,7 +105,7 @@ Ext.define('Ext.util.HashMap', {
      */
     add: function(key, value) {
         var me = this,
-            data;
+                data;
 
         if (me.containsKey(key)) {
             throw new Error('This key already exists in the HashMap');
@@ -124,7 +119,6 @@ Ext.define('Ext.util.HashMap', {
         me.fireEvent('add', me, key, value);
         return value;
     },
-
     /**
      * Replaces an item in the hash. If the key doesn't exist, the
      * `{@link #method-add}` method will be used.
@@ -134,8 +128,8 @@ Ext.define('Ext.util.HashMap', {
      */
     replace: function(key, value) {
         var me = this,
-            map = me.map,
-            old;
+                map = me.map,
+                old;
 
         if (!me.containsKey(key)) {
             me.add(key, value);
@@ -145,7 +139,6 @@ Ext.define('Ext.util.HashMap', {
         me.fireEvent('replace', me, key, value, old);
         return value;
     },
-
     /**
      * Remove an item from the hash.
      * @param {Object} o The value of the item to remove.
@@ -158,7 +151,6 @@ Ext.define('Ext.util.HashMap', {
         }
         return false;
     },
-
     /**
      * Remove an item from the hash.
      * @param {String} key The key to remove.
@@ -166,7 +158,7 @@ Ext.define('Ext.util.HashMap', {
      */
     removeByKey: function(key) {
         var me = this,
-            value;
+                value;
 
         if (me.containsKey(key)) {
             value = me.map[key];
@@ -177,7 +169,6 @@ Ext.define('Ext.util.HashMap', {
         }
         return false;
     },
-
     /**
      * Retrieves an item with a particular key.
      * @param {String} key The key to lookup.
@@ -186,7 +177,6 @@ Ext.define('Ext.util.HashMap', {
     get: function(key) {
         return this.map[key];
     },
-
     /**
      * Removes all items from the hash.
      * @return {Ext.util.HashMap} this
@@ -200,7 +190,6 @@ Ext.define('Ext.util.HashMap', {
         }
         return me;
     },
-
     /**
      * Checks whether a key exists in the hash.
      * @param {String} key The key to check for.
@@ -209,7 +198,6 @@ Ext.define('Ext.util.HashMap', {
     containsKey: function(key) {
         return this.map[key] !== undefined;
     },
-
     /**
      * Checks whether a value exists in the hash.
      * @param {Object} value The value to check for.
@@ -218,7 +206,6 @@ Ext.define('Ext.util.HashMap', {
     contains: function(value) {
         return this.containsKey(this.findKey(value));
     },
-
     /**
      * Return all of the keys in the hash.
      * @return {Array} An array of keys.
@@ -226,7 +213,6 @@ Ext.define('Ext.util.HashMap', {
     getKeys: function() {
         return this.getArray(true);
     },
-
     /**
      * Return all of the values in the hash.
      * @return {Array} An array of values.
@@ -234,7 +220,6 @@ Ext.define('Ext.util.HashMap', {
     getValues: function() {
         return this.getArray(false);
     },
-
     /**
      * Gets either the keys/values in an array from the hash.
      * @private
@@ -243,8 +228,8 @@ Ext.define('Ext.util.HashMap', {
      */
     getArray: function(isKey) {
         var arr = [],
-            key,
-            map = this.map;
+                key,
+                map = this.map;
         for (key in map) {
             if (map.hasOwnProperty(key)) {
                 arr.push(isKey ? key : map[key]);
@@ -252,7 +237,6 @@ Ext.define('Ext.util.HashMap', {
         }
         return arr;
     },
-
     /**
      * Executes the specified function once for each item in the hash.
      *
@@ -267,8 +251,8 @@ Ext.define('Ext.util.HashMap', {
     each: function(fn, scope) {
         // copy items so they may be removed during iteration.
         var items = Ext.apply({}, this.map),
-            key,
-            length = this.length;
+                key,
+                length = this.length;
 
         scope = scope || this;
         for (key in items) {
@@ -280,15 +264,14 @@ Ext.define('Ext.util.HashMap', {
         }
         return this;
     },
-
     /**
      * Performs a shallow copy on this hash.
      * @return {Ext.util.HashMap} The new hash object.
      */
     clone: function() {
         var hash = new Ext.util.HashMap(),
-            map = this.map,
-            key;
+                map = this.map,
+                key;
 
         hash.suspendEvents();
         for (key in map) {
@@ -299,7 +282,6 @@ Ext.define('Ext.util.HashMap', {
         hash.resumeEvents();
         return hash;
     },
-
     /**
      * @private
      * Find the key for a value.
@@ -308,7 +290,7 @@ Ext.define('Ext.util.HashMap', {
      */
     findKey: function(value) {
         var key,
-            map = this.map;
+                map = this.map;
 
         for (key in map) {
             if (map.hasOwnProperty(key) && map[key] === value) {

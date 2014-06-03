@@ -4,11 +4,9 @@
 Ext.define('Ext.device.storage.HTML5.Database', {
     requires: ["Ext.device.storage.HTML5.SQLStatement"],
     db: null,
-
     constructor: function(config) {
         this.db = window.openDatabase(config.name, config.version, config.displayName, config.size);
     },
-
     getVersion: function() {
         if (this.db) {
             return this.db.version;
@@ -19,7 +17,6 @@ Ext.define('Ext.device.storage.HTML5.Database', {
 
         return null;
     },
-
     /**
      * @param {String/String[]/Object/Object[]/SQLStatement/SQLStatement[]} sql SQL Command to run with optional arguments and callbacks
      * @param {Function} success callback for successful transaction
@@ -42,7 +39,7 @@ Ext.define('Ext.device.storage.HTML5.Database', {
             Ext.each(sql, function(sqlStatement) {
                 if (Ext.isString(sqlStatement)) {
                     tx.executeSql(sqlStatement);
-                }else if(Ext.isObject(sqlStatement)) {
+                } else if (Ext.isObject(sqlStatement)) {
                     tx.executeSql(sqlStatement.sql, sqlStatement.arguments, sqlStatement.success, sqlStatement.failure);
                 }
             });

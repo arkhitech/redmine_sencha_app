@@ -4,19 +4,16 @@
  */
 Ext.define('Ext.carousel.Indicator', {
     extend: 'Ext.Component',
-    xtype : 'carouselindicator',
+    xtype: 'carouselindicator',
     alternateClassName: 'Ext.Carousel.Indicator',
-
     config: {
         /**
          * @cfg
          * @inheritdoc
          */
         baseCls: Ext.baseCSSPrefix + 'carousel-indicator',
-
         direction: 'horizontal'
     },
-
     /**
      * @event previous
      * Fires when this indicator is tapped on the left half
@@ -39,7 +36,6 @@ Ext.define('Ext.carousel.Indicator', {
             scope: this
         });
     },
-
     updateDirection: function(newDirection, oldDirection) {
         var baseCls = this.getBaseCls();
 
@@ -54,13 +50,11 @@ Ext.define('Ext.carousel.Indicator', {
             this.setBottom(null);
         }
     },
-
     addIndicator: function() {
         this.indicators.push(this.element.createChild({
             tag: 'span'
         }));
     },
-
     removeIndicator: function() {
         var indicators = this.indicators;
 
@@ -68,13 +62,12 @@ Ext.define('Ext.carousel.Indicator', {
             indicators.pop().destroy();
         }
     },
-
     setActiveIndex: function(index) {
         var indicators = this.indicators,
-            currentActiveIndex = this.activeIndex,
-            currentActiveItem = indicators[currentActiveIndex],
-            activeItem = indicators[index],
-            baseCls = this.getBaseCls();
+                currentActiveIndex = this.activeIndex,
+                currentActiveItem = indicators[currentActiveIndex],
+                activeItem = indicators[index],
+                baseCls = this.getBaseCls();
 
         if (currentActiveItem) {
             currentActiveItem.removeCls(baseCls, null, 'active');
@@ -88,14 +81,13 @@ Ext.define('Ext.carousel.Indicator', {
 
         return this;
     },
-
     // @private
     onTap: function(e) {
         var touch = e.touch,
-            box = this.element.getPageBox(),
-            centerX = box.left + (box.width / 2),
-            centerY = box.top + (box.height / 2),
-            direction = this.getDirection();
+                box = this.element.getPageBox(),
+                centerX = box.left + (box.width / 2),
+                centerY = box.top + (box.height / 2),
+                direction = this.getDirection();
 
         if ((direction === 'horizontal' && touch.pageX >= centerX) || (direction === 'vertical' && touch.pageY >= centerY)) {
             this.fireEvent('next', this);
@@ -104,12 +96,11 @@ Ext.define('Ext.carousel.Indicator', {
             this.fireEvent('previous', this);
         }
     },
-
     destroy: function() {
         var indicators = this.indicators,
-            i, ln, indicator;
+                i, ln, indicator;
 
-        for (i = 0,ln = indicators.length; i < ln; i++) {
+        for (i = 0, ln = indicators.length; i < ln; i++) {
             indicator = indicators[i];
             indicator.destroy();
         }

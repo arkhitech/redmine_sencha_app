@@ -53,7 +53,6 @@ Ext.define('Ext.device.notification.Abstract', {
 
         return config;
     },
-
     alert: function(config) {
         if (!config.message) {
             throw('[Ext.device.Notification#alert] You passed no message');
@@ -65,7 +64,6 @@ Ext.define('Ext.device.notification.Abstract', {
 
         return config;
     },
-
     confirm: function(config) {
         if (!config.message) {
             throw('[Ext.device.Notification#confirm] You passed no message');
@@ -104,11 +102,9 @@ Ext.define('Ext.device.notification.Abstract', {
 
         return config;
     },
-
     /**
      * Vibrates the device.
      */
     vibrate: Ext.emptyFn,
-
     beep: Ext.emptyFn
 });

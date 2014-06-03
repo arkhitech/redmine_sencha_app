@@ -51,7 +51,6 @@
 Ext.define('Ext.data.identifier.Uuid', {
     extend: 'Ext.data.identifier.Simple',
     alias: 'data.identifier.uuid',
-
     /**
      * Provides a way to determine if this identifier supports creating unique IDs. Proxies like {@link Ext.data.proxy.LocalStorage}
      * need the identifier to create unique IDs and will check this property.
@@ -60,7 +59,6 @@ Ext.define('Ext.data.identifier.Uuid', {
      * @private
      */
     isUnique: true,
-
     config: {
         /**
          * The id for this generator instance. By default all model instances share the same
@@ -68,21 +66,18 @@ Ext.define('Ext.data.identifier.Uuid', {
          * will be created for the Model.
          */
         id: undefined,
-
         /**
          * @property {Number/Object} salt
          * When created, this value is a 48-bit number. For computation, this value is split
          * into 32-bit parts and stored in an object with `hi` and `lo` properties.
          */
         salt: null,
-
         /**
          * @property {Number/Object} timestamp
          * When created, this value is a 60-bit number. For computation, this value is split
          * into 32-bit parts and stored in an object with `hi` and `lo` properties.
          */
         timestamp: null,
-
         /**
          * @cfg {Number} version
          * The Version of UUID. Supported values are:
@@ -94,21 +89,18 @@ Ext.define('Ext.data.identifier.Uuid', {
          */
         version: 4
     },
-
     applyId: function(id) {
         if (id === undefined) {
             return Ext.data.identifier.Uuid.Global;
         }
         return id;
     },
-
     constructor: function() {
         var me = this;
         me.callParent(arguments);
         me.parts = [];
         me.init();
     },
-
     /**
      * Reconfigures this generator given new config properties.
      */
@@ -116,43 +108,42 @@ Ext.define('Ext.data.identifier.Uuid', {
         this.setConfig(config);
         this.init();
     },
-
-    generate: function () {
+    generate: function() {
         var me = this,
-            parts = me.parts,
-            version = me.getVersion(),
-            salt = me.getSalt(),
-            time = me.getTimestamp();
+                parts = me.parts,
+                version = me.getVersion(),
+                salt = me.getSalt(),
+                time = me.getTimestamp();
 
         /*
-           The magic decoder ring (derived from RFC 4122 Section 4.2.2):
-
-           +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-           |                          time_low                             |
-           +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-           |           time_mid            |  ver  |        time_hi        |
-           +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-           |res|  clock_hi |   clock_low   |    salt 0   |M|     salt 1    |
-           +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-           |                         salt (2-5)                            |
-           +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-
-                     time_mid      clock_hi (low 6 bits)
-            time_low     | time_hi |clock_lo
-                |        |     |   || salt[0]
-                |        |     |   ||   | salt[1..5]
-                v        v     v   vv   v v
-                0badf00d-aced-1def-b123-dfad0badbeef
-                              ^    ^     ^
-                        version    |     multicast (low bit)
-                                   |
-                                reserved (upper 2 bits)
-        */
+         The magic decoder ring (derived from RFC 4122 Section 4.2.2):
+         
+         +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+         |                          time_low                             |
+         +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+         |           time_mid            |  ver  |        time_hi        |
+         +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+         |res|  clock_hi |   clock_low   |    salt 0   |M|     salt 1    |
+         +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+         |                         salt (2-5)                            |
+         +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+         
+         time_mid      clock_hi (low 6 bits)
+         time_low     | time_hi |clock_lo
+         |        |     |   || salt[0]
+         |        |     |   ||   | salt[1..5]
+         v        v     v   vv   v v
+         0badf00d-aced-1def-b123-dfad0badbeef
+         ^    ^     ^
+         version    |     multicast (low bit)
+         |
+         reserved (upper 2 bits)
+         */
         parts[0] = me.toHex(time.lo, 8);
         parts[1] = me.toHex(time.hi & 0xFFFF, 4);
         parts[2] = me.toHex(((time.hi >>> 16) & 0xFFF) | (version << 12), 4);
         parts[3] = me.toHex(0x80 | ((me.clockSeq >>> 8) & 0x3F), 2) +
-                   me.toHex(me.clockSeq & 0xFF, 2);
+                me.toHex(me.clockSeq & 0xFF, 2);
         parts[4] = me.toHex(salt.hi, 4) + me.toHex(salt.lo, 8);
 
         if (version == 4) {
@@ -168,21 +159,20 @@ Ext.define('Ext.data.identifier.Uuid', {
 
         return parts.join('-').toLowerCase();
     },
-
     /**
      * @private
      */
-    init: function () {
+    init: function() {
         var me = this,
-            salt = me.getSalt(),
-            time = me.getTimestamp();
+                salt = me.getSalt(),
+                time = me.getTimestamp();
 
         if (me.getVersion() == 4) {
             // See RFC 4122 (Secion 4.4)
             //   o  If the state was unavailable (e.g., non-existent or corrupted),
             //      or the saved node ID is different than the current node ID,
             //      generate a random clock sequence value.
-            me.clockSeq = me.rand(0, me.twoPow14-1);
+            me.clockSeq = me.rand(0, me.twoPow14 - 1);
 
             if (!salt) {
                 salt = {};
@@ -195,10 +185,10 @@ Ext.define('Ext.data.identifier.Uuid', {
             }
 
             // See RFC 4122 (Secion 4.4)
-            salt.lo = me.rand(0, me.twoPow32-1);
-            salt.hi = me.rand(0, me.twoPow16-1);
-            time.lo = me.rand(0, me.twoPow32-1);
-            time.hi = me.rand(0, me.twoPow28-1);
+            salt.lo = me.rand(0, me.twoPow32 - 1);
+            salt.hi = me.rand(0, me.twoPow16 - 1);
+            time.lo = me.rand(0, me.twoPow32 - 1);
+            time.hi = me.rand(0, me.twoPow28 - 1);
         } else {
             // this is run only once per-instance
             me.setSalt(me.split(me.getSalt()));
@@ -209,7 +199,6 @@ Ext.define('Ext.data.identifier.Uuid', {
             me.getSalt().hi |= 0x100;
         }
     },
-
     /**
      * Some private values used in methods on this class.
      * @private
@@ -218,7 +207,6 @@ Ext.define('Ext.data.identifier.Uuid', {
     twoPow16: Math.pow(2, 16),
     twoPow28: Math.pow(2, 28),
     twoPow32: Math.pow(2, 32),
-
     /**
      * Converts a value into a hexadecimal value. Also allows for a maximum length
      * of the returned value.
@@ -235,7 +223,6 @@ Ext.define('Ext.data.identifier.Uuid', {
         }
         return ret;
     },
-
     /**
      * Generates a random value with between a low and high.
      * @param {Number} low
@@ -246,14 +233,13 @@ Ext.define('Ext.data.identifier.Uuid', {
         var v = Math.random() * (high - low + 1);
         return Math.floor(v) + low;
     },
-
     /**
      * Splits a number into a low and high value.
      * @param {Number} bignum
      * @private
      */
     split: function(bignum) {
-        if (typeof(bignum) == 'number') {
+        if (typeof (bignum) == 'number') {
             var hi = Math.floor(bignum / this.twoPow32);
             return {
                 lo: Math.floor(bignum - hi * this.twoPow32),

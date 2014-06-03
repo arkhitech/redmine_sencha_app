@@ -34,20 +34,18 @@
  */
 Ext.define('Ext.device.Contacts', {
     singleton: true,
-
     requires: [
         'Ext.device.Communicator',
         'Ext.device.contacts.Sencha',
         'Ext.device.contacts.Cordova'
     ],
-
     constructor: function() {
         var browserEnv = Ext.browser.is;
 
         if (browserEnv.WebView) {
             if (browserEnv.Cordova) {
                 return Ext.create('Ext.device.contacts.Cordova');
-            }else if (browserEnv.Sencha) {
+            } else if (browserEnv.Sencha) {
                 return Ext.create('Ext.device.contacts.Sencha');
             }
         }

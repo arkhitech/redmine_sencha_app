@@ -182,8 +182,7 @@
 Ext.define('Ext.data.reader.Json', {
     extend: 'Ext.data.reader.Reader',
     alternateClassName: 'Ext.data.JsonReader',
-    alias : 'reader.json',
-
+    alias: 'reader.json',
     config: {
         /**
          * @cfg {String} [record=null]
@@ -191,7 +190,6 @@ Ext.define('Ext.data.reader.Json', {
          * JsonReader intro docs for more details. This is not often needed.
          */
         record: null,
-
         /**
          * @cfg {Boolean} [useSimpleAccessors=false]
          * `true` to ensure that field names/mappings are treated as literals when reading values. For
@@ -201,9 +199,7 @@ Ext.define('Ext.data.reader.Json', {
          */
         useSimpleAccessors: false
     },
-
     objectRe: /[\[\.]/,
-
     // @inheritdoc
     getResponseData: function(response) {
         var responseText = response;
@@ -242,11 +238,10 @@ Ext.define('Ext.data.reader.Json', {
 
         return data;
     },
-
     // @inheritdoc
     buildExtractors: function() {
         var me = this,
-            root = me.getRootProperty();
+                root = me.getRootProperty();
 
         me.callParent(arguments);
 
@@ -256,7 +251,6 @@ Ext.define('Ext.data.reader.Json', {
             delete me.rootAccessor;
         }
     },
-
     /**
      * We create this method because `root` is now a config so `getRoot` is already defined, but in the old
      * data package `getRoot` was passed a data argument and it would return the data inside of the `root`
@@ -286,7 +280,6 @@ Ext.define('Ext.data.reader.Json', {
             return data;
         }
     },
-
     /**
      * @private
      * We're just preparing the data for the superclass by pulling out the record objects we want. If a {@link #record}
@@ -296,8 +289,8 @@ Ext.define('Ext.data.reader.Json', {
      */
     extractData: function(root) {
         var recordName = this.getRecord(),
-            data = [],
-            length, i;
+                data = [],
+                length, i;
 
         if (recordName) {
             length = root.length;
@@ -315,7 +308,6 @@ Ext.define('Ext.data.reader.Json', {
         }
         return this.callParent([data]);
     },
-
     /**
      * @private
      * Returns an accessor function for the given property string. Gives support for properties such as the following:
@@ -345,7 +337,6 @@ Ext.define('Ext.data.reader.Json', {
             };
         };
     }(),
-
     /**
      * @private
      * Returns an accessor expression for the passed Field. Gives support for properties such as the following:
@@ -355,11 +346,11 @@ Ext.define('Ext.data.reader.Json', {
      * This is used by buildExtractors to create optimized on extractor function which converts raw data into model instances.
      */
     createFieldAccessExpression: function(field, fieldVarName, dataName) {
-        var me     = this,
-            re     = me.objectRe,
-            hasMap = (field.getMapping() !== null),
-            map    = hasMap ? field.getMapping() : field.getName(),
-            result, operatorSearch;
+        var me = this,
+                re = me.objectRe,
+                hasMap = (field.getMapping() !== null),
+                map = hasMap ? field.getMapping() : field.getName(),
+                result, operatorSearch;
 
         if (typeof map === 'function') {
             result = fieldVarName + '.getMapping()(' + dataName + ', this)';

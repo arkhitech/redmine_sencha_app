@@ -10,7 +10,7 @@ Ext.define('RedmineApp.view.Issue', {
         'Ext.form.FieldSet',
         'Ext.MessageBox',
         'Ext.field.Select',
-        'Ext.field.Toggle'       
+        'Ext.field.Toggle'
     ],
     config: {
         itemId: 'issue-panel',

@@ -3,9 +3,7 @@
  */
 Ext.define('Ext.fx.animation.Cube', {
     extend: 'Ext.fx.animation.Abstract',
-
     alias: 'animation.cube',
-
     config: {
         /**
          * @cfg
@@ -14,18 +12,14 @@ Ext.define('Ext.fx.animation.Cube', {
         before: {
 //            'transform-style': 'preserve-3d'
         },
-
         after: {},
-
         /**
          * @cfg {String} direction The direction of which the slide animates
          * @accessor
          */
         direction: 'right',
-
         out: false
     },
-
 //    getData: function() {
 //        var to = this.getTo(),
 //            from = this.getFrom(),
@@ -110,25 +104,25 @@ Ext.define('Ext.fx.animation.Cube', {
 
     getData: function() {
         var to = this.getTo(),
-            from = this.getFrom(),
-            before = this.getBefore(),
-            after = this.getAfter(),
-            out  = this.getOut(),
-            direction  = this.getDirection(),
-            el = this.getElement(),
-            elW = el.getWidth(),
-            elH = el.getHeight(),
-            origin = out ? '100% 100%' : '0% 0%',
-            fromOpacity = 1,
-            toOpacity = 1,
-            transformFrom = {
-                rotateY: 0,
-                translateZ: 0
-            },
-            transformTo = {
-                rotateY: 0,
-                translateZ: 0
-            };
+                from = this.getFrom(),
+                before = this.getBefore(),
+                after = this.getAfter(),
+                out = this.getOut(),
+                direction = this.getDirection(),
+                el = this.getElement(),
+                elW = el.getWidth(),
+                elH = el.getHeight(),
+                origin = out ? '100% 100%' : '0% 0%',
+                fromOpacity = 1,
+                toOpacity = 1,
+                transformFrom = {
+                    rotateY: 0,
+                    translateZ: 0
+                },
+        transformTo = {
+            rotateY: 0,
+            translateZ: 0
+        };
 
         if (direction == "left" || direction == "right") {
             if (out) {

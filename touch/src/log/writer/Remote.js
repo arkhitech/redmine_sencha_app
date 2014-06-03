@@ -1,21 +1,16 @@
 //<feature logger>
 Ext.define('Ext.log.writer.Remote', {
     extend: 'Ext.log.writer.Writer',
-
     requires: [
         'Ext.Ajax'
     ],
-
     config: {
         batchSendDelay: 100,
         onFailureRetryDelay: 500,
         url: ''
     },
-
     isSending: false,
-
     sendingTimer: null,
-
     constructor: function() {
         this.queue = [];
 
@@ -23,7 +18,6 @@ Ext.define('Ext.log.writer.Remote', {
 
         return this.callParent(arguments);
     },
-
     doWrite: function(event) {
         var queue = this.queue;
         queue.push(event.message);
@@ -32,10 +26,9 @@ Ext.define('Ext.log.writer.Remote', {
             this.sendingTimer = setTimeout(this.send, this.getBatchSendDelay());
         }
     },
-
     send: function() {
         var queue = this.queue,
-            messages = queue.slice();
+                messages = queue.slice();
 
         queue.length = 0;
 
@@ -45,7 +38,6 @@ Ext.define('Ext.log.writer.Remote', {
             this.doSend(messages);
         }
     },
-
     doSend: function(messages) {
         var me = this;
 
@@ -57,7 +49,7 @@ Ext.define('Ext.log.writer.Remote', {
             params: {
                 messages: messages.join("\n")
             },
-            success: function(){
+            success: function() {
                 me.isSending = false;
                 me.send();
             },

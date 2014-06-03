@@ -15,36 +15,32 @@ Ext.define("Ext.util.Sortable", {
      * @readonly
      */
     isSortable: true,
-    
     mixinConfig: {
         hooks: {
             destroy: 'destroy'
         }
     },
-    
     /**
      * @property {String} defaultSortDirection
      * The default sort direction to use if one is not specified.
      */
     defaultSortDirection: "ASC",
-    
     requires: [
         'Ext.util.Sorter'
     ],
-
     /**
      * @property {String} sortRoot
      * The property in each item that contains the data to sort.
-     */    
-    
+     */
+
     /**
      * Performs initialization of this mixin. Component classes using this mixin should call this method during their
      * own initialization.
      */
     initSortable: function() {
         var me = this,
-            sorters = me.sorters;
-        
+                sorters = me.sorters;
+
         /**
          * @property {Ext.util.MixedCollection} sorters
          * The collection of {@link Ext.util.Sorter Sorters} currently applied to this Store
@@ -52,12 +48,11 @@ Ext.define("Ext.util.Sortable", {
         me.sorters = Ext.create('Ext.util.AbstractMixedCollection', false, function(item) {
             return item.id || item.property;
         });
-        
+
         if (sorters) {
             me.sorters.addAll(me.decodeSorters(sorters));
         }
     },
-
     /**
      * Sorts the data in the Store by one or more of its properties. Example usage:
      *
@@ -98,9 +93,9 @@ Ext.define("Ext.util.Sortable", {
      */
     sort: function(sorters, direction, where, doSort) {
         var me = this,
-            sorter, sorterFn,
-            newSorters;
-        
+                sorter, sorterFn,
+                newSorters;
+
         if (Ext.isArray(sorters)) {
             doSort = where;
             where = direction;
@@ -116,7 +111,7 @@ Ext.define("Ext.util.Sortable", {
 
             if (!sorter) {
                 sorter = {
-                    property : sorters,
+                    property: sorters,
                     direction: direction
                 };
                 newSorters = [sorter];
@@ -128,13 +123,13 @@ Ext.define("Ext.util.Sortable", {
                 sorter.setDirection(direction);
             }
         }
-        
+
         if (newSorters && newSorters.length) {
             newSorters = me.decodeSorters(newSorters);
             if (Ext.isString(where)) {
                 if (where === 'prepend') {
                     sorters = me.sorters.clone().items;
-                    
+
                     me.sorters.clear();
                     me.sorters.addAll(newSorters);
                     me.sorters.addAll(sorters);
@@ -147,38 +142,36 @@ Ext.define("Ext.util.Sortable", {
                 me.sorters.clear();
                 me.sorters.addAll(newSorters);
             }
-            
+
             if (doSort !== false) {
                 me.onBeforeSort(newSorters);
             }
         }
-        
+
         if (doSort !== false) {
             sorters = me.sorters.items;
             if (sorters.length) {
                 //construct an amalgamated sorter function which combines all of the Sorters passed
                 sorterFn = function(r1, r2) {
                     var result = sorters[0].sort(r1, r2),
-                        length = sorters.length,
-                        i;
+                            length = sorters.length,
+                            i;
 
-                        //if we have more than one sorter, OR any additional sorter functions together
-                        for (i = 1; i < length; i++) {
-                            result = result || sorters[i].sort.call(this, r1, r2);
-                        }
+                    //if we have more than one sorter, OR any additional sorter functions together
+                    for (i = 1; i < length; i++) {
+                        result = result || sorters[i].sort.call(this, r1, r2);
+                    }
 
                     return result;
                 };
 
-                me.doSort(sorterFn);                
+                me.doSort(sorterFn);
             }
         }
-        
+
         return sorters;
     },
-    
     onBeforeSort: Ext.emptyFn,
-        
     /**
      * @private
      * Normalizes an array of sorter objects, ensuring that they are all {@link Ext.util.Sorter} instances.
@@ -195,10 +188,10 @@ Ext.define("Ext.util.Sortable", {
         }
 
         var length = sorters.length,
-            Sorter = Ext.util.Sorter,
-            fields = this.model ? this.model.prototype.fields : null,
-            field,
-            config, i;
+                Sorter = Ext.util.Sorter,
+                fields = this.model ? this.model.prototype.fields : null,
+                field,
+                config, i;
 
         for (i = 0; i < length; i++) {
             config = sorters[i];
@@ -209,9 +202,9 @@ Ext.define("Ext.util.Sortable", {
                         property: config
                     };
                 }
-                
+
                 Ext.applyIf(config, {
-                    root     : this.sortRoot,
+                    root: this.sortRoot,
                     direction: "ASC"
                 });
 
@@ -237,12 +230,10 @@ Ext.define("Ext.util.Sortable", {
 
         return sorters;
     },
-    
     getSorters: function() {
         return this.sorters.items;
     },
-    
-    destroy: function () {
+    destroy: function() {
         this.callSuper();
         Ext.destroy(this.sorters);
     }

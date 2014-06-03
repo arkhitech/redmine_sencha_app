@@ -7,35 +7,25 @@
  */
 Ext.define('Ext.direct.Event', {
     alias: 'direct.event',
-
     requires: ['Ext.direct.Manager'],
-
     config: {
         status: true,
-
         /**
          * @cfg {Object} data The raw data for this event.
          * @accessor
          */
         data: null,
-
         /**
          * @cfg {String} name The name of this Event.
          * @accessor
          */
         name: 'event',
-
         xhr: null,
-
         code: null,
-
         message: '',
-
         result: null,
-
         transaction: null
     },
-
     constructor: function(config) {
         this.initConfig(config)
     }

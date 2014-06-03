@@ -7,8 +7,7 @@ Ext.define('Ext.device.splashscreen.Cordova', {
     show: function() {
         navigator.splashscreen.show();
     },
-
-    hide: function () {
+    hide: function() {
         navigator.splashscreen.hide();
     }
 });

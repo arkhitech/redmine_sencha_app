@@ -95,6 +95,5 @@ Ext.define('Ext.chart.series.CandleStick', {
          */
         closeField: null
     },
-
     fieldCategoryY: ['Open', 'High', 'Low', 'Close']
 });

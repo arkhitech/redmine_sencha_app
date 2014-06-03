@@ -3,7 +3,6 @@
  */
 Ext.define('Ext.device.geolocation.Sencha', {
     extend: 'Ext.device.geolocation.Abstract',
-
     getCurrentPosition: function(config) {
         config = this.callParent([config]);
 
@@ -26,7 +25,6 @@ Ext.define('Ext.device.geolocation.Sencha', {
 
         return config;
     },
-
     watchPosition: function(config) {
         config = this.callParent([config]);
 
@@ -49,7 +47,6 @@ Ext.define('Ext.device.geolocation.Sencha', {
 
         return config;
     },
-
     clearWatch: function() {
         Ext.device.Communicator.send({
             command: 'Geolocation#clearWatch'

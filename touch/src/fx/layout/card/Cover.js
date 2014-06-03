@@ -3,12 +3,9 @@
  */
 Ext.define('Ext.fx.layout.card.Cover', {
     extend: 'Ext.fx.layout.card.Style',
-
     alias: 'fx.layout.card.cover',
-
     config: {
         reverse: null,
-
         inAnimation: {
             before: {
                 'z-index': 100
@@ -30,7 +27,6 @@ Ext.define('Ext.fx.layout.card.Cover', {
             out: true
         }
     },
-
     updateReverse: function(reverse) {
         this.getInAnimation().setReverse(reverse);
         this.getOutAnimation().setReverse(reverse);

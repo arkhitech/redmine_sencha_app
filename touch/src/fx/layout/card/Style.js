@@ -2,13 +2,10 @@
  * @private
  */
 Ext.define('Ext.fx.layout.card.Style', {
-
     extend: 'Ext.fx.layout.card.Abstract',
-
     requires: [
         'Ext.fx.Animation'
     ],
-
     config: {
         inAnimation: {
             before: {
@@ -17,13 +14,11 @@ Ext.define('Ext.fx.layout.card.Style', {
             preserveEndState: false,
             replacePrevious: true
         },
-
         outAnimation: {
             preserveEndState: false,
             replacePrevious: true
         }
     },
-
     constructor: function(config) {
         var inAnimation, outAnimation;
 
@@ -37,22 +32,18 @@ Ext.define('Ext.fx.layout.card.Style', {
         inAnimation.on('animationend', 'incrementEnd', this);
         outAnimation.on('animationend', 'incrementEnd', this);
     },
-
     updateDirection: function(direction) {
         this.getInAnimation().setDirection(direction);
         this.getOutAnimation().setDirection(direction);
     },
-
     updateDuration: function(duration) {
         this.getInAnimation().setDuration(duration);
         this.getOutAnimation().setDuration(duration);
     },
-
     updateReverse: function(reverse) {
         this.getInAnimation().setReverse(reverse);
         this.getOutAnimation().setReverse(reverse);
     },
-
     incrementEnd: function() {
         this.endAnimationCounter++;
 
@@ -61,27 +52,22 @@ Ext.define('Ext.fx.layout.card.Style', {
             this.fireEvent('animationend', this);
         }
     },
-
     applyInAnimation: function(animation, inAnimation) {
         return Ext.factory(animation, Ext.fx.Animation, inAnimation);
     },
-
     applyOutAnimation: function(animation, outAnimation) {
         return Ext.factory(animation, Ext.fx.Animation, outAnimation);
     },
-
     updateInAnimation: function(animation) {
         animation.setScope(this);
     },
-
     updateOutAnimation: function(animation) {
         animation.setScope(this);
     },
-
     onActiveItemChange: function(cardLayout, newItem, oldItem, options, controller) {
         var inAnimation = this.getInAnimation(),
-            outAnimation = this.getOutAnimation(),
-            inElement, outElement;
+                outAnimation = this.getOutAnimation(),
+                inElement, outElement;
 
         if (newItem && oldItem && oldItem.isPainted()) {
             inElement = newItem.renderElement;
@@ -107,8 +93,7 @@ Ext.define('Ext.fx.layout.card.Style', {
             controller.pause();
         }
     },
-
-    destroy:  function () {
+    destroy: function() {
         Ext.destroy(this.getInAnimation(), this.getOutAnimation());
 
         this.callParent(arguments);

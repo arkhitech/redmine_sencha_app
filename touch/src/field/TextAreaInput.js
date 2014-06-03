@@ -3,7 +3,6 @@
  */
 Ext.define('Ext.field.TextAreaInput', {
     extend: 'Ext.field.Input',
-    xtype : 'textareainput',
-
+    xtype: 'textareainput',
     tag: 'textarea'
 });

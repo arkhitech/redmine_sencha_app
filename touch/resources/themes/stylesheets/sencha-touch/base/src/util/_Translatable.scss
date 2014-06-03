@@ -11,14 +11,14 @@
 }
 
 .x-translatable-hboxfix {
-  position: absolute;
-  min-width: 100%;
-  top: 0;
-  left: 0;
+    position: absolute;
+    min-width: 100%;
+    top: 0;
+    left: 0;
 
-  > .x-translatable {
-      position: relative !important;
-  }
+    > .x-translatable {
+        position: relative !important;
+    }
 }
 
 .x-translatable-container {

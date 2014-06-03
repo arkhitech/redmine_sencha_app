@@ -7,59 +7,49 @@
  */
 Ext.define('Ext.dataview.component.SimpleListItem', {
     extend: 'Ext.Component',
-    xtype : 'simplelistitem',
-
+    xtype: 'simplelistitem',
     config: {
         baseCls: Ext.baseCSSPrefix + 'list-item',
-
         disclosure: {
             xtype: 'component',
             cls: 'x-list-disclosure',
             hidden: true
         },
-
         header: {
             xtype: 'component',
             cls: 'x-list-header',
             html: ' '
         },
-
         /*
          * @private dataview
          */
         dataview: null,
-
         /**
          * @cfg {Ext.data.Model} record The model instance of this ListTplItem. It is controlled by the List.
          * @accessor
          */
         record: null
     },
-
     initialize: function() {
         this.element.addCls(this.getBaseCls() + '-tpl');
     },
-
     applyHeader: function(header) {
         if (header && !header.isComponent) {
             header = Ext.factory(header, Ext.Component, this.getHeader());
         }
         return header;
     },
-
     updateHeader: function(header, oldHeader) {
         if (oldHeader) {
             oldHeader.destroy();
         }
     },
-
     applyDisclosure: function(disclosure) {
         if (disclosure && !disclosure.isComponent) {
             disclosure = Ext.factory(disclosure, Ext.Component, this.getDisclosure());
         }
         return disclosure;
     },
-
     updateDisclosure: function(disclosure, oldDisclosure) {
         if (disclosure) {
             this.element.appendChild(disclosure.renderElement);
@@ -67,12 +57,11 @@ Ext.define('Ext.dataview.component.SimpleListItem', {
             oldDisclosure.destroy();
         }
     },
-
     updateRecord: function(record) {
         var me = this,
-            dataview = me.dataview || this.getDataview(),
-            data = record && dataview.prepareData(record.getData(true), dataview.getStore().indexOf(record), record),
-            disclosure = this.getDisclosure();
+                dataview = me.dataview || this.getDataview(),
+                data = record && dataview.prepareData(record.getData(true), dataview.getStore().indexOf(record), record),
+                disclosure = this.getDisclosure();
 
         me.updateData(data || null);
 
@@ -81,7 +70,6 @@ Ext.define('Ext.dataview.component.SimpleListItem', {
             disclosure[(data.hasOwnProperty(disclosureProperty) && data[disclosureProperty] === false) ? 'hide' : 'show']();
         }
     },
-
     destroy: function() {
         Ext.destroy(this.getHeader(), this.getDisclosure());
         this.callParent(arguments);

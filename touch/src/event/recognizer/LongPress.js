@@ -5,17 +5,13 @@
  */
 Ext.define('Ext.event.recognizer.LongPress', {
     extend: 'Ext.event.recognizer.SingleTouch',
-
     inheritableStatics: {
         DURATION_NOT_ENOUGH: 0x20
     },
-
     config: {
         minDuration: 1000
     },
-
     handledEvents: ['longpress'],
-
     /**
      * @member Ext.dom.Element
      * @event longpress
@@ -41,7 +37,6 @@ Ext.define('Ext.event.recognizer.LongPress', {
 
         this.isLongPress = true;
     },
-
     onTouchStart: function(e) {
         var me = this;
 
@@ -55,17 +50,14 @@ Ext.define('Ext.event.recognizer.LongPress', {
             me.fireLongPress(e);
         }, this.getMinDuration());
     },
-
     onTouchMove: function() {
         return this.fail(this.self.TOUCH_MOVED);
     },
-
     onTouchEnd: function() {
         if (!this.isLongPress) {
             return this.fail(this.self.DURATION_NOT_ENOUGH);
         }
     },
-
     fail: function() {
         clearTimeout(this.timer);
 
@@ -75,7 +67,6 @@ Ext.define('Ext.event.recognizer.LongPress', {
 }, function() {
     this.override({
         handledEvents: ['longpress', 'taphold'],
-
         fire: function(eventName) {
             if (eventName === 'longpress') {
                 var args = Array.prototype.slice.call(arguments);

@@ -23,7 +23,7 @@ $form-clear-size: 2.2em;
         border-bottom: 1px solid $foreground-color;
 
         &:before,
-        &:after {
+            &:after {
             content: '';
             position: absolute;
             left: 0;
@@ -99,37 +99,37 @@ $form-clear-size: 2.2em;
 }
 
 .x-input-el {
-  font-size: 16px;
-  background: transparent;
-  padding: .4em;
-  min-height: $form-field-height;
-  border-width: 0;
-  -webkit-appearance: none;
-  color: $primary-text-color;
-  -webkit-text-fill-color: $primary-text-color !important;
+    font-size: 16px;
+    background: transparent;
+    padding: .4em;
+    min-height: $form-field-height;
+    border-width: 0;
+    -webkit-appearance: none;
+    color: $primary-text-color;
+    -webkit-text-fill-color: $primary-text-color !important;
 }
 
 
 .x-field-search .x-input-el  {
-  padding: .4em .4em .4em 1em;
+    padding: .4em .4em .4em 1em;
 }
 
 .x-ie .x-input-el {
-  background: transparent;
+    background: transparent;
 }
 
 .x-item-disabled {
-  .x-form-label,
-  input,
-  .x-input-el,
-  .x-spinner-body,
-  select,
-  textarea,
-  .x-field-clear-container {
-    color: #b3b3b3;
-    -webkit-text-fill-color: #b3b3b3 !important;
-    pointer-events: none;
-  }
+    .x-form-label,
+    input,
+    .x-input-el,
+    .x-spinner-body,
+    select,
+    textarea,
+    .x-field-clear-container {
+        color: #b3b3b3;
+        -webkit-text-fill-color: #b3b3b3 !important;
+        pointer-events: none;
+    }
 }
 
 .x-item-disabled ::-webkit-input-placeholder {
@@ -149,15 +149,15 @@ $form-clear-size: 2.2em;
 .x-field-search,
 .x-field-select,
 .x-field-number {
-  &.x-item-disabled {
-    .x-component-outer {
-      border-bottom-color: $secondary-color;
+    &.x-item-disabled {
+        .x-component-outer {
+            border-bottom-color: $secondary-color;
 
-      &:before {
-        background: $secondary-color;
-      }
+            &:before {
+                background: $secondary-color;
+            }
+        }
     }
-  }
 }
 
 .x-toolbar {

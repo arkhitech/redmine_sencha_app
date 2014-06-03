@@ -12,11 +12,10 @@ Ext.define("Ext.draw.modifier.Target", {
     statics: {
         uniqueId: 0
     },
-
     /**
      * @inheritdoc
      */
-    prepareAttributes: function (attr) {
+    prepareAttributes: function(attr) {
         if (this._previous) {
             this._previous.prepareAttributes(attr);
         }
@@ -34,19 +33,18 @@ Ext.define("Ext.draw.modifier.Target", {
             attr.inverseMatrix = new Ext.draw.Matrix();
         }
     },
-
     /**
      * @private
      * Applies the appropriate dirty flags from the modifier changes.
      * @param {Object} attr The source attributes.
      * @param {Object} changes The modifier changes.
      */
-    setDirtyFlags: function (attr, changes) {
+    setDirtyFlags: function(attr, changes) {
         Ext.apply(attr, changes);
         var sprite = this._sprite,
-            dirtyTriggers = sprite.self.def._dirtyTriggers,
-            name, dirtyFlags = attr.dirtyFlags, flags, any = false,
-            triggers, trigger, i, ln, canvasNames;
+                dirtyTriggers = sprite.self.def._dirtyTriggers,
+                name, dirtyFlags = attr.dirtyFlags, flags, any = false,
+                triggers, trigger, i, ln, canvasNames;
 
         for (name in changes) {
             if ((triggers = dirtyTriggers[name])) {
@@ -90,19 +88,17 @@ Ext.define("Ext.draw.modifier.Target", {
 
         sprite.setDirty(true);
     },
-
     /**
      * @inheritdoc
      */
-    popUp: function (attributes, changes) {
+    popUp: function(attributes, changes) {
         this.setDirtyFlags(attributes, changes);
         this._sprite.updateDirtyFlags(attributes);
     },
-
     /**
      * @inheritdoc
      */
-    pushDown: function (attr, changes) {
+    pushDown: function(attr, changes) {
         if (this._previous) {
             changes = this._previous.pushDown(attr, changes);
         }

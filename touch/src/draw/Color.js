@@ -1,4 +1,4 @@
-(function () {
+(function() {
     /**
      * Represents an RGB color and provides helper functions on it e.g. to get
      * color components in HSL color space.
@@ -10,7 +10,6 @@
             rgbaToHexRe: /\s*rgba\((\d+),\s*(\d+),\s*(\d+),\s*([\.\d]+)\)/,
             hexRe: /\s*#([0-9a-fA-F][0-9a-fA-F]?)([0-9a-fA-F][0-9a-fA-F]?)([0-9a-fA-F][0-9a-fA-F]?)\s*/
         },
-
         isColor: true,
         /**
          * @cfg {Number} lightnessFactor
@@ -18,7 +17,6 @@
          * The default factor to compute the lighter or darker color.
          */
         lightnessFactor: 0.2,
-
         /**
          * @constructor
          * @param {Number} red Red component (0..255)
@@ -26,11 +24,10 @@
          * @param {Number} blue Blue component (0..255)
          * @param {Number} [alpha=1] (optional) Alpha component (0..1)
          */
-        constructor: function (red, green, blue, alpha) {
+        constructor: function(red, green, blue, alpha) {
             this.setRGB(red, green, blue, alpha);
         },
-
-        setRGB: function (red, green, blue, alpha) {
+        setRGB: function(red, green, blue, alpha) {
             var me = this;
             me.r = Math.min(255, Math.max(0, red));
             me.g = Math.min(255, Math.max(0, green));
@@ -41,7 +38,6 @@
                 me.a = Math.min(1, Math.max(0, alpha));
             }
         },
-
         /**
          * Returns the gray value (0 to 255) of the color.
          *
@@ -49,27 +45,26 @@
          *
          * @return {Number}
          */
-        getGrayscale: function () {
+        getGrayscale: function() {
             // http://en.wikipedia.org/wiki/Grayscale#Converting_color_to_grayscale
             return this.r * 0.3 + this.g * 0.59 + this.b * 0.11;
         },
-        
         /**
          * Get the equivalent HSL components of the color.
          * @param {Array} [target] Optional array to receive the values.
          * @return {Array}
          */
-        getHSL: function (target) {
+        getHSL: function(target) {
             var me = this,
-                r = me.r / 255,
-                g = me.g / 255,
-                b = me.b / 255,
-                max = Math.max(r, g, b),
-                min = Math.min(r, g, b),
-                delta = max - min,
-                h,
-                s = 0,
-                l = 0.5 * (max + min);
+                    r = me.r / 255,
+                    g = me.g / 255,
+                    b = me.b / 255,
+                    max = Math.max(r, g, b),
+                    min = Math.min(r, g, b),
+                    delta = max - min,
+                    h,
+                    s = 0,
+                    l = 0.5 * (max + min);
 
             // min==max means achromatic (hue is undefined)
             if (min !== max) {
@@ -97,7 +92,6 @@
             }
             return target;
         },
-
         /**
          * Set current color based on the specified HSL values.
          *
@@ -106,11 +100,11 @@
          * @param {Number} l Lightness component (0..1)
          * @return this
          */
-        setHSL: function (h, s, l) {
+        setHSL: function(h, s, l) {
             var c, x, m,
-                abs = Math.abs,
-                floor = Math.floor;
-            h = (h % 360 + 360 ) % 360;
+                    abs = Math.abs,
+                    floor = Math.floor;
+            h = (h % 360 + 360) % 360;
             s = s > 1 ? 1 : s < 0 ? 0 : s;
             l = l > 1 ? 1 : l < 0 ? 0 : l;
             if (s === 0 || h === null) {
@@ -152,13 +146,12 @@
             }
             return this;
         },
-
         /**
          * Return a new color that is lighter than this color.
          * @param {Number} [factor=0.2] Lighter factor (0..1).
          * @return {Ext.draw.Color}
          */
-        createLighter: function (factor) {
+        createLighter: function(factor) {
             var hsl = this.getHSL();
             factor = factor || this.lightnessFactor;
             // COMPAT Ext.util.Numbers -> Ext.Number
@@ -170,28 +163,26 @@
             }
             return Ext.draw.Color.fromHSL(hsl[0], hsl[1], hsl[2]);
         },
-
         /**
          * Return a new color that is darker than this color.
          * @param {Number} [factor=0.2] Darker factor (0..1).
          * @return {Ext.draw.Color}
          */
-        createDarker: function (factor) {
+        createDarker: function(factor) {
             factor = factor || this.lightnessFactor;
             return this.createLighter(-factor);
         },
-
         /**
          * Return the color in the hex format, i.e. '#rrggbb'.
          * @return {String}
          */
-        toString: function () {
+        toString: function() {
             if (this.a === 1) {
                 var me = this,
-                    round = Math.round,
-                    r = round(me.r).toString(16),
-                    g = round(me.g).toString(16),
-                    b = round(me.b).toString(16);
+                        round = Math.round,
+                        r = round(me.r).toString(16),
+                        g = round(me.g).toString(16),
+                        b = round(me.b).toString(16);
                 r = (r.length === 1) ? '0' + r : r;
                 g = (g.length === 1) ? '0' + g : g;
                 b = (b.length === 1) ? '0' + b : b;
@@ -200,7 +191,6 @@
                 return 'rgba(' + [Math.round(this.r), Math.round(this.g), Math.round(this.b), this.a.toFixed(15)].join(',') + ')';
             }
         },
-
         /**
          * Convert a color to hexadecimal format.
          *
@@ -208,7 +198,7 @@
          * Can also be an Array, in this case the function handles the first member.
          * @return {String} The color in hexadecimal format.
          */
-        toHex: function (color) {
+        toHex: function(color) {
             if (Ext.isArray(color)) {
                 color = color[0];
             }
@@ -222,16 +212,15 @@
 
             if (Ext.isArray(digits)) {
                 var red = parseInt(digits[2], 10),
-                    green = parseInt(digits[3], 10),
-                    blue = parseInt(digits[4], 10),
-                    rgb = blue | (green << 8) | (red << 16);
+                        green = parseInt(digits[3], 10),
+                        blue = parseInt(digits[4], 10),
+                        rgb = blue | (green << 8) | (red << 16);
                 return digits[1] + '#' + ("000000" + rgb.toString(16)).slice(-6);
             }
             else {
                 return '';
             }
         },
-
         /**
          * Parse the string and set current color.
          *
@@ -242,9 +231,9 @@
          * @param {String} str Color in string.
          * @return this
          */
-        setFromString: function (str) {
+        setFromString: function(str) {
             var values, r, g, b, a = 1,
-                parse = parseInt;
+                    parse = parseInt;
 
             if (str === 'none') {
                 this.r = this.g = this.b = this.a = 0;
@@ -287,7 +276,7 @@
             this.a = a;
             return this;
         }
-    }, function () {
+    }, function() {
         var flyColor = new this();
 
         //<deprecated product=touch since=2.2>
@@ -311,7 +300,7 @@
              * @return {Ext.draw.Color}
              * @static
              */
-            fly: function (r, g, b, a) {
+            fly: function(r, g, b, a) {
                 switch (arguments.length) {
                     case 1:
                         flyColor.setFromString(r);
@@ -325,7 +314,6 @@
                 }
                 return flyColor;
             },
-
             ColorList: {
                 "aliceblue": "#f0f8ff", "antiquewhite": "#faebd7", "aqua": "#00ffff", "aquamarine": "#7fffd4", "azure": "#f0ffff",
                 "beige": "#f5f5dc", "bisque": "#ffe4c4", "black": "#000000", "blanchedalmond": "#ffebcd", "blue": "#0000ff", "blueviolet": "#8a2be2", "brown": "#a52a2a", "burlywood": "#deb887",
@@ -352,7 +340,6 @@
                 "wheat": "#f5deb3", "white": "#ffffff", "whitesmoke": "#f5f5f5",
                 "yellow": "#ffff00", "yellowgreen": "#9acd32"
             },
-
             /**
              * Create a new color based on the specified HSL values.
              *
@@ -362,10 +349,9 @@
              * @return {Ext.draw.Color}
              * @static
              */
-            fromHSL: function (h, s, l) {
+            fromHSL: function(h, s, l) {
                 return (new this(0, 0, 0, 0)).setHSL(h, s, l);
             },
-
             /**
              * Parse the string and create a new color.
              *
@@ -377,10 +363,9 @@
              * @returns {Ext.draw.Color}
              * @static
              */
-            fromString: function (string) {
+            fromString: function(string) {
                 return (new this(0, 0, 0, 0)).setFromString(string);
             },
-
             /**
              * Convenience method for creating a color.
              * 
@@ -409,7 +394,7 @@
              * @return {Ext.draw.Color}
              * @static
              */
-            create: function (arg) {
+            create: function(arg) {
                 if (arg instanceof this) {
                     return arg;
                 } else if (Ext.isArray(arg)) {

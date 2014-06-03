@@ -12,12 +12,10 @@
  */
 Ext.define('Ext.device.Globalization', {
     singleton: true,
-
     requires: [
         'Ext.device.globalization.Cordova',
         'Ext.device.globalization.Simulator'
     ],
-
     constructor: function() {
         var browserEnv = Ext.browser.is;
         if (browserEnv.WebView) {

@@ -48,32 +48,32 @@ Ext.define('Ext.device.filesystem.Chrome', {
         };
 
         if (config.type == window.PERSISTENT) {
-            if(navigator.webkitPersistentStorage) {
+            if (navigator.webkitPersistentStorage) {
                 navigator.webkitPersistentStorage.requestQuota(config.size, function(grantedBytes) {
                     window.webkitRequestFileSystem(
-                        config.type,
-                        grantedBytes,
-                        successCallback,
-                        config.failure
-                    );
+                            config.type,
+                            grantedBytes,
+                            successCallback,
+                            config.failure
+                            );
                 })
-            }else {
+            } else {
                 window.webkitStorageInfo.requestQuota(window.PERSISTENT, config.size, function(grantedBytes) {
                     window.webkitRequestFileSystem(
-                        config.type,
-                        grantedBytes,
-                        successCallback,
-                        config.failure
-                    );
+                            config.type,
+                            grantedBytes,
+                            successCallback,
+                            config.failure
+                            );
                 })
             }
         } else {
             window.webkitRequestFileSystem(
-                config.type,
-                config.size,
-                successCallback,
-                config.failure
-            );
+                    config.type,
+                    config.size,
+                    successCallback,
+                    config.failure
+                    );
         }
     }
 });

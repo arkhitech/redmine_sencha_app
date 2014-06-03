@@ -4,11 +4,8 @@
  * @private
  */
 Ext.define('Ext.event.ListenerStack', {
-
     currentOrder: 'current',
-
     length: 0,
-
     constructor: function() {
         this.listeners = {
             before: [],
@@ -20,12 +17,11 @@ Ext.define('Ext.event.ListenerStack', {
 
         return this;
     },
-
     add: function(fn, scope, options, order) {
         var lateBindingMap = this.lateBindingMap,
-            listeners = this.getAll(order),
-            i = listeners.length,
-            bindingMap, listener, id;
+                listeners = this.getAll(order),
+                i = listeners.length,
+                bindingMap, listener, id;
 
         if (typeof fn == 'string' && scope.isIdentifiable) {
             id = scope.getId();
@@ -72,11 +68,9 @@ Ext.define('Ext.event.ListenerStack', {
 
         return true;
     },
-
     getAt: function(index, order) {
         return this.getAll(order)[index];
     },
-
     getAll: function(order) {
         if (!order) {
             order = this.currentOrder;
@@ -84,11 +78,9 @@ Ext.define('Ext.event.ListenerStack', {
 
         return this.listeners[order];
     },
-
     count: function(order) {
         return this.getAll(order).length;
     },
-
     create: function(fn, scope, options, order) {
         return {
             stack: this,
@@ -101,13 +93,12 @@ Ext.define('Ext.event.ListenerStack', {
             order: order
         };
     },
-
     remove: function(fn, scope, order) {
         var listeners = this.getAll(order),
-            i = listeners.length,
-            isRemoved = false,
-            lateBindingMap = this.lateBindingMap,
-            listener, id;
+                i = listeners.length,
+                isRemoved = false,
+                lateBindingMap = this.lateBindingMap,
+                listener, id;
 
         if (i > 0) {
             // Start from the end index, faster than looping from the

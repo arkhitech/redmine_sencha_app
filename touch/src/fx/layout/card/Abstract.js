@@ -4,21 +4,15 @@
 Ext.define('Ext.fx.layout.card.Abstract', {
     extend: 'Ext.Evented',
     isAnimation: true,
-
     config: {
         direction: 'left',
-
         duration: null,
-
         reverse: null,
-
         layout: null
     },
-
     updateLayout: function() {
         this.enable();
     },
-
     enable: function() {
         var layout = this.getLayout();
 
@@ -26,7 +20,6 @@ Ext.define('Ext.fx.layout.card.Abstract', {
             layout.onBefore('activeitemchange', 'onActiveItemChange', this);
         }
     },
-
     disable: function() {
         var layout = this.getLayout();
 
@@ -38,9 +31,7 @@ Ext.define('Ext.fx.layout.card.Abstract', {
             layout.unBefore('activeitemchange', 'onActiveItemChange', this);
         }
     },
-
     onActiveItemChange: Ext.emptyFn,
-
     destroy: function() {
         var layout = this.getLayout();
 

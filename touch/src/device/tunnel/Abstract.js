@@ -51,16 +51,13 @@
  */
 Ext.define('Ext.device.tunnel.Abstract', {
     requires: ['Ext.Promise'],
-
     messageId: 0,
-
     constructor: function() {
         this.pendingReceivePromises = {};
         this.connections = {};
         this.connectQueue = [];
         this.messageQueue = [];
     },
-
     /**
      * Broadcast a message (intent) to look for receivers who can respond to it
      * @param {String} message
@@ -71,7 +68,6 @@ Ext.define('Ext.device.tunnel.Abstract', {
     broadcast: function(message) {
         return Ext.Promise.from([]);
     },
-
     /**
      * Create a connection to another application with the given id
      * @param {String} receiverId The id of the application to connect to. Get this id from #broadcast
@@ -79,7 +75,7 @@ Ext.define('Ext.device.tunnel.Abstract', {
      */
     connect: function(receiverId) {
         var connections = this.connections,
-            connection = connections[receiverId];
+                connection = connections[receiverId];
 
         if (connection) {
             return Ext.Promise.from(connection);
@@ -91,7 +87,6 @@ Ext.define('Ext.device.tunnel.Abstract', {
             });
         }
     },
-
     /**
      * Send a message
      * @param {String} receiverId The id of the application to connect to. Get this id from #broadcast
@@ -101,9 +96,9 @@ Ext.define('Ext.device.tunnel.Abstract', {
      */
     send: function(receiverId, message, foreground) {
         var messageId = this.messageId++,
-            receivePromise = new Ext.Promise(),
-            sendPromise = this.doSend(receiverId, messageId, message, foreground),
-            pendingReceivePromises = this.pendingReceivePromises;
+                receivePromise = new Ext.Promise(),
+                sendPromise = this.doSend(receiverId, messageId, message, foreground),
+                pendingReceivePromises = this.pendingReceivePromises;
 
         pendingReceivePromises[messageId] = receivePromise;
 
@@ -114,7 +109,6 @@ Ext.define('Ext.device.tunnel.Abstract', {
 
         return receivePromise;
     },
-
     /**
      * Assign the callback to handle new connection. The boolean returned value dertermine whether or not to accept
      * the connection
@@ -122,7 +116,7 @@ Ext.define('Ext.device.tunnel.Abstract', {
      */
     onConnect: function(callback) {
         var queue = this.connectQueue.slice(0),
-            i, ln, args;
+                i, ln, args;
 
         this.connectQueue.length = 0;
 
@@ -135,7 +129,6 @@ Ext.define('Ext.device.tunnel.Abstract', {
             }
         }
     },
-
     /**
      * Assign the callback to handling incoming messages. The returned value will be passed back to the sender.
      * If the operation needs to be async, simply return an instance of Ext.Promise
@@ -143,7 +136,7 @@ Ext.define('Ext.device.tunnel.Abstract', {
      */
     onMessage: function(callback) {
         var queue = this.messageQueue.slice(0),
-            i, ln, args;
+                i, ln, args;
 
         this.messageQueue.length = 0;
 
@@ -156,20 +149,18 @@ Ext.define('Ext.device.tunnel.Abstract', {
             }
         }
     },
-
     /**
      * @private
      */
     onAppConnect: function() {
         return this.connectCallback.apply(this, arguments);
     },
-
     /**
      * @private
      */
     onAppMessage: function(appId, message) {
         var connection = this.connections[appId],
-            response;
+                response;
 
         if (connection) {
             response = connection.receive(message);
@@ -181,20 +172,19 @@ Ext.define('Ext.device.tunnel.Abstract', {
 
         return response;
     },
-
     /**
      * @private
      */
     onReceived: function(data) {
         var appId = data.appId,
-            message = data.message,
-            messageId = data.id,
-            foreground = data.foreground,
-            pendingReceivePromises = this.pendingReceivePromises,
-            pendingPromise = pendingReceivePromises[messageId],
-            connectCallback = this.connectCallback,
-            messageCallback = this.messageCallback,
-            response;
+                message = data.message,
+                messageId = data.id,
+                foreground = data.foreground,
+                pendingReceivePromises = this.pendingReceivePromises,
+                pendingPromise = pendingReceivePromises[messageId],
+                connectCallback = this.connectCallback,
+                messageCallback = this.messageCallback,
+                response;
 
         delete pendingReceivePromises[messageId];
 
@@ -254,7 +244,6 @@ Ext.define('Ext.device.tunnel.Abstract', {
         }
 
     },
-
     /**
      * @private
      */

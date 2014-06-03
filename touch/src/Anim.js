@@ -34,13 +34,11 @@
 
 Ext.define('Ext.Anim', {
     isAnim: true,
-
     /**
      * @cfg {Boolean} disableAnimations
      * `true` to disable animations.
      */
     disableAnimations: false,
-
     defaultConfig: {
         /**
          * @cfg {Object} from
@@ -48,49 +46,41 @@ Ext.define('Ext.Anim', {
          * define it in the {@link #to} config.
          */
         from: {},
-
         /**
          * @cfg {Object} to
          * An object of CSS values which the animation ends with. If you define a CSS property here, you must also
          * define it in the {@link #from} config.
          */
         to: {},
-
         /**
          * @cfg {Number} duration
          * Time in milliseconds for the animation to last.
          */
         duration: 250,
-
         /**
          * @cfg {Number} delay Time to delay before starting the animation.
          */
         delay: 0,
-
         /**
          * @cfg {String} easing
          * Valid values are 'ease', 'linear', ease-in', 'ease-out', 'ease-in-out', or a cubic-bezier curve as defined by CSS.
          */
         easing: 'ease-in-out',
-
         /**
          * @cfg {Boolean} autoClear
          * `true` to remove all custom CSS defined in the {@link #to} config when the animation is over.
          */
         autoClear: true,
-
         /**
          * @cfg {Boolean} out
          * `true` if you want the animation to slide out of the screen.
          */
         out: true,
-
         /**
          * @cfg {String} direction
          * Valid values are: 'left', 'right', 'up', 'down', and `null`.
          */
         direction: null,
-
         /**
          * @cfg {Boolean} reverse
          * `true` to reverse the animation direction. For example, if the animation direction was set to 'left', it would
@@ -98,7 +88,6 @@ Ext.define('Ext.Anim', {
          */
         reverse: false
     },
-
     /**
      * @cfg {Function} before
      * Code to execute before starting the animation.
@@ -120,7 +109,6 @@ Ext.define('Ext.Anim', {
         'up': 'down',
         'down': 'up'
     },
-
     constructor: function(config) {
         config = Ext.apply({}, config || {}, this.defaultConfig);
         this.config = config;
@@ -129,10 +117,9 @@ Ext.define('Ext.Anim', {
 
         this.running = [];
     },
-
     initConfig: function(el, runConfig) {
         var me = this,
-            config = Ext.apply({}, runConfig || {}, me.config);
+                config = Ext.apply({}, runConfig || {}, me.config);
 
         config.el = el = Ext.get(el);
 
@@ -150,7 +137,6 @@ Ext.define('Ext.Anim', {
 
         return config;
     },
-
     /**
      * @ignore
      */
@@ -160,9 +146,9 @@ Ext.define('Ext.Anim', {
 
 
         var me = this,
-            style = el.dom.style,
-            property,
-            after = config.after;
+                style = el.dom.style,
+                property,
+                after = config.after;
 
         if (me.running[el.id]) {
             me.onTransitionEnd(null, el, {
@@ -234,7 +220,6 @@ Ext.define('Ext.Anim', {
         me.running[el.id] = config;
         return me;
     },
-
     onTransitionEnd: function(ev, el, o) {
         el = Ext.get(el);
 
@@ -243,9 +228,9 @@ Ext.define('Ext.Anim', {
         }
 
         var style = el.dom.style,
-            config = o.config,
-            me = this,
-            property;
+                config = o.config,
+                me = this,
+                property;
 
         if (config.autoClear) {
             for (property in config.to) {
@@ -341,9 +326,9 @@ Ext.define('Ext.Anim', {
             type: 'fade',
             before: function(el) {
                 var fromOpacity = 1,
-                    toOpacity = 1,
-                    curZ = el.getStyle('z-index') == 'auto' ? 0 : el.getStyle('z-index'),
-                    zIndex = curZ;
+                        toOpacity = 1,
+                        curZ = el.getStyle('z-index') == 'auto' ? 0 : el.getStyle('z-index'),
+                        zIndex = curZ;
 
                 if (this.out) {
                     toOpacity = 0;
@@ -362,7 +347,6 @@ Ext.define('Ext.Anim', {
                 };
             }
         }),
-
         /**
          * Slide Animation
          */
@@ -372,19 +356,18 @@ Ext.define('Ext.Anim', {
             reveal: false,
             opacity: false,
             'z-index': false,
-
             before: function(el) {
                 var currentZIndex = el.getStyle('z-index') == 'auto' ? 0 : el.getStyle('z-index'),
-                    currentOpacity = el.getStyle('opacity'),
-                    zIndex = currentZIndex + 1,
-                    out = this.out,
-                    direction = this.direction,
-                    toX = 0,
-                    toY = 0,
-                    fromX = 0,
-                    fromY = 0,
-                    elH = el.getHeight(),
-                    elW = el.getWidth();
+                        currentOpacity = el.getStyle('opacity'),
+                        zIndex = currentZIndex + 1,
+                        out = this.out,
+                        direction = this.direction,
+                        toX = 0,
+                        toY = 0,
+                        fromX = 0,
+                        fromY = 0,
+                        elH = el.getHeight(),
+                        elW = el.getWidth();
 
                 if (direction == 'left' || direction == 'right') {
                     if (out) {
@@ -433,7 +416,6 @@ Ext.define('Ext.Anim', {
                 };
             }
         }),
-
         /**
          * Pop Animation
          */
@@ -441,12 +423,12 @@ Ext.define('Ext.Anim', {
             scaleOnExit: true,
             before: function(el) {
                 var fromScale = 1,
-                    toScale = 1,
-                    fromOpacity = 1,
-                    toOpacity = 1,
-                    curZ = el.getStyle('z-index') == 'auto' ? 0 : el.getStyle('z-index'),
-                    fromZ = curZ,
-                    toZ = curZ;
+                        toScale = 1,
+                        fromOpacity = 1,
+                        toOpacity = 1,
+                        curZ = el.getStyle('z-index') == 'auto' ? 0 : el.getStyle('z-index'),
+                        fromZ = curZ,
+                        toZ = curZ;
 
                 if (!this.out) {
                     fromScale = 0.01;
@@ -478,7 +460,6 @@ Ext.define('Ext.Anim', {
                 };
             }
         }),
-
         /**
          * Flip Animation
          */
@@ -487,10 +468,10 @@ Ext.define('Ext.Anim', {
             direction: 'left',
             before: function(el) {
                 var rotateProp = 'Y',
-                    fromScale = 1,
-                    toScale = 1,
-                    fromRotate = 0,
-                    toRotate = 0;
+                        fromScale = 1,
+                        toScale = 1,
+                        fromRotate = 0,
+                        toRotate = 0;
 
                 if (this.out) {
                     toRotate = -180;
@@ -520,7 +501,6 @@ Ext.define('Ext.Anim', {
                 };
             }
         }),
-
         /**
          * Cube Animation
          */
@@ -530,16 +510,16 @@ Ext.define('Ext.Anim', {
             style: 'outer',
             before: function(el) {
                 var origin = '0% 0%',
-                    fromRotate = 0,
-                    toRotate = 0,
-                    rotateProp = 'Y',
-                    fromZ = 0,
-                    toZ = 0,
-                    elW = el.getWidth(),
-                    elH = el.getHeight(),
-                    showTranslateZ = true,
-                    fromTranslate = ' translateX(0)',
-                    toTranslate = '';
+                        fromRotate = 0,
+                        toRotate = 0,
+                        rotateProp = 'Y',
+                        fromZ = 0,
+                        toZ = 0,
+                        elW = el.getWidth(),
+                        elH = el.getHeight(),
+                        showTranslateZ = true,
+                        fromTranslate = ' translateX(0)',
+                        toTranslate = '';
 
                 if (this.direction == 'left' || this.direction == 'right') {
                     if (this.out) {
@@ -567,7 +547,7 @@ Ext.define('Ext.Anim', {
                 if (this.direction == 'down' || this.direction == 'right') {
                     fromRotate *= -1;
                     toRotate *= -1;
-                    origin = (origin == '0% 0%') ? '100% 100%': '0% 0%';
+                    origin = (origin == '0% 0%') ? '100% 100%' : '0% 0%';
                 }
 
                 if (this.style == 'inner') {
@@ -586,7 +566,7 @@ Ext.define('Ext.Anim', {
                 }
 
                 this.from = {
-                    '-webkit-transform': 'rotate' + rotateProp + '(' + fromRotate + 'deg)' + (showTranslateZ ? ' translateZ(' + fromZ + 'px)': '') + fromTranslate,
+                    '-webkit-transform': 'rotate' + rotateProp + '(' + fromRotate + 'deg)' + (showTranslateZ ? ' translateZ(' + fromZ + 'px)' : '') + fromTranslate,
                     '-webkit-transform-origin': origin
                 };
                 this.to = {
@@ -596,8 +576,6 @@ Ext.define('Ext.Anim', {
             },
             duration: 250
         }),
-
-
         /**
          * Wipe Animation.
          * Because of the amount of calculations involved, this animation is best used on small display
@@ -606,8 +584,8 @@ Ext.define('Ext.Anim', {
         wipe: new Ext.Anim({
             before: function(el) {
                 var curZ = el.getStyle('z-index'),
-                    zIndex,
-                    mask = '';
+                        zIndex,
+                        mask = '';
 
                 if (!this.out) {
                     zIndex = curZ + 1;

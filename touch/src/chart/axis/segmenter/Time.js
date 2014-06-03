@@ -7,7 +7,6 @@
 Ext.define('Ext.chart.axis.segmenter.Time', {
     extend: 'Ext.chart.axis.segmenter.Segmenter',
     alias: 'segmenter.time',
-
     config: {
         /**
          * @cfg {Object} step
@@ -15,8 +14,7 @@ Ext.define('Ext.chart.axis.segmenter.Time', {
          */
         step: null
     },
-
-    renderer: function (value, context) {
+    renderer: function(value, context) {
         var ExtDate = Ext.Date;
         switch (context.majorTicks.unit) {
             case 'y':
@@ -28,12 +26,10 @@ Ext.define('Ext.chart.axis.segmenter.Time', {
         }
         return ExtDate.format(value, 'Y-m-d\nH:i:s');
     },
-
-    from: function (value) {
+    from: function(value) {
         return new Date(value);
     },
-
-    diff: function (min, max, unit) {
+    diff: function(min, max, unit) {
         var ExtDate = Ext.Date;
         if (isFinite(min)) {
             min = new Date(min);
@@ -43,8 +39,7 @@ Ext.define('Ext.chart.axis.segmenter.Time', {
         }
         return ExtDate.diff(min, max, unit);
     },
-
-    align: function (date, step, unit) {
+    align: function(date, step, unit) {
         if (unit === 'd' && step >= 7) {
             date = Ext.Date.align(date, 'd', step);
             date.setDate(date.getDate() - date.getDay() + 1);
@@ -53,32 +48,30 @@ Ext.define('Ext.chart.axis.segmenter.Time', {
             return Ext.Date.align(date, unit, step);
         }
     },
-
-    add: function (value, step, unit) {
+    add: function(value, step, unit) {
         return Ext.Date.add(new Date(value), unit, step);
     },
-
-    preferredStep: function (min, estStepSize) {
+    preferredStep: function(min, estStepSize) {
         if (this.getStep()) {
             return this.getStep();
         }
         var from = new Date(+min),
-            to = new Date(+min + Math.ceil(estStepSize)),
-            ExtDate = Ext.Date,
-            units = [
-                [ExtDate.YEAR, 1, 2, 5, 10, 20, 50, 100, 200, 500],
-                [ExtDate.MONTH, 1, 3, 6],
-                [ExtDate.DAY, 1, 7, 14],
-                [ExtDate.HOUR, 1, 6, 12],
-                [ExtDate.MINUTE, 1, 5, 15, 30],
-                [ExtDate.SECOND, 1, 5, 15, 30],
-                [ExtDate.MILLI, 1, 2, 5, 10, 20, 50, 100, 200, 500]
-            ],
-            result;
+                to = new Date(+min + Math.ceil(estStepSize)),
+                ExtDate = Ext.Date,
+                units = [
+                    [ExtDate.YEAR, 1, 2, 5, 10, 20, 50, 100, 200, 500],
+                    [ExtDate.MONTH, 1, 3, 6],
+                    [ExtDate.DAY, 1, 7, 14],
+                    [ExtDate.HOUR, 1, 6, 12],
+                    [ExtDate.MINUTE, 1, 5, 15, 30],
+                    [ExtDate.SECOND, 1, 5, 15, 30],
+                    [ExtDate.MILLI, 1, 2, 5, 10, 20, 50, 100, 200, 500]
+                ],
+                result;
 
         for (var i = 0; i < units.length; i++) {
             var unit = units[i][0],
-                diff = this.diff(from, to, unit);
+                    diff = this.diff(from, to, unit);
             if (diff > 0) {
                 for (var j = 1; j < units[i].length; j++) {
                     if (diff <= units[i][j]) {

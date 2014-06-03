@@ -39,7 +39,6 @@
 Ext.define('Ext.Img', {
     extend: 'Ext.Component',
     xtype: ['image', 'img'],
-
     /**
      * @event tap
      * Fires whenever the component is tapped
@@ -67,38 +66,32 @@ Ext.define('Ext.Img', {
          * @accessor
          */
         src: null,
-
         /**
          * @cfg
          * @inheritdoc
          */
-        baseCls : Ext.baseCSSPrefix + 'img',
-
+        baseCls: Ext.baseCSSPrefix + 'img',
         /**
          * @cfg {String} imageCls The CSS class to be used when {@link #mode} is not set to 'background'
          * @accessor
          */
-        imageCls : Ext.baseCSSPrefix + 'img-image',
-
+        imageCls: Ext.baseCSSPrefix + 'img-image',
         /**
          * @cfg {String} backgroundCls The CSS class to be used when {@link #mode} is set to 'background'
          * @accessor
          */
-        backgroundCls : Ext.baseCSSPrefix + 'img-background',
-
+        backgroundCls: Ext.baseCSSPrefix + 'img-background',
         /**
          * @cfg {String} mode If set to 'background', uses a background-image CSS property instead of an
          * `<img>` tag to display the image.
          */
         mode: 'background'
     },
-
     beforeInitialize: function() {
         var me = this;
         me.onLoad = Ext.Function.bind(me.onLoad, me);
         me.onError = Ext.Function.bind(me.onError, me);
     },
-
     initialize: function() {
         var me = this;
         me.callParent();
@@ -110,13 +103,11 @@ Ext.define('Ext.Img', {
             scope: me
         });
     },
-
     hide: function() {
         this.callParent(arguments);
         this.hiddenSrc = this.hiddenSrc || this.getSrc();
         this.setSrc(null);
     },
-
     show: function() {
         this.callParent(arguments);
         if (this.hiddenSrc) {
@@ -124,11 +115,10 @@ Ext.define('Ext.Img', {
             delete this.hiddenSrc;
         }
     },
-
     updateMode: function(mode) {
-        var me            = this,
-            imageCls      = me.getImageCls(),
-            backgroundCls = me.getBackgroundCls();
+        var me = this,
+                imageCls = me.getImageCls(),
+                backgroundCls = me.getBackgroundCls();
 
         if (mode === 'background') {
             if (me.imageElement) {
@@ -139,34 +129,29 @@ Ext.define('Ext.Img', {
 
             me.replaceCls(imageCls, backgroundCls);
         } else {
-            me.imageElement = me.element.createChild({ tag: 'img' });
+            me.imageElement = me.element.createChild({tag: 'img'});
 
             me.replaceCls(backgroundCls, imageCls);
         }
     },
-
-    updateImageCls : function (newCls, oldCls) {
+    updateImageCls: function(newCls, oldCls) {
         this.replaceCls(oldCls, newCls);
     },
-
-    updateBackgroundCls : function (newCls, oldCls) {
+    updateBackgroundCls: function(newCls, oldCls) {
         this.replaceCls(oldCls, newCls);
     },
-
     onTap: function(e) {
         this.fireEvent('tap', this, e);
     },
-
     onAfterRender: function() {
         this.updateSrc(this.getSrc());
     },
-
     /**
      * @private
      */
     updateSrc: function(newSrc) {
         var me = this,
-            dom;
+                dom;
 
         if (me.getMode() === 'background') {
             dom = this.imageObject || new Image();
@@ -181,7 +166,6 @@ Ext.define('Ext.Img', {
         dom.addEventListener('load', me.onLoad, false);
         dom.addEventListener('error', me.onError, false);
     },
-
     detachListeners: function() {
         var dom = this.imageObject;
 
@@ -190,8 +174,7 @@ Ext.define('Ext.Img', {
             dom.removeEventListener('error', this.onError, false);
         }
     },
-
-    onLoad : function(e) {
+    onLoad: function(e) {
         this.detachListeners();
 
         if (this.getMode() === 'background') {
@@ -200,8 +183,7 @@ Ext.define('Ext.Img', {
 
         this.fireEvent('load', this, e);
     },
-
-    onError : function(e) {
+    onError: function(e) {
         this.detachListeners();
 
         // Attempt to set the src even though the error event fired.
@@ -211,7 +193,6 @@ Ext.define('Ext.Img', {
 
         this.fireEvent('error', this, e);
     },
-
     doSetWidth: function(width) {
         var sizingElement = (this.getMode() === 'background') ? this.element : this.imageElement;
 
@@ -219,7 +200,6 @@ Ext.define('Ext.Img', {
 
         this.callParent(arguments);
     },
-
     doSetHeight: function(height) {
         var sizingElement = (this.getMode() === 'background') ? this.element : this.imageElement;
 
@@ -227,7 +207,6 @@ Ext.define('Ext.Img', {
 
         this.callParent(arguments);
     },
-
     destroy: function() {
         this.detachListeners();
 

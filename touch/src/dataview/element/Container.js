@@ -3,7 +3,6 @@
  */
 Ext.define('Ext.dataview.element.Container', {
     extend: 'Ext.Component',
-
     /**
      * @event itemtouchstart
      * Fires whenever an item is touched
@@ -90,116 +89,104 @@ Ext.define('Ext.dataview.element.Container', {
             scope: this
         });
     },
-
     //@private
     initialize: function() {
         this.callParent();
         this.doInitialize();
     },
-
     updateBaseCls: function(newBaseCls, oldBaseCls) {
         var me = this;
 
         me.callParent([newBaseCls + '-container', oldBaseCls]);
     },
-
     onItemTouchStart: function(e) {
         var me = this,
-            target = e.getTarget(),
-            index = me.getViewItems().indexOf(target);
+                target = e.getTarget(),
+                index = me.getViewItems().indexOf(target);
 
         Ext.get(target).on({
             touchmove: 'onItemTouchMove',
-            scope   : me,
+            scope: me,
             single: true
         });
 
         me.fireEvent('itemtouchstart', me, Ext.get(target), index, e);
     },
-
     onItemTouchEnd: function(e) {
         var me = this,
-            target = e.getTarget(),
-            index = me.getViewItems().indexOf(target);
+                target = e.getTarget(),
+                index = me.getViewItems().indexOf(target);
 
         Ext.get(target).un({
             touchmove: 'onItemTouchMove',
-            scope   : me
+            scope: me
         });
 
         me.fireEvent('itemtouchend', me, Ext.get(target), index, e);
     },
-
     onItemTouchMove: function(e) {
         var me = this,
-            target = e.getTarget(),
-            index = me.getViewItems().indexOf(target);
+                target = e.getTarget(),
+                index = me.getViewItems().indexOf(target);
 
         me.fireEvent('itemtouchmove', me, Ext.get(target), index, e);
     },
-
     onItemTap: function(e) {
         var me = this,
-            target = e.getTarget(),
-            index = me.getViewItems().indexOf(target);
+                target = e.getTarget(),
+                index = me.getViewItems().indexOf(target);
 
         me.fireEvent('itemtap', me, Ext.get(target), index, e);
     },
-
     onItemTapHold: function(e) {
-        var me     = this,
-            target = e.getTarget(),
-            index  = me.getViewItems().indexOf(target);
+        var me = this,
+                target = e.getTarget(),
+                index = me.getViewItems().indexOf(target);
 
         me.fireEvent('itemtaphold', me, Ext.get(target), index, e);
     },
-
     onItemDoubleTap: function(e) {
         var me = this,
-            target = e.getTarget(),
-            index = me.getViewItems().indexOf(target);
+                target = e.getTarget(),
+                index = me.getViewItems().indexOf(target);
 
         me.fireEvent('itemdoubletap', me, Ext.get(target), index, e);
     },
-
     onItemSingleTap: function(e) {
         var me = this,
-            target = e.getTarget(),
-            index = me.getViewItems().indexOf(target);
+                target = e.getTarget(),
+                index = me.getViewItems().indexOf(target);
 
         me.fireEvent('itemsingletap', me, Ext.get(target), index, e);
     },
-
     onItemSwipe: function(e) {
         var me = this,
-            target = e.getTarget(),
-            index = me.getViewItems().indexOf(target);
+                target = e.getTarget(),
+                index = me.getViewItems().indexOf(target);
 
-        me.fireEvent('itemswipe', me,  Ext.get(target), index, e);
+        me.fireEvent('itemswipe', me, Ext.get(target), index, e);
     },
-
     updateListItem: function(record, item) {
-        var me       = this,
-            dataview = me.dataview,
-            store    = dataview.getStore(),
-            index    = store.indexOf(record),
-            data     = dataview.prepareData(record.getData(true), index, record);
+        var me = this,
+                dataview = me.dataview,
+                store = dataview.getStore(),
+                index = store.indexOf(record),
+                data = dataview.prepareData(record.getData(true), index, record);
 
         data.xcount = store.getCount();
         data.xindex = typeof data.xindex === 'number' ? data.xindex : index;
 
         item.innerHTML = dataview.getItemTpl().apply(data);
     },
-
     addListItem: function(index, record) {
-        var me         = this,
-            dataview   = me.dataview,
-            store      = dataview.getStore(),
-            data       = dataview.prepareData(record.getData(true), index, record),
-            element    = me.element,
-            childNodes = element.dom.childNodes,
-            ln         = childNodes.length,
-            wrapElement;
+        var me = this,
+                dataview = me.dataview,
+                store = dataview.getStore(),
+                data = dataview.prepareData(record.getData(true), index, record),
+                element = me.element,
+                childNodes = element.dom.childNodes,
+                ln = childNodes.length,
+                wrapElement;
 
         data.xcount = typeof data.xcount === 'number' ? data.xcount : store.getCount();
         data.xindex = typeof data.xindex === 'number' ? data.xindex : index;
@@ -212,11 +199,10 @@ Ext.define('Ext.dataview.element.Container', {
             wrapElement.insertBefore(childNodes[index]);
         }
     },
-
     getItemElementConfig: function(index, data) {
         var dataview = this.dataview,
-            itemCls = dataview.getItemCls(),
-            cls = dataview.getBaseCls() + '-item';
+                itemCls = dataview.getItemCls(),
+                cls = dataview.getBaseCls() + '-item';
 
         if (itemCls) {
             cls += ' ' + itemCls;
@@ -226,33 +212,30 @@ Ext.define('Ext.dataview.element.Container', {
             html: dataview.getItemTpl().apply(data)
         };
     },
-
     doRemoveItemCls: function(cls) {
         var elements = this.getViewItems(),
-            ln = elements.length,
-            i = 0;
+                ln = elements.length,
+                i = 0;
 
         for (; i < ln; i++) {
             Ext.fly(elements[i]).removeCls(cls);
         }
     },
-
     doAddItemCls: function(cls) {
         var elements = this.getViewItems(),
-            ln = elements.length,
-            i = 0;
+                ln = elements.length,
+                i = 0;
 
         for (; i < ln; i++) {
             Ext.fly(elements[i]).addCls(cls);
         }
     },
-
     // Remove
     moveItemsToCache: function(from, to) {
         var me = this,
-            items = me.getViewItems(),
-            i = to - from,
-            item;
+                items = me.getViewItems(),
+                i = to - from,
+                item;
 
         for (; i >= 0; i--) {
             item = items[from + i];
@@ -262,14 +245,13 @@ Ext.define('Ext.dataview.element.Container', {
             this.dataview.showEmptyText();
         }
     },
-
     // Add
     moveItemsFromCache: function(records) {
         var me = this,
-            dataview = me.dataview,
-            store = dataview.getStore(),
-            ln = records.length,
-            i, record;
+                dataview = me.dataview,
+                store = dataview.getStore(),
+                ln = records.length,
+                i, record;
 
         if (ln) {
             dataview.hideEmptyText();
@@ -289,21 +271,18 @@ Ext.define('Ext.dataview.element.Container', {
             delete record._tmpIndex;
         }
     },
-
     // Transform ChildNodes into a proper Array so we can do indexOf...
     getViewItems: function() {
         return Array.prototype.slice.call(this.element.dom.childNodes);
     },
-
     updateAtNewIndex: function(oldIndex, newIndex, record) {
         this.moveItemsToCache(oldIndex, oldIndex);
         this.moveItemsFromCache([record]);
     },
-
     destroy: function() {
         var elements = this.getViewItems(),
-            ln = elements.length,
-            i = 0;
+                ln = elements.length,
+                i = 0;
 
         for (; i < ln; i++) {
             Ext.get(elements[i]).destroy();

@@ -78,19 +78,17 @@ Ext.define("Ext.chart.Legend", {
         horizontalHeight: 48,
         verticalWidth: 150
     },
-
-    constructor: function () {
+    constructor: function() {
         this.callSuper(arguments);
 
         var scroller = this.getScrollable().getScroller(),
-            onDrag = scroller.onDrag;
-        scroller.onDrag = function (e) {
+                onDrag = scroller.onDrag;
+        scroller.onDrag = function(e) {
             e.stopPropagation();
             onDrag.call(this, e);
         };
     },
-
-    doSetDocked: function (docked) {
+    doSetDocked: function(docked) {
         this.callSuper(arguments);
         if (docked === 'top' || docked === 'bottom') {
             this.setLayout({type: 'hbox', pack: 'center'});
@@ -112,8 +110,7 @@ Ext.define("Ext.chart.Legend", {
             }
         }
     },
-
-    setScrollable: function (scrollable) {
+    setScrollable: function(scrollable) {
         this.callSuper(arguments);
         if (scrollable === true) {
             if (this.getDocked() === 'top' || this.getDocked() === 'bottom') {
@@ -123,22 +120,18 @@ Ext.define("Ext.chart.Legend", {
             }
         }
     },
-
-    
-    setPosition: function (position) {
+    setPosition: function(position) {
         this.setDocked(position);
     },
-    
-    getPosition: function () {
+    getPosition: function() {
         return this.getDocked();
     },
-
-    onItemTap: function (container, target, index, e) {
+    onItemTap: function(container, target, index, e) {
         this.callSuper(arguments);
-        if(this.getToggleable()) {
+        if (this.getToggleable()) {
             var me = this,
-                store = me.getStore(),
-                record = store && store.getAt(index);
+                    store = me.getStore(),
+                    record = store && store.getAt(index);
             record.beginEdit();
             record.set('disabled', !record.get('disabled'));
             record.commit();

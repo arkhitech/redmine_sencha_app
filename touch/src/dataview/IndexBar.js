@@ -53,11 +53,10 @@
  *        hideOnMaskTap: false
  *     });
  *
-*/
+ */
 Ext.define('Ext.dataview.IndexBar', {
     extend: 'Ext.Component',
     alternateClassName: 'Ext.IndexBar',
-
     /**
      * @event index
      * Fires when an item in the index bar display has been tapped.
@@ -68,23 +67,19 @@ Ext.define('Ext.dataview.IndexBar', {
 
     config: {
         baseCls: Ext.baseCSSPrefix + 'indexbar',
-
         /**
          * @cfg {String} direction
          * Layout direction, can be either 'vertical' or 'horizontal'
          * @accessor
          */
         direction: 'vertical',
-
         /**
          * @cfg {Array} letters
          * The letters to show on the index bar.
          * @accessor
          */
         letters: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
-
         ui: 'alphabet',
-
         /**
          * @cfg {String} listPrefix
          * The prefix string to be used at the beginning of the list.
@@ -95,13 +90,11 @@ Ext.define('Ext.dataview.IndexBar', {
     },
     // @private
     itemCls: Ext.baseCSSPrefix + '',
-
     updateDirection: function(newDirection, oldDirection) {
         var baseCls = this.getBaseCls();
 
         this.element.replaceCls(baseCls + '-' + oldDirection, baseCls + '-' + newDirection);
     },
-
     getElementConfig: function() {
         return {
             reference: 'wrapper',
@@ -109,13 +102,12 @@ Ext.define('Ext.dataview.IndexBar', {
             children: [this.callParent()]
         };
     },
-
     updateLetters: function(letters) {
         this.innerElement.setHtml('');
 
         if (letters) {
             var ln = letters.length,
-                i;
+                    i;
 
             for (i = 0; i < ln; i++) {
                 this.innerElement.createChild({
@@ -124,7 +116,6 @@ Ext.define('Ext.dataview.IndexBar', {
             }
         }
     },
-
     updateListPrefix: function(listPrefix) {
         if (listPrefix && listPrefix.length) {
             this.innerElement.createChild({
@@ -132,7 +123,6 @@ Ext.define('Ext.dataview.IndexBar', {
             }, 0);
         }
     },
-
     // @private
     initialize: function() {
         this.callParent();
@@ -144,24 +134,21 @@ Ext.define('Ext.dataview.IndexBar', {
             scope: this
         });
     },
-
     onTouchStart: function(e) {
         e.stopPropagation();
         this.innerElement.addCls(this.getBaseCls() + '-pressed');
         this.pageBox = this.innerElement.getPageBox();
         this.onDrag(e);
     },
-
     // @private
     onDragEnd: function() {
         this.innerElement.removeCls(this.getBaseCls() + '-pressed');
     },
-
     // @private
     onDrag: function(e) {
         var point = Ext.util.Point.fromEvent(e),
-            target,
-            pageBox = this.pageBox;
+                target,
+                pageBox = this.pageBox;
 
         if (!pageBox) {
             pageBox = this.pageBox = this.el.getPageBox();
@@ -184,12 +171,11 @@ Ext.define('Ext.dataview.IndexBar', {
             this.fireEvent('index', this, target.dom.innerHTML, target);
         }
     },
-
     destroy: function() {
         var me = this,
-            elements = Array.prototype.slice.call(me.innerElement.dom.childNodes),
-            ln = elements.length,
-            i = 0;
+                elements = Array.prototype.slice.call(me.innerElement.dom.childNodes),
+                ln = elements.length,
+                i = 0;
 
         for (; i < ln; i++) {
             Ext.removeNode(elements[i]);
