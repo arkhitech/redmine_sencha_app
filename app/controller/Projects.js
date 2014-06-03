@@ -9,7 +9,8 @@ Ext.define('RedmineApp.controller.Projects', {
         },
         control: {
             projectList: {
-                disclose: 'showProjectIssues'
+                disclose: 'showProjectIssues',
+                itemtap: 'showProjectIssuesTap'
             }
         }
     },
@@ -23,6 +24,15 @@ Ext.define('RedmineApp.controller.Projects', {
         this.getRedmineIssuesNavigator().push(project_issues_view);
         this.getButtonRefresh().hide();
         this.projectIssueStore = RedmineApp.app.createIssuesStore(project.data.id);
+        project_issues_view.getAt(0).setStore(this.projectIssueStore);
+        //this.getRedmineIssuesNavigator().setCurrentRefreshListener(this.refreshProjectIssues, this);
+    },
+    showProjectIssuesTap: function(projectList, index, target, record, e, eOpts) {
+        RedmineApp.app.loadProjectSettings(record.data.id);
+        var project_issues_view = Ext.create('RedmineApp.view.ProjectIssues');
+        this.getRedmineIssuesNavigator().push(project_issues_view);
+        this.getButtonRefresh().hide();
+        this.projectIssueStore = RedmineApp.app.createIssuesStore(record.data.id);
         project_issues_view.getAt(0).setStore(this.projectIssueStore);
         //this.getRedmineIssuesNavigator().setCurrentRefreshListener(this.refreshProjectIssues, this);
     }

@@ -46,7 +46,8 @@ Ext.define('RedmineApp.controller.Issues', {
                 back: 'backClicked'
             },
             projectIssueList: {
-                disclose: 'showIssue'
+                disclose: 'showIssue',
+                itemtap: 'showIssueTap'
             },
             btnEnableEditing: {
                 tap: 'enableEditing'
@@ -339,6 +340,14 @@ Ext.define('RedmineApp.controller.Issues', {
         }
         RedmineApp.controller.Issues.isClickInProcess = true;
         this.loadIssueById(issue.data.id);
+    },
+    showIssueTap: function(issueList, index, target, record, e, eOpts) {
+        if (RedmineApp.controller.Issues.isClickInProcess) {
+            //console.log("Click is already in process, so ignoring");
+            return;
+        }
+        RedmineApp.controller.Issues.isClickInProcess = true;
+        this.loadIssueById(record.data.id);
     },
     showIssueHistoryFields: function(btn) {
         var issue_history_view = Ext.create('RedmineApp.view.IssueHistory');

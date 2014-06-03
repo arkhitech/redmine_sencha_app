@@ -12,7 +12,7 @@ Ext.define('RedmineApp.view.RedmineChartsNavigator', {
         flex: 1,
         navigationBar: {
             ui: 'sencha',
-            style: 'padding-top:20px;height:4em;background:#EEEEEE !important;',
+            style: 'padding-top:20px;height:4em;background:#EEEEEE !important;'
         },
         items: [
             {

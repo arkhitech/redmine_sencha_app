@@ -11,7 +11,8 @@ Ext.define('RedmineApp.controller.ChartsMenu', {
         },
         control: {
             list: {
-                disclose: 'showProjectCharts'
+                disclose: 'showProjectCharts',
+                itemtap: 'showProjectChartsTap'
             }
         }
     },
@@ -19,8 +20,13 @@ Ext.define('RedmineApp.controller.ChartsMenu', {
         RedmineApp.app.setCurrentProjectIdentifier(record.data.identifier);
         var redmine_chart_view = Ext.create('RedmineApp.view.RedmineChart');
         this.getRedmineChartsNavigator().push(redmine_chart_view);
+    },
+    showProjectChartsTap: function(issueListCharts, index, target, record, e, eOpts)
+    {
+        RedmineApp.app.setCurrentProjectIdentifier(record.data.identifier);
+        var redmine_chart_view = Ext.create('RedmineApp.view.RedmineChart');
+        this.getRedmineChartsNavigator().push(redmine_chart_view);
     }
-
 });
 
 
