@@ -2,38 +2,41 @@ Ext.define('RedmineApp.view.RedmineChartsNavigator', {
     extend: 'Ext.navigation.View',
     xtype: 'redmine-charts-navigator',
     requires: [
+        'Ext.TitleBar',
         'Ext.dataview.List',
-        'Ext.TitleBar'
+        'Ext.form.Panel'
     ],
     config: {
-        flex: 1,
         autoDestroy: true,
-        id: 'redminenavigatorviewforcharts',
-        height: '100%',
-        pack: 'center',
-        align: 'left',
+        showAnimation: null,
+        flex: 1,
         navigationBar: {
             ui: 'sencha',
-//             xtype: 'toolbar',
-//                ui: 'Sencha',
-//                docked: 'top',
-//                title: 'Please Enter Your Details',
-            style: 'padding-top:20px;height:4em;background:#EEEEEE !important;'
+            style: 'padding-top:20px;height:4em;background:#EEEEEE !important;',
         },
         items: [
             {
+                xtype: 'formpanel',
+                layout: 'vbox',
                 title: 'Select a Project',
-                xtype: 'list',
-                id: 'chartsprojectlist',
-                store: 'Projects',
-                itemTpl: [
-                    '<tpl for=".">',
-                    '<p>{name}</p>',
-                    '</tpl>'
-                ],
-                grouped: true,
-                indexBar: true,
-                onItemDisclosure: true
+                items: [
+                    {
+                        xtype: 'list',
+                        id: 'chartsprojectlist',
+                        store: 'Projects',
+                        pinHeaders: true,
+                        clearSelectionOnDeactivate: true,
+                        itemTpl: [
+                            '<tpl for=".">',
+                            '<p>{name}</p>',
+                            '</tpl>'
+                        ],
+                        flex: 1,
+                        grouped: true,
+                        indexBar: true,
+                        onItemDisclosure: true
+                    }
+                ]
             }
         ]
     }

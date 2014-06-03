@@ -6,7 +6,8 @@ Ext.define('RedmineApp.controller.ChartsMenu', {
     config: {
         views: ['RedmineChart', 'RedmineChartsNavigator'],
         refs: {
-            list: '#chartsprojectlist'
+            list: '#chartsprojectlist',
+            redmineChartsNavigator: 'redmine-charts-navigator'
         },
         control: {
             list: {
@@ -17,7 +18,7 @@ Ext.define('RedmineApp.controller.ChartsMenu', {
     showProjectCharts: function(list, record, node, index, event, eOpts) {
         RedmineApp.app.setCurrentProjectIdentifier(record.data.identifier);
         var redmine_chart_view = Ext.create('RedmineApp.view.RedmineChart');
-        list.up('redmine-charts-navigator').push(redmine_chart_view);
+        this.getRedmineChartsNavigator().push(redmine_chart_view);
     }
 
 });
