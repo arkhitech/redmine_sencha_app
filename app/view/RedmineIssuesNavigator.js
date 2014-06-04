@@ -22,6 +22,7 @@ Ext.define('RedmineApp.view.RedmineIssuesNavigator', {
         flex: 1,
         navigationBar: {
             ui: 'sencha',
+            style: 'padding-top:20px;height:4em;background:#EEEEEE !important;',
             items: [
                 {
                     xtype: 'button',
@@ -52,7 +53,7 @@ Ext.define('RedmineApp.view.RedmineIssuesNavigator', {
                     id: 'btn-refresh',
                     ui: 'decline',
                     align: 'right',
-                    hidden: false,
+                    hidden: true,
                     handler: function() {
                         Ext.StoreMgr.get('Projects').load();
                     }

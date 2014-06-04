@@ -87,7 +87,7 @@ Ext.define('RedmineApp.view.UserInputView', {
                                 iconMask: true,
                                 id: 'save-permanently',
                                 style: 'margin: .05em',
-                                text: 'Save Permanently',
+                                text: 'Save & Lock Fields',
                                 handler: function(btn, evt) {
                                     var redurl = Ext.getCmp('redmine_url_from_user').getValue();
                                     RedmineApp.app.setRedmineUrl(redurl);
@@ -108,7 +108,7 @@ Ext.define('RedmineApp.view.UserInputView', {
                                 iconMask: true,
                                 id: 'edit-credentials',
                                 style: 'margin: .05em',
-                                text: 'Edit Credentials',
+                                text: 'Unlock Fields',
                                 hidden: true,
                                 handler: function(btn, evt) {
                                     btn.hide();

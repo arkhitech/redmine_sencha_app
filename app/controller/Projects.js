@@ -9,24 +9,29 @@ Ext.define('RedmineApp.controller.Projects', {
         },
         control: {
             projectList: {
-                disclose: 'showProjectIssues',
+                //  disclose: 'showProjectIssues',
                 itemtap: 'showProjectIssuesTap'
             }
         }
     },
     projectIssueStore: null,
+    //  viewPushed: false,
     refreshProjectIssues: function(btn) {
         this.projectIssueStore.load();
     },
-    showProjectIssues: function(list, project) {
-        RedmineApp.app.loadProjectSettings(project.data.id);
-        var project_issues_view = Ext.create('RedmineApp.view.ProjectIssues');
-        this.getRedmineIssuesNavigator().push(project_issues_view);
-        this.getButtonRefresh().hide();
-        this.projectIssueStore = RedmineApp.app.createIssuesStore(project.data.id);
-        project_issues_view.getAt(0).setStore(this.projectIssueStore);
-        //this.getRedmineIssuesNavigator().setCurrentRefreshListener(this.refreshProjectIssues, this);
-    },
+//    showProjectIssues: function(list, project) {
+//        if (this.viewPushed === 'false')
+//        {
+//            RedmineApp.app.loadProjectSettings(project.data.id);
+//            var project_issues_view = Ext.create('RedmineApp.view.ProjectIssues');
+//            this.getRedmineIssuesNavigator().push(project_issues_view);
+//            this.getButtonRefresh().hide();
+//            this.projectIssueStore = RedmineApp.app.createIssuesStore(project.data.id);
+//            project_issues_view.getAt(0).setStore(this.projectIssueStore);
+//            this.viewPushed = true;
+//            //this.getRedmineIssuesNavigator().setCurrentRefreshListener(this.refreshProjectIssues, this);          
+//        }
+//    },
     showProjectIssuesTap: function(projectList, index, target, record, e, eOpts) {
         RedmineApp.app.loadProjectSettings(record.data.id);
         var project_issues_view = Ext.create('RedmineApp.view.ProjectIssues');
@@ -34,7 +39,7 @@ Ext.define('RedmineApp.controller.Projects', {
         this.getButtonRefresh().hide();
         this.projectIssueStore = RedmineApp.app.createIssuesStore(record.data.id);
         project_issues_view.getAt(0).setStore(this.projectIssueStore);
-        //this.getRedmineIssuesNavigator().setCurrentRefreshListener(this.refreshProjectIssues, this);
+        //this.getRedmineIssuesNavigator().setCurrentRefreshListener(this.refreshProjectIssues, this);        
     }
 });
 

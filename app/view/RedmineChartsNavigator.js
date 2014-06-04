@@ -12,31 +12,38 @@ Ext.define('RedmineApp.view.RedmineChartsNavigator', {
         flex: 1,
         navigationBar: {
             ui: 'sencha',
-            style: 'padding-top:20px;height:4em;background:#EEEEEE !important;'
+            style: 'padding-top:20px;height:4em;background:#EEEEEE !important;',
+            items: [{
+                    xtype: 'button',
+                    text: 'Refresh',
+                    iconCls: 'refresh',
+                    iconMask: true,
+                    id: 'btn-refresh-charts',
+                    ui: 'decline',
+                    align: 'right',
+                    hidden: true,
+                    handler: function() {
+                        Ext.StoreMgr.get('Projects').load();
+                    }
+                }]
         },
         items: [
             {
-                xtype: 'formpanel',
-                layout: 'vbox',
+                xtype: 'list',
                 title: 'Select a Project',
-                items: [
-                    {
-                        xtype: 'list',
-                        id: 'chartsprojectlist',
-                        store: 'Projects',
-                        pinHeaders: true,
-                        clearSelectionOnDeactivate: true,
-                        itemTpl: [
-                            '<tpl for=".">',
-                            '<p>{name}</p>',
-                            '</tpl>'
-                        ],
-                        flex: 1,
-                        grouped: true,
-                        indexBar: true,
-                        onItemDisclosure: true
-                    }
-                ]
+                id: 'chartsprojectlist',
+                store: 'Projects',
+                pinHeaders: true,
+                clearSelectionOnDeactivate: true,
+                itemTpl: [
+                    '<tpl for=".">',
+                    '<p>{name}</p>',
+                    '</tpl>'
+                ],
+                flex: 1,
+                grouped: true,
+                indexBar: true,
+                onItemDisclosure: true
             }
         ]
     }
