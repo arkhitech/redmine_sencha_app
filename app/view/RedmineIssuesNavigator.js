@@ -53,7 +53,7 @@ Ext.define('RedmineApp.view.RedmineIssuesNavigator', {
                     id: 'btn-refresh',
                     ui: 'decline',
                     align: 'right',
-                    hidden: true,
+                    hidden: false,
                     handler: function() {
                         Ext.StoreMgr.get('Projects').load();
                     }

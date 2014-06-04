@@ -21,7 +21,7 @@ Ext.define('RedmineApp.view.RedmineChartsNavigator', {
                     id: 'btn-refresh-charts',
                     ui: 'decline',
                     align: 'right',
-                    hidden: true,
+                    hidden: false,
                     handler: function() {
                         Ext.StoreMgr.get('Projects').load();
                     }
