@@ -16,31 +16,34 @@ Ext.application({
     models: ['RedmineConfig', 'Issue', 'IssueCategory', 'IssuePriority', 'Project', 'ProjectMembership', 'Tracker', 'User', 'IssueStatus'],
     stores: ['RedmineConfigs', 'Projects', 'IssuePriorities', 'IssueStatuses'],
     controllers: ['Projects', 'Issues', 'ChartsMenu', 'UserInputFields'],
-    icon: {
-        "57": "resources/icons/iOS/Icon.png",
-        "114": "resources/icons/iOS/Icon@2x.png",
-        "29": "resources/icons/iOS/Icon-Small.png",
-        "58": "resources/icons/iOS/Icon-Small@2x.png",
-        "40": "resources/icons/iOS/Icon-40.png",
-        "80": "resources/icons/iOS/Icon-40@2x.png",
-        "50": "resources/icons/iOS/Icon-Small-50.png",
-        "100": "resources/icons/iOS/Icon-Small-50@2x.png",
-        "60": "resources/icons/iOS/Icon-60.png",
-        "120": "resources/icons/iOS/Icon-60@2x.png",
-        "72": "resources/icons/iOS/Icon-72.png",
-        "144": "resources/icons/iOS/Icon-72@2x.png",
-        "76": "resources/icons/iOS/Icon-76.png",
-        "152": "resources/icons/iOS/Icon-76@2x.png"
-    },
-    startupImage: {
-        '320x460': 'resources/startup/320x460.jpg',
-        '640x920': 'resources/startup/640x920.jpg',
-        '640x1096': 'resources/startup/640x1096.jpg',
-        '768x1004': 'resources/startup/768x1004.jpg',
-        '748x1024': 'resources/startup/748x1024.jpg',
-        '1536x2008': 'resources/startup/1536x2008.jpg',
-        '1496x2048': 'resources/startup/1496x2048.jpg'
-    },
+//    icon: {
+//        57: "resources/icons/iOS/Icon.png",
+//        114: "resources/icons/iOS/Icon@2x.png",
+//        29: "resources/icons/iOS/Icon-Small.png",
+//        58: "resources/icons/iOS/Icon-Small@2x.png",
+//        40: "resources/icons/iOS/Icon-40.png",
+//        80: "resources/icons/iOS/Icon-40@2x.png",
+//        50: "resources/icons/iOS/Icon-Small-50.png",
+//        100: "resources/icons/iOS/Icon-Small-50@2x.png",
+//        60: "resources/icons/iOS/Icon-60.png",
+//        120: "resources/icons/iOS/Icon-60@2x.png",
+//        72: "resources/icons/iOS/Icon-72.png",
+//        144: "resources/icons/iOS/Icon-72@2x.png",
+//        76: "resources/icons/iOS/Icon-76.png",
+//        152: "resources/icons/iOS/Icon-76@2x.png"
+//    },
+//    isIconPrecomposed: false,
+//    startupImage: {
+//        "320x460": "resources/startup/320x460.jpg",
+//        "640x920": "resources/startup/640x920.jpg",
+//        "640x1096": "resources/startup/640x1096.jpg",
+//        "768x1004": "resources/startup/768x1004.jpg",
+//        "748x1024": "resources/startup/748x1024.jpg",
+//        "1536x2008": "resources/startup/1536x2008.jpg",
+//        "1496x2048": "resources/startup/1496x2048.jpg"
+//    },
+    phoneStartupScreen: 'resources/startup/640x920.jpg',
+    tabletStartupScreen: 'resources/startup/748x1024.jpg',
     launch: function() {
         // Destroy the #appLoadingIndicator element
         Ext.fly('appLoadingIndicator').destroy();
