@@ -32,6 +32,15 @@ Ext.application({
         "76": "resources/icons/iOS/Icon-76.png",
         "152": "resources/icons/iOS/Icon-76@2x.png"
     },
+    startupImage: {
+        '320x460': 'resources/startup/320x460.jpg',
+        '640x920': 'resources/startup/640x920.jpg',
+        '640x1096': 'resources/startup/640x1096.jpg',
+        '768x1004': 'resources/startup/768x1004.jpg',
+        '748x1024': 'resources/startup/748x1024.jpg',
+        '1536x2008': 'resources/startup/1536x2008.jpg',
+        '1496x2048': 'resources/startup/1496x2048.jpg'
+    },
     launch: function() {
         // Destroy the #appLoadingIndicator element
         Ext.fly('appLoadingIndicator').destroy();
