@@ -42,8 +42,8 @@ Ext.application({
 //        "1536x2008": "resources/startup/1536x2008.jpg",
 //        "1496x2048": "resources/startup/1496x2048.jpg"
 //    },
-    phoneStartupScreen: 'resources/startup/640x920.jpg',
-    tabletStartupScreen: 'resources/startup/748x1024.jpg',
+//    phoneStartupScreen: 'resources/startup/640x920.jpg',
+//    tabletStartupScreen: 'resources/startup/748x1024.jpg',
     launch: function() {
         // Destroy the #appLoadingIndicator element
         Ext.fly('appLoadingIndicator').destroy();
