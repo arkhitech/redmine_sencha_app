@@ -17,7 +17,6 @@
         Arkhitech 
     </author>
     
-    <icon src="resources/icons/icon.png" />     
     <gap:splash src="splash/ios/Default.png" />
     
     <!-- iPhone and iPod touch -->
